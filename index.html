@@ -1058,9 +1058,49 @@ body {
         <label data-i18n="lbl-country">Country</label>
         <input type="text" id="rt-country">
       </div>
+      <div style="margin-top:14px;padding:12px;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text);">
+          <input type="checkbox" id="r-has-sponsor" onchange="toggleSponsor()" style="width:18px;height:18px;accent-color:var(--pri);">
+          <span data-i18n="lbl-sponsor-toggle">A third party (e.g. employer) pays the rent</span>
+        </label>
+      </div>
       <div class="nav">
         <button class="btn btn-back" onclick="goRentalStep('r1')" data-i18n="btn-back">Back</button>
-        <button class="btn btn-next" onclick="validateRentalAndGo('r2','r3')" data-i18n="btn-next">Next</button>
+        <button class="btn btn-next" onclick="validateRentalAndGo('r2', document.getElementById('r-has-sponsor').checked ? 'r2b' : 'r3')" data-i18n="btn-next">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RENTAL STEP 2b: Sponsor / third party -->
+  <div class="step" id="step-r2b">
+    <div class="step-card">
+      <div class="step-icon">🏢</div>
+      <h2 class="step-title" data-i18n="rs2b-title">Who is the sponsor?</h2>
+      <p class="step-explain" data-i18n="rs2b-explain">The party paying the rent (e.g. the tenant's employer).</p>
+      <div class="field">
+        <label data-i18n="lbl-company">Company / organization name</label>
+        <input type="text" id="rs-name" data-i18n-placeholder="ph-company">
+        <div class="error-msg" id="err-rs-name" data-i18n="err-required">This field is required</div>
+      </div>
+      <div class="field">
+        <label data-i18n="lbl-rep">Represented by (name)</label>
+        <input type="text" id="rs-rep" data-i18n-placeholder="ph-name">
+      </div>
+      <div class="field">
+        <label data-i18n="lbl-id">ID or passport number</label>
+        <input type="text" id="rs-id" data-i18n-placeholder="ph-id">
+      </div>
+      <div class="field">
+        <label data-i18n="lbl-address">Address</label>
+        <input type="text" id="rs-address" data-i18n-placeholder="ph-address">
+      </div>
+      <div class="field">
+        <label data-i18n="lbl-country">Country</label>
+        <input type="text" id="rs-country">
+      </div>
+      <div class="nav">
+        <button class="btn btn-back" onclick="goRentalStep('r2')" data-i18n="btn-back">Back</button>
+        <button class="btn btn-next" onclick="validateRentalAndGo('r2b','r3')" data-i18n="btn-next">Next</button>
       </div>
     </div>
   </div>
@@ -1234,6 +1274,7 @@ body {
         <li>GoatCounter bezoekersstatistieken toegevoegd</li>
         <li>Privacy Policy toegevoegd in 5 talen (modal via footer-link)</li>
         <li>"Laatst bijgewerkt" datum in footer, in 5 talen</li>
+        <li>Derde partij (sponsor/werkgever) optie bij huurcontract — met betalingsregeling, bruto-salaris verrekening, en extra handtekening</li>
         <li>Basis/Uitgebreid toggle voor POA (+ intrekking, aansprakelijkheid) en Huurcontract (+ onderhoud, nutsvoorzieningen, opzegging, onderverhuur, huisregels, geschillen)</li>
         <li>Extra secties verschijnen met blauwe accentlijn; vrij heen en terug te schakelen</li>
         <li>Dark mode toggle (☀️/🌙) met onthouden voorkeur</li>
@@ -1582,6 +1623,15 @@ const T = {
   'edit-hint': { en:'Click on any section to edit the text. Your changes will be included in the PDF.', nl:'Klik op een sectie om de tekst aan te passen. Je wijzigingen worden opgenomen in de PDF.', es:'Haz clic en cualquier sección para editar el texto. Los cambios se incluirán en el PDF.', fr:'Cliquez sur une section pour modifier le texte. Vos modifications seront incluses dans le PDF.', de:'Klicken Sie auf einen Abschnitt, um den Text zu bearbeiten. Ihre Änderungen werden in das PDF übernommen.' },
   'last-updated': { en:'Last updated: October 1, 2026', nl:'Laatst bijgewerkt: 1 oktober 2026', es:'Última actualización: 1 de octubre de 2026', fr:'Dernière mise à jour : 1er octobre 2026', de:'Zuletzt aktualisiert: 1. Oktober 2026' },
   'privacy-link': { en:'Privacy Policy', nl:'Privacybeleid', es:'Política de Privacidad', fr:'Politique de Confidentialité', de:'Datenschutzerklärung' },
+  'lbl-sponsor-toggle': { en:'A third party (e.g. employer) pays the rent', nl:'Een derde partij (bijv. werkgever) betaalt de huur', es:'Un tercero (p. ej. empleador) paga el alquiler', fr:'Un tiers (p. ex. employeur) paie le loyer', de:'Ein Dritter (z.B. Arbeitgeber) zahlt die Miete' },
+  'rs2b-title': { en:'Who is the sponsor?', nl:'Wie is de begunstigde/sponsor?', es:'¿Quién es el patrocinador?', fr:'Qui est le garant ?', de:'Wer ist der Sponsor?' },
+  'rs2b-explain': { en:'The party paying the rent (e.g. the tenant\'s employer).', nl:'De partij die de huur betaalt (bijv. de werkgever van de huurder).', es:'La parte que paga el alquiler (p. ej. el empleador del inquilino).', fr:'La partie qui paie le loyer (p. ex. l\'employeur du locataire).', de:'Die Partei, die die Miete zahlt (z.B. der Arbeitgeber des Mieters).' },
+  'lbl-company': { en:'Company / organization name', nl:'Bedrijfs- / organisatienaam', es:'Nombre de la empresa / organización', fr:'Nom de l\'entreprise / organisation', de:'Firmen- / Organisationsname' },
+  'lbl-rep': { en:'Represented by (name)', nl:'Vertegenwoordigd door (naam)', es:'Representado por (nombre)', fr:'Représenté par (nom)', de:'Vertreten durch (Name)' },
+  'ph-company': { en:'E.g. Acme Corp.', nl:'Bijv. Acme B.V.', es:'Ej. Acme S.A.', fr:'Ex. Acme S.A.', de:'Z.B. Acme GmbH' },
+  'rdoc-sponsor': { en:'Sponsor / Paying Party', nl:'Sponsor / Betalende Partij', es:'Patrocinador / Parte Pagadora', fr:'Garant / Partie Payante', de:'Sponsor / Zahlende Partei' },
+  'rdoc-sponsor-h': { en:'SPONSOR & PAYMENT ARRANGEMENT', nl:'SPONSOR & BETALINGSREGELING', es:'PATROCINADOR Y ACUERDO DE PAGO', fr:'GARANT ET ARRANGEMENT DE PAIEMENT', de:'SPONSOR & ZAHLUNGSVEREINBARUNG' },
+  'rdoc-sponsor-text': { en:'The Sponsor agrees to pay the monthly rent directly to the Landlord on behalf of the Tenant. The Sponsor may recover this amount by deducting it from the Tenant\'s gross salary or by other agreed means.', nl:'De sponsor stemt ermee in de maandelijkse huur rechtstreeks aan de verhuurder te betalen namens de huurder. De sponsor mag dit bedrag verrekenen met het brutosalaris van de huurder of op andere overeengekomen wijze.', es:'El patrocinador se compromete a pagar el alquiler mensual directamente al propietario en nombre del inquilino. El patrocinador puede recuperar este monto deduciéndolo del salario bruto del inquilino o por otros medios acordados.', fr:'Le garant s\'engage à payer le loyer mensuel directement au bailleur pour le compte du locataire. Le garant peut récupérer ce montant en le déduisant du salaire brut du locataire ou par d\'autres moyens convenus.', de:'Der Sponsor verpflichtet sich, die monatliche Miete direkt an den Vermieter im Namen des Mieters zu zahlen. Der Sponsor kann diesen Betrag durch Abzug vom Bruttogehalt des Mieters oder auf andere vereinbarte Weise einziehen.' },
   'toggle-basic': { en:'📄 Basic', nl:'📄 Basis', es:'📄 Básico', fr:'📄 Simple', de:'📄 Einfach' },
   'toggle-detailed': { en:'📋 Detailed', nl:'📋 Uitgebreid', es:'📋 Detallado', fr:'📋 Détaillé', de:'📋 Ausführlich' },
   'rdoc-maint-h': { en:'MAINTENANCE', nl:'ONDERHOUD', es:'MANTENIMIENTO', fr:'ENTRETIEN', de:'INSTANDHALTUNG' },
@@ -2251,11 +2301,18 @@ function setRentalDuration(type) {
   document.getElementById('rental-dates').style.display = type==='fixed' ? 'grid' : 'none';
 }
 
+function toggleSponsor() {
+  // Just controls flow — step r2b is shown/skipped based on checkbox
+}
+
 // ====== Rental data ======
 function gatherRentalData() {
+  const hasSponsor = document.getElementById('r-has-sponsor')?.checked || false;
   return {
     landlord: { name:$('rl-name'), id:$('rl-id'), address:$('rl-address'), country:$('rl-country') },
     tenant:   { name:$('rt-name'), id:$('rt-id'), address:$('rt-address'), country:$('rt-country') },
+    hasSponsor,
+    sponsor: hasSponsor ? { name:$('rs-name'), rep:$('rs-rep'), id:$('rs-id'), address:$('rs-address'), country:$('rs-country') } : null,
     property: { address:$('rp-address'), type:rentalPropertyType, furnished:rentalFurnished },
     rent:     parseFloat(document.getElementById('r-rent')?.value)||0,
     currency: document.getElementById('r-currency')?.value||'USD',
@@ -2302,11 +2359,19 @@ function renderRentalPreview() {
     <div class="sec extra-sec"><div class="sec-title">${t('rdoc-disputes-h')}</div><p>${t('rdoc-disputes-text')}</p></div>
   ` : '';
 
+  const sponsorPerson = (s) => `<div class="sec"><div class="sec-title">${t('rdoc-sponsor')}</div><strong>${t('lbl-company')}:</strong> ${s.name||'___'}<br>${s.rep ? '<strong>'+t('lbl-rep')+':</strong> '+s.rep+'<br>' : ''}<strong>${t('doc-id')}:</strong> ${s.id||'___'}<br><strong>${t('doc-address')}:</strong> ${s.address||'___'}<br><strong>${t('doc-country')}:</strong> ${s.country||'___'}</div>`;
+
+  const sponsorSec = d.hasSponsor && d.sponsor ? `
+    ${sponsorPerson(d.sponsor)}
+    <div class="sec"><div class="sec-title">${t('rdoc-sponsor-h')}</div><p>${t('rdoc-sponsor-text')}</p></div>
+  ` : '';
+
   el.innerHTML = `
     <h2>${t('rdoc-title')}</h2>
     <div class="sec"><p>${t('rdoc-between')}</p></div>
     ${person(d.landlord, t('rdoc-landlord'))}
     ${person(d.tenant, t('rdoc-tenant'))}
+    ${d.hasSponsor && d.sponsor ? sponsorPerson(d.sponsor) : ''}
     <div class="sec"><div class="sec-title">${t('rdoc-property-h')}</div>
       <p>${t('rdoc-property-text')}</p>
       <strong>${t('doc-address')}:</strong> ${d.property.address||'___'}<br>
@@ -2317,13 +2382,15 @@ function renderRentalPreview() {
       <p>${rentTxt}</p>
       ${depTxt ? '<p>'+depTxt+'</p>' : ''}
     </div>
+    ${d.hasSponsor && d.sponsor ? '<div class="sec"><div class="sec-title">'+t('rdoc-sponsor-h')+'</div><p>'+t('rdoc-sponsor-text')+'</p></div>' : ''}
     <div class="sec"><div class="sec-title">${t('doc-duration-h')}</div><p>${durTxt}</p></div>
     ${extraSecs}
     <div class="sec"><div class="sec-title">${t('doc-law-h')}</div><p>${t('doc-law-text').replace('{law}',d.law||'___')}</p></div>
     <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate))}</p></div>
-    <div class="sig-grid">
+    <div class="sig-grid" style="grid-template-columns:${d.hasSponsor ? '1fr 1fr 1fr' : '1fr 1fr'};">
       <div><div class="sig-line">${t('rdoc-landlord')}<br>${d.landlord.name||'___'}</div></div>
       <div><div class="sig-line">${t('rdoc-tenant')}<br>${d.tenant.name||'___'}</div></div>
+      ${d.hasSponsor && d.sponsor ? '<div><div class="sig-line">'+t('rdoc-sponsor')+'<br>'+(d.sponsor.name||'___')+'</div></div>' : ''}
     </div>
     ${jurHtml}
   `;
@@ -2362,7 +2429,18 @@ async function downloadRentalPDF() {
   addTxt(`${t('doc-name')}: ${d.tenant.name||'___'}`,{});
   addTxt(`${t('doc-id')}: ${d.tenant.id||'___'}`,{});
   addTxt(`${t('doc-address')}: ${d.tenant.address||'___'}`,{});
-  addTxt(`${t('doc-country')}: ${d.tenant.country||'___'}`,{}); y+=4;
+  addTxt(`${t('doc-country')}: ${d.tenant.country||'___'}`,{}); y+=3;
+
+  // Sponsor
+  if (d.hasSponsor && d.sponsor) {
+    addTxt(t('rdoc-sponsor'),{size:11,style:'bold',gap:3});
+    addTxt(`${t('lbl-company')}: ${d.sponsor.name||'___'}`,{});
+    if (d.sponsor.rep) addTxt(`${t('lbl-rep')}: ${d.sponsor.rep}`,{});
+    addTxt(`${t('doc-id')}: ${d.sponsor.id||'___'}`,{});
+    addTxt(`${t('doc-address')}: ${d.sponsor.address||'___'}`,{});
+    addTxt(`${t('doc-country')}: ${d.sponsor.country||'___'}`,{});
+  }
+  y+=4;
 
   // Property
   addTxt(t('rdoc-property-h'),{size:12,style:'bold',gap:4});
@@ -2376,6 +2454,12 @@ async function downloadRentalPDF() {
   addTxt(t('rdoc-rent-text').replace('{currency}',d.currency).replace('{amount}',d.rent.toLocaleString()).replace('{day}',d.payday),{});
   if(d.deposit>0) addTxt(t('rdoc-deposit-text').replace('{currency}',d.currency).replace('{amount}',d.deposit.toLocaleString()),{});
   y+=3;
+
+  // Sponsor clause
+  if (d.hasSponsor && d.sponsor) {
+    addTxt(t('rdoc-sponsor-h'),{size:12,style:'bold',gap:4});
+    addTxt(t('rdoc-sponsor-text'),{}); y+=3;
+  }
 
   // Duration
   addTxt(t('doc-duration-h'),{size:12,style:'bold',gap:4});
@@ -2406,6 +2490,12 @@ async function downloadRentalPDF() {
   doc.text(t('rdoc-landlord'),mg,y+5); doc.text(d.landlord.name||'',mg,y+9);
   doc.line(mg+95,y,mg+160,y);
   doc.text(t('rdoc-tenant'),mg+95,y+5); doc.text(d.tenant.name||'',mg+95,y+9);
+
+  if (d.hasSponsor && d.sponsor) {
+    y+=30; if(y>260){doc.addPage();y=mg+20;}
+    doc.line(mg,y,mg+65,y);
+    doc.text(t('rdoc-sponsor'),mg,y+5); doc.text(d.sponsor.name||'',mg,y+9);
+  }
 
   // Disclaimer
   y+=25; if(y>270){doc.addPage();y=mg;}
