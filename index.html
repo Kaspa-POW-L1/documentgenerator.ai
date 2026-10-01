@@ -764,11 +764,10 @@ body {
           <h3 data-i18n="dt-rental-title">Rental Agreement</h3>
           <p data-i18n="dt-rental-desc">Lease a property or room</p>
         </div>
-        <div class="doc-card disabled">
+        <div class="doc-card" onclick="selectDocType('loan')">
           <div class="dc-icon">💰</div>
           <h3 data-i18n="dt-loan-title">Loan Agreement</h3>
           <p data-i18n="dt-loan-desc">Lend or borrow money</p>
-          <span class="dc-badge" data-i18n="dt-soon">Coming soon</span>
         </div>
         <div class="doc-card disabled">
           <div class="dc-icon">👔</div>
@@ -1259,6 +1258,107 @@ body {
 
 </div>
 
+  <!-- LOAN STEP 1: Lender -->
+  <div class="step" id="step-l1">
+    <div class="step-card">
+      <div class="step-icon">🏦</div>
+      <h2 class="step-title" data-i18n="ls1-title">Who is the lender?</h2>
+      <p class="step-explain" data-i18n="ls1-explain">The person or entity lending the money.</p>
+      <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-name">As it appears on your ID or passport</div><input type="text" id="ll-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-ll-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="ll-id" data-i18n-placeholder="ph-id"><div class="error-msg" id="err-ll-id" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><div class="hint" data-i18n="hint-address">Street, number, and city</div><input type="text" id="ll-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-ll-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="ll-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goLoanStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateLoanAndGo('l1','l2')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- LOAN STEP 2: Borrower -->
+  <div class="step" id="step-l2">
+    <div class="step-card">
+      <div class="step-icon">🙋</div>
+      <h2 class="step-title" data-i18n="ls2-title">Who is the borrower?</h2>
+      <p class="step-explain" data-i18n="ls2-explain">The person or entity receiving the loan.</p>
+      <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-name">As it appears on your ID or passport</div><input type="text" id="lb-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-lb-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="lb-id" data-i18n-placeholder="ph-id"><div class="error-msg" id="err-lb-id" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><div class="hint" data-i18n="hint-address">Street, number, and city</div><input type="text" id="lb-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-lb-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="lb-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goLoanStep('l1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateLoanAndGo('l2','l3')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- LOAN STEP 3: Loan details -->
+  <div class="step" id="step-l3">
+    <div class="step-card">
+      <div class="step-icon">💵</div>
+      <h2 class="step-title" data-i18n="ls3-title">Loan details</h2>
+      <p class="step-explain" data-i18n="ls3-explain">Amount, interest, and repayment terms.</p>
+      <div class="field-row">
+        <div class="field"><label data-i18n="lbl-loan-amount">Loan amount</label><input type="number" id="l-amount" min="0" step="0.01"></div>
+        <div class="field"><label data-i18n="lbl-currency">Currency</label>
+          <select id="l-currency"><option>USD</option><option>EUR</option><option>ANG</option><option>GBP</option><option>AWG</option><option>GYD</option><option>SRD</option><option>TTD</option><option>BBD</option><option>CHF</option><option>CAD</option></select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label data-i18n="lbl-interest-rate">Annual interest rate (%)</label><input type="number" id="l-interest" min="0" max="100" step="0.1" value="0"><div class="hint" data-i18n="hint-interest">Enter 0 for an interest-free loan</div></div>
+        <div class="field"><label data-i18n="lbl-repay-type">Repayment</label>
+          <select id="l-repay-type" onchange="toggleLoanRepay()"><option value="monthly" data-i18n="opt-monthly">Monthly installments</option><option value="lumpsum" data-i18n="opt-lumpsum">Lump sum at end</option></select>
+        </div>
+      </div>
+      <div id="loan-monthly-fields">
+        <div class="field-row">
+          <div class="field"><label data-i18n="lbl-monthly-amount">Monthly payment</label><input type="number" id="l-monthly" min="0" step="0.01"></div>
+          <div class="field"><label data-i18n="lbl-payment-day">Payment due by day of month</label><input type="number" id="l-payday" min="1" max="31" value="1"></div>
+        </div>
+      </div>
+      <div class="nav"><button class="btn btn-back" onclick="goLoanStep('l2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goLoanStep('l4')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- LOAN STEP 4: Duration & law -->
+  <div class="step" id="step-l4">
+    <div class="step-card">
+      <div class="step-icon">📅</div>
+      <h2 class="step-title" data-i18n="ls4-title">Duration and signing</h2>
+      <p class="step-explain" data-i18n="ls4-explain">When does the loan start and end?</p>
+      <div class="field-row">
+        <div class="field"><label data-i18n="lbl-from">From</label><input type="date" id="l-date-start"></div>
+        <div class="field"><label data-i18n="lbl-until">Until</label><input type="date" id="l-date-end"></div>
+      </div>
+      <div style="margin-top:14px;">
+        <div class="field"><label data-i18n="lbl-place">Where is this being signed?</label><input type="text" id="l-place"></div>
+        <div class="field"><label data-i18n="lbl-date">Date of the document</label><input type="date" id="l-doc-date"></div>
+        <div class="field"><label data-i18n="lbl-law">Which country's laws apply?</label><input type="text" id="l-law"></div>
+      </div>
+      <div class="nav"><button class="btn btn-back" onclick="goLoanStep('l3')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goLoanStep('l5')" data-i18n="btn-preview">Check the document</button></div>
+    </div>
+  </div>
+
+  <!-- LOAN STEP 5: Preview & Download -->
+  <div class="step" id="step-l5">
+    <div class="step-card" style="padding:20px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+        <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-back" onclick="goLoanStep('l1')" data-i18n="btn-edit">Edit</button>
+          <button class="btn btn-download" onclick="downloadLoanPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+        </div>
+      </div>
+      <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
+    </div>
+    <div class="detail-toggle" id="loan-detail-toggle">
+      <button class="active" onclick="setDocDetail('loan','basic')" id="loan-basic-btn" data-i18n="toggle-basic">📄 Basic</button>
+      <button onclick="setDocDetail('loan','detailed')" id="loan-detailed-btn" data-i18n="toggle-detailed">📋 Detailed</button>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <button class="btn-edit-doc" onclick="toggleEditMode('loan-preview')" id="edit-btn-loan-preview" data-i18n="btn-customize">✏️ Customize document</button>
+    </div>
+    <div class="edit-hint" id="edit-hint-loan-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
+    <div class="preview-box" id="loan-preview"></div>
+    <div style="text-align:center;margin-top:16px;">
+      <button class="btn btn-download" onclick="downloadLoanPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+    </div>
+  </div>
+
 <!-- Changelog (admin only — ?admin in URL) -->
 <div class="modal-overlay" id="changelog-modal">
   <div class="modal">
@@ -1274,6 +1374,8 @@ body {
         <li>GoatCounter bezoekersstatistieken toegevoegd</li>
         <li>Privacy Policy toegevoegd in 5 talen (modal via footer-link)</li>
         <li>"Laatst bijgewerkt" datum in footer, in 5 talen</li>
+        <li>Leenovereenkomst (Loan Agreement) volledig uitgebouwd: uitlener, lener, bedrag, rente, maandelijkse termijnen of eenmalige aflossing, looptijd, 5 talen</li>
+        <li>Loan Agreement basis/uitgebreid: + achterstallige betaling, vervroegde aflossing, wanbetaling</li>
         <li>Derde partij (sponsor/werkgever) optie bij huurcontract — met betalingsregeling, bruto-salaris verrekening, en extra handtekening</li>
         <li>Basis/Uitgebreid toggle voor POA (+ intrekking, aansprakelijkheid) en Huurcontract (+ onderhoud, nutsvoorzieningen, opzegging, onderverhuur, huisregels, geschillen)</li>
         <li>Extra secties verschijnen met blauwe accentlijn; vrij heen en terug te schakelen</li>
@@ -1623,6 +1725,39 @@ const T = {
   'edit-hint': { en:'Click on any section to edit the text. Your changes will be included in the PDF.', nl:'Klik op een sectie om de tekst aan te passen. Je wijzigingen worden opgenomen in de PDF.', es:'Haz clic en cualquier sección para editar el texto. Los cambios se incluirán en el PDF.', fr:'Cliquez sur une section pour modifier le texte. Vos modifications seront incluses dans le PDF.', de:'Klicken Sie auf einen Abschnitt, um den Text zu bearbeiten. Ihre Änderungen werden in das PDF übernommen.' },
   'last-updated': { en:'Last updated: October 1, 2026', nl:'Laatst bijgewerkt: 1 oktober 2026', es:'Última actualización: 1 de octubre de 2026', fr:'Dernière mise à jour : 1er octobre 2026', de:'Zuletzt aktualisiert: 1. Oktober 2026' },
   'privacy-link': { en:'Privacy Policy', nl:'Privacybeleid', es:'Política de Privacidad', fr:'Politique de Confidentialité', de:'Datenschutzerklärung' },
+  'ls1-title': { en:'Who is the lender?', nl:'Wie is de uitlener?', es:'¿Quién es el prestamista?', fr:'Qui est le prêteur ?', de:'Wer ist der Darlehensgeber?' },
+  'ls1-explain': { en:'The person or entity lending the money.', nl:'De persoon of organisatie die het geld uitleent.', es:'La persona o entidad que presta el dinero.', fr:'La personne ou l\'entité qui prête l\'argent.', de:'Die Person oder Organisation, die das Geld verleiht.' },
+  'ls2-title': { en:'Who is the borrower?', nl:'Wie is de lener?', es:'¿Quién es el prestatario?', fr:'Qui est l\'emprunteur ?', de:'Wer ist der Darlehensnehmer?' },
+  'ls2-explain': { en:'The person or entity receiving the loan.', nl:'De persoon of organisatie die het geld leent.', es:'La persona o entidad que recibe el préstamo.', fr:'La personne ou l\'entité qui reçoit le prêt.', de:'Die Person oder Organisation, die das Darlehen erhält.' },
+  'ls3-title': { en:'Loan details', nl:'Leninggegevens', es:'Detalles del préstamo', fr:'Détails du prêt', de:'Darlehensdetails' },
+  'ls3-explain': { en:'Amount, interest, and repayment terms.', nl:'Bedrag, rente en terugbetalingsvoorwaarden.', es:'Monto, intereses y condiciones de pago.', fr:'Montant, intérêts et conditions de remboursement.', de:'Betrag, Zinsen und Rückzahlungsbedingungen.' },
+  'ls4-title': { en:'Duration and signing', nl:'Looptijd en ondertekening', es:'Duración y firma', fr:'Durée et signature', de:'Laufzeit und Unterschrift' },
+  'ls4-explain': { en:'When does the loan start and end?', nl:'Wanneer begint en eindigt de lening?', es:'¿Cuándo empieza y termina el préstamo?', fr:'Quand le prêt commence-t-il et se termine-t-il ?', de:'Wann beginnt und endet das Darlehen?' },
+  'lbl-loan-amount': { en:'Loan amount', nl:'Leenbedrag', es:'Monto del préstamo', fr:'Montant du prêt', de:'Darlehensbetrag' },
+  'lbl-interest-rate': { en:'Annual interest rate (%)', nl:'Jaarlijkse rente (%)', es:'Tasa de interés anual (%)', fr:'Taux d\'intérêt annuel (%)', de:'Jährlicher Zinssatz (%)' },
+  'hint-interest': { en:'Enter 0 for an interest-free loan', nl:'Vul 0 in voor een renteloze lening', es:'Ingrese 0 para un préstamo sin intereses', fr:'Entrez 0 pour un prêt sans intérêts', de:'0 eingeben für ein zinsloses Darlehen' },
+  'lbl-repay-type': { en:'Repayment', nl:'Terugbetaling', es:'Reembolso', fr:'Remboursement', de:'Rückzahlung' },
+  'opt-monthly': { en:'Monthly installments', nl:'Maandelijkse termijnen', es:'Cuotas mensuales', fr:'Mensualités', de:'Monatliche Raten' },
+  'opt-lumpsum': { en:'Lump sum at end', nl:'Eenmalig aan het einde', es:'Suma global al final', fr:'Somme forfaitaire à la fin', de:'Einmalzahlung am Ende' },
+  'lbl-monthly-amount': { en:'Monthly payment', nl:'Maandelijks bedrag', es:'Pago mensual', fr:'Mensualité', de:'Monatliche Zahlung' },
+  'ldoc-title': { en:'LOAN AGREEMENT', nl:'LEENOVEREENKOMST', es:'CONTRATO DE PRÉSTAMO', fr:'CONTRAT DE PRÊT', de:'DARLEHENSVERTRAG' },
+  'ldoc-between': { en:'This Loan Agreement is entered into between:', nl:'Deze leenovereenkomst is aangegaan tussen:', es:'Este contrato de préstamo se celebra entre:', fr:'Le présent contrat de prêt est conclu entre :', de:'Dieser Darlehensvertrag wird geschlossen zwischen:' },
+  'ldoc-lender': { en:'Lender', nl:'Uitlener', es:'Prestamista', fr:'Prêteur', de:'Darlehensgeber' },
+  'ldoc-borrower': { en:'Borrower', nl:'Lener', es:'Prestatario', fr:'Emprunteur', de:'Darlehensnehmer' },
+  'ldoc-amount-h': { en:'LOAN AMOUNT', nl:'LEENBEDRAG', es:'MONTO DEL PRÉSTAMO', fr:'MONTANT DU PRÊT', de:'DARLEHENSBETRAG' },
+  'ldoc-amount-text': { en:'The Lender agrees to lend the Borrower the sum of {amount}.', nl:'De uitlener stemt ermee in om de lener het bedrag van {amount} te lenen.', es:'El prestamista acuerda prestar al prestatario la suma de {amount}.', fr:'Le prêteur accepte de prêter à l\'emprunteur la somme de {amount}.', de:'Der Darlehensgeber gewährt dem Darlehensnehmer ein Darlehen in Höhe von {amount}.' },
+  'ldoc-interest-h': { en:'INTEREST', nl:'RENTE', es:'INTERESES', fr:'INTÉRÊTS', de:'ZINSEN' },
+  'ldoc-interest-text': { en:'The loan carries an annual interest rate of {rate}%, calculated on the outstanding balance.', nl:'Op de lening is een jaarlijkse rente van {rate}% van toepassing, berekend over het uitstaande saldo.', es:'El préstamo tiene una tasa de interés anual del {rate}%, calculada sobre el saldo pendiente.', fr:'Le prêt porte un taux d\'intérêt annuel de {rate}%, calculé sur le solde restant dû.', de:'Das Darlehen wird mit einem jährlichen Zinssatz von {rate}% verzinst, berechnet auf den ausstehenden Saldo.' },
+  'ldoc-noint-text': { en:'This is an interest-free loan. No interest shall accrue on the principal amount.', nl:'Dit is een renteloze lening. Er wordt geen rente berekend over de hoofdsom.', es:'Este es un préstamo sin intereses. No se acumularán intereses sobre el monto principal.', fr:'Il s\'agit d\'un prêt sans intérêts. Aucun intérêt ne sera appliqué au montant principal.', de:'Dies ist ein zinsloses Darlehen. Auf den Darlehensbetrag werden keine Zinsen erhoben.' },
+  'ldoc-repay-h': { en:'REPAYMENT', nl:'TERUGBETALING', es:'REEMBOLSO', fr:'REMBOURSEMENT', de:'RÜCKZAHLUNG' },
+  'ldoc-monthly-text': { en:'The Borrower shall repay the loan in monthly installments of {currency} {amount}, due on or before the {day}th of each month.', nl:'De lener betaalt de lening terug in maandelijkse termijnen van {currency} {amount}, verschuldigd op of voor de {day}e van elke maand.', es:'El prestatario reembolsará el préstamo en cuotas mensuales de {currency} {amount}, pagaderas el día {day} de cada mes o antes.', fr:'L\'emprunteur remboursera le prêt en mensualités de {currency} {amount}, exigibles au plus tard le {day} de chaque mois.', de:'Der Darlehensnehmer zahlt das Darlehen in monatlichen Raten von {currency} {amount} zurück, fällig bis zum {day}. eines jeden Monats.' },
+  'ldoc-lumpsum-text': { en:'The Borrower shall repay the full loan amount in a single payment on or before {date}.', nl:'De lener betaalt het volledige leenbedrag in één keer terug op of voor {date}.', es:'El prestatario reembolsará el monto total del préstamo en un solo pago antes del {date}.', fr:'L\'emprunteur remboursera le montant total du prêt en un seul versement au plus tard le {date}.', de:'Der Darlehensnehmer zahlt den gesamten Darlehensbetrag in einer Einmalzahlung bis zum {date} zurück.' },
+  'ldoc-late-h': { en:'LATE PAYMENT', nl:'ACHTERSTALLIGE BETALING', es:'PAGO TARDÍO', fr:'RETARD DE PAIEMENT', de:'ZAHLUNGSVERZUG' },
+  'ldoc-late-text': { en:'If a payment is more than 7 days overdue, the Borrower shall pay a late fee of 2% of the overdue amount for each month of delay.', nl:'Indien een betaling meer dan 7 dagen achterstallig is, is de lener een boete van 2% van het achterstallige bedrag verschuldigd voor elke maand vertraging.', es:'Si un pago tiene más de 7 días de retraso, el prestatario pagará un recargo del 2% del monto vencido por cada mes de retraso.', fr:'Si un paiement a plus de 7 jours de retard, l\'emprunteur paiera des pénalités de 2% du montant en souffrance pour chaque mois de retard.', de:'Ist eine Zahlung mehr als 7 Tage überfällig, zahlt der Darlehensnehmer einen Verzugszuschlag von 2% des überfälligen Betrags für jeden Monat des Verzugs.' },
+  'ldoc-early-h': { en:'EARLY REPAYMENT', nl:'VERVROEGDE AFLOSSING', es:'PAGO ANTICIPADO', fr:'REMBOURSEMENT ANTICIPÉ', de:'VORZEITIGE RÜCKZAHLUNG' },
+  'ldoc-early-text': { en:'The Borrower may repay the loan in full or in part at any time without penalty.', nl:'De lener mag de lening op elk moment geheel of gedeeltelijk vervroegd aflossen zonder boete.', es:'El prestatario puede reembolsar el préstamo total o parcialmente en cualquier momento sin penalización.', fr:'L\'emprunteur peut rembourser le prêt en totalité ou en partie à tout moment sans pénalité.', de:'Der Darlehensnehmer kann das Darlehen jederzeit ganz oder teilweise ohne Vorfälligkeitsentschädigung zurückzahlen.' },
+  'ldoc-default-h': { en:'DEFAULT', nl:'WANBETALING', es:'INCUMPLIMIENTO', fr:'DÉFAUT DE PAIEMENT', de:'ZAHLUNGSAUSFALL' },
+  'ldoc-default-text': { en:'If the Borrower fails to make any payment within 30 days of the due date, the full remaining balance becomes immediately due and payable.', nl:'Indien de lener enige betaling niet binnen 30 dagen na de vervaldatum voldoet, wordt het volledige resterende saldo onmiddellijk opeisbaar.', es:'Si el prestatario no realiza algún pago dentro de los 30 días posteriores a la fecha de vencimiento, el saldo total restante será exigible de inmediato.', fr:'Si l\'emprunteur ne s\'acquitte pas d\'un paiement dans les 30 jours suivant la date d\'échéance, le solde restant total devient immédiatement exigible.', de:'Kommt der Darlehensnehmer mit einer Zahlung mehr als 30 Tage in Verzug, wird der gesamte Restbetrag sofort fällig und zahlbar.' },
   'lbl-sponsor-toggle': { en:'A third party (e.g. employer) pays the rent', nl:'Een derde partij (bijv. werkgever) betaalt de huur', es:'Un tercero (p. ej. empleador) paga el alquiler', fr:'Un tiers (p. ex. employeur) paie le loyer', de:'Ein Dritter (z.B. Arbeitgeber) zahlt die Miete' },
   'rs2b-title': { en:'Who is the sponsor?', nl:'Wie is de begunstigde/sponsor?', es:'¿Quién es el patrocinador?', fr:'Qui est le garant ?', de:'Wer ist der Sponsor?' },
   'rs2b-explain': { en:'The party paying the rent (e.g. the tenant\'s employer).', nl:'De partij die de huur betaalt (bijv. de werkgever van de huurder).', es:'La parte que paga el alquiler (p. ej. el empleador del inquilino).', fr:'La partie qui paie le loyer (p. ex. l\'employeur du locataire).', de:'Die Partei, die die Miete zahlt (z.B. der Arbeitgeber des Mieters).' },
@@ -2236,6 +2371,8 @@ function selectDocType(type) {
     goStep(1);
   } else if (type === 'rental') {
     goRentalStep('r1');
+  } else if (type === 'loan') {
+    goLoanStep('l1');
   }
 }
 
@@ -2537,16 +2674,15 @@ function toggleTheme() {
 })();
 
 // ====== Detail level toggle ======
-const docDetail = { poa: 'basic', rental: 'basic' };
+const docDetail = { poa: 'basic', rental: 'basic', loan: 'basic' };
 
 function setDocDetail(docType, level) {
   docDetail[docType] = level;
-  // Update button states
   document.getElementById(docType+'-basic-btn').classList.toggle('active', level==='basic');
   document.getElementById(docType+'-detailed-btn').classList.toggle('active', level==='detailed');
-  // Re-render preview
   if (docType === 'poa') renderPreview();
-  else renderRentalPreview();
+  else if (docType === 'rental') renderRentalPreview();
+  else if (docType === 'loan') renderLoanPreview();
 }
 
 // ====== Edit mode & tracking ======
@@ -2614,6 +2750,179 @@ function trackEdits(previewId, docType) {
       })
     }).catch(() => {});
   }
+}
+
+// ====== Loan Agreement ======
+const LOAN_STEPS = ['l1','l2','l3','l4','l5'];
+
+function goLoanStep(step) {
+  if (step === 0) { goStep(0); return; }
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  const idx = LOAN_STEPS.indexOf(step);
+  document.getElementById('progress').style.width = ((idx+1) / LOAN_STEPS.length * 100) + '%';
+  if (step === 'l5') renderLoanPreview();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function validateLoanAndGo(from, to) {
+  const req = { 'l1': ['ll-name','ll-id','ll-address'], 'l2': ['lb-name','lb-id','lb-address'] };
+  let ok = true;
+  (req[from]||[]).forEach(id => {
+    const el = document.getElementById(id);
+    const err = document.getElementById('err-'+id);
+    if (!el.value.trim()) { el.classList.add('field-error'); if(err){err.style.display='block';err.textContent=t('err-required');} ok=false; }
+    else { el.classList.remove('field-error'); if(err) err.style.display='none'; }
+  });
+  if (ok) goLoanStep(to);
+}
+
+function toggleLoanRepay() {
+  const type = document.getElementById('l-repay-type').value;
+  document.getElementById('loan-monthly-fields').style.display = type === 'monthly' ? 'block' : 'none';
+}
+
+function gatherLoanData() {
+  return {
+    lender: { name:$('ll-name'), id:$('ll-id'), address:$('ll-address'), country:$('ll-country') },
+    borrower: { name:$('lb-name'), id:$('lb-id'), address:$('lb-address'), country:$('lb-country') },
+    amount: parseFloat(document.getElementById('l-amount')?.value)||0,
+    currency: document.getElementById('l-currency')?.value||'USD',
+    interest: parseFloat(document.getElementById('l-interest')?.value)||0,
+    repayType: document.getElementById('l-repay-type')?.value||'monthly',
+    monthly: parseFloat(document.getElementById('l-monthly')?.value)||0,
+    payday: parseInt(document.getElementById('l-payday')?.value)||1,
+    dateStart: document.getElementById('l-date-start')?.value||'',
+    dateEnd: document.getElementById('l-date-end')?.value||'',
+    docDate: document.getElementById('l-doc-date')?.value||'',
+    place: $('l-place'),
+    law: $('l-law'),
+  };
+}
+
+function renderLoanPreview() {
+  const d = gatherLoanData();
+  const el = document.getElementById('loan-preview');
+  const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br><strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
+
+  const amtStr = d.currency + ' ' + d.amount.toLocaleString();
+  const intStr = d.interest > 0 ? t('ldoc-interest-text').replace('{rate}',d.interest) : t('ldoc-noint-text');
+  let repayStr = '';
+  if (d.repayType === 'monthly') {
+    repayStr = t('ldoc-monthly-text').replace('{currency}',d.currency).replace('{amount}',d.monthly.toLocaleString()).replace('{day}',d.payday);
+  } else {
+    repayStr = t('ldoc-lumpsum-text').replace('{date}',fmtDate(d.dateEnd));
+  }
+
+  const detailed = docDetail.loan === 'detailed';
+  const extraSecs = detailed ? `
+    <div class="sec extra-sec"><div class="sec-title">${t('ldoc-late-h')}</div><p>${t('ldoc-late-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('ldoc-early-h')}</div><p>${t('ldoc-early-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('ldoc-default-h')}</div><p>${t('ldoc-default-text')}</p></div>
+  ` : '';
+
+  el.innerHTML = `
+    <h2>${t('ldoc-title')}</h2>
+    <div class="sec"><p>${t('ldoc-between')}</p></div>
+    ${person(d.lender, t('ldoc-lender'))}
+    ${person(d.borrower, t('ldoc-borrower'))}
+    <div class="sec"><div class="sec-title">${t('ldoc-amount-h')}</div><p>${t('ldoc-amount-text').replace('{amount}',amtStr)}</p></div>
+    <div class="sec"><div class="sec-title">${t('ldoc-interest-h')}</div><p>${intStr}</p></div>
+    <div class="sec"><div class="sec-title">${t('ldoc-repay-h')}</div><p>${repayStr}</p></div>
+    <div class="sec"><div class="sec-title">${t('doc-duration-h')}</div><p>${t('doc-fixed-text').replace('{start}',fmtDate(d.dateStart)).replace('{end}',fmtDate(d.dateEnd))}</p></div>
+    ${extraSecs}
+    <div class="sec"><div class="sec-title">${t('doc-law-h')}</div><p>${t('doc-law-text').replace('{law}',d.law||'___')}</p></div>
+    <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate))}</p></div>
+    <div class="sig-grid">
+      <div><div class="sig-line">${t('ldoc-lender')}<br>${d.lender.name||'___'}</div></div>
+      <div><div class="sig-line">${t('ldoc-borrower')}<br>${d.borrower.name||'___'}</div></div>
+    </div>
+    <div class="sig-grid" style="margin-top:16px;">
+      <div><div class="sig-line">${t('doc-witness')} 1</div></div>
+      <div><div class="sig-line">${t('doc-witness')} 2</div></div>
+    </div>
+  `;
+}
+
+async function downloadLoanPDF() {
+  trackEdits('loan-preview', 'Loan Agreement');
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const d = gatherLoanData();
+  const mg = 25, pw = 160;
+  let y = mg;
+  const addTxt = (text, opts={}) => {
+    const sz=opts.size||10, st=opts.style||'normal', al=opts.align||'left';
+    doc.setFontSize(sz); doc.setFont('helvetica',st);
+    const lines = doc.splitTextToSize(text, opts.w||pw);
+    if (y + lines.length*sz*0.4 > 280) { doc.addPage(); y=mg; }
+    doc.text(lines, al==='center'?105:mg, y, {align:al});
+    y += lines.length*sz*0.42 + (opts.gap||2);
+  };
+
+  addTxt(t('ldoc-title'),{size:18,style:'bold',align:'center',gap:8}); y+=3;
+  addTxt(t('ldoc-between'),{size:10,style:'italic'}); y+=2;
+
+  addTxt(t('ldoc-lender'),{size:11,style:'bold',gap:3});
+  addTxt(`${t('doc-name')}: ${d.lender.name||'___'}`,{});
+  addTxt(`${t('doc-id')}: ${d.lender.id||'___'}`,{});
+  addTxt(`${t('doc-address')}: ${d.lender.address||'___'}`,{});
+  addTxt(`${t('doc-country')}: ${d.lender.country||'___'}`,{}); y+=3;
+
+  addTxt(t('ldoc-borrower'),{size:11,style:'bold',gap:3});
+  addTxt(`${t('doc-name')}: ${d.borrower.name||'___'}`,{});
+  addTxt(`${t('doc-id')}: ${d.borrower.id||'___'}`,{});
+  addTxt(`${t('doc-address')}: ${d.borrower.address||'___'}`,{});
+  addTxt(`${t('doc-country')}: ${d.borrower.country||'___'}`,{}); y+=4;
+
+  const amtStr = d.currency+' '+d.amount.toLocaleString();
+  addTxt(t('ldoc-amount-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('ldoc-amount-text').replace('{amount}',amtStr),{}); y+=3;
+
+  addTxt(t('ldoc-interest-h'),{size:12,style:'bold',gap:4});
+  addTxt(d.interest>0 ? t('ldoc-interest-text').replace('{rate}',d.interest) : t('ldoc-noint-text'),{}); y+=3;
+
+  addTxt(t('ldoc-repay-h'),{size:12,style:'bold',gap:4});
+  if (d.repayType==='monthly') {
+    addTxt(t('ldoc-monthly-text').replace('{currency}',d.currency).replace('{amount}',d.monthly.toLocaleString()).replace('{day}',d.payday),{});
+  } else {
+    addTxt(t('ldoc-lumpsum-text').replace('{date}',fmtDate(d.dateEnd)),{});
+  }
+  y+=3;
+
+  addTxt(t('doc-duration-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('doc-fixed-text').replace('{start}',fmtDate(d.dateStart)).replace('{end}',fmtDate(d.dateEnd)),{}); y+=3;
+
+  if (docDetail.loan === 'detailed') {
+    addTxt(t('ldoc-late-h'),{size:12,style:'bold',gap:4}); addTxt(t('ldoc-late-text'),{}); y+=3;
+    addTxt(t('ldoc-early-h'),{size:12,style:'bold',gap:4}); addTxt(t('ldoc-early-text'),{}); y+=3;
+    addTxt(t('ldoc-default-h'),{size:12,style:'bold',gap:4}); addTxt(t('ldoc-default-text'),{}); y+=3;
+  }
+
+  addTxt(t('doc-law-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('doc-law-text').replace('{law}',d.law||'___'),{}); y+=3;
+  addTxt(t('doc-exec-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate)),{});
+
+  y+=20; if(y>250){doc.addPage();y=mg+20;}
+  doc.setDrawColor(50);
+  doc.line(mg,y,mg+65,y); doc.setFontSize(9);
+  doc.text(t('ldoc-lender'),mg,y+5); doc.text(d.lender.name||'',mg,y+9);
+  doc.line(mg+95,y,mg+160,y);
+  doc.text(t('ldoc-borrower'),mg+95,y+5); doc.text(d.borrower.name||'',mg+95,y+9);
+
+  y+=30; if(y>260){doc.addPage();y=mg+20;}
+  doc.line(mg,y,mg+65,y); doc.text(`${t('doc-witness')} 1`,mg,y+5);
+  doc.line(mg+95,y,mg+160,y); doc.text(`${t('doc-witness')} 2`,mg+95,y+5);
+
+  doc.setFontSize(7); doc.setTextColor(150);
+  doc.text('Generated by documentgenerator.ai', 105, 290, { align:'center' });
+
+  const blob = doc.output('blob');
+  const fn = `Loan_Agreement_${d.lender.name?d.lender.name.replace(/\s+/g,'_'):'draft'}.pdf`;
+  try { const dl = await window.claude?.use?.('downloads'); if(dl){await dl.save({filename:fn,data:blob});return;} } catch(e){}
+  const u = URL.createObjectURL(blob); const a = document.createElement('a');
+  a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
 
 // ====== Contact / Suggest ======
