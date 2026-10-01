@@ -2163,12 +2163,12 @@ function submitSuggestion(type) {
   const text = document.getElementById(field).value.trim();
   if (!text) return;
 
-  // Store locally for now (backend integration later)
-  try {
-    const stored = JSON.parse(localStorage.getItem('dg_feedback') || '[]');
-    stored.push({ type, text, lang, date: new Date().toISOString() });
-    localStorage.setItem('dg_feedback', JSON.stringify(stored));
-  } catch(e) {}
+  // Send to Formspree
+  fetch('https://formspree.io/f/xqpaownl', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({ type, message: text, language: lang, _subject: 'documentgenerator.ai — ' + type })
+  }).catch(() => {});
 
   document.getElementById('suggest-form').style.display = 'none';
   document.getElementById('feedback-form').style.display = 'none';
