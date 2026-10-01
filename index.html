@@ -1262,7 +1262,11 @@ body {
 </div>
 
 <!-- Floating contact/suggest button -->
-<div style="text-align:center;padding:16px 0 8px;font-size:11px;color:var(--text-light);" data-i18n="last-updated">Last updated: October 1, 2026</div>
+<div style="text-align:center;padding:16px 0 8px;font-size:11px;color:var(--text-light);">
+  <span data-i18n="last-updated">Last updated: October 1, 2026</span>
+  <span style="margin:0 6px;">·</span>
+  <a href="#" onclick="event.preventDefault();document.getElementById('privacy-modal').classList.add('show');" style="color:var(--text-light);text-decoration:underline;cursor:pointer;" data-i18n="privacy-link">Privacy Policy</a>
+</div>
 <button class="fab" onclick="toggleContact()" title="Contact & suggestions">💬</button>
 
 <!-- Contact modal -->
@@ -1303,7 +1307,98 @@ body {
   </div>
 </div>
 
+<!-- Privacy Policy Modal -->
+<div class="modal-overlay" id="privacy-modal">
+  <div class="modal" style="max-width:620px;">
+    <button class="modal-close" onclick="document.getElementById('privacy-modal').classList.remove('show')">&times;</button>
+    <div id="privacy-content"></div>
+  </div>
+</div>
+
 <script>
+const PRIVACY = {
+  en: `<h2>Privacy Policy</h2>
+<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Effective: October 1, 2026</p>
+<p><strong>documentgenerator.ai</strong> is a free document generation tool. Your privacy matters to us. This policy explains what data we collect and how we use it.</p>
+<h3 style="margin-top:16px;">1. Documents you create</h3>
+<p>All documents are generated <strong>entirely in your browser</strong>. No personal data — names, addresses, ID numbers, or document content — is sent to our servers or stored anywhere. We never see what you type.</p>
+<h3 style="margin-top:16px;">2. Anonymous usage data</h3>
+<p>When you download a document, we may collect anonymous, non-personal data to improve our templates:</p>
+<ul style="padding-left:18px;font-size:13px;"><li>Document type (e.g. Power of Attorney)</li><li>Language selected</li><li>Your timezone / region (not your IP address or exact location)</li><li>Which sections of the document you customized (section names only, never the content)</li></ul>
+<p>This data cannot identify you and is used solely to improve our templates.</p>
+<h3 style="margin-top:16px;">3. Feedback & suggestions</h3>
+<p>If you use the feedback form (💬), your message is sent via <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> to our email. We do not collect your email address unless you include it voluntarily in your message.</p>
+<h3 style="margin-top:16px;">4. Cookies & local storage</h3>
+<p>We use browser local storage only to remember your language preference. We do not use tracking cookies or third-party analytics.</p>
+<h3 style="margin-top:16px;">5. Third-party services</h3>
+<p>We use <strong>Formspree</strong> for the feedback form and <strong>Google Fonts</strong> for typography. These services may log standard web request data (IP address, browser type). See their respective privacy policies.</p>
+<h3 style="margin-top:16px;">6. Contact</h3>
+<p>Questions about this policy? Use the 💬 button or email us.</p>`,
+
+  nl: `<h2>Privacybeleid</h2>
+<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Ingangsdatum: 1 oktober 2026</p>
+<p><strong>documentgenerator.ai</strong> is een gratis tool voor het genereren van documenten. Je privacy is belangrijk voor ons. Dit beleid legt uit welke gegevens we verzamelen en hoe we die gebruiken.</p>
+<h3 style="margin-top:16px;">1. Documenten die je maakt</h3>
+<p>Alle documenten worden <strong>volledig in je browser</strong> gegenereerd. Geen persoonlijke gegevens — namen, adressen, ID-nummers of documentinhoud — worden naar onze servers gestuurd of ergens opgeslagen. Wij zien nooit wat je typt.</p>
+<h3 style="margin-top:16px;">2. Anonieme gebruiksgegevens</h3>
+<p>Bij het downloaden van een document verzamelen we mogelijk anonieme, niet-persoonlijke gegevens om onze templates te verbeteren:</p>
+<ul style="padding-left:18px;font-size:13px;"><li>Documenttype (bijv. Volmacht)</li><li>Geselecteerde taal</li><li>Je tijdzone / regio (niet je IP-adres of exacte locatie)</li><li>Welke secties van het document je hebt aangepast (alleen sectienamen, nooit de inhoud)</li></ul>
+<p>Deze gegevens zijn niet herleidbaar tot jou en worden uitsluitend gebruikt om onze templates te verbeteren.</p>
+<h3 style="margin-top:16px;">3. Feedback & suggesties</h3>
+<p>Als je het feedbackformulier (💬) gebruikt, wordt je bericht via <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> naar ons e-mailadres gestuurd. We verzamelen je e-mailadres niet, tenzij je het zelf in je bericht vermeldt.</p>
+<h3 style="margin-top:16px;">4. Cookies & lokale opslag</h3>
+<p>We gebruiken lokale browseropslag alleen om je taalvoorkeur te onthouden. We gebruiken geen tracking cookies of analytics van derden.</p>
+<h3 style="margin-top:16px;">5. Diensten van derden</h3>
+<p>We gebruiken <strong>Formspree</strong> voor het feedbackformulier en <strong>Google Fonts</strong> voor typografie. Deze diensten kunnen standaard webverzoekgegevens loggen (IP-adres, browsertype). Zie hun respectievelijke privacybeleid.</p>
+<h3 style="margin-top:16px;">6. Contact</h3>
+<p>Vragen over dit beleid? Gebruik de 💬-knop of mail ons.</p>`,
+
+  es: `<h2>Política de Privacidad</h2>
+<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Vigente desde: 1 de octubre de 2026</p>
+<p><strong>documentgenerator.ai</strong> es una herramienta gratuita para generar documentos. Tu privacidad es importante. Esta política explica qué datos recopilamos y cómo los usamos.</p>
+<h3 style="margin-top:16px;">1. Documentos que creas</h3>
+<p>Todos los documentos se generan <strong>completamente en tu navegador</strong>. No se envían datos personales — nombres, direcciones, números de identificación o contenido — a nuestros servidores. Nunca vemos lo que escribes.</p>
+<h3 style="margin-top:16px;">2. Datos de uso anónimos</h3>
+<p>Al descargar un documento, podemos recopilar datos anónimos para mejorar nuestras plantillas:</p>
+<ul style="padding-left:18px;font-size:13px;"><li>Tipo de documento</li><li>Idioma seleccionado</li><li>Tu zona horaria / región</li><li>Qué secciones personalizaste (solo nombres, nunca contenido)</li></ul>
+<h3 style="margin-top:16px;">3. Comentarios y sugerencias</h3>
+<p>Si usas el formulario (💬), tu mensaje se envía a través de Formspree. No recopilamos tu correo electrónico a menos que lo incluyas.</p>
+<h3 style="margin-top:16px;">4. Cookies</h3>
+<p>Usamos almacenamiento local solo para tu preferencia de idioma. No usamos cookies de rastreo.</p>
+<h3 style="margin-top:16px;">5. Contacto</h3>
+<p>¿Preguntas? Usa el botón 💬.</p>`,
+
+  fr: `<h2>Politique de Confidentialité</h2>
+<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">En vigueur : 1er octobre 2026</p>
+<p><strong>documentgenerator.ai</strong> est un outil gratuit de génération de documents. Votre vie privée compte. Cette politique explique les données que nous collectons.</p>
+<h3 style="margin-top:16px;">1. Documents créés</h3>
+<p>Tous les documents sont générés <strong>entièrement dans votre navigateur</strong>. Aucune donnée personnelle n'est envoyée à nos serveurs. Nous ne voyons jamais ce que vous tapez.</p>
+<h3 style="margin-top:16px;">2. Données anonymes</h3>
+<p>Lors du téléchargement, nous pouvons collecter des données anonymes :</p>
+<ul style="padding-left:18px;font-size:13px;"><li>Type de document</li><li>Langue sélectionnée</li><li>Fuseau horaire / région</li><li>Sections personnalisées (noms uniquement)</li></ul>
+<h3 style="margin-top:16px;">3. Commentaires</h3>
+<p>Le formulaire (💬) envoie votre message via Formspree. Nous ne collectons pas votre e-mail sauf si vous l'incluez.</p>
+<h3 style="margin-top:16px;">4. Cookies</h3>
+<p>Stockage local pour la langue uniquement. Pas de cookies de suivi.</p>
+<h3 style="margin-top:16px;">5. Contact</h3>
+<p>Questions ? Utilisez le bouton 💬.</p>`,
+
+  de: `<h2>Datenschutzerklärung</h2>
+<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Gültig ab: 1. Oktober 2026</p>
+<p><strong>documentgenerator.ai</strong> ist ein kostenloses Tool zur Dokumentenerstellung. Ihre Privatsphäre ist uns wichtig. Diese Erklärung beschreibt, welche Daten wir erheben.</p>
+<h3 style="margin-top:16px;">1. Erstellte Dokumente</h3>
+<p>Alle Dokumente werden <strong>vollständig in Ihrem Browser</strong> erstellt. Keine persönlichen Daten werden an unsere Server gesendet. Wir sehen nie, was Sie eingeben.</p>
+<h3 style="margin-top:16px;">2. Anonyme Nutzungsdaten</h3>
+<p>Beim Download können wir anonyme Daten erfassen:</p>
+<ul style="padding-left:18px;font-size:13px;"><li>Dokumenttyp</li><li>Gewählte Sprache</li><li>Zeitzone / Region</li><li>Angepasste Abschnitte (nur Namen)</li></ul>
+<h3 style="margin-top:16px;">3. Feedback</h3>
+<p>Das Formular (💬) sendet Ihre Nachricht über Formspree. Wir erfassen Ihre E-Mail nur, wenn Sie sie angeben.</p>
+<h3 style="margin-top:16px;">4. Cookies</h3>
+<p>Lokaler Speicher nur für Spracheinstellung. Keine Tracking-Cookies.</p>
+<h3 style="margin-top:16px;">5. Kontakt</h3>
+<p>Fragen? Nutzen Sie den 💬-Button.</p>`
+};
+
 // ====== Translation — EN, NL, ES, FR, DE ======
 const T = {
   // Document chooser
@@ -1406,6 +1501,7 @@ const T = {
   'btn-customize-off': { en:'✅ Done editing', nl:'✅ Klaar met bewerken', es:'✅ Listo', fr:'✅ Terminé', de:'✅ Fertig' },
   'edit-hint': { en:'Click on any section to edit the text. Your changes will be included in the PDF.', nl:'Klik op een sectie om de tekst aan te passen. Je wijzigingen worden opgenomen in de PDF.', es:'Haz clic en cualquier sección para editar el texto. Los cambios se incluirán en el PDF.', fr:'Cliquez sur une section pour modifier le texte. Vos modifications seront incluses dans le PDF.', de:'Klicken Sie auf einen Abschnitt, um den Text zu bearbeiten. Ihre Änderungen werden in das PDF übernommen.' },
   'last-updated': { en:'Last updated: October 1, 2026', nl:'Laatst bijgewerkt: 1 oktober 2026', es:'Última actualización: 1 de octubre de 2026', fr:'Dernière mise à jour : 1er octobre 2026', de:'Zuletzt aktualisiert: 1. Oktober 2026' },
+  'privacy-link': { en:'Privacy Policy', nl:'Privacybeleid', es:'Política de Privacidad', fr:'Politique de Confidentialité', de:'Datenschutzerklärung' },
 
   'lbl-name':    { en:'Full name', nl:'Volledige naam', es:'Nombre completo', fr:'Nom complet', de:'Vollständiger Name' },
   'hint-name':   { en:'As it appears on your ID or passport', nl:'Zoals het op je ID of paspoort staat', es:'Tal como aparece en tu documento de identidad o pasaporte', fr:'Tel qu\'il apparaît sur votre pièce d\'identité ou passeport', de:'Wie auf Ihrem Ausweis oder Reisepass angegeben' },
@@ -1545,6 +1641,9 @@ function applyLang() {
   });
   buildScopeGrid();
   if (currentStep === 5) renderPreview();
+  // Update privacy policy content
+  const pc = document.getElementById('privacy-content');
+  if (pc && PRIVACY[lang]) pc.innerHTML = PRIVACY[lang];
 }
 
 function buildScopeGrid() {
