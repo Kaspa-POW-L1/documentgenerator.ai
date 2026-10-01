@@ -449,6 +449,40 @@ body {
   margin-bottom: 12px;
   display: none;
 }
+.detail-toggle {
+  display: flex;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.detail-toggle button {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-mid);
+  transition: all 0.2s;
+}
+.detail-toggle button.active {
+  background: var(--pri);
+  color: #fff;
+}
+.detail-toggle button:hover:not(.active) {
+  background: var(--pri-light);
+}
+.extra-sec {
+  border-left: 3px solid var(--pri);
+  padding-left: 12px;
+  margin-bottom: 14px;
+  animation: fadeIn 0.3s;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 
 /* Intro */
 .intro-points {
@@ -947,6 +981,10 @@ body {
       </div>
       <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
     </div>
+    <div class="detail-toggle" id="poa-detail-toggle">
+      <button class="active" onclick="setDocDetail('poa','basic')" id="poa-basic-btn" data-i18n="toggle-basic">📄 Basic</button>
+      <button onclick="setDocDetail('poa','detailed')" id="poa-detailed-btn" data-i18n="toggle-detailed">📋 Detailed</button>
+    </div>
     <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
       <button class="btn-edit-doc" onclick="toggleEditMode('preview')" id="edit-btn-preview" data-i18n="btn-customize">✏️ Customize document</button>
     </div>
@@ -1164,6 +1202,10 @@ body {
       </div>
       <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
     </div>
+    <div class="detail-toggle" id="rental-detail-toggle">
+      <button class="active" onclick="setDocDetail('rental','basic')" id="rental-basic-btn" data-i18n="toggle-basic">📄 Basic</button>
+      <button onclick="setDocDetail('rental','detailed')" id="rental-detailed-btn" data-i18n="toggle-detailed">📋 Detailed</button>
+    </div>
     <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
       <button class="btn-edit-doc" onclick="toggleEditMode('rental-preview')" id="edit-btn-rental-preview" data-i18n="btn-customize">✏️ Customize document</button>
     </div>
@@ -1192,6 +1234,8 @@ body {
         <li>GoatCounter bezoekersstatistieken toegevoegd</li>
         <li>Privacy Policy toegevoegd in 5 talen (modal via footer-link)</li>
         <li>"Laatst bijgewerkt" datum in footer, in 5 talen</li>
+        <li>Basis/Uitgebreid toggle voor POA (+ intrekking, aansprakelijkheid) en Huurcontract (+ onderhoud, nutsvoorzieningen, opzegging, onderverhuur, huisregels, geschillen)</li>
+        <li>Extra secties verschijnen met blauwe accentlijn; vrij heen en terug te schakelen</li>
         <li>Dark mode toggle (☀️/🌙) met onthouden voorkeur</li>
         <li>AI-cues verwijderd uit alle teksten (5 talen)</li>
         <li>Standaardtaal altijd Engels, ongeacht locatie</li>
@@ -1538,6 +1582,24 @@ const T = {
   'edit-hint': { en:'Click on any section to edit the text. Your changes will be included in the PDF.', nl:'Klik op een sectie om de tekst aan te passen. Je wijzigingen worden opgenomen in de PDF.', es:'Haz clic en cualquier sección para editar el texto. Los cambios se incluirán en el PDF.', fr:'Cliquez sur une section pour modifier le texte. Vos modifications seront incluses dans le PDF.', de:'Klicken Sie auf einen Abschnitt, um den Text zu bearbeiten. Ihre Änderungen werden in das PDF übernommen.' },
   'last-updated': { en:'Last updated: October 1, 2026', nl:'Laatst bijgewerkt: 1 oktober 2026', es:'Última actualización: 1 de octubre de 2026', fr:'Dernière mise à jour : 1er octobre 2026', de:'Zuletzt aktualisiert: 1. Oktober 2026' },
   'privacy-link': { en:'Privacy Policy', nl:'Privacybeleid', es:'Política de Privacidad', fr:'Politique de Confidentialité', de:'Datenschutzerklärung' },
+  'toggle-basic': { en:'📄 Basic', nl:'📄 Basis', es:'📄 Básico', fr:'📄 Simple', de:'📄 Einfach' },
+  'toggle-detailed': { en:'📋 Detailed', nl:'📋 Uitgebreid', es:'📋 Detallado', fr:'📋 Détaillé', de:'📋 Ausführlich' },
+  'rdoc-maint-h': { en:'MAINTENANCE', nl:'ONDERHOUD', es:'MANTENIMIENTO', fr:'ENTRETIEN', de:'INSTANDHALTUNG' },
+  'rdoc-maint-text': { en:'The Tenant shall maintain the property in good condition. Minor repairs are the responsibility of the Tenant. Structural and major repairs remain the responsibility of the Landlord.', nl:'De huurder dient het gehuurde in goede staat te onderhouden. Klein onderhoud is voor rekening van de huurder. Structureel en groot onderhoud blijft voor rekening van de verhuurder.', es:'El inquilino mantendrá la propiedad en buen estado. Las reparaciones menores son responsabilidad del inquilino. Las reparaciones estructurales y mayores son responsabilidad del propietario.', fr:'Le locataire entretiendra le bien en bon état. Les réparations mineures sont à la charge du locataire. Les réparations structurelles et majeures restent à la charge du bailleur.', de:'Der Mieter hat das Mietobjekt in gutem Zustand zu halten. Kleinreparaturen gehen zu Lasten des Mieters. Strukturelle und größere Reparaturen bleiben Sache des Vermieters.' },
+  'rdoc-notice-h': { en:'TERMINATION & NOTICE', nl:'OPZEGGING', es:'TERMINACIÓN Y AVISO', fr:'RÉSILIATION ET PRÉAVIS', de:'KÜNDIGUNG' },
+  'rdoc-notice-text': { en:'Either party may terminate this agreement by giving at least one month\'s written notice before the end of a rental period. Early termination requires mutual written consent.', nl:'Elke partij kan deze overeenkomst opzeggen met inachtneming van ten minste één maand schriftelijke opzegtermijn vóór het einde van een huurperiode. Tussentijdse beëindiging vereist wederzijds schriftelijk akkoord.', es:'Cualquiera de las partes puede rescindir este contrato con al menos un mes de preaviso por escrito antes del final de un período de alquiler. La rescisión anticipada requiere consentimiento mutuo por escrito.', fr:'Chaque partie peut résilier ce contrat en donnant un préavis écrit d\'au moins un mois avant la fin d\'une période de location. La résiliation anticipée nécessite un accord écrit mutuel.', de:'Jede Partei kann diesen Vertrag mit einer Frist von mindestens einem Monat zum Ende einer Mietperiode schriftlich kündigen. Eine vorzeitige Beendigung bedarf der beiderseitigen schriftlichen Zustimmung.' },
+  'rdoc-sublet-h': { en:'SUBLETTING', nl:'ONDERVERHUUR', es:'SUBARRIENDO', fr:'SOUS-LOCATION', de:'UNTERVERMIETUNG' },
+  'rdoc-sublet-text': { en:'The Tenant may not sublet or transfer this lease without prior written consent from the Landlord.', nl:'De huurder mag het gehuurde niet onderverhuren of deze huurovereenkomst overdragen zonder voorafgaande schriftelijke toestemming van de verhuurder.', es:'El inquilino no podrá subarrendar ni ceder este contrato sin el consentimiento previo por escrito del propietario.', fr:'Le locataire ne peut sous-louer ni céder ce bail sans le consentement écrit préalable du bailleur.', de:'Der Mieter darf das Mietobjekt nicht ohne vorherige schriftliche Zustimmung des Vermieters untervermieten oder diesen Vertrag übertragen.' },
+  'rdoc-rules-h': { en:'HOUSE RULES', nl:'HUISREGELS', es:'NORMAS DE LA VIVIENDA', fr:'RÈGLEMENT INTÉRIEUR', de:'HAUSORDNUNG' },
+  'rdoc-rules-text': { en:'The Tenant agrees to use the property for residential purposes only, to not cause unreasonable noise or disturbance, and to comply with all applicable local rules and regulations.', nl:'De huurder stemt ermee in het gehuurde uitsluitend als woonruimte te gebruiken, geen onredelijke overlast te veroorzaken en zich te houden aan alle toepasselijke lokale regels en voorschriften.', es:'El inquilino se compromete a utilizar la propiedad únicamente con fines residenciales, a no causar ruido ni molestias excesivas y a cumplir con todas las normas y regulaciones locales aplicables.', fr:'Le locataire s\'engage à utiliser le bien à des fins résidentielles uniquement, à ne pas causer de bruit ou de trouble excessif et à respecter toutes les règles et réglementations locales applicables.', de:'Der Mieter verpflichtet sich, das Mietobjekt ausschließlich zu Wohnzwecken zu nutzen, keine unzumutbare Lärmbelästigung oder Störung zu verursachen und alle geltenden örtlichen Regeln und Vorschriften einzuhalten.' },
+  'rdoc-utilities-h': { en:'UTILITIES', nl:'NUTSVOORZIENINGEN', es:'SERVICIOS PÚBLICOS', fr:'CHARGES', de:'NEBENKOSTEN' },
+  'rdoc-utilities-text': { en:'Unless otherwise agreed in writing, the Tenant is responsible for all utility costs including water, electricity, gas, internet, and waste collection.', nl:'Tenzij schriftelijk anders overeengekomen, zijn alle kosten voor nutsvoorzieningen, waaronder water, elektriciteit, gas, internet en afvalinzameling, voor rekening van de huurder.', es:'Salvo acuerdo por escrito en contrario, el inquilino es responsable de todos los costos de servicios públicos, incluyendo agua, electricidad, gas, internet y recolección de basura.', fr:'Sauf accord écrit contraire, le locataire est responsable de tous les frais de charges, y compris l\'eau, l\'électricité, le gaz, l\'internet et la collecte des déchets.', de:'Sofern nicht schriftlich anders vereinbart, trägt der Mieter alle Nebenkosten einschließlich Wasser, Strom, Gas, Internet und Müllabfuhr.' },
+  'rdoc-disputes-h': { en:'DISPUTES', nl:'GESCHILLEN', es:'DISPUTAS', fr:'LITIGES', de:'STREITIGKEITEN' },
+  'rdoc-disputes-text': { en:'Any dispute arising from this agreement shall first be resolved through negotiation between the parties. If no resolution is reached, the dispute shall be submitted to the competent court under the governing law of this agreement.', nl:'Geschillen voortvloeiend uit deze overeenkomst worden eerst in onderling overleg opgelost. Indien geen overeenstemming wordt bereikt, wordt het geschil voorgelegd aan de bevoegde rechter onder het toepasselijk recht van deze overeenkomst.', es:'Cualquier disputa derivada de este contrato se resolverá primero mediante negociación entre las partes. Si no se llega a un acuerdo, la disputa se someterá al tribunal competente bajo la legislación aplicable de este contrato.', fr:'Tout litige découlant du présent contrat sera d\'abord résolu par négociation entre les parties. En l\'absence d\'accord, le litige sera soumis au tribunal compétent en vertu du droit applicable au présent contrat.', de:'Streitigkeiten aus diesem Vertrag werden zunächst im Verhandlungswege zwischen den Parteien beigelegt. Kommt keine Einigung zustande, wird der Streit dem zuständigen Gericht nach dem anwendbaren Recht dieses Vertrags vorgelegt.' },
+  'doc-revoke-h': { en:'REVOCATION', nl:'INTREKKING', es:'REVOCACIÓN', fr:'RÉVOCATION', de:'WIDERRUF' },
+  'doc-revoke-text': { en:'The Grantor may revoke this Power of Attorney at any time by written notice to the Attorney-in-Fact. The revocation takes effect upon receipt of the notice.', nl:'De volmachtgever kan deze volmacht te allen tijde intrekken door middel van een schriftelijke kennisgeving aan de gevolmachtigde. De intrekking gaat in op het moment van ontvangst van de kennisgeving.', es:'El otorgante puede revocar este poder notarial en cualquier momento mediante notificación escrita al apoderado. La revocación surte efecto a partir de la recepción de la notificación.', fr:'Le mandant peut révoquer cette procuration à tout moment par notification écrite au mandataire. La révocation prend effet dès réception de la notification.', de:'Der Vollmachtgeber kann diese Vollmacht jederzeit durch schriftliche Mitteilung an den Bevollmächtigten widerrufen. Der Widerruf wird mit Zugang der Mitteilung wirksam.' },
+  'doc-liability-h': { en:'LIABILITY', nl:'AANSPRAKELIJKHEID', es:'RESPONSABILIDAD', fr:'RESPONSABILITÉ', de:'HAFTUNG' },
+  'doc-liability-text': { en:'The Attorney-in-Fact shall exercise reasonable care when acting under this Power of Attorney and shall be liable for damages resulting from willful misconduct or gross negligence.', nl:'De gevolmachtigde dient redelijke zorgvuldigheid te betrachten bij het handelen onder deze volmacht en is aansprakelijk voor schade als gevolg van opzet of grove nalatigheid.', es:'El apoderado ejercerá un cuidado razonable al actuar bajo este poder notarial y será responsable de los daños resultantes de conducta dolosa o negligencia grave.', fr:'Le mandataire exercera une diligence raisonnable dans l\'exécution de cette procuration et sera responsable des dommages résultant d\'une faute intentionnelle ou d\'une négligence grave.', de:'Der Bevollmächtigte hat bei der Ausübung dieser Vollmacht angemessene Sorgfalt walten zu lassen und haftet für Schäden, die durch vorsätzliches Fehlverhalten oder grobe Fahrlässigkeit entstehen.' },
 
   'lbl-name':    { en:'Full name', nl:'Volledige naam', es:'Nombre completo', fr:'Nom complet', de:'Vollständiger Name' },
   'hint-name':   { en:'As it appears on your ID or passport', nl:'Zoals het op je ID of paspoort staat', es:'Tal como aparece en tu documento de identidad o pasaporte', fr:'Tel qu\'il apparaît sur votre pièce d\'identité ou passeport', de:'Wie auf Ihrem Ausweis oder Reisepass angegeben' },
@@ -1808,6 +1870,12 @@ function renderPreview() {
     ? `<p>${t('doc-indef-text')}</p>`
     : `<p>${t('doc-fixed-text').replace('{start}', fmtDate(d.dateStart)).replace('{end}', fmtDate(d.dateEnd))}</p>`;
 
+  const detailed = docDetail.poa === 'detailed';
+  const extraSecs = detailed ? `
+    <div class="sec extra-sec"><div class="sec-title">${t('doc-revoke-h')}</div><p>${t('doc-revoke-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('doc-liability-h')}</div><p>${t('doc-liability-text')}</p></div>
+  ` : '';
+
   el.innerHTML = `
     <h2>${t('doc-title')}</h2>
     <div class="sec"><div class="sec-title">${t('doc-preamble')}</div>${person(d.g1)}</div>
@@ -1815,6 +1883,7 @@ function renderPreview() {
     <div class="sec">${person(d.g2)}</div>
     <div class="sec"><div class="sec-title">${t('doc-scope-h')}</div>${scopeHtml}</div>
     <div class="sec"><div class="sec-title">${t('doc-duration-h')}</div>${durHtml}</div>
+    ${extraSecs}
     <div class="sec"><div class="sec-title">${t('doc-law-h')}</div><p>${t('doc-law-text').replace('{law}', d.govLaw||'___')}</p></div>
     <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}', d.docPlace||'___').replace('{date}', fmtDate(d.docDate))}</p></div>
     <div class="sig-grid">
@@ -1882,6 +1951,13 @@ async function downloadPDF() {
     addTxt(t('doc-fixed-text').replace('{start}', fmtDate(d.dateStart)).replace('{end}', fmtDate(d.dateEnd)), {});
   }
   y += 3;
+
+  if (docDetail.poa === 'detailed') {
+    addTxt(t('doc-revoke-h'), { size: 12, style: 'bold', gap: 4 });
+    addTxt(t('doc-revoke-text'), {}); y += 3;
+    addTxt(t('doc-liability-h'), { size: 12, style: 'bold', gap: 4 });
+    addTxt(t('doc-liability-text'), {}); y += 3;
+  }
 
   addTxt(t('doc-law-h'), { size: 12, style: 'bold', gap: 4 });
   addTxt(t('doc-law-text').replace('{law}', d.govLaw||'___'), {});
@@ -2216,6 +2292,16 @@ function renderRentalPreview() {
     jurHtml = `<div style="margin-top:12px;padding:10px;background:#fffbe6;border:1px solid #e6d27a;border-radius:6px;font-size:12px;"><strong>${t('jur-title')}</strong><ul style="margin:4px 0 0 16px;">${items.map(r=>'<li>'+r+'</li>').join('')}</ul></div>`;
   }
 
+  const detailed = docDetail.rental === 'detailed';
+  const extraSecs = detailed ? `
+    <div class="sec extra-sec"><div class="sec-title">${t('rdoc-maint-h')}</div><p>${t('rdoc-maint-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('rdoc-utilities-h')}</div><p>${t('rdoc-utilities-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('rdoc-notice-h')}</div><p>${t('rdoc-notice-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('rdoc-sublet-h')}</div><p>${t('rdoc-sublet-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('rdoc-rules-h')}</div><p>${t('rdoc-rules-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('rdoc-disputes-h')}</div><p>${t('rdoc-disputes-text')}</p></div>
+  ` : '';
+
   el.innerHTML = `
     <h2>${t('rdoc-title')}</h2>
     <div class="sec"><p>${t('rdoc-between')}</p></div>
@@ -2232,6 +2318,7 @@ function renderRentalPreview() {
       ${depTxt ? '<p>'+depTxt+'</p>' : ''}
     </div>
     <div class="sec"><div class="sec-title">${t('doc-duration-h')}</div><p>${durTxt}</p></div>
+    ${extraSecs}
     <div class="sec"><div class="sec-title">${t('doc-law-h')}</div><p>${t('doc-law-text').replace('{law}',d.law||'___')}</p></div>
     <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate))}</p></div>
     <div class="sig-grid">
@@ -2295,6 +2382,15 @@ async function downloadRentalPDF() {
   if(d.durationType==='fixed') addTxt(t('doc-fixed-text').replace('{start}',fmtDate(d.dateStart)).replace('{end}',fmtDate(d.dateEnd)),{});
   else addTxt(t('doc-indef-text'),{}); y+=3;
 
+  if (docDetail.rental === 'detailed') {
+    addTxt(t('rdoc-maint-h'),{size:12,style:'bold',gap:4}); addTxt(t('rdoc-maint-text'),{}); y+=3;
+    addTxt(t('rdoc-utilities-h'),{size:12,style:'bold',gap:4}); addTxt(t('rdoc-utilities-text'),{}); y+=3;
+    addTxt(t('rdoc-notice-h'),{size:12,style:'bold',gap:4}); addTxt(t('rdoc-notice-text'),{}); y+=3;
+    addTxt(t('rdoc-sublet-h'),{size:12,style:'bold',gap:4}); addTxt(t('rdoc-sublet-text'),{}); y+=3;
+    addTxt(t('rdoc-rules-h'),{size:12,style:'bold',gap:4}); addTxt(t('rdoc-rules-text'),{}); y+=3;
+    addTxt(t('rdoc-disputes-h'),{size:12,style:'bold',gap:4}); addTxt(t('rdoc-disputes-text'),{}); y+=3;
+  }
+
   // Law
   addTxt(t('doc-law-h'),{size:12,style:'bold',gap:4});
   addTxt(t('doc-law-text').replace('{law}',d.law||'___'),{}); y+=3;
@@ -2349,6 +2445,19 @@ function toggleTheme() {
     }
   } catch(e) {}
 })();
+
+// ====== Detail level toggle ======
+const docDetail = { poa: 'basic', rental: 'basic' };
+
+function setDocDetail(docType, level) {
+  docDetail[docType] = level;
+  // Update button states
+  document.getElementById(docType+'-basic-btn').classList.toggle('active', level==='basic');
+  document.getElementById(docType+'-detailed-btn').classList.toggle('active', level==='detailed');
+  // Re-render preview
+  if (docType === 'poa') renderPreview();
+  else renderRentalPreview();
+}
 
 // ====== Edit mode & tracking ======
 const originalContent = {};
