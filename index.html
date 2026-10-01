@@ -1171,6 +1171,20 @@ body {
     <button class="modal-close" onclick="document.getElementById('changelog-modal').classList.remove('show')">&times;</button>
     <h2>Changelog — documentgenerator.ai</h2>
     <div class="log-entry">
+      <h3>v4.1</h3>
+      <div class="log-date">1 oktober 2026</div>
+      <ul>
+        <li>Bewerkbare preview: gebruiker kan document aanpassen vóór PDF-download (✏️ knop)</li>
+        <li>Anonieme structuurtracking: bij download wordt bijgehouden welke secties gewijzigd zijn (geen inhoud, alleen sectienamen)</li>
+        <li>Feedback en suggesties nu via Formspree (was localStorage)</li>
+        <li>GoatCounter bezoekersstatistieken toegevoegd</li>
+        <li>Privacy Policy toegevoegd in 5 talen (modal via footer-link)</li>
+        <li>"Laatst bijgewerkt" datum in footer, in 5 talen</li>
+        <li>Deployed naar Vercel via GitHub (Kaspa-POW-L1/documentgenerator.ai)</li>
+        <li>Custom domein documentgenerator.ai gekoppeld via GoDaddy DNS</li>
+      </ul>
+    </div>
+    <div class="log-entry">
       <h3>v4.0</h3>
       <div class="log-date">1 oktober 2026</div>
       <ul>
@@ -1331,7 +1345,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">4. Cookies & local storage</h3>
 <p>We use browser local storage only to remember your language preference. We do not use tracking cookies or third-party analytics.</p>
 <h3 style="margin-top:16px;">5. Third-party services</h3>
-<p>We use <strong>Formspree</strong> for the feedback form and <strong>Google Fonts</strong> for typography. These services may log standard web request data (IP address, browser type). See their respective privacy policies.</p>
+<p>We use <strong>Formspree</strong> for the feedback form, <strong>GoatCounter</strong> for privacy-friendly visitor statistics (no cookies, no personal data), and <strong>Google Fonts</strong> for typography. These services may log standard web request data (IP address, browser type). See their respective privacy policies.</p>
 <h3 style="margin-top:16px;">6. Contact</h3>
 <p>Questions about this policy? Use the 💬 button or email us.</p>`,
 
@@ -1349,7 +1363,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">4. Cookies & lokale opslag</h3>
 <p>We gebruiken lokale browseropslag alleen om je taalvoorkeur te onthouden. We gebruiken geen tracking cookies of analytics van derden.</p>
 <h3 style="margin-top:16px;">5. Diensten van derden</h3>
-<p>We gebruiken <strong>Formspree</strong> voor het feedbackformulier en <strong>Google Fonts</strong> voor typografie. Deze diensten kunnen standaard webverzoekgegevens loggen (IP-adres, browsertype). Zie hun respectievelijke privacybeleid.</p>
+<p>We gebruiken <strong>Formspree</strong> voor het feedbackformulier, <strong>GoatCounter</strong> voor privacyvriendelijke bezoekersstatistieken (geen cookies, geen persoonlijke gegevens), en <strong>Google Fonts</strong> voor typografie. Deze diensten kunnen standaard webverzoekgegevens loggen (IP-adres, browsertype). Zie hun respectievelijke privacybeleid.</p>
 <h3 style="margin-top:16px;">6. Contact</h3>
 <p>Vragen over dit beleid? Gebruik de 💬-knop of mail ons.</p>`,
 
@@ -1365,7 +1379,9 @@ const PRIVACY = {
 <p>Si usas el formulario (💬), tu mensaje se envía a través de Formspree. No recopilamos tu correo electrónico a menos que lo incluyas.</p>
 <h3 style="margin-top:16px;">4. Cookies</h3>
 <p>Usamos almacenamiento local solo para tu preferencia de idioma. No usamos cookies de rastreo.</p>
-<h3 style="margin-top:16px;">5. Contacto</h3>
+<h3 style="margin-top:16px;">5. Servicios de terceros</h3>
+<p>Usamos <strong>Formspree</strong> para comentarios, <strong>GoatCounter</strong> para estadísticas de visitantes (sin cookies, sin datos personales), y <strong>Google Fonts</strong> para tipografía.</p>
+<h3 style="margin-top:16px;">6. Contacto</h3>
 <p>¿Preguntas? Usa el botón 💬.</p>`,
 
   fr: `<h2>Politique de Confidentialité</h2>
@@ -1380,7 +1396,9 @@ const PRIVACY = {
 <p>Le formulaire (💬) envoie votre message via Formspree. Nous ne collectons pas votre e-mail sauf si vous l'incluez.</p>
 <h3 style="margin-top:16px;">4. Cookies</h3>
 <p>Stockage local pour la langue uniquement. Pas de cookies de suivi.</p>
-<h3 style="margin-top:16px;">5. Contact</h3>
+<h3 style="margin-top:16px;">5. Services tiers</h3>
+<p>Nous utilisons <strong>Formspree</strong> pour les commentaires, <strong>GoatCounter</strong> pour les statistiques de visiteurs (sans cookies, sans données personnelles), et <strong>Google Fonts</strong> pour la typographie.</p>
+<h3 style="margin-top:16px;">6. Contact</h3>
 <p>Questions ? Utilisez le bouton 💬.</p>`,
 
   de: `<h2>Datenschutzerklärung</h2>
@@ -1395,7 +1413,9 @@ const PRIVACY = {
 <p>Das Formular (💬) sendet Ihre Nachricht über Formspree. Wir erfassen Ihre E-Mail nur, wenn Sie sie angeben.</p>
 <h3 style="margin-top:16px;">4. Cookies</h3>
 <p>Lokaler Speicher nur für Spracheinstellung. Keine Tracking-Cookies.</p>
-<h3 style="margin-top:16px;">5. Kontakt</h3>
+<h3 style="margin-top:16px;">5. Drittanbieter</h3>
+<p>Wir verwenden <strong>Formspree</strong> für Feedback, <strong>GoatCounter</strong> für datenschutzfreundliche Besucherstatistiken (keine Cookies, keine persönlichen Daten), und <strong>Google Fonts</strong> für Typografie.</p>
+<h3 style="margin-top:16px;">6. Kontakt</h3>
 <p>Fragen? Nutzen Sie den 💬-Button.</p>`
 };
 
@@ -2452,5 +2472,6 @@ if (location.search.includes('admin')) {
   buildScopeGrid();
 })();
 </script>
+<script data-goatcounter="https://documentgenerator.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
