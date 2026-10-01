@@ -366,8 +366,8 @@ body {
 
 /* Preview */
 .preview-box {
-  background: #fff;
-  color: #1a1a1a;
+  background: var(--card);
+  color: var(--text);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 40px 32px;
@@ -390,7 +390,7 @@ body {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: #555;
+  color: var(--text-mid);
   margin-bottom: 4px;
 }
 .preview-box .sig-grid {
@@ -400,11 +400,11 @@ body {
   margin-top: 36px;
 }
 .preview-box .sig-line {
-  border-top: 1px solid #333;
+  border-top: 1px solid var(--border);
   padding-top: 6px;
   margin-top: 48px;
   font-size: 12px;
-  color: #555;
+  color: var(--text-mid);
 }
 .preview-box.editable .sec,
 .preview-box.editable h2,
@@ -696,12 +696,15 @@ body {
 
 <header class="header">
   <div class="brand">document<span>generator</span>.ai</div>
-  <div class="lang-toggle">
-    <button class="lang-btn active" onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
-    <button class="lang-btn" onclick="setLang('es')" id="btn-es">🇪🇸 ES</button>
-    <button class="lang-btn" onclick="setLang('fr')" id="btn-fr">🇫🇷 FR</button>
-    <button class="lang-btn" onclick="setLang('de')" id="btn-de">🇩🇪 DE</button>
-    <button class="lang-btn" onclick="setLang('nl')" id="btn-nl">🇳🇱 NL</button>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
+      <button class="lang-btn" onclick="setLang('es')" id="btn-es">🇪🇸 ES</button>
+      <button class="lang-btn" onclick="setLang('fr')" id="btn-fr">🇫🇷 FR</button>
+      <button class="lang-btn" onclick="setLang('de')" id="btn-de">🇩🇪 DE</button>
+      <button class="lang-btn" onclick="setLang('nl')" id="btn-nl">🇳🇱 NL</button>
+    </div>
+    <button onclick="toggleTheme()" id="theme-btn" style="background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:16px;line-height:1;" title="Toggle dark mode">☀️</button>
   </div>
 </header>
 
@@ -1189,6 +1192,10 @@ body {
         <li>GoatCounter bezoekersstatistieken toegevoegd</li>
         <li>Privacy Policy toegevoegd in 5 talen (modal via footer-link)</li>
         <li>"Laatst bijgewerkt" datum in footer, in 5 talen</li>
+        <li>Dark mode toggle (☀️/🌙) met onthouden voorkeur</li>
+        <li>AI-cues verwijderd uit alle teksten (5 talen)</li>
+        <li>Standaardtaal altijd Engels, ongeacht locatie</li>
+        <li>Taalknopjes responsive op mobiel (alle 5 altijd zichtbaar)</li>
         <li>Deployed naar Vercel via GitHub (Kaspa-POW-L1/documentgenerator.ai)</li>
         <li>Custom domein documentgenerator.ai gekoppeld via GoDaddy DNS</li>
       </ul>
@@ -2320,6 +2327,28 @@ async function downloadRentalPDF() {
   try { const dl=await window.claude?.use?.('downloads'); if(dl){await dl.save({filename:fn,data:blob});return;} } catch(e){}
   const u=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
+
+// ====== Theme toggle ======
+function toggleTheme() {
+  const root = document.documentElement;
+  const current = root.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  root.setAttribute('data-theme', next);
+  document.getElementById('theme-btn').textContent = next === 'dark' ? '🌙' : '☀️';
+  try { localStorage.setItem('dg_theme', next); } catch(e) {}
+}
+
+// Init theme
+(function() {
+  try {
+    const saved = localStorage.getItem('dg_theme');
+    if (saved) {
+      document.documentElement.setAttribute('data-theme', saved);
+      const btn = document.getElementById('theme-btn');
+      if (btn) btn.textContent = saved === 'dark' ? '🌙' : '☀️';
+    }
+  } catch(e) {}
+})();
 
 // ====== Edit mode & tracking ======
 const originalContent = {};
