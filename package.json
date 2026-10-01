@@ -1,0 +1,8 @@
+{
+  "name": "documentgenerator.ai",
+  "version": "3.0.0",
+  "description": "AI-powered document generator — POA, Rental Agreement, and more",
+  "private": true,
+  "license": "UNLICENSED",
+  "author": "Peter Aarsen"
+}
