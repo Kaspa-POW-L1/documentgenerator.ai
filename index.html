@@ -688,6 +688,7 @@ body {
 <header class="header">
   <div class="brand">document<span>generator</span>.ai</div>
   <div class="lang-toggle">
+    <span style="font-size:16px;margin-right:4px;cursor:default;" title="Choose your language">🌐</span>
     <button class="lang-btn active" onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
     <button class="lang-btn" onclick="setLang('es')" id="btn-es">🇪🇸 ES</button>
     <button class="lang-btn" onclick="setLang('fr')" id="btn-fr">🇫🇷 FR</button>
@@ -705,7 +706,7 @@ body {
     <div class="step-card">
       <div class="step-icon">📄</div>
       <h1 class="step-title" data-i18n="chooser-title">What document do you need?</h1>
-      <p class="step-explain" data-i18n="chooser-explain">Pick a document type below. We'll guide you through it step by step.</p>
+      <p class="step-explain" data-i18n="chooser-explain">Pick a document type to get started.</p>
 
       <div class="doc-grid">
         <div class="doc-card" onclick="selectDocType('poa')">
@@ -1287,7 +1288,7 @@ body {
 <div class="modal-overlay" id="contact-modal">
   <div class="modal contact-modal">
     <button class="modal-close" onclick="toggleContact()">&times;</button>
-    <h2 data-i18n="contact-title">How can we help?</h2>
+    <h2 data-i18n="contact-title">Get in touch</h2>
     <div id="contact-options" class="cm-options">
       <div class="cm-option" onclick="showSuggestForm()">
         <div class="cm-icon">💡</div>
@@ -1333,9 +1334,9 @@ body {
 const PRIVACY = {
   en: `<h2>Privacy Policy</h2>
 <p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Effective: October 1, 2026</p>
-<p><strong>documentgenerator.ai</strong> is a free document generation tool. Your privacy matters to us. This policy explains what data we collect and how we use it.</p>
+<p><strong>documentgenerator.ai</strong> is a free document generation tool. This policy explains what data we collect and how we use it.</p>
 <h3 style="margin-top:16px;">1. Documents you create</h3>
-<p>All documents are generated <strong>entirely in your browser</strong>. No personal data — names, addresses, ID numbers, or document content — is sent to our servers or stored anywhere. We never see what you type.</p>
+<p>All documents are generated <strong>entirely in your browser</strong>. No personal data — names, addresses, ID numbers, or document content — is sent to our servers or stored anywhere. Nothing you enter leaves your browser.</p>
 <h3 style="margin-top:16px;">2. Anonymous usage data</h3>
 <p>When you download a document, we may collect anonymous, non-personal data to improve our templates:</p>
 <ul style="padding-left:18px;font-size:13px;"><li>Document type (e.g. Power of Attorney)</li><li>Language selected</li><li>Your timezone / region (not your IP address or exact location)</li><li>Which sections of the document you customized (section names only, never the content)</li></ul>
@@ -1351,9 +1352,9 @@ const PRIVACY = {
 
   nl: `<h2>Privacybeleid</h2>
 <p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Ingangsdatum: 1 oktober 2026</p>
-<p><strong>documentgenerator.ai</strong> is een gratis tool voor het genereren van documenten. Je privacy is belangrijk voor ons. Dit beleid legt uit welke gegevens we verzamelen en hoe we die gebruiken.</p>
+<p><strong>documentgenerator.ai</strong> is een gratis tool voor het genereren van documenten. Dit beleid legt uit welke gegevens we verzamelen en hoe we die gebruiken.</p>
 <h3 style="margin-top:16px;">1. Documenten die je maakt</h3>
-<p>Alle documenten worden <strong>volledig in je browser</strong> gegenereerd. Geen persoonlijke gegevens — namen, adressen, ID-nummers of documentinhoud — worden naar onze servers gestuurd of ergens opgeslagen. Wij zien nooit wat je typt.</p>
+<p>Alle documenten worden <strong>volledig in je browser</strong> gegenereerd. Geen persoonlijke gegevens — namen, adressen, ID-nummers of documentinhoud — worden naar onze servers gestuurd of ergens opgeslagen. Niets wat je invult verlaat je browser.</p>
 <h3 style="margin-top:16px;">2. Anonieme gebruiksgegevens</h3>
 <p>Bij het downloaden van een document verzamelen we mogelijk anonieme, niet-persoonlijke gegevens om onze templates te verbeteren:</p>
 <ul style="padding-left:18px;font-size:13px;"><li>Documenttype (bijv. Volmacht)</li><li>Geselecteerde taal</li><li>Je tijdzone / regio (niet je IP-adres of exacte locatie)</li><li>Welke secties van het document je hebt aangepast (alleen sectienamen, nooit de inhoud)</li></ul>
@@ -1369,9 +1370,9 @@ const PRIVACY = {
 
   es: `<h2>Política de Privacidad</h2>
 <p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Vigente desde: 1 de octubre de 2026</p>
-<p><strong>documentgenerator.ai</strong> es una herramienta gratuita para generar documentos. Tu privacidad es importante. Esta política explica qué datos recopilamos y cómo los usamos.</p>
+<p><strong>documentgenerator.ai</strong> es una herramienta gratuita para generar documentos. Esta política explica qué datos recopilamos y cómo los usamos.</p>
 <h3 style="margin-top:16px;">1. Documentos que creas</h3>
-<p>Todos los documentos se generan <strong>completamente en tu navegador</strong>. No se envían datos personales — nombres, direcciones, números de identificación o contenido — a nuestros servidores. Nunca vemos lo que escribes.</p>
+<p>Todos los documentos se generan <strong>completamente en tu navegador</strong>. No se envían datos personales — nombres, direcciones, números de identificación o contenido — a nuestros servidores. Nada de lo que ingresas sale de tu navegador.</p>
 <h3 style="margin-top:16px;">2. Datos de uso anónimos</h3>
 <p>Al descargar un documento, podemos recopilar datos anónimos para mejorar nuestras plantillas:</p>
 <ul style="padding-left:18px;font-size:13px;"><li>Tipo de documento</li><li>Idioma seleccionado</li><li>Tu zona horaria / región</li><li>Qué secciones personalizaste (solo nombres, nunca contenido)</li></ul>
@@ -1386,9 +1387,9 @@ const PRIVACY = {
 
   fr: `<h2>Politique de Confidentialité</h2>
 <p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">En vigueur : 1er octobre 2026</p>
-<p><strong>documentgenerator.ai</strong> est un outil gratuit de génération de documents. Votre vie privée compte. Cette politique explique les données que nous collectons.</p>
+<p><strong>documentgenerator.ai</strong> est un outil gratuit de génération de documents. Cette politique explique les données que nous collectons et comment nous les utilisons.</p>
 <h3 style="margin-top:16px;">1. Documents créés</h3>
-<p>Tous les documents sont générés <strong>entièrement dans votre navigateur</strong>. Aucune donnée personnelle n'est envoyée à nos serveurs. Nous ne voyons jamais ce que vous tapez.</p>
+<p>Tous les documents sont générés <strong>entièrement dans votre navigateur</strong>. Aucune donnée personnelle n'est envoyée à nos serveurs. Rien de ce que vous saisissez ne quitte votre navigateur.</p>
 <h3 style="margin-top:16px;">2. Données anonymes</h3>
 <p>Lors du téléchargement, nous pouvons collecter des données anonymes :</p>
 <ul style="padding-left:18px;font-size:13px;"><li>Type de document</li><li>Langue sélectionnée</li><li>Fuseau horaire / région</li><li>Sections personnalisées (noms uniquement)</li></ul>
@@ -1403,9 +1404,9 @@ const PRIVACY = {
 
   de: `<h2>Datenschutzerklärung</h2>
 <p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Gültig ab: 1. Oktober 2026</p>
-<p><strong>documentgenerator.ai</strong> ist ein kostenloses Tool zur Dokumentenerstellung. Ihre Privatsphäre ist uns wichtig. Diese Erklärung beschreibt, welche Daten wir erheben.</p>
+<p><strong>documentgenerator.ai</strong> ist ein kostenloses Tool zur Dokumentenerstellung. Diese Erklärung beschreibt, welche Daten wir erheben und wie wir sie verwenden.</p>
 <h3 style="margin-top:16px;">1. Erstellte Dokumente</h3>
-<p>Alle Dokumente werden <strong>vollständig in Ihrem Browser</strong> erstellt. Keine persönlichen Daten werden an unsere Server gesendet. Wir sehen nie, was Sie eingeben.</p>
+<p>Alle Dokumente werden <strong>vollständig in Ihrem Browser</strong> erstellt. Keine persönlichen Daten werden an unsere Server gesendet. Nichts, was Sie eingeben, verlässt Ihren Browser.</p>
 <h3 style="margin-top:16px;">2. Anonyme Nutzungsdaten</h3>
 <p>Beim Download können wir anonyme Daten erfassen:</p>
 <ul style="padding-left:18px;font-size:13px;"><li>Dokumenttyp</li><li>Gewählte Sprache</li><li>Zeitzone / Region</li><li>Angepasste Abschnitte (nur Namen)</li></ul>
@@ -1423,7 +1424,7 @@ const PRIVACY = {
 const T = {
   // Document chooser
   'chooser-title':   { en:'What document do you need?', nl:'Welk document heb je nodig?', es:'¿Qué documento necesitas?', fr:'De quel document avez-vous besoin ?', de:'Welches Dokument brauchen Sie?' },
-  'chooser-explain': { en:'Pick a document type below. We\'ll guide you through it step by step.', nl:'Kies hieronder een documenttype. We begeleiden je stap voor stap.', es:'Elige un tipo de documento. Te guiaremos paso a paso.', fr:'Choisissez un type de document ci-dessous. Nous vous guiderons étape par étape.', de:'Wählen Sie unten einen Dokumenttyp. Wir führen Sie Schritt für Schritt.' },
+  'chooser-explain': { en:'Pick a document type to get started.', nl:'Kies een documenttype om te beginnen.', es:'Elige un tipo de documento para empezar.', fr:'Choisissez un type de document pour commencer.', de:'Wählen Sie einen Dokumenttyp, um zu beginnen.' },
   'dt-poa-title':    { en:'Power of Attorney', nl:'Volmacht', es:'Poder notarial', fr:'Procuration', de:'Vollmacht' },
   'dt-poa-desc':     { en:'Let someone act on your behalf', nl:'Laat iemand namens jou handelen', es:'Permite que alguien actúe en tu nombre', fr:'Permettre à quelqu\'un d\'agir en votre nom', de:'Jemanden in Ihrem Namen handeln lassen' },
   'dt-rental-title': { en:'Rental Agreement', nl:'Huurcontract', es:'Contrato de alquiler', fr:'Contrat de location', de:'Mietvertrag' },
@@ -1439,7 +1440,7 @@ const T = {
   'dt-soon':         { en:'Coming soon', nl:'Binnenkort', es:'Próximamente', fr:'Bientôt', de:'Demnächst' },
 
   // Contact/suggest
-  'contact-title':        { en:'How can we help?', nl:'Hoe kunnen we helpen?', es:'¿Cómo podemos ayudar?', fr:'Comment pouvons-nous vous aider ?', de:'Wie können wir helfen?' },
+  'contact-title':        { en:'Get in touch', nl:'Neem contact op', es:'Contacto', fr:'Nous contacter', de:'Kontakt' },
   'contact-suggest-title':{ en:'Suggest a document', nl:'Stel een document voor', es:'Sugerir un documento', fr:'Suggérer un document', de:'Dokument vorschlagen' },
   'contact-suggest-desc': { en:'Tell us what other documents you\'d like us to add', nl:'Vertel ons welke documenten je nog wilt', es:'Dinos qué otros documentos te gustaría que agreguemos', fr:'Dites-nous quels autres documents vous aimeriez voir', de:'Sagen Sie uns, welche Dokumente Sie sich wünschen' },
   'contact-feedback-title':{ en:'Give feedback', nl:'Geef feedback', es:'Dar opinión', fr:'Donner un avis', de:'Feedback geben' },
@@ -2009,14 +2010,12 @@ function applyLocale(locale) {
     document.getElementById('doc-place').value = locale.city;
   }
 
-  // Set default language based on locale (only if no saved preference)
+  // Default language is always English; user can switch manually.
+  // Only override if user previously chose a language.
   try {
-    if (!localStorage.getItem('dg_lang')) {
-      lang = locale.defLang;
-    }
-  } catch(e) {
-    lang = locale.defLang;
-  }
+    const saved = localStorage.getItem('dg_lang');
+    if (saved) lang = saved;
+  } catch(e) {}
 }
 
 // ====== Document type selection ======
