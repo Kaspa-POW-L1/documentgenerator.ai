@@ -397,6 +397,49 @@ body {
   font-size: 12px;
   color: #555;
 }
+.preview-box.editable .sec,
+.preview-box.editable h2,
+.preview-box.editable p,
+.preview-box.editable .sig-grid {
+  outline: 1px dashed transparent;
+  border-radius: 4px;
+  transition: outline-color 0.2s, background 0.2s;
+}
+.preview-box.editable .sec:hover,
+.preview-box.editable h2:hover,
+.preview-box.editable p[contenteditable]:hover {
+  outline-color: var(--pri);
+  background: var(--pri-light);
+}
+.preview-box.editable .sec:focus-within,
+.preview-box.editable h2:focus,
+.preview-box.editable p[contenteditable]:focus {
+  outline-color: var(--pri);
+  background: #fff;
+  box-shadow: 0 0 0 2px var(--pri-light);
+}
+.btn-edit-doc {
+  background: var(--warn-light);
+  color: #92400E;
+  border: 1px solid var(--warn);
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-edit-doc:hover { background: #FDE68A; }
+.btn-edit-doc.active { background: var(--pri-light); color: var(--pri-dark); border-color: var(--pri); }
+.edit-hint {
+  font-size: 12px;
+  color: var(--text-mid);
+  background: var(--warn-light);
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  display: none;
+}
 
 /* Intro */
 .intro-points {
@@ -892,6 +935,10 @@ body {
       </div>
       <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
     </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <button class="btn-edit-doc" onclick="toggleEditMode('preview')" id="edit-btn-preview" data-i18n="btn-customize">✏️ Customize document</button>
+    </div>
+    <div class="edit-hint" id="edit-hint-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
     <div class="preview-box" id="preview"></div>
     <div style="text-align:center;margin-top:16px;">
       <button class="btn btn-download" onclick="downloadPDF()" data-i18n="btn-download">⬇ Download PDF</button>
@@ -1105,6 +1152,10 @@ body {
       </div>
       <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
     </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <button class="btn-edit-doc" onclick="toggleEditMode('rental-preview')" id="edit-btn-rental-preview" data-i18n="btn-customize">✏️ Customize document</button>
+    </div>
+    <div class="edit-hint" id="edit-hint-rental-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
     <div class="preview-box" id="rental-preview"></div>
     <div class="disclaimer-box" data-i18n="rental-disclaimer">⚠ This document is generated as a starting point. Rental laws vary by country and region. We strongly recommend having this agreement reviewed by a local legal professional before signing.</div>
     <div style="text-align:center;margin-top:16px;">
@@ -1350,6 +1401,9 @@ const T = {
   's4-explain': { en:'Choose how long this power of attorney stays valid.', nl:'Kies hoe lang de volmacht geldig blijft.', es:'Elige cuánto tiempo será válido este poder.', fr:'Choisissez la durée de validité de cette procuration.', de:'Wählen Sie, wie lange die Vollmacht gültig bleibt.' },
   's5-title':   { en:'Your document', nl:'Je document', es:'Tu documento', fr:'Votre document', de:'Ihr Dokument' },
   's5-explain': { en:'Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.', nl:'Controleer alles hieronder. Klopt er iets niet? Klik op Aanpassen. Ziet het er goed uit? Download de PDF.', es:'Revisa todo a continuación. Si algo está mal, haz clic en Editar. Si todo está bien, descarga el PDF.', fr:'Vérifiez tout ci-dessous. Si quelque chose ne va pas, cliquez sur Modifier. Si tout est correct, téléchargez le PDF.', de:'Prüfen Sie alles unten. Stimmt etwas nicht, klicken Sie auf Bearbeiten. Sieht alles gut aus, laden Sie das PDF herunter.' },
+  'btn-customize': { en:'✏️ Customize document', nl:'✏️ Document aanpassen', es:'✏️ Personalizar documento', fr:'✏️ Personnaliser le document', de:'✏️ Dokument anpassen' },
+  'btn-customize-off': { en:'✅ Done editing', nl:'✅ Klaar met bewerken', es:'✅ Listo', fr:'✅ Terminé', de:'✅ Fertig' },
+  'edit-hint': { en:'Click on any section to edit the text. Your changes will be included in the PDF.', nl:'Klik op een sectie om de tekst aan te passen. Je wijzigingen worden opgenomen in de PDF.', es:'Haz clic en cualquier sección para editar el texto. Los cambios se incluirán en el PDF.', fr:'Cliquez sur une section pour modifier le texte. Vos modifications seront incluses dans le PDF.', de:'Klicken Sie auf einen Abschnitt, um den Text zu bearbeiten. Ihre Änderungen werden in das PDF übernommen.' },
 
   'lbl-name':    { en:'Full name', nl:'Volledige naam', es:'Nombre completo', fr:'Nom complet', de:'Vollständiger Name' },
   'hint-name':   { en:'As it appears on your ID or passport', nl:'Zoals het op je ID of paspoort staat', es:'Tal como aparece en tu documento de identidad o pasaporte', fr:'Tel qu\'il apparaît sur votre pièce d\'identité ou passeport', de:'Wie auf Ihrem Ausweis oder Reisepass angegeben' },
@@ -1639,6 +1693,7 @@ function renderPreview() {
 
 // ====== PDF ======
 async function downloadPDF() {
+  trackEdits('preview', 'Power of Attorney');
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
   const d = gatherData();
@@ -2054,6 +2109,7 @@ function renderRentalPreview() {
 
 // ====== Rental PDF ======
 async function downloadRentalPDF() {
+  trackEdits('rental-preview', 'Rental Agreement');
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'mm', format:'a4' });
   const d = gatherRentalData();
@@ -2135,6 +2191,73 @@ async function downloadRentalPDF() {
   const fn = `Rental_Agreement_${d.tenant.name?d.tenant.name.replace(/\s+/g,'_'):'draft'}.pdf`;
   try { const dl=await window.claude?.use?.('downloads'); if(dl){await dl.save({filename:fn,data:blob});return;} } catch(e){}
   const u=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
+}
+
+// ====== Edit mode & tracking ======
+const originalContent = {};
+
+function toggleEditMode(previewId) {
+  const box = document.getElementById(previewId);
+  const btn = document.getElementById('edit-btn-' + previewId);
+  const hint = document.getElementById('edit-hint-' + previewId);
+  const isEditable = box.classList.toggle('editable');
+
+  if (isEditable) {
+    // Store original content for diff tracking
+    originalContent[previewId] = {};
+    const sections = box.querySelectorAll('.sec, h2, p:not(.sec p):not(.sec-title)');
+    sections.forEach((sec, i) => {
+      const label = sec.querySelector('.sec-title')?.textContent || sec.tagName + '-' + i;
+      originalContent[previewId][label] = sec.innerHTML;
+      sec.contentEditable = 'true';
+    });
+    btn.innerHTML = t('btn-customize-off');
+    btn.classList.add('active');
+    hint.style.display = 'block';
+  } else {
+    const sections = box.querySelectorAll('[contenteditable]');
+    sections.forEach(sec => sec.contentEditable = 'false');
+    btn.innerHTML = t('btn-customize');
+    btn.classList.remove('active');
+    hint.style.display = 'none';
+  }
+}
+
+function trackEdits(previewId, docType) {
+  if (!originalContent[previewId]) return;
+  const box = document.getElementById(previewId);
+  const sections = box.querySelectorAll('.sec, h2');
+  const changes = [];
+
+  sections.forEach((sec, i) => {
+    const label = sec.querySelector('.sec-title')?.textContent || sec.tagName + '-' + i;
+    const orig = originalContent[previewId][label];
+    if (orig && orig !== sec.innerHTML) {
+      const origLen = orig.replace(/<[^>]*>/g,'').length;
+      const newLen = sec.innerHTML.replace(/<[^>]*>/g,'').length;
+      changes.push({
+        section: label,
+        action: newLen === 0 ? 'removed' : (newLen > origLen + 20 ? 'expanded' : (newLen < origLen - 20 ? 'shortened' : 'modified')),
+        delta: newLen - origLen
+      });
+    }
+  });
+
+  if (changes.length > 0) {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown';
+    fetch('https://formspree.io/f/xqpaownl', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: 'documentgenerator.ai — edit tracking',
+        type: 'edit-tracking',
+        docType: docType,
+        language: lang,
+        timezone: tz,
+        changes: JSON.stringify(changes)
+      })
+    }).catch(() => {});
+  }
 }
 
 // ====== Contact / Suggest ======
