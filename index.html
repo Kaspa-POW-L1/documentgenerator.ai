@@ -1262,17 +1262,24 @@ input[type=number] { -moz-appearance: textfield; }
         <div class="field">
           <label data-i18n="lbl-currency">Currency</label>
           <select id="r-currency">
-            <option value="USD">USD ($)</option>
-            <option value="EUR">EUR (€)</option>
-            <option value="GBP">GBP (£)</option>
-            <option value="ANG">ANG (ƒ)</option>
-            <option value="MXN">MXN ($)</option>
-            <option value="COP">COP ($)</option>
-            <option value="BRL">BRL (R$)</option>
-            <option value="CHF">CHF</option>
-            <option value="ARS">ARS ($)</option>
-            <option value="PEN">PEN (S/)</option>
-            <option value="CLP">CLP ($)</option>
+            <option value="USD">USD — US Dollar</option>
+            <option value="EUR">EUR — Euro</option>
+            <option value="CMg">CMg — Caribbean Guilder</option>
+            <option value="GBP">GBP — British Pound</option>
+            <option value="AWG">AWG — Aruban Florin</option>
+            <option value="XCD">XCD — East Caribbean Dollar</option>
+            <option value="DOP">DOP — Dominican Peso</option>
+            <option value="JMD">JMD — Jamaican Dollar</option>
+            <option value="TTD">TTD — Trinidad & Tobago Dollar</option>
+            <option value="BBD">BBD — Barbadian Dollar</option>
+            <option value="GYD">GYD — Guyanese Dollar</option>
+            <option value="SRD">SRD — Surinamese Dollar</option>
+            <option value="HTG">HTG — Haitian Gourde</option>
+            <option value="CHF">CHF — Swiss Franc</option>
+            <option value="CAD">CAD — Canadian Dollar</option>
+            <option value="AUD">AUD — Australian Dollar</option>
+            <option value="MXN">MXN — Mexican Peso</option>
+            <option value="other">Other</option>
           </select>
         </div>
       </div>
@@ -1497,7 +1504,24 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field-row">
         <div class="field"><label data-i18n="lbl-sale-price">Sale price</label><input type="number" id="b-price" min="0" step="0.01"></div>
         <div class="field"><label data-i18n="lbl-currency">Currency</label>
-          <select id="b-currency"><option>USD</option><option>EUR</option><option>ANG</option><option>GBP</option><option>AWG</option><option>GYD</option><option>SRD</option><option>TTD</option><option>BBD</option><option>CHF</option><option>CAD</option></select>
+          <select id="b-currency"><option value="USD">USD — US Dollar</option>
+            <option value="EUR">EUR — Euro</option>
+            <option value="CMg">CMg — Caribbean Guilder</option>
+            <option value="GBP">GBP — British Pound</option>
+            <option value="AWG">AWG — Aruban Florin</option>
+            <option value="XCD">XCD — East Caribbean Dollar</option>
+            <option value="DOP">DOP — Dominican Peso</option>
+            <option value="JMD">JMD — Jamaican Dollar</option>
+            <option value="TTD">TTD — Trinidad &amp; Tobago Dollar</option>
+            <option value="BBD">BBD — Barbadian Dollar</option>
+            <option value="GYD">GYD — Guyanese Dollar</option>
+            <option value="SRD">SRD — Surinamese Dollar</option>
+            <option value="HTG">HTG — Haitian Gourde</option>
+            <option value="CHF">CHF — Swiss Franc</option>
+            <option value="CAD">CAD — Canadian Dollar</option>
+            <option value="AUD">AUD — Australian Dollar</option>
+            <option value="MXN">MXN — Mexican Peso</option>
+            <option value="other">Other</option></select>
         </div>
       </div>
       <div class="field"><label data-i18n="lbl-payment-method">Payment method</label>
@@ -1618,7 +1642,24 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field-row">
         <div class="field"><label data-i18n="lbl-fee">Fee amount</label><input type="number" id="e-fee" min="0" step="0.01"></div>
         <div class="field"><label data-i18n="lbl-currency">Currency</label>
-          <select id="e-currency"><option>USD</option><option>EUR</option><option>ANG</option><option>GBP</option><option>AWG</option><option>GYD</option><option>SRD</option><option>TTD</option><option>BBD</option><option>CHF</option><option>CAD</option></select>
+          <select id="e-currency"><option value="USD">USD — US Dollar</option>
+            <option value="EUR">EUR — Euro</option>
+            <option value="CMg">CMg — Caribbean Guilder</option>
+            <option value="GBP">GBP — British Pound</option>
+            <option value="AWG">AWG — Aruban Florin</option>
+            <option value="XCD">XCD — East Caribbean Dollar</option>
+            <option value="DOP">DOP — Dominican Peso</option>
+            <option value="JMD">JMD — Jamaican Dollar</option>
+            <option value="TTD">TTD — Trinidad &amp; Tobago Dollar</option>
+            <option value="BBD">BBD — Barbadian Dollar</option>
+            <option value="GYD">GYD — Guyanese Dollar</option>
+            <option value="SRD">SRD — Surinamese Dollar</option>
+            <option value="HTG">HTG — Haitian Gourde</option>
+            <option value="CHF">CHF — Swiss Franc</option>
+            <option value="CAD">CAD — Canadian Dollar</option>
+            <option value="AUD">AUD — Australian Dollar</option>
+            <option value="MXN">MXN — Mexican Peso</option>
+            <option value="other">Other</option></select>
         </div>
       </div>
       <div class="field"><label data-i18n="lbl-billing">Billing frequency</label>
@@ -1862,7 +1903,24 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field-row">
         <div class="field"><label data-i18n="lbl-salary">Gross salary</label><input type="number" id="em-salary" min="0" step="0.01"></div>
         <div class="field"><label data-i18n="lbl-currency">Currency</label>
-          <select id="em-currency"><option>USD</option><option>EUR</option><option>ANG</option><option>GBP</option><option>AWG</option><option>GYD</option><option>SRD</option><option>TTD</option><option>BBD</option><option>CHF</option><option>CAD</option></select>
+          <select id="em-currency"><option value="USD">USD — US Dollar</option>
+            <option value="EUR">EUR — Euro</option>
+            <option value="CMg">CMg — Caribbean Guilder</option>
+            <option value="GBP">GBP — British Pound</option>
+            <option value="AWG">AWG — Aruban Florin</option>
+            <option value="XCD">XCD — East Caribbean Dollar</option>
+            <option value="DOP">DOP — Dominican Peso</option>
+            <option value="JMD">JMD — Jamaican Dollar</option>
+            <option value="TTD">TTD — Trinidad &amp; Tobago Dollar</option>
+            <option value="BBD">BBD — Barbadian Dollar</option>
+            <option value="GYD">GYD — Guyanese Dollar</option>
+            <option value="SRD">SRD — Surinamese Dollar</option>
+            <option value="HTG">HTG — Haitian Gourde</option>
+            <option value="CHF">CHF — Swiss Franc</option>
+            <option value="CAD">CAD — Canadian Dollar</option>
+            <option value="AUD">AUD — Australian Dollar</option>
+            <option value="MXN">MXN — Mexican Peso</option>
+            <option value="other">Other</option></select>
         </div>
       </div>
       <div class="field"><label data-i18n="lbl-payfrequency">Payment frequency</label>
@@ -1968,7 +2026,24 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field-row">
         <div class="field"><label data-i18n="lbl-loan-amount">Loan amount</label><input type="number" id="l-amount" min="0" step="0.01"></div>
         <div class="field"><label data-i18n="lbl-currency">Currency</label>
-          <select id="l-currency"><option>USD</option><option>EUR</option><option>ANG</option><option>GBP</option><option>AWG</option><option>GYD</option><option>SRD</option><option>TTD</option><option>BBD</option><option>CHF</option><option>CAD</option></select>
+          <select id="l-currency"><option value="USD">USD — US Dollar</option>
+            <option value="EUR">EUR — Euro</option>
+            <option value="CMg">CMg — Caribbean Guilder</option>
+            <option value="GBP">GBP — British Pound</option>
+            <option value="AWG">AWG — Aruban Florin</option>
+            <option value="XCD">XCD — East Caribbean Dollar</option>
+            <option value="DOP">DOP — Dominican Peso</option>
+            <option value="JMD">JMD — Jamaican Dollar</option>
+            <option value="TTD">TTD — Trinidad &amp; Tobago Dollar</option>
+            <option value="BBD">BBD — Barbadian Dollar</option>
+            <option value="GYD">GYD — Guyanese Dollar</option>
+            <option value="SRD">SRD — Surinamese Dollar</option>
+            <option value="HTG">HTG — Haitian Gourde</option>
+            <option value="CHF">CHF — Swiss Franc</option>
+            <option value="CAD">CAD — Canadian Dollar</option>
+            <option value="AUD">AUD — Australian Dollar</option>
+            <option value="MXN">MXN — Mexican Peso</option>
+            <option value="other">Other</option></select>
         </div>
       </div>
       <div class="field-row">
@@ -5280,10 +5355,29 @@ if (location.search.includes('admin')) {
   const angCountries = ['sint maarten','curaçao','curacao'];
   const gbpCountries = ['united kingdom'];
   const c = (locale.country||'').toLowerCase();
-  if (eurCountries.some(e=>c.includes(e))) document.getElementById('r-currency').value = 'EUR';
-  else if (angCountries.some(e=>c.includes(e))) document.getElementById('r-currency').value = 'ANG';
-  else if (gbpCountries.some(e=>c.includes(e))) document.getElementById('r-currency').value = 'GBP';
-  else document.getElementById('r-currency').value = 'USD';
+  const awgCountries = ['aruba'];
+  const xcdCountries = ['dominica','grenada','saint lucia','saint kitts','saint vincent','antigua'];
+  let defCur = 'USD';
+  if (eurCountries.some(e=>c.includes(e))) defCur = 'EUR';
+  else if (angCountries.some(e=>c.includes(e))) defCur = 'CMg';
+  else if (awgCountries.some(e=>c.includes(e))) defCur = 'AWG';
+  else if (gbpCountries.some(e=>c.includes(e))) defCur = 'GBP';
+  else if (xcdCountries.some(e=>c.includes(e))) defCur = 'XCD';
+  else if (c.includes('guyana')) defCur = 'GYD';
+  else if (c.includes('suriname')) defCur = 'SRD';
+  else if (c.includes('trinidad')) defCur = 'TTD';
+  else if (c.includes('barbados')) defCur = 'BBD';
+  else if (c.includes('jamaica')) defCur = 'JMD';
+  else if (c.includes('dominicana') || c.includes('dominican')) defCur = 'DOP';
+  else if (c.includes('haiti') || c.includes('haïti')) defCur = 'HTG';
+  else if (c.includes('schweiz') || c.includes('suisse')) defCur = 'CHF';
+  else if (c.includes('canada')) defCur = 'CAD';
+  else if (c.includes('australia')) defCur = 'AUD';
+  else if (c.includes('méxico') || c.includes('mexico')) defCur = 'MXN';
+  ['r-currency','b-currency','e-currency','em-currency','l-currency'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = defCur;
+  });
 
   // Restore saved language preference (overrides locale)
   try {
