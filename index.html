@@ -876,11 +876,10 @@ body {
           <p data-i18n="dt-nda-desc">Protect confidential information</p>
           <span class="dc-badge" data-i18n="dt-soon">Coming soon</span>
         </div>
-        <div class="doc-card disabled">
+        <div class="doc-card" onclick="selectDocType('will')">
           <div class="dc-icon">📜</div>
           <h3 data-i18n="dt-will-title">Last Will & Testament</h3>
           <p data-i18n="dt-will-desc">Set out your final wishes</p>
-          <span class="dc-badge" data-i18n="dt-soon">Coming soon</span>
         </div>
       </div>
 
@@ -1635,6 +1634,113 @@ body {
     </div>
   </div>
 
+  <!-- WILL STEP 1: Testator -->
+  <div class="step" id="step-w1">
+    <div class="step-card">
+      <div class="step-icon">🧓</div>
+      <h2 class="step-title" data-i18n="ws1-title">Who is the testator?</h2>
+      <p class="step-explain" data-i18n="ws1-explain">The person making this will.</p>
+      <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-name">As it appears on your ID or passport</div><input type="text" id="wt-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-wt-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="wt-id" data-i18n-placeholder="ph-id"></div>
+      <div class="field"><label data-i18n="lbl-dob">Date of birth</label><input type="date" id="wt-dob"></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="wt-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-wt-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="wt-country"></div>
+      <div class="field"><label data-i18n="lbl-marital">Marital status</label>
+        <select id="wt-marital">
+          <option value="single" data-i18n="opt-single">Single</option>
+          <option value="married" data-i18n="opt-married">Married</option>
+          <option value="divorced" data-i18n="opt-divorced">Divorced</option>
+          <option value="widowed" data-i18n="opt-widowed">Widowed</option>
+        </select>
+      </div>
+      <div class="nav"><button class="btn btn-back" onclick="goWillStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateWillAndGo('w1','w2')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- WILL STEP 2: Executor -->
+  <div class="step" id="step-w2">
+    <div class="step-card">
+      <div class="step-icon">⚖️</div>
+      <h2 class="step-title" data-i18n="ws2-title">Who is the executor?</h2>
+      <p class="step-explain" data-i18n="ws2-explain">The person who will carry out the instructions in this will.</p>
+      <div class="field"><label data-i18n="lbl-name">Full name</label><input type="text" id="we-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-we-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="we-id" data-i18n-placeholder="ph-id"></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="we-address" data-i18n-placeholder="ph-address"></div>
+      <div class="field"><label data-i18n="lbl-relationship">Relationship to testator</label><input type="text" id="we-rel" placeholder="e.g. Spouse, Son, Attorney"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goWillStep('w1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateWillAndGo('w2','w3')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- WILL STEP 3: Beneficiaries -->
+  <div class="step" id="step-w3">
+    <div class="step-card">
+      <div class="step-icon">👥</div>
+      <h2 class="step-title" data-i18n="ws3-title">Who are the beneficiaries?</h2>
+      <p class="step-explain" data-i18n="ws3-explain">Add one or more people or organizations who will inherit.</p>
+      <div id="will-beneficiaries"></div>
+      <button class="btn-add-attach" onclick="addBeneficiary()" data-i18n="btn-add-beneficiary" style="margin-top:8px;">+ Add beneficiary</button>
+      <div class="nav"><button class="btn btn-back" onclick="goWillStep('w2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goWillStep('w4')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- WILL STEP 4: Signing -->
+  <div class="step" id="step-w4">
+    <div class="step-card">
+      <div class="step-icon">✍️</div>
+      <h2 class="step-title" data-i18n="ws4-title">Signing details</h2>
+      <p class="step-explain" data-i18n="ws4-explain">Where and when is this will being signed?</p>
+      <div class="field"><label data-i18n="lbl-place">Where is this being signed?</label><input type="text" id="w-place"></div>
+      <div class="field"><label data-i18n="lbl-date">Date of the document</label><input type="date" id="w-doc-date"></div>
+      <div class="field"><label data-i18n="lbl-law">Which country's laws apply?</label><input type="text" id="w-law"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goWillStep('w3')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goWillStep('w5')" data-i18n="btn-preview">Check the document</button></div>
+    </div>
+  </div>
+
+  <!-- WILL STEP 5: Preview & Download -->
+  <div class="step" id="step-w5">
+    <div class="step-card" style="padding:20px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+        <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-back" onclick="goWillStep('w1')" data-i18n="btn-edit">Edit</button>
+          <button class="btn btn-download" onclick="downloadWillPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+        </div>
+      </div>
+      <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
+    </div>
+    <div class="detail-toggle" id="will-detail-toggle">
+      <button class="active" onclick="setDocDetail('will','basic')" id="will-basic-btn" data-i18n="toggle-basic">📄 Basic</button>
+      <button onclick="setDocDetail('will','detailed')" id="will-detailed-btn" data-i18n="toggle-detailed">📋 Detailed</button>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <button class="btn-edit-doc" onclick="toggleEditMode('will-preview')" id="edit-btn-will-preview" data-i18n="btn-customize">✏️ Customize document</button>
+    </div>
+    <div class="edit-hint" id="edit-hint-will-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
+    <div class="preview-box" id="will-preview"></div>
+    <div class="disclaimer-box" data-i18n="will-disclaimer">⚠ This is a basic template. Inheritance laws vary significantly by jurisdiction. We strongly recommend having this will reviewed and notarized by a legal professional.</div>
+    <div class="attach-box">
+      <div class="attach-title" data-i18n="lbl-attachments">📎 Attachments</div>
+      <div id="will-attach-list"></div>
+      <button class="btn-add-attach" onclick="addAttachment('will')" data-i18n="btn-add-attach">+ Add attachment</button>
+    </div>
+    <details class="doc-settings">
+      <summary data-i18n="lbl-doc-settings">Document settings</summary>
+      <div class="ds-body">
+        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="will-header" data-i18n-placeholder="ph-header"></div>
+        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="will-footer" data-i18n-placeholder="ph-footer"></div>
+        <div class="field"><label data-i18n="lbl-fontsize">Font size</label><select id="will-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select></div>
+        <div class="field"><label data-i18n="lbl-fontfamily">Font</label><select id="will-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select></div>
+      </div>
+    </details>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-mid);cursor:pointer;">
+        <input type="checkbox" id="will-page-numbers" style="width:16px;height:16px;accent-color:var(--pri);">
+        <span data-i18n="lbl-page-numbers">Number pages</span>
+      </label>
+      <button class="btn btn-download" onclick="downloadWillPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+    </div>
+  </div>
+
 </div>
 
 <!-- Changelog (admin only — ?admin in URL) -->
@@ -1652,6 +1758,8 @@ body {
         <li>Prijs, valuta, betaalwijze (contant/overschrijving/gemengd), staat (as-is of goede staat)</li>
         <li>Basic/Detailed: uitgebreid voegt eigendomsverklaring en geschillenregeling toe</li>
         <li>Jurisdictie-checklist voor Sint Maarten voertuigoverdracht: NAf. 5 zegel, benodigde documenten (ID, rijbewijs, verzekeringspolis, keuringskaart, Carte Grise)</li>
+        <li>Testament (Last Will & Testament) toegevoegd: erflater, executeur, dynamisch begunstigden-systeem (naam, relatie, aandeel), burgerlijke staat, getuigen</li>
+        <li>Testament basic/uitgebreid: + schulden & verplichtingen, voogd minderjarige kinderen, uitvaartwensen</li>
         <li>Engagement Letter (Overeenkomst van opdracht) toegevoegd: dienstverlener, opdrachtgever, scope, vergoeding (vast/uur/maandelijks), betalingstermijn, looptijd</li>
         <li>Engagement Letter basic/uitgebreid: + vertrouwelijkheid, aansprakelijkheidsbeperking, beëindigingsclausule</li>
         <li>Documentinstellingen: aanpasbare koptekst, voettekst, lettergrootte (9-12pt), en lettertype (Helvetica, Times New Roman, Courier)</li>
@@ -1924,6 +2032,40 @@ const T = {
   'dt-poa-desc':     { en:'Let someone act on your behalf', nl:'Laat iemand namens jou handelen', es:'Permite que alguien actúe en tu nombre', fr:'Permettre à quelqu\'un d\'agir en votre nom', de:'Jemanden in Ihrem Namen handeln lassen' },
   'dt-rental-title': { en:'Rental Agreement', nl:'Huurcontract', es:'Contrato de alquiler', fr:'Contrat de location', de:'Mietvertrag' },
   'dt-rental-desc':  { en:'Lease a property or room', nl:'Verhuur een woning of kamer', es:'Alquilar una propiedad o habitación', fr:'Louer un bien ou une chambre', de:'Eine Immobilie oder ein Zimmer vermieten' },
+  'ws1-title': { en:'Who is the testator?', nl:'Wie is de erflater?', es:'¿Quién es el testador?', fr:'Qui est le testateur ?', de:'Wer ist der Erblasser?' },
+  'ws1-explain': { en:'The person making this will.', nl:'De persoon die dit testament maakt.', es:'La persona que hace este testamento.', fr:'La personne qui rédige ce testament.', de:'Die Person, die dieses Testament erstellt.' },
+  'ws2-title': { en:'Who is the executor?', nl:'Wie is de executeur?', es:'¿Quién es el albacea?', fr:'Qui est l\'exécuteur ?', de:'Wer ist der Testamentsvollstrecker?' },
+  'ws2-explain': { en:'The person who will carry out the instructions in this will.', nl:'De persoon die de instructies in dit testament uitvoert.', es:'La persona que ejecutará las instrucciones de este testamento.', fr:'La personne qui exécutera les instructions de ce testament.', de:'Die Person, die die Anweisungen in diesem Testament ausführt.' },
+  'ws3-title': { en:'Who are the beneficiaries?', nl:'Wie zijn de begunstigden?', es:'¿Quiénes son los beneficiarios?', fr:'Qui sont les bénéficiaires ?', de:'Wer sind die Begünstigten?' },
+  'ws3-explain': { en:'Add one or more people or organizations who will inherit.', nl:'Voeg een of meer personen of organisaties toe die erven.', es:'Añada una o más personas u organizaciones que heredarán.', fr:'Ajoutez une ou plusieurs personnes ou organisations qui hériteront.', de:'Fügen Sie eine oder mehrere Personen oder Organisationen hinzu, die erben werden.' },
+  'ws4-title': { en:'Signing details', nl:'Ondertekeningsgegevens', es:'Detalles de la firma', fr:'Détails de la signature', de:'Unterschriftsdetails' },
+  'ws4-explain': { en:'Where and when is this will being signed?', nl:'Waar en wanneer wordt dit testament ondertekend?', es:'¿Dónde y cuándo se firma este testamento?', fr:'Où et quand ce testament est-il signé ?', de:'Wo und wann wird dieses Testament unterschrieben?' },
+  'lbl-dob': { en:'Date of birth', nl:'Geboortedatum', es:'Fecha de nacimiento', fr:'Date de naissance', de:'Geburtsdatum' },
+  'lbl-marital': { en:'Marital status', nl:'Burgerlijke staat', es:'Estado civil', fr:'État civil', de:'Familienstand' },
+  'opt-single': { en:'Single', nl:'Ongehuwd', es:'Soltero/a', fr:'Célibataire', de:'Ledig' },
+  'opt-married': { en:'Married', nl:'Gehuwd', es:'Casado/a', fr:'Marié(e)', de:'Verheiratet' },
+  'opt-divorced': { en:'Divorced', nl:'Gescheiden', es:'Divorciado/a', fr:'Divorcé(e)', de:'Geschieden' },
+  'opt-widowed': { en:'Widowed', nl:'Weduwe/weduwnaar', es:'Viudo/a', fr:'Veuf/veuve', de:'Verwitwet' },
+  'lbl-relationship': { en:'Relationship to testator', nl:'Relatie tot erflater', es:'Relación con el testador', fr:'Lien avec le testateur', de:'Beziehung zum Erblasser' },
+  'btn-add-beneficiary': { en:'+ Add beneficiary', nl:'+ Begunstigde toevoegen', es:'+ Añadir beneficiario', fr:'+ Ajouter un bénéficiaire', de:'+ Begünstigten hinzufügen' },
+  'lbl-ben-name': { en:'Name', nl:'Naam', es:'Nombre', fr:'Nom', de:'Name' },
+  'lbl-ben-rel': { en:'Relationship', nl:'Relatie', es:'Relación', fr:'Lien', de:'Beziehung' },
+  'lbl-ben-share': { en:'Share / bequest', nl:'Aandeel / nalatenschap', es:'Participación / legado', fr:'Part / legs', de:'Anteil / Vermächtnis' },
+  'ph-ben-share': { en:'e.g. 50%, all real estate, residuary estate', nl:'bijv. 50%, alle onroerend goed, restant nalatenschap', es:'p. ej. 50%, todos los inmuebles, patrimonio residual', fr:'p. ex. 50%, tous les biens immobiliers, patrimoine résiduel', de:'z.B. 50%, alle Immobilien, Restnachlass' },
+  'wdoc-title': { en:'LAST WILL AND TESTAMENT', nl:'TESTAMENT', es:'TESTAMENTO', fr:'TESTAMENT', de:'TESTAMENT' },
+  'wdoc-declaration': { en:'I, {name}, born on {dob}, residing at {address}, {country}, of sound mind and legal capacity, do hereby declare this to be my Last Will and Testament, revoking all prior wills and codicils.', nl:'Ik, {name}, geboren op {dob}, wonende te {address}, {country}, bij vol verstand en handelingsbekwaam, verklaar hierbij dit als mijn testament, waarbij alle eerdere testamenten en codicillen worden herroepen.', es:'Yo, {name}, nacido/a el {dob}, con domicilio en {address}, {country}, en pleno uso de mis facultades mentales y capacidad legal, declaro por la presente que este es mi testamento, revocando todos los testamentos y codicilos anteriores.', fr:'Je soussigné(e), {name}, né(e) le {dob}, demeurant à {address}, {country}, sain(e) d\'esprit et juridiquement capable, déclare par la présente que ceci constitue mon testament, révoquant tous testaments et codicilles antérieurs.', de:'Ich, {name}, geboren am {dob}, wohnhaft in {address}, {country}, bei klarem Verstand und voll geschäftsfähig, erkläre hiermit dies als mein Testament und widerrufe alle früheren Testamente und Nachträge.' },
+  'wdoc-marital-h': { en:'MARITAL STATUS', nl:'BURGERLIJKE STAAT', es:'ESTADO CIVIL', fr:'ÉTAT CIVIL', de:'FAMILIENSTAND' },
+  'wdoc-executor-h': { en:'EXECUTOR', nl:'EXECUTEUR', es:'ALBACEA', fr:'EXÉCUTEUR', de:'TESTAMENTSVOLLSTRECKER' },
+  'wdoc-executor-text': { en:'I appoint {name} ({rel}) as executor of this will, with full authority to manage, distribute, and settle my estate in accordance with the terms set out herein.', nl:'Ik benoem {name} ({rel}) tot executeur van dit testament, met volledige bevoegdheid om mijn nalatenschap te beheren, verdelen en afwikkelen volgens de hierin opgenomen voorwaarden.', es:'Designo a {name} ({rel}) como albacea de este testamento, con plena autoridad para administrar, distribuir y liquidar mi patrimonio de acuerdo con los términos establecidos en el presente.', fr:'Je désigne {name} ({rel}) comme exécuteur de ce testament, avec pleine autorité pour gérer, distribuer et régler ma succession conformément aux termes énoncés dans le présent document.', de:'Ich bestelle {name} ({rel}) zum Testamentsvollstrecker, mit voller Befugnis, meinen Nachlass gemäß den hierin festgelegten Bedingungen zu verwalten, zu verteilen und abzuwickeln.' },
+  'wdoc-beneficiaries-h': { en:'BENEFICIARIES & BEQUESTS', nl:'BEGUNSTIGDEN & NALATENSCHAPPEN', es:'BENEFICIARIOS Y LEGADOS', fr:'BÉNÉFICIAIRES ET LEGS', de:'BEGÜNSTIGTE & VERMÄCHTNISSE' },
+  'wdoc-guardian-h': { en:'GUARDIAN FOR MINOR CHILDREN', nl:'VOOGD VOOR MINDERJARIGE KINDEREN', es:'TUTOR PARA HIJOS MENORES', fr:'TUTEUR POUR ENFANTS MINEURS', de:'VORMUND FÜR MINDERJÄHRIGE KINDER' },
+  'wdoc-guardian-text': { en:'If any of my children are minors at the time of my death, I appoint the executor named above as their legal guardian, unless otherwise determined by a court of competent jurisdiction.', nl:'Indien een van mijn kinderen minderjarig is op het moment van mijn overlijden, benoem ik de hierboven genoemde executeur als hun wettelijk voogd, tenzij anders bepaald door een bevoegde rechter.', es:'Si alguno de mis hijos es menor de edad al momento de mi fallecimiento, designo al albacea mencionado anteriormente como su tutor legal, salvo que un tribunal competente determine lo contrario.', fr:'Si l\'un de mes enfants est mineur au moment de mon décès, je désigne l\'exécuteur mentionné ci-dessus comme tuteur légal, sauf décision contraire d\'un tribunal compétent.', de:'Sollte eines meiner Kinder zum Zeitpunkt meines Todes minderjährig sein, bestelle ich den oben genannten Testamentsvollstrecker als gesetzlichen Vormund, sofern nicht ein zuständiges Gericht anders entscheidet.' },
+  'wdoc-funeral-h': { en:'FUNERAL WISHES', nl:'UITVAARTWENSEN', es:'DESEOS FUNERARIOS', fr:'VOLONTÉS FUNÉRAIRES', de:'BESTATTUNGSWÜNSCHE' },
+  'wdoc-funeral-text': { en:'I wish for my remains to be handled in a manner consistent with my personal beliefs and the wishes of my family. Any reasonable funeral expenses shall be paid from my estate.', nl:'Ik wens dat mijn stoffelijk overschot wordt behandeld op een wijze die overeenkomt met mijn persoonlijke overtuigingen en de wensen van mijn familie. Redelijke uitvaartkosten worden betaald uit mijn nalatenschap.', es:'Deseo que mis restos sean tratados de manera consistente con mis creencias personales y los deseos de mi familia. Los gastos funerarios razonables serán pagados de mi patrimonio.', fr:'Je souhaite que mes restes soient traités d\'une manière conforme à mes convictions personnelles et aux souhaits de ma famille. Les frais funéraires raisonnables seront payés par ma succession.', de:'Ich wünsche, dass mit meinen sterblichen Überresten in einer Weise verfahren wird, die meinen persönlichen Überzeugungen und den Wünschen meiner Familie entspricht. Angemessene Bestattungskosten sind aus meinem Nachlass zu begleichen.' },
+  'wdoc-debts-h': { en:'DEBTS & LIABILITIES', nl:'SCHULDEN & VERPLICHTINGEN', es:'DEUDAS Y OBLIGACIONES', fr:'DETTES ET OBLIGATIONS', de:'SCHULDEN & VERBINDLICHKEITEN' },
+  'wdoc-debts-text': { en:'I direct my executor to pay all outstanding debts, taxes, and liabilities from my estate before any distribution to beneficiaries.', nl:'Ik draag mijn executeur op alle openstaande schulden, belastingen en verplichtingen uit mijn nalatenschap te voldoen vóór enige verdeling aan begunstigden.', es:'Instruyo a mi albacea a pagar todas las deudas, impuestos y obligaciones pendientes de mi patrimonio antes de cualquier distribución a los beneficiarios.', fr:'J\'instruis mon exécuteur de payer toutes les dettes, impôts et obligations en suspens de ma succession avant toute distribution aux bénéficiaires.', de:'Ich weise meinen Testamentsvollstrecker an, alle ausstehenden Schulden, Steuern und Verbindlichkeiten aus meinem Nachlass zu begleichen, bevor eine Verteilung an die Begünstigten erfolgt.' },
+  'wdoc-witness-note': { en:'Signed in the presence of the following witnesses, who attest that the testator signed this will voluntarily and of sound mind:', nl:'Ondertekend in aanwezigheid van de volgende getuigen, die verklaren dat de erflater dit testament vrijwillig en bij vol verstand heeft ondertekend:', es:'Firmado en presencia de los siguientes testigos, quienes atestiguan que el testador firmó este testamento voluntariamente y en pleno uso de sus facultades mentales:', fr:'Signé en présence des témoins suivants, qui attestent que le testateur a signé ce testament volontairement et en pleine possession de ses facultés mentales :', de:'Unterzeichnet in Anwesenheit der folgenden Zeugen, die bestätigen, dass der Erblasser dieses Testament freiwillig und bei klarem Verstand unterzeichnet hat:' },
+  'will-disclaimer': { en:'⚠ This is a basic template. Inheritance laws vary significantly by jurisdiction. We strongly recommend having this will reviewed and notarized by a legal professional.', nl:'⚠ Dit is een basissjabloon. Erfrecht verschilt aanzienlijk per rechtsgebied. Wij raden sterk aan dit testament te laten beoordelen en notarieel te laten vastleggen.', es:'⚠ Esta es una plantilla básica. Las leyes de herencia varían significativamente según la jurisdicción. Recomendamos encarecidamente que este testamento sea revisado y notariado por un profesional legal.', fr:'⚠ Ceci est un modèle de base. Les lois sur la succession varient considérablement selon la juridiction. Nous recommandons fortement de faire examiner et notarier ce testament par un professionnel du droit.', de:'⚠ Dies ist eine Grundvorlage. Das Erbrecht unterscheidet sich erheblich je nach Rechtsgebiet. Wir empfehlen dringend, dieses Testament von einem Rechtsanwalt prüfen und notariell beurkunden zu lassen.' },
   'dt-eng-title': { en:'Engagement Letter', nl:'Overeenkomst van opdracht', es:'Carta de compromiso', fr:'Lettre de mission', de:'Auftragsbestätigung' },
   'dt-eng-desc': { en:'Define a professional service agreement', nl:'Leg een professionele dienstverlening vast', es:'Defina un acuerdo de servicios profesionales', fr:'Définissez un accord de services professionnels', de:'Definieren Sie eine professionelle Dienstleistungsvereinbarung' },
   'es1-title': { en:'Who is the service provider?', nl:'Wie is de dienstverlener?', es:'¿Quién es el proveedor de servicios?', fr:'Qui est le prestataire ?', de:'Wer ist der Dienstleister?' },
@@ -2764,6 +2906,7 @@ function selectDocType(type) {
   else if (type === 'rental') goRentalStep('r1');
   else if (type === 'bos') goBosStep('b1');
   else if (type === 'eng') goEngStep('e1');
+  else if (type === 'will') goWillStep('w1');
 }
 
 // ====== Rental navigation ======
@@ -3026,7 +3169,7 @@ function toggleTheme() {
 })();
 
 // ====== Detail level toggle ======
-const docDetail = { poa: 'basic', rental: 'basic', bos: 'basic', eng: 'basic' };
+const docDetail = { poa: 'basic', rental: 'basic', bos: 'basic', eng: 'basic', will: 'basic' };
 
 function setDocDetail(docType, level) {
   docDetail[docType] = level;
@@ -3036,6 +3179,7 @@ function setDocDetail(docType, level) {
   else if (docType === 'rental') renderRentalPreview();
   else if (docType === 'bos') renderBosPreview();
   else if (docType === 'eng') renderEngPreview();
+  else if (docType === 'will') renderWillPreview();
 }
 
 // ====== Engagement Letter ======
@@ -3203,6 +3347,180 @@ async function downloadEngPDF() {
 
   const blob = doc.output('blob');
   const fn = `Engagement_Letter_${d.client.name?d.client.name.replace(/\s+/g,'_'):'draft'}.pdf`;
+  try { const dl = await window.claude?.use?.('downloads'); if(dl){await dl.save({filename:fn,data:blob});return;} } catch(e){}
+  const u = URL.createObjectURL(blob); const a = document.createElement('a');
+  a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
+}
+
+// ====== Last Will & Testament ======
+const WILL_STEPS = ['w1','w2','w3','w4','w5'];
+
+function goWillStep(step) {
+  if (step === 0) { goStep(0); return; }
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  const idx = WILL_STEPS.indexOf(step);
+  document.getElementById('progress').style.width = ((idx+1) / WILL_STEPS.length * 100) + '%';
+  updateStepNav('dt-will-title', idx+1, WILL_STEPS.length);
+  if (step === 'w3' && document.getElementById('will-beneficiaries').children.length === 0) addBeneficiary();
+  if (step === 'w5') renderWillPreview();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function validateWillAndGo(from, to) {
+  const req = { 'w1': ['wt-name','wt-address'], 'w2': ['we-name'] };
+  let ok = true;
+  (req[from]||[]).forEach(id => {
+    const el = document.getElementById(id);
+    const err = document.getElementById('err-'+id);
+    if (!el.value.trim()) { el.classList.add('field-error'); if(err){err.style.display='block';err.textContent=t('err-required');} ok=false; }
+    else { el.classList.remove('field-error'); if(err) err.style.display='none'; }
+  });
+  if (ok) goWillStep(to);
+}
+
+function addBeneficiary() {
+  const list = document.getElementById('will-beneficiaries');
+  const idx = list.children.length + 1;
+  const div = document.createElement('div');
+  div.style.cssText = 'border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;position:relative;background:var(--input-bg);';
+  div.innerHTML = `<button onclick="this.parentElement.remove()" style="position:absolute;top:8px;right:10px;background:none;border:none;cursor:pointer;font-size:16px;color:var(--text-light);">✕</button>
+    <div style="font-weight:600;font-size:13px;margin-bottom:8px;color:var(--text-mid);">#${idx}</div>
+    <div class="field"><label data-i18n="lbl-ben-name">${t('lbl-ben-name')}</label><input type="text" class="ben-name" placeholder="${t('ph-name')}"></div>
+    <div class="field"><label data-i18n="lbl-ben-rel">${t('lbl-ben-rel')}</label><input type="text" class="ben-rel" placeholder="e.g. Spouse, Son, Daughter, Organization"></div>
+    <div class="field"><label data-i18n="lbl-ben-share">${t('lbl-ben-share')}</label><input type="text" class="ben-share" placeholder="${t('ph-ben-share')}"></div>`;
+  list.appendChild(div);
+}
+
+function getBeneficiaries() {
+  const list = document.getElementById('will-beneficiaries');
+  return Array.from(list.children).map(div => ({
+    name: div.querySelector('.ben-name')?.value?.trim() || '',
+    rel: div.querySelector('.ben-rel')?.value?.trim() || '',
+    share: div.querySelector('.ben-share')?.value?.trim() || ''
+  })).filter(b => b.name);
+}
+
+function gatherWillData() {
+  return {
+    testator: { name:$('wt-name'), id:$('wt-id'), dob:document.getElementById('wt-dob')?.value||'', address:$('wt-address'), country:$('wt-country'), marital:document.getElementById('wt-marital')?.value||'single' },
+    executor: { name:$('we-name'), id:$('we-id'), address:$('we-address'), rel:$('we-rel') },
+    beneficiaries: getBeneficiaries(),
+    docDate: document.getElementById('w-doc-date')?.value||'',
+    place: $('w-place'),
+    law: $('w-law'),
+  };
+}
+
+function renderWillPreview() {
+  const d = gatherWillData();
+  const el = document.getElementById('will-preview');
+  const maritalLabel = t('opt-'+d.testator.marital);
+  const decl = t('wdoc-declaration').replace('{name}',d.testator.name||'___').replace('{dob}',fmtDate(d.testator.dob)).replace('{address}',d.testator.address||'___').replace('{country}',d.testator.country||'___');
+  const execText = t('wdoc-executor-text').replace('{name}',d.executor.name||'___').replace('{rel}',d.executor.rel||'___');
+
+  let benHtml = '';
+  d.beneficiaries.forEach((b,i) => {
+    benHtml += `<p><strong>${i+1}. ${b.name}</strong> (${b.rel||'—'}): ${b.share||'—'}</p>`;
+  });
+  if (!benHtml) benHtml = '<p>___</p>';
+
+  const detailed = docDetail.will === 'detailed';
+  const extraSecs = detailed ? `
+    <div class="sec extra-sec"><div class="sec-title">${t('wdoc-debts-h')}</div><p>${t('wdoc-debts-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('wdoc-guardian-h')}</div><p>${t('wdoc-guardian-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('wdoc-funeral-h')}</div><p>${t('wdoc-funeral-text')}</p></div>
+  ` : '';
+
+  el.innerHTML = `
+    <h2>${t('wdoc-title')}</h2>
+    <div class="sec"><p>${decl}</p></div>
+    <div class="sec"><div class="sec-title">${t('wdoc-marital-h')}</div><p>${maritalLabel}</p></div>
+    <div class="sec"><div class="sec-title">${t('wdoc-executor-h')}</div><p>${execText}</p>
+      <strong>${t('doc-name')}:</strong> ${d.executor.name||'___'}<br>
+      ${d.executor.id ? '<strong>'+t('doc-id')+':</strong> '+d.executor.id+'<br>' : ''}
+      ${d.executor.address ? '<strong>'+t('doc-address')+':</strong> '+d.executor.address+'<br>' : ''}
+    </div>
+    <div class="sec"><div class="sec-title">${t('wdoc-beneficiaries-h')}</div>${benHtml}</div>
+    ${extraSecs}
+    <div class="sec"><div class="sec-title">${t('doc-law-h')}</div><p>${t('doc-law-text').replace('{law}',d.law||'___')}</p></div>
+    <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate))}</p></div>
+    <div class="sec"><p style="font-style:italic;font-size:12px;">${t('wdoc-witness-note')}</p></div>
+    <div class="sig-grid">
+      <div><div class="sig-line">${t('doc-name')}: ${d.testator.name||'___'}<br>(${t('ws1-title').replace('?','')})</div></div>
+    </div>
+    <div class="sig-grid" style="margin-top:16px;">
+      <div><div class="sig-line">${t('doc-witness')} 1</div></div>
+      <div><div class="sig-line">${t('doc-witness')} 2</div></div>
+    </div>
+  `;
+}
+
+async function downloadWillPDF() {
+  trackEdits('will-preview', 'Last Will');
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const d = gatherWillData();
+  const ds = getDocSettings('will');
+  const mg = 25, pw = 160;
+  let y = ds.header ? mg + 4 : mg;
+  const addTxt = (text, opts={}) => {
+    const sz=opts.size||ds.fontSize, st=opts.style||'normal', al=opts.align||'left';
+    doc.setFontSize(sz); doc.setFont(ds.fontFamily,st);
+    const lines = doc.splitTextToSize(text, opts.w||pw);
+    if (y + lines.length*sz*0.4 > 278) { doc.addPage(); y=ds.header?mg+4:mg; }
+    doc.text(lines, al==='center'?105:mg, y, {align:al});
+    y += lines.length*sz*0.42 + (opts.gap||2);
+  };
+
+  addTxt(t('wdoc-title'),{size:18,style:'bold',align:'center',gap:8}); y+=3;
+  addTxt(t('wdoc-declaration').replace('{name}',d.testator.name||'___').replace('{dob}',fmtDate(d.testator.dob)).replace('{address}',d.testator.address||'___').replace('{country}',d.testator.country||'___'),{}); y+=3;
+
+  addTxt(t('wdoc-marital-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('opt-'+d.testator.marital),{}); y+=3;
+
+  addTxt(t('wdoc-executor-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('wdoc-executor-text').replace('{name}',d.executor.name||'___').replace('{rel}',d.executor.rel||'___'),{});
+  addTxt(`${t('doc-name')}: ${d.executor.name||'___'}`,{});
+  if (d.executor.id) addTxt(`${t('doc-id')}: ${d.executor.id}`,{});
+  if (d.executor.address) addTxt(`${t('doc-address')}: ${d.executor.address}`,{});
+  y+=3;
+
+  addTxt(t('wdoc-beneficiaries-h'),{size:12,style:'bold',gap:4});
+  d.beneficiaries.forEach((b,i) => {
+    addTxt(`${i+1}. ${b.name} (${b.rel||'—'}): ${b.share||'—'}`,{});
+  });
+  y+=3;
+
+  if (docDetail.will === 'detailed') {
+    addTxt(t('wdoc-debts-h'),{size:12,style:'bold',gap:4}); addTxt(t('wdoc-debts-text'),{}); y+=3;
+    addTxt(t('wdoc-guardian-h'),{size:12,style:'bold',gap:4}); addTxt(t('wdoc-guardian-text'),{}); y+=3;
+    addTxt(t('wdoc-funeral-h'),{size:12,style:'bold',gap:4}); addTxt(t('wdoc-funeral-text'),{}); y+=3;
+  }
+
+  addTxt(t('doc-law-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('doc-law-text').replace('{law}',d.law||'___'),{}); y+=3;
+  addTxt(t('doc-exec-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate)),{}); y+=3;
+
+  addTxt(t('wdoc-witness-note'),{size:9,style:'italic'}); y+=5;
+
+  y+=15; if(y>250){doc.addPage();y=mg+20;}
+  doc.setDrawColor(50);
+  doc.line(mg,y,mg+pw,y); doc.setFontSize(9);
+  doc.text(`${d.testator.name||'___'}`,mg,y+5);
+  doc.text('(Testator)',mg,y+9);
+
+  y+=30; if(y>260){doc.addPage();y=mg+20;}
+  doc.line(mg,y,mg+65,y); doc.text(`${t('doc-witness')} 1`,mg,y+5);
+  doc.line(mg+95,y,mg+160,y); doc.text(`${t('doc-witness')} 2`,mg+95,y+5);
+
+  y = addAttachmentsToPDF(doc, 'will', mg, pw, y+20);
+  addHeaderFooter(doc, ds);
+  addPageNumbers(doc, 'will-page-numbers');
+
+  const blob = doc.output('blob');
+  const fn = `Last_Will_${d.testator.name?d.testator.name.replace(/\s+/g,'_'):'draft'}.pdf`;
   try { const dl = await window.claude?.use?.('downloads'); if(dl){await dl.save({filename:fn,data:blob});return;} } catch(e){}
   const u = URL.createObjectURL(blob); const a = document.createElement('a');
   a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
