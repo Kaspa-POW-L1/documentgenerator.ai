@@ -577,6 +577,26 @@ body {
   transition: all 0.15s;
 }
 .ben-quick button:hover { border-color: var(--pri); background: var(--pri-light); color: var(--pri-dark); }
+.btn-new-doc {
+  display: block; margin: 16px auto 0; padding: 10px 20px;
+  font-size: 13px; font-family: inherit; font-weight: 600;
+  border: 1px dashed var(--border); border-radius: 8px;
+  background: none; color: var(--text-mid); cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-new-doc:hover { border-color: var(--pri); color: var(--pri); }
+.extra-sec.greyed {
+  opacity: 0.35;
+  pointer-events: none;
+  position: relative;
+}
+.extra-sec.greyed::after {
+  content: attr(data-upsell);
+  position: absolute; top: 8px; right: 10px;
+  font-size: 10px; font-weight: 600;
+  color: var(--pri); background: var(--pri-light);
+  padding: 2px 8px; border-radius: 4px;
+}
 
 /* Intro */
 .intro-points {
@@ -1119,6 +1139,7 @@ body {
       </label>
       <button class="btn btn-download" onclick="downloadPDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
+    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
 
   <!-- ===== RENTAL AGREEMENT STEPS ===== -->
@@ -1363,6 +1384,7 @@ body {
       </label>
       <button class="btn btn-download" onclick="downloadRentalPDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
+    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
 
   <!-- BOS STEP 1: Seller -->
@@ -1537,6 +1559,7 @@ body {
       </label>
       <button class="btn btn-download" onclick="downloadBosPDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
+    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
 
   <!-- ENG STEP 1: Service Provider -->
@@ -1652,6 +1675,7 @@ body {
       </label>
       <button class="btn btn-download" onclick="downloadEngPDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
+    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
 
   <!-- NDA STEP 1: Type & Disclosing party -->
@@ -1754,6 +1778,7 @@ body {
       </label>
       <button class="btn btn-download" onclick="downloadNdaPDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
+    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
 
   <!-- EMPL STEP 1: Employer -->
@@ -1886,6 +1911,7 @@ body {
       </label>
       <button class="btn btn-download" onclick="downloadEmplPDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
+    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
 
   <!-- LOAN STEP 1: Lender -->
@@ -2003,6 +2029,7 @@ body {
       </label>
       <button class="btn btn-download" onclick="downloadLoanPDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
+    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
 
   <!-- WILL STEP 1: Testator -->
@@ -2120,6 +2147,7 @@ body {
       </label>
       <button class="btn btn-download" onclick="downloadWillPDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
+    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
 
 </div>
@@ -2788,6 +2816,10 @@ const T = {
   'edit-hint': { en:'Click on any section to edit the text. Your changes will be included in the PDF.', nl:'Klik op een sectie om de tekst aan te passen. Je wijzigingen worden opgenomen in de PDF.', es:'Haz clic en cualquier sección para editar el texto. Los cambios se incluirán en el PDF.', fr:'Cliquez sur une section pour modifier le texte. Vos modifications seront incluses dans le PDF.', de:'Klicken Sie auf einen Abschnitt, um den Text zu bearbeiten. Ihre Änderungen werden in das PDF übernommen.' },
   'last-updated-prefix': { en:'Last updated:', nl:'Laatst bijgewerkt:', es:'Última actualización:', fr:'Dernière mise à jour :', de:'Zuletzt aktualisiert:' },
   'privacy-link': { en:'Privacy Policy', nl:'Privacybeleid', es:'Política de Privacidad', fr:'Politique de Confidentialité', de:'Datenschutzerklärung' },
+  'warn-empty-fields': { en:'Some fields are still empty. You can continue, but the document may be incomplete.', nl:'Sommige velden zijn nog leeg. Je kunt doorgaan, maar het document is mogelijk onvolledig.', es:'Algunos campos están vacíos. Puede continuar, pero el documento podría estar incompleto.', fr:'Certains champs sont encore vides. Vous pouvez continuer, mais le document pourrait être incomplet.', de:'Einige Felder sind noch leer. Sie können fortfahren, aber das Dokument ist möglicherweise unvollständig.' },
+  'upsell-detailed': { en:'Switch to Detailed ↑', nl:'Schakel naar Uitgebreid ↑', es:'Cambiar a Detallado ↑', fr:'Passer en Détaillé ↑', de:'Zu Detailliert wechseln ↑' },
+  'confirm-new': { en:'Start a new document? Any unsaved data will be lost.', nl:'Nieuw document beginnen? Niet-opgeslagen gegevens gaan verloren.', es:'¿Comenzar un nuevo documento? Los datos no guardados se perderán.', fr:'Commencer un nouveau document ? Les données non enregistrées seront perdues.', de:'Neues Dokument beginnen? Nicht gespeicherte Daten gehen verloren.' },
+  'btn-new-doc': { en:'+ New document', nl:'+ Nieuw document', es:'+ Nuevo documento', fr:'+ Nouveau document', de:'+ Neues Dokument' },
   'step-of': { en:'Step {n} of {total}', nl:'Stap {n} van {total}', es:'Paso {n} de {total}', fr:'Étape {n} sur {total}', de:'Schritt {n} von {total}' },
   'dq-yesterday': { en:'Yesterday', nl:'Gisteren', es:'Ayer', fr:'Hier', de:'Gestern' },
   'dq-today': { en:'Today', nl:'Vandaag', es:'Hoy', fr:'Aujourd\'hui', de:'Heute' },
@@ -3017,7 +3049,7 @@ function goStep(n) {
   document.getElementById('progress').style.width = (n / totalSteps * 100) + '%';
   if (n === 0) updateStepNav(null);
   else updateStepNav('dt-poa-title', n, totalSteps);
-  if (n === 5) renderPreview();
+  if (n === 5) renderPreview(); checkEmptyFields();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -3108,10 +3140,10 @@ function renderPreview() {
     : `<p>${t('doc-fixed-text').replace('{start}', fmtDate(d.dateStart)).replace('{end}', fmtDate(d.dateEnd))}</p>`;
 
   const detailed = docDetail.poa === 'detailed';
-  const extraSecs = detailed ? `
+  const extraSecs = `
     <div class="sec extra-sec"><div class="sec-title">${t('doc-revoke-h')}</div><p>${t('doc-revoke-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('doc-liability-h')}</div><p>${t('doc-liability-text')}</p></div>
-  ` : '';
+  `;
 
   el.innerHTML = `
     <h2>${t('doc-title')}</h2>
@@ -3465,7 +3497,7 @@ function goRentalStep(step) {
   if (step === 'r3') buildPropTypeGrid();
   if (step === 'r4') showJurNotice('jur-notice-rent', document.getElementById('rl-country').value);
   if (step === 'r5') showJurNotice('jur-notice-duration', document.getElementById('rl-country').value);
-  if (step === 'r6') renderRentalPreview();
+  if (step === 'r6') renderRentalPreview(); checkEmptyFields();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -3558,14 +3590,14 @@ function renderRentalPreview() {
   }
 
   const detailed = docDetail.rental === 'detailed';
-  const extraSecs = detailed ? `
+  const extraSecs = `
     <div class="sec extra-sec"><div class="sec-title">${t('rdoc-maint-h')}</div><p>${t('rdoc-maint-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('rdoc-utilities-h')}</div><p>${t('rdoc-utilities-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('rdoc-notice-h')}</div><p>${t('rdoc-notice-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('rdoc-sublet-h')}</div><p>${t('rdoc-sublet-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('rdoc-rules-h')}</div><p>${t('rdoc-rules-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('rdoc-disputes-h')}</div><p>${t('rdoc-disputes-text')}</p></div>
-  ` : '';
+  `;
 
   el.innerHTML = `
     <h2>${t('rdoc-title')}</h2>
@@ -3739,7 +3771,7 @@ function goEngStep(step) {
   const idx = ENG_STEPS.indexOf(step);
   document.getElementById('progress').style.width = ((idx+1) / ENG_STEPS.length * 100) + '%';
   updateStepNav('dt-eng-title', idx+1, ENG_STEPS.length);
-  if (step === 'e5') renderEngPreview();
+  if (step === 'e5') renderEngPreview(); checkEmptyFields();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -3786,11 +3818,11 @@ function renderEngPreview() {
   else durText = t('edoc-ongoing-text').replace('{start}',fmtDate(d.dateStart));
 
   const detailed = docDetail.eng === 'detailed';
-  const extraSecs = detailed ? `
+  const extraSecs = `
     <div class="sec extra-sec"><div class="sec-title">${t('edoc-confid-h')}</div><p>${t('edoc-confid-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('edoc-liability-h')}</div><p>${t('edoc-liability-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('edoc-term-h')}</div><p>${t('edoc-term-text')}</p></div>
-  ` : '';
+  `;
 
   el.innerHTML = `
     <h2>${t('edoc-title')}</h2>
@@ -3909,7 +3941,7 @@ function goNdaStep(step) {
   const idx = NDA_STEPS.indexOf(step);
   document.getElementById('progress').style.width = ((idx+1) / NDA_STEPS.length * 100) + '%';
   updateStepNav('dt-nda-title', idx+1, NDA_STEPS.length);
-  if (step === 'n5') renderNdaPreview();
+  if (step === 'n5') renderNdaPreview(); checkEmptyFields();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -3948,11 +3980,11 @@ function renderNdaPreview() {
   const durText = d.duration === '0' ? t('ndoc-duration-indef') : t('ndoc-duration-text').replace('{duration}',d.durationLabel);
 
   const detailed = docDetail.nda === 'detailed';
-  const extraSecs = detailed ? `
+  const extraSecs = `
     <div class="sec extra-sec"><div class="sec-title">${t('ndoc-permitted-h')}</div><p>${t('ndoc-permitted-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('ndoc-return-h')}</div><p>${t('ndoc-return-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('ndoc-remedies-h')}</div><p>${t('ndoc-remedies-text')}</p></div>
-  ` : '';
+  `;
 
   el.innerHTML = `
     <h2>${title}</h2>
@@ -4053,7 +4085,7 @@ function goEmplStep(step) {
   const idx = EMPL_STEPS.indexOf(step);
   document.getElementById('progress').style.width = ((idx+1) / EMPL_STEPS.length * 100) + '%';
   updateStepNav('dt-employment-title', idx+1, EMPL_STEPS.length);
-  if (step === 'm6') renderEmplPreview();
+  if (step === 'm6') renderEmplPreview(); checkEmptyFields();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -4103,10 +4135,10 @@ function renderEmplPreview() {
     startText += ' ' + t('mdoc-probation-text').replace('{months}',d.probation).replace('{days}',days);
   }
   const detailed = docDetail.empl === 'detailed';
-  const extraSecs = detailed ? `
+  const extraSecs = `
     <div class="sec extra-sec"><div class="sec-title">${t('mdoc-termination-h')}</div><p>${t('mdoc-termination-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('mdoc-confidentiality-h')}</div><p>${t('mdoc-confidentiality-text')}</p></div>
-  ` : '';
+  `;
 
   el.innerHTML = `
     <h2>${t('mdoc-title')}</h2>
@@ -4226,7 +4258,7 @@ function goLoanStep(step) {
   const idx = LOAN_STEPS.indexOf(step);
   document.getElementById('progress').style.width = ((idx+1) / LOAN_STEPS.length * 100) + '%';
   updateStepNav('dt-loan-title', idx+1, LOAN_STEPS.length);
-  if (step === 'l5') renderLoanPreview();
+  if (step === 'l5') renderLoanPreview(); checkEmptyFields();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -4273,11 +4305,11 @@ function renderLoanPreview() {
   let repayStr = d.repayType === 'monthly' ? t('ldoc-monthly-text').replace('{currency}',d.currency).replace('{amount}',d.monthly.toLocaleString()).replace('{day}',d.payday) : t('ldoc-lumpsum-text').replace('{date}',fmtDate(d.dateEnd));
 
   const detailed = docDetail.loan === 'detailed';
-  const extraSecs = detailed ? `
+  const extraSecs = `
     <div class="sec extra-sec"><div class="sec-title">${t('ldoc-late-h')}</div><p>${t('ldoc-late-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('ldoc-early-h')}</div><p>${t('ldoc-early-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('ldoc-default-h')}</div><p>${t('ldoc-default-text')}</p></div>
-  ` : '';
+  `;
 
   el.innerHTML = `
     <h2>${t('ldoc-title')}</h2>
@@ -4382,6 +4414,89 @@ async function downloadLoanPDF() {
   a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
 
+// ====== Soft validation warning ======
+function checkEmptyFields() {
+  const activeStep = document.querySelector('.step.active');
+  if (!activeStep) return;
+  // Remove existing warning
+  const existing = activeStep.querySelector('.soft-warning');
+  if (existing) existing.remove();
+  // Count empty required-looking fields across ALL steps (not just current)
+  let empty = 0;
+  document.querySelectorAll('.step input[type="text"], .step input[type="number"], .step input[type="date"]').forEach(el => {
+    if (el.id && !el.value.trim() && !el.id.includes('header') && !el.id.includes('footer') && !el.id.includes('dept') && !el.id.includes('rep') && !el.id.includes('role')) empty++;
+  });
+  if (empty > 3) {
+    const warn = document.createElement('div');
+    warn.className = 'soft-warning';
+    warn.style.cssText = 'padding:10px 14px;background:var(--warn-light);border-left:3px solid var(--warn);border-radius:6px;font-size:12px;color:#92400E;margin-bottom:12px;';
+    warn.textContent = '⚠ ' + t('warn-empty-fields');
+    const card = activeStep.querySelector('.step-card');
+    if (card) card.appendChild(warn);
+  }
+}
+
+// ====== Extra section helper (upsell in basic mode) ======
+function extraSecClass(detailed) {
+  return detailed ? 'extra-sec' : 'extra-sec greyed';
+}
+function extraSecAttr(detailed) {
+  return detailed ? '' : ` data-upsell="${t('upsell-detailed')}"`;
+}
+
+// ====== Auto-save ======
+function autoSave() {
+  try {
+    const inputs = {};
+    document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
+      if (el.type === 'checkbox') inputs[el.id] = el.checked;
+      else if (el.value) inputs[el.id] = el.value;
+    });
+    localStorage.setItem('dg-autosave', JSON.stringify(inputs));
+    localStorage.setItem('dg-autosave-ts', Date.now());
+  } catch(e) {}
+}
+
+function autoRestore() {
+  try {
+    const saved = localStorage.getItem('dg-autosave');
+    const ts = localStorage.getItem('dg-autosave-ts');
+    if (!saved || !ts) return;
+    if (Date.now() - parseInt(ts) > 86400000) { localStorage.removeItem('dg-autosave'); return; } // 24h expiry
+    const inputs = JSON.parse(saved);
+    Object.entries(inputs).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (el.type === 'checkbox') el.checked = val;
+      else el.value = val;
+    });
+  } catch(e) {}
+}
+
+function clearAutoSave() {
+  try { localStorage.removeItem('dg-autosave'); localStorage.removeItem('dg-autosave-ts'); } catch(e) {}
+}
+
+// Save every 5 seconds if anything changed
+setInterval(autoSave, 5000);
+
+// ====== New document ======
+function startNewDocument() {
+  if (!confirm(t('confirm-new'))) return;
+  clearAutoSave();
+  document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
+    if (el.type === 'checkbox') el.checked = false;
+    else if (el.type === 'date' || el.type === 'number' || el.type === 'text') el.value = '';
+    else if (el.tagName === 'SELECT') el.selectedIndex = 0;
+  });
+  // Clear dynamic beneficiaries
+  const benList = document.getElementById('will-beneficiaries');
+  if (benList) benList.innerHTML = '';
+  goStep(0);
+  // Re-apply locale defaults
+  try { const tz = Intl.DateTimeFormat().resolvedOptions().timeZone; const loc = LOCALES[tz]; if(loc) applyLocale(loc); } catch(e){}
+}
+
 // ====== Auto-fill law from place ======
 function autoFillLaw(placeId, lawId) {
   const place = document.getElementById(placeId)?.value?.trim() || '';
@@ -4404,7 +4519,7 @@ function goWillStep(step) {
   document.getElementById('progress').style.width = ((idx+1) / WILL_STEPS.length * 100) + '%';
   updateStepNav('dt-will-title', idx+1, WILL_STEPS.length);
   // beneficiaries are added via quick buttons or "+ Other"
-  if (step === 'w5') renderWillPreview();
+  if (step === 'w5') renderWillPreview(); checkEmptyFields();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -4484,11 +4599,11 @@ function renderWillPreview() {
   if (!benHtml) benHtml = '<p>___</p>';
 
   const detailed = docDetail.will === 'detailed';
-  const extraSecs = detailed ? `
+  const extraSecs = `
     <div class="sec extra-sec"><div class="sec-title">${t('wdoc-debts-h')}</div><p>${t('wdoc-debts-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('wdoc-guardian-h')}</div><p>${t('wdoc-guardian-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('wdoc-funeral-h')}</div><p>${t('wdoc-funeral-text')}</p></div>
-  ` : '';
+  `;
 
   el.innerHTML = `
     <h2>${t('wdoc-title')}</h2>
@@ -4708,7 +4823,7 @@ function goBosStep(step) {
   const idx = BOS_STEPS.indexOf(step);
   document.getElementById('progress').style.width = ((idx+1) / BOS_STEPS.length * 100) + '%';
   updateStepNav('dt-bos-title', idx+1, BOS_STEPS.length);
-  if (step === 'b6') renderBosPreview();
+  if (step === 'b6') renderBosPreview(); checkEmptyFields();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -4820,10 +4935,10 @@ function renderBosPreview() {
   const condText = d.condition === 'asis' ? t('bdoc-asis-text') : t('bdoc-good-text');
 
   const detailed = docDetail.bos === 'detailed';
-  const extraSecs = detailed ? `
+  const extraSecs = `
     <div class="sec extra-sec"><div class="sec-title">${t('bdoc-ownership-h')}</div><p>${t('bdoc-ownership-text')}</p></div>
     <div class="sec extra-sec"><div class="sec-title">${t('bdoc-disputes-h')}</div><p>${t('bdoc-disputes-text')}</p></div>
-  ` : '';
+  `;
 
   el.innerHTML = `
     <h2>${t('bdoc-title')}</h2>
@@ -5092,6 +5207,7 @@ if (location.search.includes('admin')) {
   setLang(lang);
   buildScopeGrid();
   initDateQuickPicks();
+  autoRestore();
 })();
 </script>
 <script data-goatcounter="https://documentgenerator.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
