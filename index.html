@@ -3327,16 +3327,20 @@ function applyLocale(locale) {
   // Update address placeholders for all languages
   T['ph-address'] = locale.addr;
 
-  // Set default country fields
+  // Set default country fields (all document types)
   if (locale.country) {
-    document.getElementById('g1-country').value = locale.country;
-    document.getElementById('g2-country').value = locale.country;
-    document.getElementById('gov-law').value = locale.country;
+    ['g1-country','g2-country','gov-law','bs-country','bb-country','rl-country','rt-country','ep-country','ec-country','nd-country','nr-country','em-country','em-emp-country','ll-country','lb-country','wt-country'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el && !el.value) el.value = locale.country;
+    });
   }
 
-  // Set default signing place
+  // Set default signing place (all document types)
   if (locale.city) {
-    document.getElementById('doc-place').value = locale.city;
+    ['doc-place','b-place','r-place','e-place','n-place','m-place','l-place','w-place'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el && !el.value) el.value = locale.city;
+    });
   }
 
   // Default language is always English; user can switch manually.
