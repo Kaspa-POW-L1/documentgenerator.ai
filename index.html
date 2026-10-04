@@ -536,6 +536,19 @@ body {
   color: var(--text);
 }
 .ds-full { grid-column: 1 / -1; }
+.date-quick { display: flex; gap: 6px; margin-top: 4px; }
+.date-quick button {
+  padding: 3px 8px;
+  font-size: 11px;
+  font-family: inherit;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--card);
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.date-quick button:hover { border-color: var(--pri); color: var(--pri); }
 
 /* Intro */
 .intro-points {
@@ -2077,6 +2090,9 @@ const T = {
   'edit-hint': { en:'Click on any section to edit the text. Your changes will be included in the PDF.', nl:'Klik op een sectie om de tekst aan te passen. Je wijzigingen worden opgenomen in de PDF.', es:'Haz clic en cualquier sección para editar el texto. Los cambios se incluirán en el PDF.', fr:'Cliquez sur une section pour modifier le texte. Vos modifications seront incluses dans le PDF.', de:'Klicken Sie auf einen Abschnitt, um den Text zu bearbeiten. Ihre Änderungen werden in das PDF übernommen.' },
   'last-updated-prefix': { en:'Last updated:', nl:'Laatst bijgewerkt:', es:'Última actualización:', fr:'Dernière mise à jour :', de:'Zuletzt aktualisiert:' },
   'privacy-link': { en:'Privacy Policy', nl:'Privacybeleid', es:'Política de Privacidad', fr:'Politique de Confidentialité', de:'Datenschutzerklärung' },
+  'dq-yesterday': { en:'Yesterday', nl:'Gisteren', es:'Ayer', fr:'Hier', de:'Gestern' },
+  'dq-today': { en:'Today', nl:'Vandaag', es:'Hoy', fr:'Aujourd\'hui', de:'Heute' },
+  'dq-tomorrow': { en:'Tomorrow', nl:'Morgen', es:'Mañana', fr:'Demain', de:'Morgen' },
   'lbl-doc-settings': { en:'Document settings', nl:'Documentinstellingen', es:'Configuración del documento', fr:'Paramètres du document', de:'Dokumenteinstellungen' },
   'lbl-header': { en:'Header text', nl:'Koptekst', es:'Encabezado', fr:'En-tête', de:'Kopfzeile' },
   'lbl-footer': { en:'Footer text', nl:'Voettekst', es:'Pie de página', fr:'Pied de page', de:'Fußzeile' },
@@ -3166,6 +3182,23 @@ async function downloadEngPDF() {
   a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
 
+// ====== Date quick-pick ======
+function fmtDateISO(offset) {
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  return d.toISOString().split('T')[0];
+}
+
+function initDateQuickPicks() {
+  document.querySelectorAll('input[type="date"]').forEach(input => {
+    if (input.parentElement.querySelector('.date-quick')) return;
+    const div = document.createElement('div');
+    div.className = 'date-quick';
+    div.innerHTML = `<button type="button" onclick="this.parentElement.previousElementSibling.value='${fmtDateISO(-1)}'" data-i18n="dq-yesterday">${t('dq-yesterday')}</button><button type="button" onclick="this.parentElement.previousElementSibling.value='${fmtDateISO(0)}'" data-i18n="dq-today">${t('dq-today')}</button><button type="button" onclick="this.parentElement.previousElementSibling.value='${fmtDateISO(1)}'" data-i18n="dq-tomorrow">${t('dq-tomorrow')}</button>`;
+    input.after(div);
+  });
+}
+
 // ====== Document settings helper ======
 function getDocSettings(docType) {
   return {
@@ -3638,6 +3671,7 @@ if (location.search.includes('admin')) {
 
   setLang(lang);
   buildScopeGrid();
+  initDateQuickPicks();
 })();
 </script>
 <script data-goatcounter="https://documentgenerator.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
