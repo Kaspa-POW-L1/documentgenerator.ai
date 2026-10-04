@@ -995,7 +995,11 @@ body {
     </div>
     <div class="edit-hint" id="edit-hint-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
     <div class="preview-box" id="preview"></div>
-    <div style="text-align:center;margin-top:16px;">
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-mid);cursor:pointer;">
+        <input type="checkbox" id="poa-page-numbers" style="width:16px;height:16px;accent-color:var(--pri);">
+        <span data-i18n="lbl-page-numbers">Number pages</span>
+      </label>
       <button class="btn btn-download" onclick="downloadPDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
   </div>
@@ -1217,7 +1221,11 @@ body {
     <div class="edit-hint" id="edit-hint-rental-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
     <div class="preview-box" id="rental-preview"></div>
     <div class="disclaimer-box" data-i18n="rental-disclaimer">⚠ This document is generated as a starting point. Rental laws vary by country and region. We strongly recommend having this agreement reviewed by a local legal professional before signing.</div>
-    <div style="text-align:center;margin-top:16px;">
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-mid);cursor:pointer;">
+        <input type="checkbox" id="rental-page-numbers" style="width:16px;height:16px;accent-color:var(--pri);">
+        <span data-i18n="lbl-page-numbers">Number pages</span>
+      </label>
       <button class="btn btn-download" onclick="downloadRentalPDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
   </div>
@@ -1362,7 +1370,11 @@ body {
     </div>
     <div class="edit-hint" id="edit-hint-bos-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
     <div class="preview-box" id="bos-preview"></div>
-    <div style="text-align:center;margin-top:16px;">
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-mid);cursor:pointer;">
+        <input type="checkbox" id="bos-page-numbers" style="width:16px;height:16px;accent-color:var(--pri);">
+        <span data-i18n="lbl-page-numbers">Number pages</span>
+      </label>
       <button class="btn btn-download" onclick="downloadBosPDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
   </div>
@@ -1381,6 +1393,8 @@ body {
         <li>Bootvelden: naam, type, lengte, rompnummer/HIN, registratienummer</li>
         <li>Prijs, valuta, betaalwijze (contant/overschrijving/gemengd), staat (as-is of goede staat)</li>
         <li>Basic/Detailed: uitgebreid voegt eigendomsverklaring en geschillenregeling toe</li>
+        <li>Jurisdictie-checklist voor Sint Maarten voertuigoverdracht: NAf. 5 zegel, benodigde documenten (ID, rijbewijs, verzekeringspolis, keuringskaart, Carte Grise)</li>
+        <li>Optionele paginanummering in PDF ("1 van 3") — checkbox bij alle documenttypes, in 5 talen</li>
         <li>Volledige ondersteuning in 5 talen</li>
       </ul>
     </div>
@@ -1793,8 +1807,11 @@ const T = {
   'btn-customize': { en:'✏️ Customize document', nl:'✏️ Document aanpassen', es:'✏️ Personalizar documento', fr:'✏️ Personnaliser le document', de:'✏️ Dokument anpassen' },
   'btn-customize-off': { en:'✅ Done editing', nl:'✅ Klaar met bewerken', es:'✅ Listo', fr:'✅ Terminé', de:'✅ Fertig' },
   'edit-hint': { en:'Click on any section to edit the text. Your changes will be included in the PDF.', nl:'Klik op een sectie om de tekst aan te passen. Je wijzigingen worden opgenomen in de PDF.', es:'Haz clic en cualquier sección para editar el texto. Los cambios se incluirán en el PDF.', fr:'Cliquez sur une section pour modifier le texte. Vos modifications seront incluses dans le PDF.', de:'Klicken Sie auf einen Abschnitt, um den Text zu bearbeiten. Ihre Änderungen werden in das PDF übernommen.' },
-  'last-updated': { en:'Last updated: October 1, 2026', nl:'Laatst bijgewerkt: 1 oktober 2026', es:'Última actualización: 1 de octubre de 2026', fr:'Dernière mise à jour : 1er octobre 2026', de:'Zuletzt aktualisiert: 1. Oktober 2026' },
+  'last-updated': { en:'Last updated: October 3, 2026', nl:'Laatst bijgewerkt: 3 oktober 2026', es:'Última actualización: 3 de octubre de 2026', fr:'Dernière mise à jour : 3 octobre 2026', de:'Zuletzt aktualisiert: 3. Oktober 2026' },
   'privacy-link': { en:'Privacy Policy', nl:'Privacybeleid', es:'Política de Privacidad', fr:'Politique de Confidentialité', de:'Datenschutzerklärung' },
+  'bos-checklist-title': { en:'📋 Required for vehicle transfer in your country', nl:'📋 Vereist voor voertuigoverdracht in jouw land', es:'📋 Requisitos para la transferencia de vehículo en tu país', fr:'📋 Documents requis pour le transfert de véhicule dans votre pays', de:'📋 Erforderlich für die Fahrzeugübertragung in Ihrem Land' },
+  'lbl-page-numbers': { en:'Number pages', nl:'Pagina\'s nummeren', es:'Numerar páginas', fr:'Numéroter les pages', de:'Seiten nummerieren' },
+  'page-of': { en:'of', nl:'van', es:'de', fr:'sur', de:'von' },
   'toggle-basic': { en:'📄 Basic', nl:'📄 Basis', es:'📄 Básico', fr:'📄 Simple', de:'📄 Einfach' },
   'toggle-detailed': { en:'📋 Detailed', nl:'📋 Uitgebreid', es:'📋 Detallado', fr:'📋 Détaillé', de:'📋 Ausführlich' },
   'rdoc-maint-h': { en:'MAINTENANCE', nl:'ONDERHOUD', es:'MANTENIMIENTO', fr:'ENTRETIEN', de:'INSTANDHALTUNG' },
@@ -2200,6 +2217,7 @@ async function downloadPDF() {
   doc.setFontSize(7);
   doc.setTextColor(150);
   doc.text('Generated by documentgenerator.ai', 105, 290, { align: 'center' });
+  addPageNumbers(doc, 'poa-page-numbers');
 
   const blob = doc.output('blob');
   const fn = `Power_of_Attorney_${d.g1.name ? d.g1.name.replace(/\s+/g,'_') : 'draft'}.pdf`;
@@ -2374,6 +2392,25 @@ const JUR_RULES = {
     de:['Geregelt durch Buch 7A des Zivilgesetzbuchs von Sint Maarten','Keine gesetzliche Mietpreiskontrolle — Miete frei verhandelbar','Üblich sind 1-2 Monatsmieten Kaution, aber nicht gesetzlich festgelegt','Kündigungsfristen sollten klar im Vertrag stehen']
   }
 };
+
+const BOS_JUR_RULES = {
+  'sint maarten': {
+    en:['Buy a NAf. 5 stamp at the Public Service Center (Philipsburg) — bring a valid ID','Required documents for vehicle insurance: copy of seller\'s valid ID, copy of buyer\'s driver\'s license, copy of last insurance policy, copy of vehicle inspection card, original Carte Grise (registration document)','The Bill of Sale must be the standardized format accepted by all insurance companies on Sint Maarten','Vehicles must pass inspection (keuring) before transfer — check with Bureau Telecommunications & Post (BTP)','Keep a copy of the signed Bill of Sale for your records — it may be needed to prove ownership'],
+    nl:['Koop een zegel van NAf. 5 bij het Public Service Center (Philipsburg) — neem een geldig ID mee','Benodigde documenten voor autoverzekering: kopie geldig ID verkoper, kopie rijbewijs koper, kopie laatste verzekeringspolis, kopie keuringskaart voertuig, originele Carte Grise (kentekenregistratie)','De koopovereenkomst moet het gestandaardiseerde format zijn dat geaccepteerd wordt door alle verzekeringsmaatschappijen op Sint Maarten','Voertuigen moeten gekeurd zijn (keuring) vóór overdracht — check bij Bureau Telecommunications & Post (BTP)','Bewaar een kopie van de ondertekende koopovereenkomst — deze kan nodig zijn als eigendomsbewijs'],
+    es:['Compre un sello de NAf. 5 en el Public Service Center (Philipsburg) — lleve una identificación válida','Documentos requeridos para el seguro del vehículo: copia del ID del vendedor, copia de la licencia del comprador, copia de la última póliza de seguro, copia de la tarjeta de inspección, Carte Grise original','El contrato de compraventa debe ser el formato estandarizado aceptado por todas las aseguradoras en Sint Maarten','Los vehículos deben pasar inspección antes de la transferencia','Conserve una copia firmada del contrato de compraventa como prueba de propiedad'],
+    fr:['Achetez un timbre de NAf. 5 au Public Service Center (Philipsburg) — munissez-vous d\'une pièce d\'identité','Documents requis pour l\'assurance du véhicule : copie de l\'ID du vendeur, copie du permis de l\'acheteur, copie de la dernière police d\'assurance, copie de la carte d\'inspection, Carte Grise originale','L\'acte de vente doit être au format standardisé accepté par toutes les compagnies d\'assurance à Sint Maarten','Les véhicules doivent passer l\'inspection avant le transfert','Conservez une copie signée de l\'acte de vente comme preuve de propriété'],
+    de:['Kaufen Sie eine Stempelmarke (NAf. 5) beim Public Service Center (Philipsburg) — bringen Sie einen gültigen Ausweis mit','Erforderliche Dokumente für die Kfz-Versicherung: Kopie des Ausweises des Verkäufers, Kopie des Führerscheins des Käufers, Kopie der letzten Versicherungspolice, Kopie der Prüfkarte, Original-Carte-Grise','Der Kaufvertrag muss das standardisierte Format sein, das von allen Versicherungen auf Sint Maarten akzeptiert wird','Fahrzeuge müssen vor der Übertragung die Inspektion bestehen','Bewahren Sie eine Kopie des unterschriebenen Kaufvertrags als Eigentumsnachweis auf']
+  }
+};
+
+function getBosJurRules(country, category) {
+  if (!country || category !== 'vehicle') return null;
+  const c = country.toLowerCase().trim();
+  for (const [key, rules] of Object.entries(BOS_JUR_RULES)) {
+    if (c.includes(key) || key.includes(c)) return rules;
+  }
+  return null;
+}
 
 function getJurRules(country) {
   if (!country) return null;
@@ -2628,6 +2665,7 @@ async function downloadRentalPDF() {
   // Footer
   doc.setFontSize(7); doc.setTextColor(150);
   doc.text('Generated by documentgenerator.ai',105,290,{align:'center'});
+  addPageNumbers(doc, 'rental-page-numbers');
 
   const blob = doc.output('blob');
   const fn = `Rental_Agreement_${d.tenant.name?d.tenant.name.replace(/\s+/g,'_'):'draft'}.pdf`;
@@ -2667,6 +2705,22 @@ function setDocDetail(docType, level) {
   if (docType === 'poa') renderPreview();
   else if (docType === 'rental') renderRentalPreview();
   else if (docType === 'bos') renderBosPreview();
+}
+
+// ====== Page numbering helper ======
+function addPageNumbers(doc, checkboxId) {
+  const cb = document.getElementById(checkboxId);
+  if (!cb || !cb.checked) return;
+  const total = doc.getNumberOfPages();
+  const ofWord = t('page-of');
+  for (let i = 1; i <= total; i++) {
+    doc.setPage(i);
+    doc.setFontSize(9);
+    doc.setFont('helvetica','normal');
+    doc.setTextColor(120);
+    doc.text(`${i} ${ofWord} ${total}`, 105, 285, { align:'center' });
+    doc.setTextColor(0);
+  }
 }
 
 // ====== Bill of Sale ======
@@ -2810,6 +2864,18 @@ function renderBosPreview() {
       <div><div class="sig-line">${t('doc-witness')} 2</div></div>
     </div>
   `;
+
+  // Add jurisdiction checklist if available
+  const bosCountry = d.law || d.seller.country;
+  const bosJur = getBosJurRules(bosCountry, d.item.category);
+  if (bosJur) {
+    const items = bosJur[lang] || bosJur.en;
+    el.innerHTML += `<div style="margin-top:16px;padding:14px;background:#fffbe6;border:1px solid #e6d27a;border-radius:8px;font-size:13px;">
+      <strong>${t('bos-checklist-title')}</strong>
+      <ul style="margin:8px 0 0 16px;line-height:1.7;">${items.map(r => '<li>'+r+'</li>').join('')}</ul>
+      <p style="margin-top:10px;font-size:11px;color:#92400E;">⚠ This checklist is for reference only and is not part of the generated document.</p>
+    </div>`;
+  }
 }
 
 async function downloadBosPDF() {
@@ -2878,6 +2944,7 @@ async function downloadBosPDF() {
   y+=25; if(y>270){doc.addPage();y=mg;}
   doc.setFontSize(7); doc.setTextColor(150);
   doc.text('Generated by documentgenerator.ai', 105, 290, { align:'center' });
+  addPageNumbers(doc, 'bos-page-numbers');
 
   const blob = doc.output('blob');
   const fn = `Bill_of_Sale_${d.seller.name?d.seller.name.replace(/\s+/g,'_'):'draft'}.pdf`;
