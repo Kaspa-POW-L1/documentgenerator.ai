@@ -2464,6 +2464,8 @@ input[type=number] { -moz-appearance: textfield; }
         <li>Alle country- en plaatsvelden automatisch ingevuld op basis van locatiedetectie</li>
         <li>Kwitantie (Receipt) toegevoegd: ontvanger, betaler, bedrag, betaalwijze, kwitantienummer</li>
         <li>Factuur (Invoice) toegevoegd: afzender, ontvanger, dynamische regels (omschrijving, aantal, stukprijs), belasting, subtotaal, totaal, vervaldatum, bankgegevens</li>
+        <li>Kwitantie ↔ Factuur koppeling: met één klik een kwitantie maken vanuit een factuur en omgekeerd</li>
+        <li>Wettelijke rente-clausule standaard in alle documenten met geldbedragen, met verwijzing naar het juiste wetsartikel per jurisdictie (15+ landen)</li>
         <li>ANG vervangen door CMg (Caribbean Guilder) — valutanamen toegevoegd, locatie-detectie voor standaardvaluta</li>
         <li>Voertuigtype sub-keuze: auto, motor, scooter, vrachtwagen, SUV, bestelbus, bus, ATV, aanhanger</li>
         <li>Datum en tijd in "laatst bijgewerkt" nu dynamisch</li>
@@ -2945,6 +2947,9 @@ const T = {
   'lbl-phone': { en:'Phone (optional)', nl:'Telefoon (optioneel)', es:'Teléfono (opcional)', fr:'Téléphone (optionnel)', de:'Telefon (optional)' },
   'lbl-tax-rate': { en:'Tax rate (%)', nl:'Belastingtarief (%)', es:'Tasa de impuesto (%)', fr:'Taux de taxe (%)', de:'Steuersatz (%)' },
   'hint-tax': { en:'Enter 0 if no tax applies', nl:'Vul 0 in als er geen belasting geldt', es:'Ingrese 0 si no aplica impuesto', fr:'Entrez 0 si aucune taxe ne s\'applique', de:'0 eingeben wenn keine Steuer anfällt' },
+  'doc-late-interest-h': { en:'LATE PAYMENT', nl:'TE LATE BETALING', es:'PAGO TARDÍO', fr:'RETARD DE PAIEMENT', de:'ZAHLUNGSVERZUG' },
+  'doc-late-interest': { en:'If any amount due under this agreement is not paid by the agreed date, the creditor is entitled to charge statutory interest on the outstanding amount from the date it became due until the date of full payment.', nl:'Indien een verschuldigd bedrag uit hoofde van deze overeenkomst niet op de afgesproken datum is voldaan, is de schuldeiser gerechtigd wettelijke rente in rekening te brengen over het openstaande bedrag vanaf de datum waarop het verschuldigd werd tot aan de datum van volledige betaling.', es:'Si cualquier monto adeudado en virtud de este acuerdo no se paga en la fecha acordada, el acreedor tiene derecho a cobrar intereses legales sobre el monto pendiente desde la fecha en que venció hasta la fecha de pago total.', fr:'Si un montant dû en vertu du présent accord n\'est pas payé à la date convenue, le créancier est en droit de facturer des intérêts légaux sur le montant impayé à compter de la date d\'exigibilité jusqu\'à la date du paiement intégral.', de:'Wird ein gemäß dieser Vereinbarung fälliger Betrag nicht zum vereinbarten Termin gezahlt, ist der Gläubiger berechtigt, gesetzliche Zinsen auf den ausstehenden Betrag ab dem Fälligkeitsdatum bis zum Tag der vollständigen Zahlung zu berechnen.' },
+  'doc-late-interest-ref': { en:'Legal basis: {ref}', nl:'Wettelijke grondslag: {ref}', es:'Base legal: {ref}', fr:'Base juridique : {ref}', de:'Rechtsgrundlage: {ref}' },
   'btn-receipt-from-invoice': { en:'✅ Payment received? Create receipt', nl:'✅ Betaling ontvangen? Maak kwitantie', es:'✅ ¿Pago recibido? Crear recibo', fr:'✅ Paiement reçu ? Créer un reçu', de:'✅ Zahlung erhalten? Quittung erstellen' },
   'btn-invoice-from-receipt': { en:'📄 Create invoice for this payment', nl:'📄 Maak factuur voor deze betaling', es:'📄 Crear factura para este pago', fr:'📄 Créer une facture pour ce paiement', de:'📄 Rechnung für diese Zahlung erstellen' },
   'btn-add-line': { en:'+ Add line', nl:'+ Regel toevoegen', es:'+ Añadir línea', fr:'+ Ajouter une ligne', de:'+ Position hinzufügen' },
@@ -3977,6 +3982,7 @@ function renderRentalPreview() {
     </div>
     <div class="sec"><div class="sec-title">${t('doc-duration-h')}</div><p>${durTxt}</p></div>
     ${extraSecs}
+    ${lateInterestHtml(d.law||d.from?.country||'')}
     <div class="sec"><div class="sec-title">${t('doc-law-h')}</div><p>${t('doc-law-text').replace('{law}',d.law||'___')}</p></div>
     <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate))}</p></div>
     <div class="sig-grid">
@@ -4040,6 +4046,8 @@ async function downloadRentalPDF() {
   addTxt(t('doc-duration-h'),{size:12,style:'bold',gap:4});
   if(d.durationType==='fixed') addTxt(t('doc-fixed-text').replace('{start}',fmtDate(d.dateStart)).replace('{end}',fmtDate(d.dateEnd)),{});
   else addTxt(t('doc-indef-text'),{}); y+=3;
+
+  addLateInterestPDF(addTxt,d.law||'');y+=3;
 
   if (docDetail.rental === 'detailed') {
     addTxt(t('rdoc-maint-h'),{size:12,style:'bold',gap:4}); addTxt(t('rdoc-maint-text'),{}); y+=3;
@@ -4205,6 +4213,7 @@ function renderEngPreview() {
     <div class="sec"><div class="sec-title">${t('edoc-fee-h')}</div><p>${feeText}</p></div>
     <div class="sec"><div class="sec-title">${t('edoc-duration-h')}</div><p>${durText}</p></div>
     ${extraSecs}
+    ${lateInterestHtml(d.law||d.from?.country||'')}
     <div class="sec"><div class="sec-title">${t('doc-law-h')}</div><p>${t('doc-law-text').replace('{law}',d.law||'___')}</p></div>
     <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate))}</p></div>
     <div class="sig-grid">
@@ -4268,6 +4277,8 @@ async function downloadEngPDF() {
     addTxt(t('edoc-liability-h'),{size:12,style:'bold',gap:4}); addTxt(t('edoc-liability-text'),{}); y+=3;
     addTxt(t('edoc-term-h'),{size:12,style:'bold',gap:4}); addTxt(t('edoc-term-text'),{}); y+=3;
   }
+
+  addLateInterestPDF(addTxt,d.law||'');y+=3;
 
   addTxt(t('doc-law-h'),{size:12,style:'bold',gap:4});
   addTxt(t('doc-law-text').replace('{law}',d.law||'___'),{}); y+=3;
@@ -4464,7 +4475,8 @@ function renderInvoicePreview() {
     </div>
     <div class="sec">${linesHtml}${totalsHtml}</div>
     <div class="sec" style="font-size:12px;"><strong>${t('lbl-payment-method')}:</strong> ${d.methodLabel}${d.bank?'<br><strong>'+t('lbl-bank-details')+':</strong><br>'+d.bank.replace(/\n/g,'<br>'):''}</div>
-    ${d.notes?'<div class="sec" style="font-size:12px;"><strong>'+t('lbl-notes')+':</strong> '+d.notes+'</div>':''}`;
+    ${d.notes?'<div class="sec" style="font-size:12px;"><strong>'+t('lbl-notes')+':</strong> '+d.notes+'</div>':''}
+    ${lateInterestHtml(d.law||d.from?.country||'')}`;
 }
 async function downloadInvoicePDF() {
   trackEdits('invoice-preview','Invoice');
@@ -4500,6 +4512,7 @@ async function downloadInvoicePDF() {
   addTxt(t('lbl-payment-method')+': '+d.methodLabel,{});
   if(d.bank)addTxt(t('lbl-bank-details')+':\n'+d.bank,{});
   if(d.notes)addTxt(t('lbl-notes')+': '+d.notes,{});
+  y+=3;addLateInterestPDF(addTxt,d.law||d.from?.country||'');
 
   addHeaderFooter(doc,ds);addPageNumbers(doc,'invoice-page-numbers');
   const blob=doc.output('blob');const fn=`Invoice_${d.number||'draft'}.pdf`;
@@ -4897,6 +4910,7 @@ function renderLoanPreview() {
     <div class="sec"><div class="sec-title">${t('ldoc-repay-h')}</div><p>${repayStr}</p></div>
     <div class="sec"><div class="sec-title">${t('doc-duration-h')}</div><p>${t('doc-fixed-text').replace('{start}',fmtDate(d.dateStart)).replace('{end}',fmtDate(d.dateEnd))}</p></div>
     ${extraSecs}
+    ${lateInterestHtml(d.law||d.from?.country||'')}
     <div class="sec"><div class="sec-title">${t('doc-law-h')}</div><p>${t('doc-law-text').replace('{law}',d.law||'___')}</p></div>
     <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate))}</p></div>
     <div class="sig-grid">
@@ -4962,6 +4976,8 @@ async function downloadLoanPDF() {
     addTxt(t('ldoc-early-h'),{size:12,style:'bold',gap:4}); addTxt(t('ldoc-early-text'),{}); y+=3;
     addTxt(t('ldoc-default-h'),{size:12,style:'bold',gap:4}); addTxt(t('ldoc-default-text'),{}); y+=3;
   }
+
+  addLateInterestPDF(addTxt,d.law||'');y+=3;
 
   addTxt(t('doc-law-h'),{size:12,style:'bold',gap:4});
   addTxt(t('doc-law-text').replace('{law}',d.law||'___'),{}); y+=3;
@@ -5040,6 +5056,55 @@ function checkEmptyFields() {
 }
 
 // ====== Extra section helper (upsell in basic mode) ======
+function getLateInterestRef(law) {
+  const c = (law||'').toLowerCase();
+  if (c.includes('sint maarten') || c.includes('curaçao') || c.includes('curacao'))
+    return 'Art. 6:120 Burgerlijk Wetboek / Landsbesluit wettelijke rente (CBCS)';
+  if (c.includes('nederland') || c.includes('netherlands'))
+    return 'Art. 6:119 / 6:119a Burgerlijk Wetboek (BW)';
+  if (c.includes('bonaire') || c.includes('saba') || c.includes('sint eustatius') || c.includes('bes'))
+    return 'Art. 6:120 Burgerlijk Wetboek BES';
+  if (c.includes('aruba'))
+    return 'Art. 6:119 Burgerlijk Wetboek van Aruba';
+  if (c.includes('belg'))
+    return 'Wet van 5 mei 1865 betreffende de wettelijke rentevoet';
+  if (c.includes('united kingdom') || c.includes('uk') || c.includes('england'))
+    return 'Late Payment of Commercial Debts (Interest) Act 1998';
+  if (c.includes('deutschland') || c.includes('germany'))
+    return '§ 288 Bürgerliches Gesetzbuch (BGB)';
+  if (c.includes('france') || c.includes('frankrijk'))
+    return 'Art. L.441-10 Code de commerce';
+  if (c.includes('españa') || c.includes('spain') || c.includes('spanje'))
+    return 'Art. 1108 Código Civil / Ley 3/2004';
+  if (c.includes('suriname'))
+    return 'Art. 1286 Burgerlijk Wetboek Suriname';
+  if (c.includes('trinidad'))
+    return 'Supreme Court of Judicature Act, Section 25';
+  if (c.includes('jamaica'))
+    return 'Judicature (Supreme Court) Act, Section 3';
+  if (c.includes('barbados'))
+    return 'Supreme Court of Judicature Act, Cap. 117A';
+  if (c.includes('guyana'))
+    return 'Civil Law of Guyana Act, Cap. 6:01';
+  if (c.includes('dominican') || c.includes('dominicana'))
+    return 'Art. 1153 Código Civil Dominicano';
+  if (c.includes('haiti') || c.includes('haïti'))
+    return 'Art. 1153 Code Civil Haïtien';
+  return '';
+}
+
+function lateInterestHtml(law) {
+  const ref = getLateInterestRef(law);
+  const refHtml = ref ? `<p style="font-size:11px;font-style:italic;margin-top:4px;">${t('doc-late-interest-ref').replace('{ref}',ref)}</p>` : '';
+  return `<div class="sec" style="border-left:2px solid var(--warn);padding-left:10px;"><div class="sec-title">${t('doc-late-interest-h')}</div><p>${t('doc-late-interest')}</p>${refHtml}</div>`;
+}
+function addLateInterestPDF(addTxt, law) {
+  addTxt(t('doc-late-interest-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('doc-late-interest'),{});
+  const ref = getLateInterestRef(law);
+  if (ref) addTxt(t('doc-late-interest-ref').replace('{ref}',ref),{size:9,style:'italic'});
+}
+
 function extraSecClass(detailed) {
   return detailed ? 'extra-sec' : 'extra-sec greyed';
 }
@@ -5574,6 +5639,7 @@ function renderBosPreview() {
     <div class="sec"><div class="sec-title">${t('bdoc-price-h')}</div><p>${t('bdoc-price-text').replace('{amount}',amtStr)}</p><p>${t('bdoc-payment-text').replace('{method}',payLabel)}</p></div>
     <div class="sec"><div class="sec-title">${t('bdoc-condition-h')}</div><p>${condText}</p></div>
     ${extraSecs}
+    ${lateInterestHtml(d.law||d.from?.country||'')}
     <div class="sec"><div class="sec-title">${t('doc-law-h')}</div><p>${t('doc-law-text').replace('{law}',d.law||'___')}</p></div>
     <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate))}</p></div>
     <div class="sig-grid">
@@ -5646,6 +5712,8 @@ async function downloadBosPDF() {
     addTxt(t('bdoc-ownership-h'),{size:12,style:'bold',gap:4}); addTxt(t('bdoc-ownership-text'),{}); y+=3;
     addTxt(t('bdoc-disputes-h'),{size:12,style:'bold',gap:4}); addTxt(t('bdoc-disputes-text'),{}); y+=3;
   }
+
+  addLateInterestPDF(addTxt,d.law||'');y+=3;
 
   addTxt(t('doc-law-h'),{size:12,style:'bold',gap:4});
   addTxt(t('doc-law-text').replace('{law}',d.law||'___'),{}); y+=3;
