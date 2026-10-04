@@ -497,6 +497,44 @@ body {
 .attach-row button:hover { color:var(--error); }
 .btn-add-attach { background:none; border:1px dashed var(--border); border-radius:6px; padding:8px 14px; font-size:12px; font-weight:500; color:var(--text-mid); cursor:pointer; font-family:inherit; width:100%; }
 .btn-add-attach:hover { border-color:var(--pri); color:var(--pri); }
+.doc-settings {
+  margin-top: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.doc-settings summary {
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--input-bg);
+  color: var(--text);
+  list-style: none;
+}
+.doc-settings summary::-webkit-details-marker { display:none; }
+.doc-settings summary::before { content:'⚙️ '; }
+.doc-settings .ds-body {
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 500px) { .doc-settings .ds-body { grid-template-columns: 1fr; } }
+.doc-settings .ds-body .field { margin-bottom: 0; }
+.doc-settings .ds-body label { font-size: 12px; font-weight: 600; color: var(--text-mid); margin-bottom: 4px; display: block; }
+.doc-settings .ds-body input,
+.doc-settings .ds-body select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  background: var(--card);
+  color: var(--text);
+}
+.ds-full { grid-column: 1 / -1; }
 
 /* Intro */
 .intro-points {
@@ -1014,6 +1052,19 @@ body {
       <div id="poa-attach-list"></div>
       <button class="btn-add-attach" onclick="addAttachment('poa')" data-i18n="btn-add-attach">+ Add attachment</button>
     </div>
+    <details class="doc-settings">
+      <summary data-i18n="lbl-doc-settings">Document settings</summary>
+      <div class="ds-body">
+        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="poa-header" data-i18n-placeholder="ph-header"></div>
+        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="poa-footer" data-i18n-placeholder="ph-footer"></div>
+        <div class="field"><label data-i18n="lbl-fontsize">Font size</label>
+          <select id="poa-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select>
+        </div>
+        <div class="field"><label data-i18n="lbl-fontfamily">Font</label>
+          <select id="poa-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select>
+        </div>
+      </div>
+    </details>
     <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
       <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-mid);cursor:pointer;">
         <input type="checkbox" id="poa-page-numbers" style="width:16px;height:16px;accent-color:var(--pri);">
@@ -1245,6 +1296,19 @@ body {
       <div id="rental-attach-list"></div>
       <button class="btn-add-attach" onclick="addAttachment('rental')" data-i18n="btn-add-attach">+ Add attachment</button>
     </div>
+    <details class="doc-settings">
+      <summary data-i18n="lbl-doc-settings">Document settings</summary>
+      <div class="ds-body">
+        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="rental-header" data-i18n-placeholder="ph-header"></div>
+        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="rental-footer" data-i18n-placeholder="ph-footer"></div>
+        <div class="field"><label data-i18n="lbl-fontsize">Font size</label>
+          <select id="rental-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select>
+        </div>
+        <div class="field"><label data-i18n="lbl-fontfamily">Font</label>
+          <select id="rental-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select>
+        </div>
+      </div>
+    </details>
     <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
       <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-mid);cursor:pointer;">
         <input type="checkbox" id="rental-page-numbers" style="width:16px;height:16px;accent-color:var(--pri);">
@@ -1399,6 +1463,19 @@ body {
       <div id="bos-attach-list"></div>
       <button class="btn-add-attach" onclick="addAttachment('bos')" data-i18n="btn-add-attach">+ Add attachment</button>
     </div>
+    <details class="doc-settings">
+      <summary data-i18n="lbl-doc-settings">Document settings</summary>
+      <div class="ds-body">
+        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="bos-header" data-i18n-placeholder="ph-header"></div>
+        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="bos-footer" data-i18n-placeholder="ph-footer"></div>
+        <div class="field"><label data-i18n="lbl-fontsize">Font size</label>
+          <select id="bos-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select>
+        </div>
+        <div class="field"><label data-i18n="lbl-fontfamily">Font</label>
+          <select id="bos-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select>
+        </div>
+      </div>
+    </details>
     <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
       <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-mid);cursor:pointer;">
         <input type="checkbox" id="bos-page-numbers" style="width:16px;height:16px;accent-color:var(--pri);">
@@ -1423,6 +1500,7 @@ body {
         <li>Prijs, valuta, betaalwijze (contant/overschrijving/gemengd), staat (as-is of goede staat)</li>
         <li>Basic/Detailed: uitgebreid voegt eigendomsverklaring en geschillenregeling toe</li>
         <li>Jurisdictie-checklist voor Sint Maarten voertuigoverdracht: NAf. 5 zegel, benodigde documenten (ID, rijbewijs, verzekeringspolis, keuringskaart, Carte Grise)</li>
+        <li>Documentinstellingen: aanpasbare koptekst, voettekst, lettergrootte (9-12pt), en lettertype (Helvetica, Times New Roman, Courier)</li>
         <li>Bijlagen-functie: gebruiker kan bijlagenamen toevoegen, worden genummerd in de PDF onder "BIJLAGEN"</li>
         <li>Optionele paginanummering in PDF ("1 van 3") — checkbox bij alle documenttypes, in 5 talen</li>
         <li>Volledige ondersteuning in 5 talen</li>
@@ -1839,6 +1917,13 @@ const T = {
   'edit-hint': { en:'Click on any section to edit the text. Your changes will be included in the PDF.', nl:'Klik op een sectie om de tekst aan te passen. Je wijzigingen worden opgenomen in de PDF.', es:'Haz clic en cualquier sección para editar el texto. Los cambios se incluirán en el PDF.', fr:'Cliquez sur une section pour modifier le texte. Vos modifications seront incluses dans le PDF.', de:'Klicken Sie auf einen Abschnitt, um den Text zu bearbeiten. Ihre Änderungen werden in das PDF übernommen.' },
   'last-updated': { en:'Last updated: October 3, 2026', nl:'Laatst bijgewerkt: 3 oktober 2026', es:'Última actualización: 3 de octubre de 2026', fr:'Dernière mise à jour : 3 octobre 2026', de:'Zuletzt aktualisiert: 3. Oktober 2026' },
   'privacy-link': { en:'Privacy Policy', nl:'Privacybeleid', es:'Política de Privacidad', fr:'Politique de Confidentialité', de:'Datenschutzerklärung' },
+  'lbl-doc-settings': { en:'Document settings', nl:'Documentinstellingen', es:'Configuración del documento', fr:'Paramètres du document', de:'Dokumenteinstellungen' },
+  'lbl-header': { en:'Header text', nl:'Koptekst', es:'Encabezado', fr:'En-tête', de:'Kopfzeile' },
+  'lbl-footer': { en:'Footer text', nl:'Voettekst', es:'Pie de página', fr:'Pied de page', de:'Fußzeile' },
+  'ph-header': { en:'e.g. CONFIDENTIAL', nl:'bijv. VERTROUWELIJK', es:'p. ej. CONFIDENCIAL', fr:'p. ex. CONFIDENTIEL', de:'z.B. VERTRAULICH' },
+  'ph-footer': { en:'e.g. Company name', nl:'bijv. Bedrijfsnaam', es:'p. ej. Nombre de empresa', fr:'p. ex. Nom de l\'entreprise', de:'z.B. Firmenname' },
+  'lbl-fontsize': { en:'Font size', nl:'Lettergrootte', es:'Tamaño de letra', fr:'Taille de police', de:'Schriftgröße' },
+  'lbl-fontfamily': { en:'Font', nl:'Lettertype', es:'Fuente', fr:'Police', de:'Schriftart' },
   'lbl-attachments': { en:'📎 Attachments', nl:'📎 Bijlagen', es:'📎 Anexos', fr:'📎 Pièces jointes', de:'📎 Anlagen' },
   'btn-add-attach': { en:'+ Add attachment', nl:'+ Bijlage toevoegen', es:'+ Añadir anexo', fr:'+ Ajouter une pièce jointe', de:'+ Anlage hinzufügen' },
   'ph-attach': { en:'e.g. Copy of ID, Vehicle inspection card', nl:'bijv. Kopie ID, Keuringskaart voertuig', es:'p. ej. Copia de ID, Tarjeta de inspección', fr:'p. ex. Copie d\'ID, Carte d\'inspection', de:'z.B. Kopie des Ausweises, Prüfkarte' },
@@ -2167,15 +2252,16 @@ async function downloadPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
   const d = gatherData();
+  const ds = getDocSettings('poa');
   const mg = 25, pw = 160;
-  let y = mg;
+  let y = ds.header ? mg + 4 : mg;
 
   const addTxt = (text, opts = {}) => {
-    const sz = opts.size || 10, st = opts.style || 'normal', al = opts.align || 'left';
+    const sz = opts.size || ds.fontSize, st = opts.style || 'normal', al = opts.align || 'left';
     doc.setFontSize(sz);
-    doc.setFont('helvetica', st);
+    doc.setFont(ds.fontFamily, st);
     const lines = doc.splitTextToSize(text, opts.w || pw);
-    if (y + lines.length * sz * 0.4 > 280) { doc.addPage(); y = mg; }
+    if (y + lines.length * sz * 0.4 > 278) { doc.addPage(); y = ds.header ? mg + 4 : mg; }
     doc.text(lines, al === 'center' ? 105 : mg, y, { align: al });
     y += lines.length * sz * 0.42 + (opts.gap || 2);
   };
@@ -2249,9 +2335,7 @@ async function downloadPDF() {
   doc.text(`${t('doc-witness')} 2`, mg+95, y+5);
 
   y = addAttachmentsToPDF(doc, 'poa', mg, pw, y);
-  doc.setFontSize(7);
-  doc.setTextColor(150);
-  doc.text('Generated by documentgenerator.ai', 105, 290, { align: 'center' });
+  addHeaderFooter(doc, ds);
   addPageNumbers(doc, 'poa-page-numbers');
 
   const blob = doc.output('blob');
@@ -2618,14 +2702,15 @@ async function downloadRentalPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'mm', format:'a4' });
   const d = gatherRentalData();
+  const ds = getDocSettings('rental');
   const mg = 25, pw = 160;
-  let y = mg;
+  let y = ds.header ? mg + 4 : mg;
 
   const addTxt = (text, opts={}) => {
-    const sz=opts.size||10, st=opts.style||'normal', al=opts.align||'left';
-    doc.setFontSize(sz); doc.setFont('helvetica',st);
+    const sz=opts.size||ds.fontSize, st=opts.style||'normal', al=opts.align||'left';
+    doc.setFontSize(sz); doc.setFont(ds.fontFamily,st);
     const lines = doc.splitTextToSize(text, opts.w||pw);
-    if (y+lines.length*sz*0.4>280){doc.addPage();y=mg;}
+    if (y+lines.length*sz*0.4>278){doc.addPage();y=ds.header?mg+4:mg;}
     doc.text(lines, al==='center'?105:mg, y, {align:al});
     y+=lines.length*sz*0.42+(opts.gap||2);
   };
@@ -2698,9 +2783,7 @@ async function downloadRentalPDF() {
   doc.text(discLines,mg,y); y+=discLines.length*3.5;
 
   y = addAttachmentsToPDF(doc, 'rental', mg, pw, y);
-  // Footer
-  doc.setFontSize(7); doc.setTextColor(150);
-  doc.text('Generated by documentgenerator.ai',105,290,{align:'center'});
+  addHeaderFooter(doc, ds);
   addPageNumbers(doc, 'rental-page-numbers');
 
   const blob = doc.output('blob');
@@ -2741,6 +2824,34 @@ function setDocDetail(docType, level) {
   if (docType === 'poa') renderPreview();
   else if (docType === 'rental') renderRentalPreview();
   else if (docType === 'bos') renderBosPreview();
+}
+
+// ====== Document settings helper ======
+function getDocSettings(docType) {
+  return {
+    fontSize: parseInt(document.getElementById(docType+'-fontsize')?.value) || 10,
+    fontFamily: document.getElementById(docType+'-fontfamily')?.value || 'helvetica',
+    header: document.getElementById(docType+'-header')?.value?.trim() || '',
+    footer: document.getElementById(docType+'-footer')?.value?.trim() || '',
+  };
+}
+
+function addHeaderFooter(doc, settings) {
+  const total = doc.getNumberOfPages();
+  for (let i = 1; i <= total; i++) {
+    doc.setPage(i);
+    if (settings.header) {
+      doc.setFontSize(8); doc.setFont(settings.fontFamily,'bold'); doc.setTextColor(100);
+      doc.text(settings.header, 105, 12, { align:'center' });
+      doc.setDrawColor(200); doc.line(25, 14, 185, 14);
+    }
+    if (settings.footer) {
+      doc.setFontSize(8); doc.setFont(settings.fontFamily,'normal'); doc.setTextColor(100);
+      doc.setDrawColor(200); doc.line(25, 282, 185, 282);
+      doc.text(settings.footer, 105, 287, { align:'center' });
+    }
+    doc.setTextColor(0);
+  }
 }
 
 // ====== Attachments ======
@@ -2960,13 +3071,14 @@ async function downloadBosPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'mm', format:'a4' });
   const d = gatherBosData();
+  const ds = getDocSettings('bos');
   const mg = 25, pw = 160;
-  let y = mg;
+  let y = ds.header ? mg + 4 : mg;
   const addTxt = (text, opts={}) => {
-    const sz=opts.size||10, st=opts.style||'normal', al=opts.align||'left';
-    doc.setFontSize(sz); doc.setFont('helvetica',st);
+    const sz=opts.size||ds.fontSize, st=opts.style||'normal', al=opts.align||'left';
+    doc.setFontSize(sz); doc.setFont(ds.fontFamily,st);
     const lines = doc.splitTextToSize(text, opts.w||pw);
-    if (y + lines.length*sz*0.4 > 280) { doc.addPage(); y=mg; }
+    if (y + lines.length*sz*0.4 > 278) { doc.addPage(); y=ds.header?mg+4:mg; }
     doc.text(lines, al==='center'?105:mg, y, {align:al});
     y += lines.length*sz*0.42 + (opts.gap||2);
   };
@@ -3020,8 +3132,7 @@ async function downloadBosPDF() {
 
   y+=25; if(y>270){doc.addPage();y=mg;}
   y = addAttachmentsToPDF(doc, 'bos', mg, pw, y);
-  doc.setFontSize(7); doc.setTextColor(150);
-  doc.text('Generated by documentgenerator.ai', 105, 290, { align:'center' });
+  addHeaderFooter(doc, ds);
   addPageNumbers(doc, 'bos-page-numbers');
 
   const blob = doc.output('blob');
