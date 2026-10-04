@@ -915,6 +915,16 @@ input[type=number] { -moz-appearance: textfield; }
           <h3 data-i18n="dt-will-title">Last Will & Testament</h3>
           <p data-i18n="dt-will-desc">Set out your final wishes</p>
         </div>
+        <div class="doc-card" onclick="selectDocType('receipt')">
+          <div class="dc-icon">🧾</div>
+          <h3 data-i18n="dt-receipt-title">Receipt</h3>
+          <p data-i18n="dt-receipt-desc">Confirm a payment received</p>
+        </div>
+        <div class="doc-card" onclick="selectDocType('invoice')">
+          <div class="dc-icon">🧮</div>
+          <h3 data-i18n="dt-invoice-title">Invoice</h3>
+          <p data-i18n="dt-invoice-desc">Bill for goods or services</p>
+        </div>
       </div>
 
       <div class="intro-points">
@@ -1736,6 +1746,188 @@ input[type=number] { -moz-appearance: textfield; }
     <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
 
+  <!-- RECEIPT STEP 1: Received by -->
+  <div class="step" id="step-rc1">
+    <div class="step-card">
+      <div class="step-icon">🧾</div>
+      <h2 class="step-title" data-i18n="rc1-title">Received by</h2>
+      <p class="step-explain" data-i18n="rc1-explain">The person or business that received the payment.</p>
+      <div class="field"><label data-i18n="lbl-name">Full name</label><input type="text" id="rc-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-rc-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="rc-address" data-i18n-placeholder="ph-address"></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="rc-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goReceiptStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateReceiptAndGo('rc1','rc2')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- RECEIPT STEP 2: Received from -->
+  <div class="step" id="step-rc2">
+    <div class="step-card">
+      <div class="step-icon">🙋</div>
+      <h2 class="step-title" data-i18n="rc2-title">Received from</h2>
+      <p class="step-explain" data-i18n="rc2-explain">The person or business that made the payment.</p>
+      <div class="field"><label data-i18n="lbl-name">Full name</label><input type="text" id="rc-from-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-rc-from-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="rc-from-address" data-i18n-placeholder="ph-address"></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="rc-from-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goReceiptStep('rc1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateReceiptAndGo('rc2','rc3')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- RECEIPT STEP 3: Payment details -->
+  <div class="step" id="step-rc3">
+    <div class="step-card">
+      <div class="step-icon">💵</div>
+      <h2 class="step-title" data-i18n="rc3-title">Payment details</h2>
+      <p class="step-explain" data-i18n="rc3-explain">How much was paid, for what, and how?</p>
+      <div class="field"><label data-i18n="lbl-receipt-number">Receipt number (optional)</label><input type="text" id="rc-number" placeholder="e.g. R-2026-001"></div>
+      <div class="field-row">
+        <div class="field"><label data-i18n="lbl-loan-amount">Amount</label><input type="number" id="rc-amount" min="0" step="0.01"></div>
+        <div class="field"><label data-i18n="lbl-currency">Currency</label>
+          <select id="rc-currency"><option value="USD">USD — US Dollar</option><option value="EUR">EUR — Euro</option><option value="CMg">CMg — Caribbean Guilder</option><option value="GBP">GBP — British Pound</option><option value="AWG">AWG — Aruban Florin</option><option value="XCD">XCD — East Caribbean Dollar</option><option value="DOP">DOP — Dominican Peso</option><option value="JMD">JMD — Jamaican Dollar</option><option value="TTD">TTD — Trinidad &amp; Tobago Dollar</option><option value="BBD">BBD — Barbadian Dollar</option><option value="GYD">GYD — Guyanese Dollar</option><option value="SRD">SRD — Surinamese Dollar</option><option value="HTG">HTG — Haitian Gourde</option><option value="CHF">CHF — Swiss Franc</option><option value="CAD">CAD — Canadian Dollar</option><option value="AUD">AUD — Australian Dollar</option><option value="MXN">MXN — Mexican Peso</option><option value="other">Other</option></select>
+        </div>
+      </div>
+      <div class="field"><label data-i18n="lbl-for">For</label><input type="text" id="rc-for" data-i18n-placeholder="ph-for"></div>
+      <div class="field"><label data-i18n="lbl-payment-method">Payment method</label>
+        <select id="rc-method"><option value="cash" data-i18n="opt-cash">Cash</option><option value="bank" data-i18n="opt-bank">Bank transfer</option><option value="check" data-i18n="opt-check">Check</option><option value="card" data-i18n="opt-card">Card</option><option value="other" data-i18n="opt-other-method">Other</option></select>
+      </div>
+      <div class="field"><label data-i18n="lbl-date">Date of payment</label><input type="date" id="rc-date"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goReceiptStep('rc2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goReceiptStep('rc4')" data-i18n="btn-preview">Check the document</button></div>
+    </div>
+  </div>
+
+  <!-- RECEIPT STEP 4: Preview & Download -->
+  <div class="step" id="step-rc4">
+    <div class="step-card" style="padding:20px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+        <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-back" onclick="goReceiptStep('rc1')" data-i18n="btn-edit">Edit</button>
+          <button class="btn btn-download" onclick="downloadReceiptPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+        </div>
+      </div>
+      <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <button class="btn-edit-doc" onclick="toggleEditMode('receipt-preview')" id="edit-btn-receipt-preview" data-i18n="btn-customize">✏️ Customize document</button>
+    </div>
+    <div class="edit-hint" id="edit-hint-receipt-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
+    <div class="preview-box" id="receipt-preview"></div>
+    <details class="doc-settings">
+      <summary data-i18n="lbl-doc-settings">Document settings</summary>
+      <div class="ds-body">
+        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="receipt-header" data-i18n-placeholder="ph-header"></div>
+        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="receipt-footer" data-i18n-placeholder="ph-footer"></div>
+        <div class="field"><label data-i18n="lbl-fontsize">Font size</label><select id="receipt-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select></div>
+        <div class="field"><label data-i18n="lbl-fontfamily">Font</label><select id="receipt-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select></div>
+      </div>
+    </details>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
+      <button class="btn btn-download" onclick="downloadReceiptPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+    </div>
+    <button class="btn-new-doc" onclick="invoiceFromReceipt()" data-i18n="btn-invoice-from-receipt" style="border-color:var(--pri);color:var(--pri);">📄 Create invoice for this payment</button>
+    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
+  </div>
+
+  <!-- INVOICE STEP 1: From -->
+  <div class="step" id="step-iv1">
+    <div class="step-card">
+      <div class="step-icon">🏢</div>
+      <h2 class="step-title" data-i18n="iv1-title">From (sender)</h2>
+      <p class="step-explain" data-i18n="iv1-explain">The person or business sending the invoice.</p>
+      <div class="field"><label data-i18n="lbl-name">Full name / company</label><input type="text" id="iv-from-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-iv-from-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="iv-from-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-iv-from-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="iv-from-country"></div>
+      <div class="field"><label data-i18n="lbl-email">Email (optional)</label><input type="email" id="iv-from-email"></div>
+      <div class="field"><label data-i18n="lbl-phone">Phone (optional)</label><input type="text" id="iv-from-phone"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goInvoiceStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateInvoiceAndGo('iv1','iv2')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- INVOICE STEP 2: To -->
+  <div class="step" id="step-iv2">
+    <div class="step-card">
+      <div class="step-icon">🙋</div>
+      <h2 class="step-title" data-i18n="iv2-title">To (recipient)</h2>
+      <p class="step-explain" data-i18n="iv2-explain">The person or business receiving the invoice.</p>
+      <div class="field"><label data-i18n="lbl-name">Full name / company</label><input type="text" id="iv-to-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-iv-to-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="iv-to-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-iv-to-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="iv-to-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goInvoiceStep('iv1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateInvoiceAndGo('iv2','iv3')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- INVOICE STEP 3: Line items -->
+  <div class="step" id="step-iv3">
+    <div class="step-card">
+      <div class="step-icon">📋</div>
+      <h2 class="step-title" data-i18n="iv3-title">Line items</h2>
+      <p class="step-explain" data-i18n="iv3-explain">What are you billing for?</p>
+      <div class="field-row">
+        <div class="field"><label data-i18n="lbl-invoice-number">Invoice number</label><input type="text" id="iv-number" placeholder="e.g. INV-2026-001"></div>
+        <div class="field"><label data-i18n="lbl-currency">Currency</label>
+          <select id="iv-currency"><option value="USD">USD — US Dollar</option><option value="EUR">EUR — Euro</option><option value="CMg">CMg — Caribbean Guilder</option><option value="GBP">GBP — British Pound</option><option value="AWG">AWG — Aruban Florin</option><option value="XCD">XCD — East Caribbean Dollar</option><option value="DOP">DOP — Dominican Peso</option><option value="JMD">JMD — Jamaican Dollar</option><option value="TTD">TTD — Trinidad &amp; Tobago Dollar</option><option value="BBD">BBD — Barbadian Dollar</option><option value="GYD">GYD — Guyanese Dollar</option><option value="SRD">SRD — Surinamese Dollar</option><option value="HTG">HTG — Haitian Gourde</option><option value="CHF">CHF — Swiss Franc</option><option value="CAD">CAD — Canadian Dollar</option><option value="AUD">AUD — Australian Dollar</option><option value="MXN">MXN — Mexican Peso</option><option value="other">Other</option></select>
+        </div>
+      </div>
+      <div id="invoice-lines"></div>
+      <button class="btn-add-attach" onclick="addInvoiceLine()" data-i18n="btn-add-line" style="margin-top:8px;">+ Add line</button>
+      <div class="field" style="margin-top:12px;"><label data-i18n="lbl-tax-rate">Tax rate (%)</label><input type="number" id="iv-tax" min="0" max="100" step="0.1" value="0"><div class="hint" data-i18n="hint-tax">Enter 0 if no tax applies</div></div>
+      <div class="nav"><button class="btn btn-back" onclick="goInvoiceStep('iv2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goInvoiceStep('iv4')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- INVOICE STEP 4: Payment terms -->
+  <div class="step" id="step-iv4">
+    <div class="step-card">
+      <div class="step-icon">📅</div>
+      <h2 class="step-title" data-i18n="iv4-title">Payment terms</h2>
+      <p class="step-explain" data-i18n="iv4-explain">When is payment due and how?</p>
+      <div class="field"><label data-i18n="lbl-invoice-date">Invoice date</label><input type="date" id="iv-date"></div>
+      <div class="field"><label data-i18n="lbl-due-date">Due date</label><input type="date" id="iv-due" onchange="validateDateRange('iv-date','iv-due')"></div>
+      <div class="field"><label data-i18n="lbl-payment-method">Payment method</label>
+        <select id="iv-method"><option value="bank" data-i18n="opt-bank">Bank transfer</option><option value="cash" data-i18n="opt-cash">Cash</option><option value="check" data-i18n="opt-check">Check</option><option value="card" data-i18n="opt-card">Card</option><option value="other" data-i18n="opt-other-method">Other</option></select>
+      </div>
+      <div class="field"><label data-i18n="lbl-bank-details">Bank details (optional)</label><textarea id="iv-bank" rows="3" placeholder="e.g. IBAN, account number, bank name"></textarea></div>
+      <div class="field"><label data-i18n="lbl-notes">Notes (optional)</label><textarea id="iv-notes" rows="2"></textarea></div>
+      <div class="nav"><button class="btn btn-back" onclick="goInvoiceStep('iv3')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goInvoiceStep('iv5')" data-i18n="btn-preview">Check the document</button></div>
+    </div>
+  </div>
+
+  <!-- INVOICE STEP 5: Preview & Download -->
+  <div class="step" id="step-iv5">
+    <div class="step-card" style="padding:20px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+        <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-back" onclick="goInvoiceStep('iv1')" data-i18n="btn-edit">Edit</button>
+          <button class="btn btn-download" onclick="downloadInvoicePDF()" data-i18n="btn-download">⬇ Download PDF</button>
+        </div>
+      </div>
+      <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <button class="btn-edit-doc" onclick="toggleEditMode('invoice-preview')" id="edit-btn-invoice-preview" data-i18n="btn-customize">✏️ Customize document</button>
+    </div>
+    <div class="edit-hint" id="edit-hint-invoice-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
+    <div class="preview-box" id="invoice-preview"></div>
+    <details class="doc-settings">
+      <summary data-i18n="lbl-doc-settings">Document settings</summary>
+      <div class="ds-body">
+        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="invoice-header" data-i18n-placeholder="ph-header"></div>
+        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="invoice-footer" data-i18n-placeholder="ph-footer"></div>
+        <div class="field"><label data-i18n="lbl-fontsize">Font size</label><select id="invoice-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select></div>
+        <div class="field"><label data-i18n="lbl-fontfamily">Font</label><select id="invoice-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select></div>
+      </div>
+    </details>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-mid);cursor:pointer;">
+        <input type="checkbox" id="invoice-page-numbers" style="width:16px;height:16px;accent-color:var(--pri);">
+        <span data-i18n="lbl-page-numbers">Number pages</span>
+      </label>
+      <button class="btn btn-download" onclick="downloadInvoicePDF()" data-i18n="btn-download">⬇ Download PDF</button>
+    </div>
+    <button class="btn-new-doc" onclick="receiptFromInvoice()" data-i18n="btn-receipt-from-invoice" style="border-color:var(--pri);color:var(--pri);">✅ Payment received? Create receipt</button>
+    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
+  </div>
+
   <!-- NDA STEP 1: Type & Disclosing party -->
   <div class="step" id="step-n1">
     <div class="step-card">
@@ -2270,6 +2462,10 @@ input[type=number] { -moz-appearance: textfield; }
         <li>Basic/uitgebreid upsell: extra secties zichtbaar als uitgegrijsde blokken in basic-modus</li>
         <li>Zachte validatiewaarschuwing bij preview als velden nog leeg zijn</li>
         <li>Alle country- en plaatsvelden automatisch ingevuld op basis van locatiedetectie</li>
+        <li>Kwitantie (Receipt) toegevoegd: ontvanger, betaler, bedrag, betaalwijze, kwitantienummer</li>
+        <li>Factuur (Invoice) toegevoegd: afzender, ontvanger, dynamische regels (omschrijving, aantal, stukprijs), belasting, subtotaal, totaal, vervaldatum, bankgegevens</li>
+        <li>ANG vervangen door CMg (Caribbean Guilder) — valutanamen toegevoegd, locatie-detectie voor standaardvaluta</li>
+        <li>Voertuigtype sub-keuze: auto, motor, scooter, vrachtwagen, SUV, bestelbus, bus, ATV, aanhanger</li>
         <li>Datum en tijd in "laatst bijgewerkt" nu dynamisch</li>
         <li>Documenticoon boven keuzepagina verwijderd</li>
       </ul>
@@ -2710,6 +2906,56 @@ const T = {
   'bdoc-disputes-text': { en:'Any dispute arising from this agreement shall first be resolved through negotiation. If no resolution is reached, the dispute shall be submitted to the competent court under the governing law of this agreement.', nl:'Geschillen voortvloeiend uit deze overeenkomst worden eerst in onderling overleg opgelost. Indien geen overeenstemming wordt bereikt, wordt het geschil voorgelegd aan de bevoegde rechter onder het toepasselijk recht van deze overeenkomst.', es:'Cualquier disputa derivada de este contrato se resolverá primero mediante negociación. Si no se llega a un acuerdo, la disputa se someterá al tribunal competente.', fr:'Tout litige découlant du présent contrat sera d\'abord résolu par négociation. En l\'absence d\'accord, le litige sera soumis au tribunal compétent.', de:'Streitigkeiten aus diesem Vertrag werden zunächst im Verhandlungswege beigelegt. Kommt keine Einigung zustande, wird der Streit dem zuständigen Gericht vorgelegt.' },
   'dt-loan-title':   { en:'Loan Agreement', nl:'Leenovereenkomst', es:'Contrato de préstamo', fr:'Contrat de prêt', de:'Darlehensvertrag' },
   'dt-loan-desc':    { en:'Lend or borrow money', nl:'Geld lenen of uitlenen', es:'Prestar o pedir dinero prestado', fr:'Prêter ou emprunter de l\'argent', de:'Geld verleihen oder leihen' },
+  'dt-receipt-title': { en:'Receipt', nl:'Kwitantie', es:'Recibo', fr:'Reçu', de:'Quittung' },
+  'dt-receipt-desc': { en:'Confirm a payment received', nl:'Bevestig een ontvangen betaling', es:'Confirmar un pago recibido', fr:'Confirmer un paiement reçu', de:'Eingang einer Zahlung bestätigen' },
+  'rc1-title': { en:'Received by', nl:'Ontvangen door', es:'Recibido por', fr:'Reçu par', de:'Empfangen von' },
+  'rc1-explain': { en:'The person or business that received the payment.', nl:'De persoon of het bedrijf dat de betaling heeft ontvangen.', es:'La persona o empresa que recibió el pago.', fr:'La personne ou l\'entreprise qui a reçu le paiement.', de:'Die Person oder das Unternehmen, das die Zahlung erhalten hat.' },
+  'rc2-title': { en:'Received from', nl:'Ontvangen van', es:'Recibido de', fr:'Reçu de', de:'Erhalten von' },
+  'rc2-explain': { en:'The person or business that made the payment.', nl:'De persoon of het bedrijf dat de betaling heeft gedaan.', es:'La persona o empresa que realizó el pago.', fr:'La personne ou l\'entreprise qui a effectué le paiement.', de:'Die Person oder das Unternehmen, das die Zahlung geleistet hat.' },
+  'rc3-title': { en:'Payment details', nl:'Betalingsgegevens', es:'Detalles del pago', fr:'Détails du paiement', de:'Zahlungsdetails' },
+  'rc3-explain': { en:'How much was paid, for what, and how?', nl:'Hoeveel is er betaald, waarvoor en hoe?', es:'¿Cuánto se pagó, por qué y cómo?', fr:'Combien a été payé, pour quoi et comment ?', de:'Wie viel wurde bezahlt, wofür und wie?' },
+  'lbl-receipt-number': { en:'Receipt number (optional)', nl:'Kwitantienummer (optioneel)', es:'Número de recibo (opcional)', fr:'Numéro de reçu (optionnel)', de:'Quittungsnummer (optional)' },
+  'lbl-for': { en:'For', nl:'Voor', es:'Por', fr:'Pour', de:'Für' },
+  'ph-for': { en:'e.g. Consulting services, Car repair, Rent September 2026', nl:'bijv. Advieswerk, Autoreparatie, Huur september 2026', es:'p. ej. Servicios de consultoría, Reparación de auto', fr:'p. ex. Services de conseil, Réparation auto', de:'z.B. Beratung, Autoreparatur, Miete September 2026' },
+  'lbl-payment-method': { en:'Payment method', nl:'Betaalwijze', es:'Método de pago', fr:'Mode de paiement', de:'Zahlungsart' },
+  'opt-cash': { en:'Cash', nl:'Contant', es:'Efectivo', fr:'Espèces', de:'Bargeld' },
+  'opt-bank': { en:'Bank transfer', nl:'Bankoverschrijving', es:'Transferencia bancaria', fr:'Virement bancaire', de:'Banküberweisung' },
+  'opt-check': { en:'Check', nl:'Cheque', es:'Cheque', fr:'Chèque', de:'Scheck' },
+  'opt-card': { en:'Card', nl:'Kaart', es:'Tarjeta', fr:'Carte', de:'Karte' },
+  'opt-other-method': { en:'Other', nl:'Anders', es:'Otro', fr:'Autre', de:'Sonstige' },
+  'rcdoc-title': { en:'RECEIPT', nl:'KWITANTIE', es:'RECIBO', fr:'REÇU', de:'QUITTUNG' },
+  'rcdoc-received': { en:'Received from {from} the sum of {amount} for:', nl:'Ontvangen van {from} het bedrag van {amount} voor:', es:'Recibido de {from} la suma de {amount} por:', fr:'Reçu de {from} la somme de {amount} pour :', de:'Erhalten von {from} den Betrag von {amount} für:' },
+  'rcdoc-method': { en:'Payment method: {method}', nl:'Betaalwijze: {method}', es:'Método de pago: {method}', fr:'Mode de paiement : {method}', de:'Zahlungsart: {method}' },
+  'dt-invoice-title': { en:'Invoice', nl:'Factuur', es:'Factura', fr:'Facture', de:'Rechnung' },
+  'dt-invoice-desc': { en:'Bill for goods or services', nl:'Rekening voor goederen of diensten', es:'Factura por bienes o servicios', fr:'Facture pour biens ou services', de:'Rechnung für Waren oder Dienstleistungen' },
+  'iv1-title': { en:'From (sender)', nl:'Van (afzender)', es:'De (remitente)', fr:'De (expéditeur)', de:'Von (Absender)' },
+  'iv1-explain': { en:'The person or business sending the invoice.', nl:'De persoon of het bedrijf dat de factuur stuurt.', es:'La persona o empresa que envía la factura.', fr:'La personne ou l\'entreprise qui envoie la facture.', de:'Die Person oder das Unternehmen, das die Rechnung sendet.' },
+  'iv2-title': { en:'To (recipient)', nl:'Aan (ontvanger)', es:'Para (destinatario)', fr:'À (destinataire)', de:'An (Empfänger)' },
+  'iv2-explain': { en:'The person or business receiving the invoice.', nl:'De persoon of het bedrijf dat de factuur ontvangt.', es:'La persona o empresa que recibe la factura.', fr:'La personne ou l\'entreprise qui reçoit la facture.', de:'Die Person oder das Unternehmen, das die Rechnung erhält.' },
+  'iv3-title': { en:'Line items', nl:'Regels', es:'Líneas', fr:'Lignes', de:'Positionen' },
+  'iv3-explain': { en:'What are you billing for?', nl:'Waarvoor factureer je?', es:'¿Qué estás facturando?', fr:'Que facturez-vous ?', de:'Wofür stellen Sie die Rechnung?' },
+  'iv4-title': { en:'Payment terms', nl:'Betalingsvoorwaarden', es:'Condiciones de pago', fr:'Conditions de paiement', de:'Zahlungsbedingungen' },
+  'iv4-explain': { en:'When is payment due and how?', nl:'Wanneer moet er betaald worden en hoe?', es:'¿Cuándo vence el pago y cómo?', fr:'Quand le paiement est-il dû et comment ?', de:'Wann ist die Zahlung fällig und wie?' },
+  'lbl-invoice-number': { en:'Invoice number', nl:'Factuurnummer', es:'Número de factura', fr:'Numéro de facture', de:'Rechnungsnummer' },
+  'lbl-invoice-date': { en:'Invoice date', nl:'Factuurdatum', es:'Fecha de factura', fr:'Date de facture', de:'Rechnungsdatum' },
+  'lbl-due-date': { en:'Due date', nl:'Vervaldatum', es:'Fecha de vencimiento', fr:'Date d\'échéance', de:'Fälligkeitsdatum' },
+  'lbl-bank-details': { en:'Bank details (optional)', nl:'Bankgegevens (optioneel)', es:'Datos bancarios (opcional)', fr:'Coordonnées bancaires (optionnel)', de:'Bankverbindung (optional)' },
+  'lbl-notes': { en:'Notes (optional)', nl:'Opmerkingen (optioneel)', es:'Notas (opcional)', fr:'Notes (optionnel)', de:'Anmerkungen (optional)' },
+  'lbl-email': { en:'Email (optional)', nl:'E-mail (optioneel)', es:'Email (opcional)', fr:'Email (optionnel)', de:'E-Mail (optional)' },
+  'lbl-phone': { en:'Phone (optional)', nl:'Telefoon (optioneel)', es:'Teléfono (opcional)', fr:'Téléphone (optionnel)', de:'Telefon (optional)' },
+  'lbl-tax-rate': { en:'Tax rate (%)', nl:'Belastingtarief (%)', es:'Tasa de impuesto (%)', fr:'Taux de taxe (%)', de:'Steuersatz (%)' },
+  'hint-tax': { en:'Enter 0 if no tax applies', nl:'Vul 0 in als er geen belasting geldt', es:'Ingrese 0 si no aplica impuesto', fr:'Entrez 0 si aucune taxe ne s\'applique', de:'0 eingeben wenn keine Steuer anfällt' },
+  'btn-receipt-from-invoice': { en:'✅ Payment received? Create receipt', nl:'✅ Betaling ontvangen? Maak kwitantie', es:'✅ ¿Pago recibido? Crear recibo', fr:'✅ Paiement reçu ? Créer un reçu', de:'✅ Zahlung erhalten? Quittung erstellen' },
+  'btn-invoice-from-receipt': { en:'📄 Create invoice for this payment', nl:'📄 Maak factuur voor deze betaling', es:'📄 Crear factura para este pago', fr:'📄 Créer une facture pour ce paiement', de:'📄 Rechnung für diese Zahlung erstellen' },
+  'btn-add-line': { en:'+ Add line', nl:'+ Regel toevoegen', es:'+ Añadir línea', fr:'+ Ajouter une ligne', de:'+ Position hinzufügen' },
+  'lbl-line-desc': { en:'Description', nl:'Omschrijving', es:'Descripción', fr:'Description', de:'Beschreibung' },
+  'lbl-line-qty': { en:'Qty', nl:'Aantal', es:'Cant.', fr:'Qté', de:'Menge' },
+  'lbl-line-price': { en:'Unit price', nl:'Stukprijs', es:'Precio', fr:'Prix', de:'Preis' },
+  'ivdoc-title': { en:'INVOICE', nl:'FACTUUR', es:'FACTURA', fr:'FACTURE', de:'RECHNUNG' },
+  'ivdoc-subtotal': { en:'Subtotal', nl:'Subtotaal', es:'Subtotal', fr:'Sous-total', de:'Zwischensumme' },
+  'ivdoc-tax': { en:'Tax ({rate}%)', nl:'Belasting ({rate}%)', es:'Impuesto ({rate}%)', fr:'Taxe ({rate}%)', de:'Steuer ({rate}%)' },
+  'ivdoc-total': { en:'Total', nl:'Totaal', es:'Total', fr:'Total', de:'Gesamt' },
+  'ivdoc-due': { en:'Due by: {date}', nl:'Vervaldatum: {date}', es:'Vence el: {date}', fr:'Échéance : {date}', de:'Fällig am: {date}' },
   'ns1-title': { en:'Disclosing party', nl:'Gegevens van de verstrekkende partij', es:'Datos de la parte reveladora', fr:'Coordonnées de la partie divulgatrice', de:'Angaben der offenlegenden Partei' },
   'ns1-explain': { en:'The party sharing confidential information — not the person filling in this form.', nl:'De partij die vertrouwelijke informatie deelt — niet degene die dit formulier invult.', es:'La parte que comparte información confidencial — no quien completa este formulario.', fr:'La partie qui partage des informations confidentielles — pas celle qui remplit ce formulaire.', de:'Die Partei, die vertrauliche Informationen teilt — nicht die Person, die dieses Formular ausfüllt.' },
   'ns2-title': { en:'Receiving party', nl:'Gegevens van de ontvangende partij', es:'Datos de la parte receptora', fr:'Coordonnées de la partie réceptrice', de:'Angaben der empfangenden Partei' },
@@ -3474,7 +3720,7 @@ function applyLocale(locale) {
 
   // Set default country fields (all document types)
   if (locale.country) {
-    ['g1-country','g2-country','gov-law','bs-country','bb-country','rl-country','rt-country','ep-country','ec-country','nd-country','nr-country','em-country','em-emp-country','ll-country','lb-country','wt-country'].forEach(id => {
+    ['g1-country','g2-country','gov-law','bs-country','bb-country','rl-country','rt-country','ep-country','ec-country','nd-country','nr-country','em-country','em-emp-country','ll-country','lb-country','wt-country','rc-country','rc-from-country','iv-from-country','iv-to-country'].forEach(id => {
       const el = document.getElementById(id);
       if (el && !el.value) el.value = locale.country;
     });
@@ -3592,6 +3838,8 @@ function selectDocType(type) {
   else if (type === 'rental') goRentalStep('r1');
   else if (type === 'bos') goBosStep('b3');
   else if (type === 'eng') goEngStep('e1');
+  else if (type === 'receipt') goReceiptStep('rc1');
+  else if (type === 'invoice') goInvoiceStep('iv1');
   else if (type === 'nda') goNdaStep('n1');
   else if (type === 'empl') goEmplStep('m1');
   else if (type === 'loan') goLoanStep('l1');
@@ -4042,6 +4290,221 @@ async function downloadEngPDF() {
   try { const dl = await window.claude?.use?.('downloads'); if(dl){await dl.save({filename:fn,data:blob});return;} } catch(e){}
   const u = URL.createObjectURL(blob); const a = document.createElement('a');
   a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
+}
+
+// ====== Receipt ======
+const RECEIPT_STEPS = ['rc1','rc2','rc3','rc4'];
+function goReceiptStep(step) {
+  if (step === 0) { goStep(0); return; }
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  const idx = RECEIPT_STEPS.indexOf(step);
+  document.getElementById('progress').style.width = ((idx+1) / RECEIPT_STEPS.length * 100) + '%';
+  updateStepNav('dt-receipt-title', idx+1, RECEIPT_STEPS.length);
+  if (step === 'rc4') { renderReceiptPreview(); checkEmptyFields(); }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function validateReceiptAndGo(from, to) {
+  const req = { 'rc1': ['rc-name'], 'rc2': ['rc-from-name'] };
+  let ok = true;
+  (req[from]||[]).forEach(id => { const el = document.getElementById(id); const err = document.getElementById('err-'+id); if (!el.value.trim()) { el.classList.add('field-error'); if(err){err.style.display='block';} ok=false; } else { el.classList.remove('field-error'); if(err) err.style.display='none'; } });
+  if (ok) goReceiptStep(to);
+}
+function gatherReceiptData() {
+  const methodMap = { cash:t('opt-cash'), bank:t('opt-bank'), check:t('opt-check'), card:t('opt-card'), other:t('opt-other-method') };
+  return { receiver:{name:$('rc-name'),address:$('rc-address'),country:$('rc-country')}, payer:{name:$('rc-from-name'),address:$('rc-from-address'),country:$('rc-from-country')}, number:$('rc-number'), amount:parseFloat(document.getElementById('rc-amount')?.value)||0, currency:document.getElementById('rc-currency')?.value||'USD', forWhat:$('rc-for'), method:document.getElementById('rc-method')?.value||'cash', methodLabel:methodMap[document.getElementById('rc-method')?.value||'cash'], date:document.getElementById('rc-date')?.value||'' };
+}
+function renderReceiptPreview() {
+  const d = gatherReceiptData();
+  const el = document.getElementById('receipt-preview');
+  const amt = d.currency + ' ' + d.amount.toLocaleString(undefined,{minimumFractionDigits:2});
+  el.innerHTML = `
+    <h2>${t('rcdoc-title')}</h2>
+    ${d.number ? '<div class="sec"><strong>#'+d.number+'</strong></div>' : ''}
+    <div class="sec"><div class="sec-title">${t('rc1-title')}</div><strong>${d.receiver.name||'___'}</strong>${d.receiver.address?'<br>'+d.receiver.address:''}${d.receiver.country?'<br>'+d.receiver.country:''}</div>
+    <div class="sec"><p style="font-size:14px;font-weight:600;">${t('rcdoc-received').replace('{from}',d.payer.name||'___').replace('{amount}',amt)}</p><p style="font-size:15px;font-weight:700;margin-top:6px;">${d.forWhat||'___'}</p></div>
+    <div class="sec"><p>${t('rcdoc-method').replace('{method}',d.methodLabel)}</p><p>${t('lbl-date')}: ${fmtDate(d.date)}</p></div>
+    <div class="sig-grid"><div><div class="sig-line">${t('rc1-title')}<br>${d.receiver.name||'___'}</div></div></div>`;
+}
+async function downloadReceiptPDF() {
+  trackEdits('receipt-preview','Receipt');
+  const{jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});const d=gatherReceiptData();const ds=getDocSettings('receipt');const mg=25,pw=160;let y=ds.header?mg+4:mg;
+  const addTxt=(text,opts={})=>{const sz=opts.size||ds.fontSize,st=opts.style||'normal',al=opts.align||'left';doc.setFontSize(sz);doc.setFont(ds.fontFamily,st);const lines=doc.splitTextToSize(text,opts.w||pw);if(y+lines.length*sz*0.4>278){doc.addPage();y=ds.header?mg+4:mg;}doc.text(lines,al==='center'?105:mg,y,{align:al});y+=lines.length*sz*0.42+(opts.gap||2);};
+  const amt=d.currency+' '+d.amount.toLocaleString(undefined,{minimumFractionDigits:2});
+  addTxt(t('rcdoc-title'),{size:18,style:'bold',align:'center',gap:8});y+=3;
+  if(d.number)addTxt('#'+d.number,{size:10,align:'center',gap:4});
+  addTxt(t('rc1-title'),{size:11,style:'bold',gap:3});addTxt(d.receiver.name||'___',{});if(d.receiver.address)addTxt(d.receiver.address,{});if(d.receiver.country)addTxt(d.receiver.country,{});y+=4;
+  addTxt(t('rcdoc-received').replace('{from}',d.payer.name||'___').replace('{amount}',amt),{size:11,style:'bold',gap:4});
+  addTxt(d.forWhat||'___',{size:12,style:'bold',gap:4});y+=3;
+  addTxt(t('rcdoc-method').replace('{method}',d.methodLabel),{});
+  addTxt(t('lbl-date')+': '+fmtDate(d.date),{});y+=15;
+  if(y>250){doc.addPage();y=mg+20;}doc.setDrawColor(50);doc.line(mg,y,mg+65,y);doc.setFontSize(9);doc.text(d.receiver.name||'___',mg,y+5);
+  addHeaderFooter(doc,ds);
+  const blob=doc.output('blob');const fn=`Receipt_${d.number||'draft'}.pdf`;
+  try{const dl=await window.claude?.use?.('downloads');if(dl){await dl.save({filename:fn,data:blob});return;}}catch(e){}
+  const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=fn;a.click();URL.revokeObjectURL(u);
+}
+
+// ====== Receipt ↔ Invoice linking ======
+function receiptFromInvoice() {
+  const d = gatherInvoiceData();
+  // Receiver = invoice sender (they received the payment)
+  document.getElementById('rc-name').value = d.from.name;
+  document.getElementById('rc-address').value = d.from.address;
+  document.getElementById('rc-country').value = d.from.country;
+  // Payer = invoice recipient (they paid)
+  document.getElementById('rc-from-name').value = d.to.name;
+  document.getElementById('rc-from-address').value = d.to.address;
+  document.getElementById('rc-from-country').value = d.to.country;
+  // Payment details
+  document.getElementById('rc-amount').value = d.total;
+  document.getElementById('rc-currency').value = d.currency;
+  document.getElementById('rc-number').value = d.number ? 'R-' + d.number : '';
+  document.getElementById('rc-for').value = d.number ? t('lbl-invoice-number') + ' ' + d.number : '';
+  document.getElementById('rc-method').value = d.method;
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('rc-date').value = today;
+  goReceiptStep('rc1');
+}
+
+function invoiceFromReceipt() {
+  const d = gatherReceiptData();
+  // Sender = receipt receiver (they issue the invoice)
+  document.getElementById('iv-from-name').value = d.receiver.name;
+  document.getElementById('iv-from-address').value = d.receiver.address;
+  document.getElementById('iv-from-country').value = d.receiver.country;
+  // Recipient = receipt payer (they receive the invoice)
+  document.getElementById('iv-to-name').value = d.payer.name;
+  document.getElementById('iv-to-address').value = d.payer.address;
+  document.getElementById('iv-to-country').value = d.payer.country;
+  // Currency
+  document.getElementById('iv-currency').value = d.currency;
+  // Clear existing lines and add one with the receipt details
+  document.getElementById('invoice-lines').innerHTML = '';
+  addInvoiceLine();
+  const line = document.getElementById('invoice-lines').firstChild;
+  if (line) {
+    line.querySelector('.iv-desc').value = d.forWhat || '';
+    line.querySelector('.iv-price').value = d.amount || '';
+  }
+  document.getElementById('iv-number').value = d.number ? 'INV-' + d.number.replace('R-','') : '';
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('iv-date').value = today;
+  goInvoiceStep('iv1');
+}
+
+// ====== Invoice ======
+const INVOICE_STEPS = ['iv1','iv2','iv3','iv4','iv5'];
+function goInvoiceStep(step) {
+  if (step === 0) { goStep(0); return; }
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  const idx = INVOICE_STEPS.indexOf(step);
+  document.getElementById('progress').style.width = ((idx+1) / INVOICE_STEPS.length * 100) + '%';
+  updateStepNav('dt-invoice-title', idx+1, INVOICE_STEPS.length);
+  if (step === 'iv3' && document.getElementById('invoice-lines').children.length === 0) addInvoiceLine();
+  if (step === 'iv5') { renderInvoicePreview(); checkEmptyFields(); }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function validateInvoiceAndGo(from, to) {
+  const req = { 'iv1': ['iv-from-name','iv-from-address'], 'iv2': ['iv-to-name','iv-to-address'] };
+  let ok = true;
+  (req[from]||[]).forEach(id => { const el = document.getElementById(id); const err = document.getElementById('err-'+id); if (!el.value.trim()) { el.classList.add('field-error'); if(err){err.style.display='block';} ok=false; } else { el.classList.remove('field-error'); if(err) err.style.display='none'; } });
+  if (ok) goInvoiceStep(to);
+}
+function addInvoiceLine() {
+  const list = document.getElementById('invoice-lines');
+  const idx = list.children.length + 1;
+  const div = document.createElement('div');
+  div.style.cssText = 'border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px;position:relative;background:var(--input-bg);';
+  div.innerHTML = `<button onclick="this.parentElement.remove()" style="position:absolute;top:6px;right:8px;background:none;border:none;cursor:pointer;font-size:14px;color:var(--text-light);">✕</button>
+    <div class="field"><label>${t('lbl-line-desc')}</label><input type="text" class="iv-desc" placeholder="${t('lbl-line-desc')}"></div>
+    <div class="field-row">
+      <div class="field"><label>${t('lbl-line-qty')}</label><input type="number" class="iv-qty" min="1" value="1" style="width:80px;"></div>
+      <div class="field"><label>${t('lbl-line-price')}</label><input type="number" class="iv-price" min="0" step="0.01"></div>
+    </div>`;
+  list.appendChild(div);
+}
+function getInvoiceLines() {
+  return Array.from(document.getElementById('invoice-lines').children).map(div => ({
+    desc: div.querySelector('.iv-desc')?.value?.trim()||'',
+    qty: parseFloat(div.querySelector('.iv-qty')?.value)||1,
+    price: parseFloat(div.querySelector('.iv-price')?.value)||0
+  })).filter(l => l.desc || l.price);
+}
+function gatherInvoiceData() {
+  const lines = getInvoiceLines();
+  const sub = lines.reduce((s,l) => s + l.qty * l.price, 0);
+  const taxRate = parseFloat(document.getElementById('iv-tax')?.value)||0;
+  const tax = sub * taxRate / 100;
+  const methodMap = { cash:t('opt-cash'), bank:t('opt-bank'), check:t('opt-check'), card:t('opt-card'), other:t('opt-other-method') };
+  return { from:{name:$('iv-from-name'),address:$('iv-from-address'),country:$('iv-from-country'),email:$('iv-from-email'),phone:$('iv-from-phone')}, to:{name:$('iv-to-name'),address:$('iv-to-address'),country:$('iv-to-country')}, number:$('iv-number'), currency:document.getElementById('iv-currency')?.value||'USD', lines, subtotal:sub, taxRate, tax, total:sub+tax, date:document.getElementById('iv-date')?.value||'', due:document.getElementById('iv-due')?.value||'', method:document.getElementById('iv-method')?.value||'bank', methodLabel:methodMap[document.getElementById('iv-method')?.value||'bank'], bank:$('iv-bank'), notes:$('iv-notes') };
+}
+function renderInvoicePreview() {
+  const d = gatherInvoiceData();
+  const el = document.getElementById('invoice-preview');
+  const fmt = (n) => d.currency + ' ' + n.toLocaleString(undefined,{minimumFractionDigits:2});
+  let linesHtml = '<table style="width:100%;border-collapse:collapse;font-size:12px;margin:8px 0;"><thead><tr style="border-bottom:2px solid var(--border);text-align:left;"><th style="padding:6px;">#</th><th style="padding:6px;">'+t('lbl-line-desc')+'</th><th style="padding:6px;text-align:center;">'+t('lbl-line-qty')+'</th><th style="padding:6px;text-align:right;">'+t('lbl-line-price')+'</th><th style="padding:6px;text-align:right;">'+t('ivdoc-total')+'</th></tr></thead><tbody>';
+  d.lines.forEach((l,i) => { linesHtml += `<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px;">${i+1}</td><td style="padding:6px;">${l.desc}</td><td style="padding:6px;text-align:center;">${l.qty}</td><td style="padding:6px;text-align:right;">${fmt(l.price)}</td><td style="padding:6px;text-align:right;">${fmt(l.qty*l.price)}</td></tr>`; });
+  linesHtml += '</tbody></table>';
+  let totalsHtml = `<div style="text-align:right;font-size:13px;margin-top:8px;"><div>${t('ivdoc-subtotal')}: ${fmt(d.subtotal)}</div>`;
+  if (d.taxRate > 0) totalsHtml += `<div>${t('ivdoc-tax').replace('{rate}',d.taxRate)}: ${fmt(d.tax)}</div>`;
+  totalsHtml += `<div style="font-size:16px;font-weight:700;margin-top:4px;">${t('ivdoc-total')}: ${fmt(d.total)}</div></div>`;
+
+  el.innerHTML = `
+    <h2>${t('ivdoc-title')}</h2>
+    <div class="sec" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <div><div class="sec-title">${t('iv1-title')}</div><strong>${d.from.name||'___'}</strong>${d.from.address?'<br>'+d.from.address:''}${d.from.country?'<br>'+d.from.country:''}${d.from.email?'<br>'+d.from.email:''}${d.from.phone?'<br>'+d.from.phone:''}</div>
+      <div style="text-align:right;"><div class="sec-title">${t('iv2-title')}</div><strong>${d.to.name||'___'}</strong>${d.to.address?'<br>'+d.to.address:''}${d.to.country?'<br>'+d.to.country:''}</div>
+    </div>
+    <div class="sec" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:13px;">
+      ${d.number?'<div><strong>'+t('lbl-invoice-number')+':</strong> '+d.number+'</div>':''}
+      <div><strong>${t('lbl-invoice-date')}:</strong> ${fmtDate(d.date)}</div>
+      <div><strong>${t('lbl-due-date')}:</strong> ${fmtDate(d.due)}</div>
+    </div>
+    <div class="sec">${linesHtml}${totalsHtml}</div>
+    <div class="sec" style="font-size:12px;"><strong>${t('lbl-payment-method')}:</strong> ${d.methodLabel}${d.bank?'<br><strong>'+t('lbl-bank-details')+':</strong><br>'+d.bank.replace(/\n/g,'<br>'):''}</div>
+    ${d.notes?'<div class="sec" style="font-size:12px;"><strong>'+t('lbl-notes')+':</strong> '+d.notes+'</div>':''}`;
+}
+async function downloadInvoicePDF() {
+  trackEdits('invoice-preview','Invoice');
+  const{jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});const d=gatherInvoiceData();const ds=getDocSettings('invoice');const mg=25,pw=160;let y=ds.header?mg+4:mg;
+  const addTxt=(text,opts={})=>{const sz=opts.size||ds.fontSize,st=opts.style||'normal',al=opts.align||'left';doc.setFontSize(sz);doc.setFont(ds.fontFamily,st);const lines=doc.splitTextToSize(text,opts.w||pw);if(y+lines.length*sz*0.4>278){doc.addPage();y=ds.header?mg+4:mg;}doc.text(lines,al==='center'?105:mg,y,{align:al});y+=lines.length*sz*0.42+(opts.gap||2);};
+  const fmt=(n)=>d.currency+' '+n.toLocaleString(undefined,{minimumFractionDigits:2});
+
+  addTxt(t('ivdoc-title'),{size:18,style:'bold',align:'center',gap:8});y+=3;
+
+  addTxt(t('iv1-title').replace(' (sender)','').replace(' (afzender)',''),{size:11,style:'bold',gap:3});
+  addTxt(d.from.name||'___',{});if(d.from.address)addTxt(d.from.address,{});if(d.from.country)addTxt(d.from.country,{});if(d.from.email)addTxt(d.from.email,{});if(d.from.phone)addTxt(d.from.phone,{});y+=3;
+
+  addTxt(t('iv2-title').replace(' (recipient)','').replace(' (ontvanger)',''),{size:11,style:'bold',gap:3});
+  addTxt(d.to.name||'___',{});if(d.to.address)addTxt(d.to.address,{});if(d.to.country)addTxt(d.to.country,{});y+=4;
+
+  if(d.number)addTxt(t('lbl-invoice-number')+': '+d.number,{});
+  addTxt(t('lbl-invoice-date')+': '+fmtDate(d.date),{});
+  addTxt(t('lbl-due-date')+': '+fmtDate(d.due),{});y+=4;
+
+  // Table header
+  doc.setFontSize(9);doc.setFont(ds.fontFamily,'bold');
+  doc.text('#',mg,y);doc.text(t('lbl-line-desc'),mg+8,y);doc.text(t('lbl-line-qty'),mg+110,y);doc.text(t('lbl-line-price'),mg+125,y);doc.text(t('ivdoc-total'),mg+145,y);
+  y+=2;doc.setDrawColor(100);doc.line(mg,y,mg+pw,y);y+=5;
+  doc.setFont(ds.fontFamily,'normal');
+  d.lines.forEach((l,i)=>{if(y>270){doc.addPage();y=mg+10;}doc.text(String(i+1),mg,y);doc.text(l.desc||'',mg+8,y);doc.text(String(l.qty),mg+113,y);doc.text(fmt(l.price),mg+125,y);doc.text(fmt(l.qty*l.price),mg+145,y);y+=5;});
+  doc.line(mg,y,mg+pw,y);y+=6;
+
+  doc.setFont(ds.fontFamily,'normal');doc.text(t('ivdoc-subtotal')+': '+fmt(d.subtotal),mg+pw,y,{align:'right'});y+=5;
+  if(d.taxRate>0){doc.text(t('ivdoc-tax').replace('{rate}',d.taxRate)+': '+fmt(d.tax),mg+pw,y,{align:'right'});y+=5;}
+  doc.setFont(ds.fontFamily,'bold');doc.setFontSize(12);doc.text(t('ivdoc-total')+': '+fmt(d.total),mg+pw,y,{align:'right'});y+=8;
+
+  doc.setFontSize(ds.fontSize);doc.setFont(ds.fontFamily,'normal');
+  addTxt(t('lbl-payment-method')+': '+d.methodLabel,{});
+  if(d.bank)addTxt(t('lbl-bank-details')+':\n'+d.bank,{});
+  if(d.notes)addTxt(t('lbl-notes')+': '+d.notes,{});
+
+  addHeaderFooter(doc,ds);addPageNumbers(doc,'invoice-page-numbers');
+  const blob=doc.output('blob');const fn=`Invoice_${d.number||'draft'}.pdf`;
+  try{const dl=await window.claude?.use?.('downloads');if(dl){await dl.save({filename:fn,data:blob});return;}}catch(e){}
+  const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=fn;a.click();URL.revokeObjectURL(u);
 }
 
 // ====== Non-Disclosure Agreement ======
@@ -5374,7 +5837,7 @@ if (location.search.includes('admin')) {
   else if (c.includes('canada')) defCur = 'CAD';
   else if (c.includes('australia')) defCur = 'AUD';
   else if (c.includes('méxico') || c.includes('mexico')) defCur = 'MXN';
-  ['r-currency','b-currency','e-currency','em-currency','l-currency'].forEach(id => {
+  ['r-currency','b-currency','e-currency','em-currency','l-currency','rc-currency','iv-currency'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = defCur;
   });
