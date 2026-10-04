@@ -1452,7 +1452,7 @@ input[type=number] { -moz-appearance: textfield; }
           <div class="field"><label data-i18n="lbl-model">Model</label><input type="text" id="b-model" placeholder="e.g. Hilux"></div>
         </div>
         <div class="field-row">
-          <div class="field"><label data-i18n="lbl-year">Year</label><input type="number" id="b-year" min="1900" max="2030"></div>
+          <div class="field"><label data-i18n="lbl-year">Year</label><input type="number" id="b-year" min="1900" onblur="validateYear(this)"><div class="field-warn" id="warn-b-year" style="display:none;font-size:11px;color:#DC2626;margin-top:2px;"></div></div>
           <div class="field"><label data-i18n="lbl-color">Color</label><input type="text" id="b-color"></div>
         </div>
         <div class="field-row">
@@ -1460,7 +1460,7 @@ input[type=number] { -moz-appearance: textfield; }
           <div class="field"><label data-i18n="lbl-plate">License plate</label><input type="text" id="b-plate"></div>
         </div>
         <div class="field-row">
-          <div class="field"><label data-i18n="lbl-mileage">Mileage</label><input type="number" id="b-mileage" min="0" onfocus="showMileageWarning()"></div>
+          <div class="field"><label data-i18n="lbl-mileage">Mileage</label><input type="text" id="b-mileage" inputmode="numeric" pattern="[0-9]*" onblur="cleanMileage(this)" onfocus="showMileageWarning()"></div>
           <div class="field"><label data-i18n="lbl-mileage-unit">Unit</label>
             <select id="b-mileage-unit" onchange="showMileageWarning()">
               <option value="km">km</option>
@@ -2852,6 +2852,7 @@ const T = {
   'edit-hint': { en:'Click on any section to edit the text. Your changes will be included in the PDF.', nl:'Klik op een sectie om de tekst aan te passen. Je wijzigingen worden opgenomen in de PDF.', es:'Haz clic en cualquier sección para editar el texto. Los cambios se incluirán en el PDF.', fr:'Cliquez sur une section pour modifier le texte. Vos modifications seront incluses dans le PDF.', de:'Klicken Sie auf einen Abschnitt, um den Text zu bearbeiten. Ihre Änderungen werden in das PDF übernommen.' },
   'last-updated-prefix': { en:'Last updated:', nl:'Laatst bijgewerkt:', es:'Última actualización:', fr:'Dernière mise à jour :', de:'Zuletzt aktualisiert:' },
   'privacy-link': { en:'Privacy Policy', nl:'Privacybeleid', es:'Política de Privacidad', fr:'Politique de Confidentialité', de:'Datenschutzerklärung' },
+  'warn-year': { en:'Enter a year between 1900 and {max}', nl:'Voer een jaar in tussen 1900 en {max}', es:'Ingrese un año entre 1900 y {max}', fr:'Entrez une année entre 1900 et {max}', de:'Geben Sie ein Jahr zwischen 1900 und {max} ein' },
   'warn-date-range': { en:'End date is before the start date', nl:'Einddatum ligt vóór de startdatum', es:'La fecha de fin es anterior a la de inicio', fr:'La date de fin est antérieure à la date de début', de:'Das Enddatum liegt vor dem Startdatum' },
   'warn-empty-fields': { en:'Some fields are still empty. You can continue, but the document may be incomplete.', nl:'Sommige velden zijn nog leeg. Je kunt doorgaan, maar het document is mogelijk onvolledig.', es:'Algunos campos están vacíos. Puede continuar, pero el documento podría estar incompleto.', fr:'Certains champs sont encore vides. Vous pouvez continuer, mais le document pourrait être incomplet.', de:'Einige Felder sind noch leer. Sie können fortfahren, aber das Dokument ist möglicherweise unvollständig.' },
   'upsell-detailed': { en:'Switch to Detailed ↑', nl:'Schakel naar Uitgebreid ↑', es:'Cambiar a Detallado ↑', fr:'Passer en Détaillé ↑', de:'Zu Detailliert wechseln ↑' },
@@ -4901,6 +4902,25 @@ function validateBosAndGo(from, to) {
     else { el.classList.remove('field-error'); if(err) err.style.display='none'; }
   });
   if (ok) goBosStep(to);
+}
+
+function validateYear(el) {
+  const warn = document.getElementById('warn-b-year');
+  const v = parseInt(el.value);
+  const currentYear = new Date().getFullYear() + 1;
+  if (el.value && (v < 1900 || v > currentYear)) {
+    el.classList.add('field-error');
+    if (warn) { warn.style.display = 'block'; warn.textContent = t('warn-year').replace('{max}', currentYear); }
+  } else {
+    el.classList.remove('field-error');
+    if (warn) warn.style.display = 'none';
+  }
+}
+
+function cleanMileage(el) {
+  // Strip leading zeros and non-numeric
+  let v = el.value.replace(/[^0-9]/g, '').replace(/^0+/, '') || '';
+  el.value = v;
 }
 
 function showMileageWarning() {
