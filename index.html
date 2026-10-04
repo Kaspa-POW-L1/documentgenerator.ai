@@ -754,6 +754,11 @@ body {
       <p class="step-explain" data-i18n="chooser-explain">Pick a document type to get started.</p>
 
       <div class="doc-grid">
+        <div class="doc-card" onclick="selectDocType('bos')">
+          <div class="dc-icon">🚗</div>
+          <h3 data-i18n="dt-bos-title">Bill of Sale</h3>
+          <p data-i18n="dt-bos-desc">Sell or buy a vehicle, boat, or item</p>
+        </div>
         <div class="doc-card" onclick="selectDocType('poa')">
           <div class="dc-icon">📝</div>
           <h3 data-i18n="dt-poa-title">Power of Attorney</h3>
@@ -764,10 +769,11 @@ body {
           <h3 data-i18n="dt-rental-title">Rental Agreement</h3>
           <p data-i18n="dt-rental-desc">Lease a property or room</p>
         </div>
-        <div class="doc-card" onclick="selectDocType('loan')">
+        <div class="doc-card disabled">
           <div class="dc-icon">💰</div>
           <h3 data-i18n="dt-loan-title">Loan Agreement</h3>
           <p data-i18n="dt-loan-desc">Lend or borrow money</p>
+          <span class="dc-badge" data-i18n="dt-soon">Coming soon</span>
         </div>
         <div class="doc-card disabled">
           <div class="dc-icon">👔</div>
@@ -1057,49 +1063,9 @@ body {
         <label data-i18n="lbl-country">Country</label>
         <input type="text" id="rt-country">
       </div>
-      <div style="margin-top:14px;padding:12px;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;">
-        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text);">
-          <input type="checkbox" id="r-has-sponsor" onchange="toggleSponsor()" style="width:18px;height:18px;accent-color:var(--pri);">
-          <span data-i18n="lbl-sponsor-toggle">A third party (e.g. employer) pays the rent</span>
-        </label>
-      </div>
       <div class="nav">
         <button class="btn btn-back" onclick="goRentalStep('r1')" data-i18n="btn-back">Back</button>
-        <button class="btn btn-next" onclick="validateRentalAndGo('r2', document.getElementById('r-has-sponsor').checked ? 'r2b' : 'r3')" data-i18n="btn-next">Next</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- RENTAL STEP 2b: Sponsor / third party -->
-  <div class="step" id="step-r2b">
-    <div class="step-card">
-      <div class="step-icon">🏢</div>
-      <h2 class="step-title" data-i18n="rs2b-title">Who is the sponsor?</h2>
-      <p class="step-explain" data-i18n="rs2b-explain">The party paying the rent (e.g. the tenant's employer).</p>
-      <div class="field">
-        <label data-i18n="lbl-company">Company / organization name</label>
-        <input type="text" id="rs-name" data-i18n-placeholder="ph-company">
-        <div class="error-msg" id="err-rs-name" data-i18n="err-required">This field is required</div>
-      </div>
-      <div class="field">
-        <label data-i18n="lbl-rep">Represented by (name)</label>
-        <input type="text" id="rs-rep" data-i18n-placeholder="ph-name">
-      </div>
-      <div class="field">
-        <label data-i18n="lbl-id">ID or passport number</label>
-        <input type="text" id="rs-id" data-i18n-placeholder="ph-id">
-      </div>
-      <div class="field">
-        <label data-i18n="lbl-address">Address</label>
-        <input type="text" id="rs-address" data-i18n-placeholder="ph-address">
-      </div>
-      <div class="field">
-        <label data-i18n="lbl-country">Country</label>
-        <input type="text" id="rs-country">
-      </div>
-      <div class="nav">
-        <button class="btn btn-back" onclick="goRentalStep('r2')" data-i18n="btn-back">Back</button>
-        <button class="btn btn-next" onclick="validateRentalAndGo('r2b','r3')" data-i18n="btn-next">Next</button>
+        <button class="btn btn-next" onclick="validateRentalAndGo('r2','r3')" data-i18n="btn-next">Next</button>
       </div>
     </div>
   </div>
@@ -1258,104 +1224,146 @@ body {
 
 </div>
 
-  <!-- LOAN STEP 1: Lender -->
-  <div class="step" id="step-l1">
+  <!-- BOS STEP 1: Seller -->
+  <div class="step" id="step-b1">
     <div class="step-card">
-      <div class="step-icon">🏦</div>
-      <h2 class="step-title" data-i18n="ls1-title">Who is the lender?</h2>
-      <p class="step-explain" data-i18n="ls1-explain">The person or entity lending the money.</p>
-      <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-name">As it appears on your ID or passport</div><input type="text" id="ll-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-ll-name" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="ll-id" data-i18n-placeholder="ph-id"><div class="error-msg" id="err-ll-id" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-address">Address</label><div class="hint" data-i18n="hint-address">Street, number, and city</div><input type="text" id="ll-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-ll-address" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="ll-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goLoanStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateLoanAndGo('l1','l2')" data-i18n="btn-next">Next</button></div>
+      <div class="step-icon">🏷️</div>
+      <h2 class="step-title" data-i18n="bs1-title">Who is the seller?</h2>
+      <p class="step-explain" data-i18n="bs1-explain">The current owner of the item.</p>
+      <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-name">As it appears on your ID or passport</div><input type="text" id="bs-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-bs-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="bs-id" data-i18n-placeholder="ph-id"><div class="error-msg" id="err-bs-id" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><div class="hint" data-i18n="hint-address">Street, number, and city</div><input type="text" id="bs-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-bs-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="bs-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goBosStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateBosAndGo('b1','b2')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
-  <!-- LOAN STEP 2: Borrower -->
-  <div class="step" id="step-l2">
+  <!-- BOS STEP 2: Buyer -->
+  <div class="step" id="step-b2">
     <div class="step-card">
-      <div class="step-icon">🙋</div>
-      <h2 class="step-title" data-i18n="ls2-title">Who is the borrower?</h2>
-      <p class="step-explain" data-i18n="ls2-explain">The person or entity receiving the loan.</p>
-      <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-name">As it appears on your ID or passport</div><input type="text" id="lb-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-lb-name" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="lb-id" data-i18n-placeholder="ph-id"><div class="error-msg" id="err-lb-id" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-address">Address</label><div class="hint" data-i18n="hint-address">Street, number, and city</div><input type="text" id="lb-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-lb-address" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="lb-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goLoanStep('l1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateLoanAndGo('l2','l3')" data-i18n="btn-next">Next</button></div>
+      <div class="step-icon">🛒</div>
+      <h2 class="step-title" data-i18n="bs2-title">Who is the buyer?</h2>
+      <p class="step-explain" data-i18n="bs2-explain">The new owner of the item.</p>
+      <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-name">As it appears on your ID or passport</div><input type="text" id="bb-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-bb-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="bb-id" data-i18n-placeholder="ph-id"><div class="error-msg" id="err-bb-id" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><div class="hint" data-i18n="hint-address">Street, number, and city</div><input type="text" id="bb-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-bb-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="bb-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goBosStep('b1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateBosAndGo('b2','b3')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
-  <!-- LOAN STEP 3: Loan details -->
-  <div class="step" id="step-l3">
+  <!-- BOS STEP 3: Item details -->
+  <div class="step" id="step-b3">
     <div class="step-card">
-      <div class="step-icon">💵</div>
-      <h2 class="step-title" data-i18n="ls3-title">Loan details</h2>
-      <p class="step-explain" data-i18n="ls3-explain">Amount, interest, and repayment terms.</p>
-      <div class="field-row">
-        <div class="field"><label data-i18n="lbl-loan-amount">Loan amount</label><input type="number" id="l-amount" min="0" step="0.01"></div>
-        <div class="field"><label data-i18n="lbl-currency">Currency</label>
-          <select id="l-currency"><option>USD</option><option>EUR</option><option>ANG</option><option>GBP</option><option>AWG</option><option>GYD</option><option>SRD</option><option>TTD</option><option>BBD</option><option>CHF</option><option>CAD</option></select>
-        </div>
+      <div class="step-icon">📦</div>
+      <h2 class="step-title" data-i18n="bs3-title">What is being sold?</h2>
+      <p class="step-explain" data-i18n="bs3-explain">Describe the item in detail.</p>
+      <div class="field"><label data-i18n="lbl-item-cat">Category</label>
+        <select id="b-item-cat" onchange="toggleBosFields()">
+          <option value="vehicle" data-i18n="opt-vehicle">Vehicle</option>
+          <option value="boat" data-i18n="opt-boat">Boat</option>
+          <option value="equipment" data-i18n="opt-equipment">Equipment / Machinery</option>
+          <option value="other" data-i18n="opt-other-item">Other</option>
+        </select>
       </div>
-      <div class="field-row">
-        <div class="field"><label data-i18n="lbl-interest-rate">Annual interest rate (%)</label><input type="number" id="l-interest" min="0" max="100" step="0.1" value="0"><div class="hint" data-i18n="hint-interest">Enter 0 for an interest-free loan</div></div>
-        <div class="field"><label data-i18n="lbl-repay-type">Repayment</label>
-          <select id="l-repay-type" onchange="toggleLoanRepay()"><option value="monthly" data-i18n="opt-monthly">Monthly installments</option><option value="lumpsum" data-i18n="opt-lumpsum">Lump sum at end</option></select>
-        </div>
-      </div>
-      <div id="loan-monthly-fields">
+      <div id="bos-vehicle-fields">
         <div class="field-row">
-          <div class="field"><label data-i18n="lbl-monthly-amount">Monthly payment</label><input type="number" id="l-monthly" min="0" step="0.01"></div>
-          <div class="field"><label data-i18n="lbl-payment-day">Payment due by day of month</label><input type="number" id="l-payday" min="1" max="31" value="1"></div>
+          <div class="field"><label data-i18n="lbl-make">Make</label><input type="text" id="b-make" placeholder="e.g. Toyota"></div>
+          <div class="field"><label data-i18n="lbl-model">Model</label><input type="text" id="b-model" placeholder="e.g. Hilux"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label data-i18n="lbl-year">Year</label><input type="number" id="b-year" min="1900" max="2030"></div>
+          <div class="field"><label data-i18n="lbl-color">Color</label><input type="text" id="b-color"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label data-i18n="lbl-vin">VIN / Chassis number</label><input type="text" id="b-vin"></div>
+          <div class="field"><label data-i18n="lbl-plate">License plate</label><input type="text" id="b-plate"></div>
+        </div>
+        <div class="field"><label data-i18n="lbl-mileage">Mileage (km)</label><input type="number" id="b-mileage" min="0"></div>
+      </div>
+      <div id="bos-boat-fields" style="display:none;">
+        <div class="field-row">
+          <div class="field"><label data-i18n="lbl-boat-name">Boat name</label><input type="text" id="b-boat-name"></div>
+          <div class="field"><label data-i18n="lbl-boat-type">Type</label><input type="text" id="b-boat-type" placeholder="e.g. Speedboat"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label data-i18n="lbl-boat-length">Length (ft)</label><input type="number" id="b-boat-length" min="0"></div>
+          <div class="field"><label data-i18n="lbl-hull-id">Hull ID / HIN</label><input type="text" id="b-hull-id"></div>
+        </div>
+        <div class="field"><label data-i18n="lbl-boat-reg">Registration number</label><input type="text" id="b-boat-reg"></div>
+      </div>
+      <div id="bos-other-fields" style="display:none;">
+        <div class="field"><label data-i18n="lbl-item-desc">Description of the item</label><textarea id="b-item-desc" rows="3" style="width:100%;font-family:inherit;font-size:13px;padding:10px;border:1px solid var(--border);border-radius:8px;resize:vertical;"></textarea></div>
+      </div>
+      <div class="nav"><button class="btn btn-back" onclick="goBosStep('b2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goBosStep('b4')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- BOS STEP 4: Price & payment -->
+  <div class="step" id="step-b4">
+    <div class="step-card">
+      <div class="step-icon">💲</div>
+      <h2 class="step-title" data-i18n="bs4-title">Price and payment</h2>
+      <p class="step-explain" data-i18n="bs4-explain">The agreed sale price and how it will be paid.</p>
+      <div class="field-row">
+        <div class="field"><label data-i18n="lbl-sale-price">Sale price</label><input type="number" id="b-price" min="0" step="0.01"></div>
+        <div class="field"><label data-i18n="lbl-currency">Currency</label>
+          <select id="b-currency"><option>USD</option><option>EUR</option><option>ANG</option><option>GBP</option><option>AWG</option><option>GYD</option><option>SRD</option><option>TTD</option><option>BBD</option><option>CHF</option><option>CAD</option></select>
         </div>
       </div>
-      <div class="nav"><button class="btn btn-back" onclick="goLoanStep('l2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goLoanStep('l4')" data-i18n="btn-next">Next</button></div>
+      <div class="field"><label data-i18n="lbl-payment-method">Payment method</label>
+        <select id="b-payment">
+          <option value="cash" data-i18n="opt-cash">Cash</option>
+          <option value="transfer" data-i18n="opt-transfer">Bank transfer</option>
+          <option value="mixed" data-i18n="opt-mixed">Cash + bank transfer</option>
+        </select>
+      </div>
+      <div class="field"><label data-i18n="lbl-condition">Condition of item</label>
+        <select id="b-condition">
+          <option value="asis" data-i18n="opt-asis">As-is (no warranty)</option>
+          <option value="good" data-i18n="opt-good">Good working condition</option>
+        </select>
+      </div>
+      <div class="nav"><button class="btn btn-back" onclick="goBosStep('b3')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goBosStep('b5')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
-  <!-- LOAN STEP 4: Duration & law -->
-  <div class="step" id="step-l4">
+  <!-- BOS STEP 5: Signing -->
+  <div class="step" id="step-b5">
     <div class="step-card">
-      <div class="step-icon">📅</div>
-      <h2 class="step-title" data-i18n="ls4-title">Duration and signing</h2>
-      <p class="step-explain" data-i18n="ls4-explain">When does the loan start and end?</p>
-      <div class="field-row">
-        <div class="field"><label data-i18n="lbl-from">From</label><input type="date" id="l-date-start"></div>
-        <div class="field"><label data-i18n="lbl-until">Until</label><input type="date" id="l-date-end"></div>
-      </div>
-      <div style="margin-top:14px;">
-        <div class="field"><label data-i18n="lbl-place">Where is this being signed?</label><input type="text" id="l-place"></div>
-        <div class="field"><label data-i18n="lbl-date">Date of the document</label><input type="date" id="l-doc-date"></div>
-        <div class="field"><label data-i18n="lbl-law">Which country's laws apply?</label><input type="text" id="l-law"></div>
-      </div>
-      <div class="nav"><button class="btn btn-back" onclick="goLoanStep('l3')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goLoanStep('l5')" data-i18n="btn-preview">Check the document</button></div>
+      <div class="step-icon">✍️</div>
+      <h2 class="step-title" data-i18n="bs5-title">Signing details</h2>
+      <p class="step-explain" data-i18n="bs5-explain">Where and when is this being signed?</p>
+      <div class="field"><label data-i18n="lbl-place">Where is this being signed?</label><input type="text" id="b-place"></div>
+      <div class="field"><label data-i18n="lbl-date">Date of the document</label><input type="date" id="b-doc-date"></div>
+      <div class="field"><label data-i18n="lbl-law">Which country's laws apply?</label><input type="text" id="b-law"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goBosStep('b4')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goBosStep('b6')" data-i18n="btn-preview">Check the document</button></div>
     </div>
   </div>
 
-  <!-- LOAN STEP 5: Preview & Download -->
-  <div class="step" id="step-l5">
+  <!-- BOS STEP 6: Preview & Download -->
+  <div class="step" id="step-b6">
     <div class="step-card" style="padding:20px 24px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
         <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
         <div style="display:flex;gap:8px;">
-          <button class="btn btn-back" onclick="goLoanStep('l1')" data-i18n="btn-edit">Edit</button>
-          <button class="btn btn-download" onclick="downloadLoanPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+          <button class="btn btn-back" onclick="goBosStep('b1')" data-i18n="btn-edit">Edit</button>
+          <button class="btn btn-download" onclick="downloadBosPDF()" data-i18n="btn-download">⬇ Download PDF</button>
         </div>
       </div>
       <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
     </div>
-    <div class="detail-toggle" id="loan-detail-toggle">
-      <button class="active" onclick="setDocDetail('loan','basic')" id="loan-basic-btn" data-i18n="toggle-basic">📄 Basic</button>
-      <button onclick="setDocDetail('loan','detailed')" id="loan-detailed-btn" data-i18n="toggle-detailed">📋 Detailed</button>
+    <div class="detail-toggle" id="bos-detail-toggle">
+      <button class="active" onclick="setDocDetail('bos','basic')" id="bos-basic-btn" data-i18n="toggle-basic">📄 Basic</button>
+      <button onclick="setDocDetail('bos','detailed')" id="bos-detailed-btn" data-i18n="toggle-detailed">📋 Detailed</button>
     </div>
     <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
-      <button class="btn-edit-doc" onclick="toggleEditMode('loan-preview')" id="edit-btn-loan-preview" data-i18n="btn-customize">✏️ Customize document</button>
+      <button class="btn-edit-doc" onclick="toggleEditMode('bos-preview')" id="edit-btn-bos-preview" data-i18n="btn-customize">✏️ Customize document</button>
     </div>
-    <div class="edit-hint" id="edit-hint-loan-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
-    <div class="preview-box" id="loan-preview"></div>
+    <div class="edit-hint" id="edit-hint-bos-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
+    <div class="preview-box" id="bos-preview"></div>
     <div style="text-align:center;margin-top:16px;">
-      <button class="btn btn-download" onclick="downloadLoanPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+      <button class="btn btn-download" onclick="downloadBosPDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
   </div>
 
@@ -1364,6 +1372,18 @@ body {
   <div class="modal">
     <button class="modal-close" onclick="document.getElementById('changelog-modal').classList.remove('show')">&times;</button>
     <h2>Changelog — documentgenerator.ai</h2>
+    <div class="log-entry">
+      <h3>v4.2</h3>
+      <div class="log-date">3 oktober 2026</div>
+      <ul>
+        <li>Bill of Sale (Koopovereenkomst) toegevoegd als eerste documenttype — voertuig, boot, apparatuur of overig</li>
+        <li>Voertuigvelden: merk, model, jaar, kleur, VIN/chassisnummer, kenteken, kilometerstand</li>
+        <li>Bootvelden: naam, type, lengte, rompnummer/HIN, registratienummer</li>
+        <li>Prijs, valuta, betaalwijze (contant/overschrijving/gemengd), staat (as-is of goede staat)</li>
+        <li>Basic/Detailed: uitgebreid voegt eigendomsverklaring en geschillenregeling toe</li>
+        <li>Volledige ondersteuning in 5 talen</li>
+      </ul>
+    </div>
     <div class="log-entry">
       <h3>v4.1</h3>
       <div class="log-date">1 oktober 2026</div>
@@ -1374,9 +1394,6 @@ body {
         <li>GoatCounter bezoekersstatistieken toegevoegd</li>
         <li>Privacy Policy toegevoegd in 5 talen (modal via footer-link)</li>
         <li>"Laatst bijgewerkt" datum in footer, in 5 talen</li>
-        <li>Leenovereenkomst (Loan Agreement) volledig uitgebouwd: uitlener, lener, bedrag, rente, maandelijkse termijnen of eenmalige aflossing, looptijd, 5 talen</li>
-        <li>Loan Agreement basis/uitgebreid: + achterstallige betaling, vervroegde aflossing, wanbetaling</li>
-        <li>Derde partij (sponsor/werkgever) optie bij huurcontract — met betalingsregeling, bruto-salaris verrekening, en extra handtekening</li>
         <li>Basis/Uitgebreid toggle voor POA (+ intrekking, aansprakelijkheid) en Huurcontract (+ onderhoud, nutsvoorzieningen, opzegging, onderverhuur, huisregels, geschillen)</li>
         <li>Extra secties verschijnen met blauwe accentlijn; vrij heen en terug te schakelen</li>
         <li>Dark mode toggle (☀️/🌙) met onthouden voorkeur</li>
@@ -1631,6 +1648,59 @@ const T = {
   'dt-poa-desc':     { en:'Let someone act on your behalf', nl:'Laat iemand namens jou handelen', es:'Permite que alguien actúe en tu nombre', fr:'Permettre à quelqu\'un d\'agir en votre nom', de:'Jemanden in Ihrem Namen handeln lassen' },
   'dt-rental-title': { en:'Rental Agreement', nl:'Huurcontract', es:'Contrato de alquiler', fr:'Contrat de location', de:'Mietvertrag' },
   'dt-rental-desc':  { en:'Lease a property or room', nl:'Verhuur een woning of kamer', es:'Alquilar una propiedad o habitación', fr:'Louer un bien ou une chambre', de:'Eine Immobilie oder ein Zimmer vermieten' },
+  'dt-bos-title': { en:'Bill of Sale', nl:'Koopovereenkomst', es:'Contrato de compraventa', fr:'Acte de vente', de:'Kaufvertrag' },
+  'dt-bos-desc': { en:'Sell or buy a vehicle, boat, or item', nl:'Verkoop of koop een voertuig, boot of artikel', es:'Vende o compra un vehículo, barco o artículo', fr:'Vendez ou achetez un véhicule, bateau ou article', de:'Verkaufen oder kaufen Sie ein Fahrzeug, Boot oder Gegenstand' },
+  'bs1-title': { en:'Who is the seller?', nl:'Wie is de verkoper?', es:'¿Quién es el vendedor?', fr:'Qui est le vendeur ?', de:'Wer ist der Verkäufer?' },
+  'bs1-explain': { en:'The current owner of the item.', nl:'De huidige eigenaar van het artikel.', es:'El propietario actual del artículo.', fr:'Le propriétaire actuel de l\'article.', de:'Der aktuelle Eigentümer des Gegenstands.' },
+  'bs2-title': { en:'Who is the buyer?', nl:'Wie is de koper?', es:'¿Quién es el comprador?', fr:'Qui est l\'acheteur ?', de:'Wer ist der Käufer?' },
+  'bs2-explain': { en:'The new owner of the item.', nl:'De nieuwe eigenaar van het artikel.', es:'El nuevo propietario del artículo.', fr:'Le nouveau propriétaire de l\'article.', de:'Der neue Eigentümer des Gegenstands.' },
+  'bs3-title': { en:'What is being sold?', nl:'Wat wordt er verkocht?', es:'¿Qué se vende?', fr:'Que vendez-vous ?', de:'Was wird verkauft?' },
+  'bs3-explain': { en:'Describe the item in detail.', nl:'Beschrijf het artikel in detail.', es:'Describe el artículo en detalle.', fr:'Décrivez l\'article en détail.', de:'Beschreiben Sie den Gegenstand im Detail.' },
+  'bs4-title': { en:'Price and payment', nl:'Prijs en betaling', es:'Precio y pago', fr:'Prix et paiement', de:'Preis und Zahlung' },
+  'bs4-explain': { en:'The agreed sale price and how it will be paid.', nl:'De overeengekomen verkoopprijs en de betaalwijze.', es:'El precio de venta acordado y la forma de pago.', fr:'Le prix de vente convenu et le mode de paiement.', de:'Der vereinbarte Verkaufspreis und die Zahlungsweise.' },
+  'bs5-title': { en:'Signing details', nl:'Ondertekeningsgegevens', es:'Detalles de la firma', fr:'Détails de la signature', de:'Unterschriftsdetails' },
+  'bs5-explain': { en:'Where and when is this being signed?', nl:'Waar en wanneer wordt dit ondertekend?', es:'¿Dónde y cuándo se firma?', fr:'Où et quand est-ce signé ?', de:'Wo und wann wird unterschrieben?' },
+  'lbl-item-cat': { en:'Category', nl:'Categorie', es:'Categoría', fr:'Catégorie', de:'Kategorie' },
+  'opt-vehicle': { en:'Vehicle', nl:'Voertuig', es:'Vehículo', fr:'Véhicule', de:'Fahrzeug' },
+  'opt-boat': { en:'Boat', nl:'Boot', es:'Barco', fr:'Bateau', de:'Boot' },
+  'opt-equipment': { en:'Equipment / Machinery', nl:'Apparatuur / Machines', es:'Equipo / Maquinaria', fr:'Équipement / Machine', de:'Ausrüstung / Maschinen' },
+  'opt-other-item': { en:'Other', nl:'Anders', es:'Otro', fr:'Autre', de:'Sonstiges' },
+  'lbl-make': { en:'Make', nl:'Merk', es:'Marca', fr:'Marque', de:'Marke' },
+  'lbl-model': { en:'Model', nl:'Model', es:'Modelo', fr:'Modèle', de:'Modell' },
+  'lbl-year': { en:'Year', nl:'Jaar', es:'Año', fr:'Année', de:'Jahr' },
+  'lbl-color': { en:'Color', nl:'Kleur', es:'Color', fr:'Couleur', de:'Farbe' },
+  'lbl-vin': { en:'VIN / Chassis number', nl:'VIN / Chassisnummer', es:'VIN / Número de chasis', fr:'VIN / Numéro de châssis', de:'FIN / Fahrgestellnummer' },
+  'lbl-plate': { en:'License plate', nl:'Kenteken', es:'Matrícula', fr:'Plaque d\'immatriculation', de:'Kennzeichen' },
+  'lbl-mileage': { en:'Mileage (km)', nl:'Kilometerstand', es:'Kilometraje', fr:'Kilométrage', de:'Kilometerstand' },
+  'lbl-boat-name': { en:'Boat name', nl:'Bootnaam', es:'Nombre del barco', fr:'Nom du bateau', de:'Bootsname' },
+  'lbl-boat-type': { en:'Type', nl:'Type', es:'Tipo', fr:'Type', de:'Typ' },
+  'lbl-boat-length': { en:'Length (ft)', nl:'Lengte (ft)', es:'Eslora (ft)', fr:'Longueur (ft)', de:'Länge (ft)' },
+  'lbl-hull-id': { en:'Hull ID / HIN', nl:'Rompnummer / HIN', es:'ID de casco / HIN', fr:'ID coque / HIN', de:'Rumpf-ID / HIN' },
+  'lbl-boat-reg': { en:'Registration number', nl:'Registratienummer', es:'Número de registro', fr:'Numéro d\'enregistrement', de:'Registrierungsnummer' },
+  'lbl-item-desc': { en:'Description of the item', nl:'Beschrijving van het artikel', es:'Descripción del artículo', fr:'Description de l\'article', de:'Beschreibung des Gegenstands' },
+  'lbl-sale-price': { en:'Sale price', nl:'Verkoopprijs', es:'Precio de venta', fr:'Prix de vente', de:'Verkaufspreis' },
+  'lbl-payment-method': { en:'Payment method', nl:'Betaalwijze', es:'Forma de pago', fr:'Mode de paiement', de:'Zahlungsweise' },
+  'opt-cash': { en:'Cash', nl:'Contant', es:'Efectivo', fr:'Espèces', de:'Barzahlung' },
+  'opt-transfer': { en:'Bank transfer', nl:'Bankoverschrijving', es:'Transferencia bancaria', fr:'Virement bancaire', de:'Banküberweisung' },
+  'opt-mixed': { en:'Cash + bank transfer', nl:'Contant + bankoverschrijving', es:'Efectivo + transferencia', fr:'Espèces + virement', de:'Bar + Überweisung' },
+  'lbl-condition': { en:'Condition of item', nl:'Staat van het artikel', es:'Condición del artículo', fr:'État de l\'article', de:'Zustand des Gegenstands' },
+  'opt-asis': { en:'As-is (no warranty)', nl:'In huidige staat (geen garantie)', es:'Tal como está (sin garantía)', fr:'En l\'état (sans garantie)', de:'Wie besehen (ohne Garantie)' },
+  'opt-good': { en:'Good working condition', nl:'Goede werkende staat', es:'Buen estado de funcionamiento', fr:'Bon état de fonctionnement', de:'Guter Betriebszustand' },
+  'bdoc-title': { en:'BILL OF SALE', nl:'KOOPOVEREENKOMST', es:'CONTRATO DE COMPRAVENTA', fr:'ACTE DE VENTE', de:'KAUFVERTRAG' },
+  'bdoc-between': { en:'This Bill of Sale is entered into between:', nl:'Deze koopovereenkomst is aangegaan tussen:', es:'Este contrato de compraventa se celebra entre:', fr:'Le présent acte de vente est conclu entre :', de:'Dieser Kaufvertrag wird geschlossen zwischen:' },
+  'bdoc-seller': { en:'Seller', nl:'Verkoper', es:'Vendedor', fr:'Vendeur', de:'Verkäufer' },
+  'bdoc-buyer': { en:'Buyer', nl:'Koper', es:'Comprador', fr:'Acheteur', de:'Käufer' },
+  'bdoc-item-h': { en:'ITEM DESCRIPTION', nl:'BESCHRIJVING ARTIKEL', es:'DESCRIPCIÓN DEL ARTÍCULO', fr:'DESCRIPTION DE L\'ARTICLE', de:'ARTIKELBESCHREIBUNG' },
+  'bdoc-price-h': { en:'SALE PRICE & PAYMENT', nl:'VERKOOPPRIJS & BETALING', es:'PRECIO Y PAGO', fr:'PRIX ET PAIEMENT', de:'VERKAUFSPREIS & ZAHLUNG' },
+  'bdoc-price-text': { en:'The Buyer agrees to pay the Seller the sum of {amount} for the item described above.', nl:'De koper stemt ermee in de verkoper het bedrag van {amount} te betalen voor het hierboven beschreven artikel.', es:'El comprador se compromete a pagar al vendedor la suma de {amount} por el artículo descrito anteriormente.', fr:'L\'acheteur s\'engage à payer au vendeur la somme de {amount} pour l\'article décrit ci-dessus.', de:'Der Käufer verpflichtet sich, dem Verkäufer den Betrag von {amount} für den oben beschriebenen Gegenstand zu zahlen.' },
+  'bdoc-payment-text': { en:'Payment method: {method}.', nl:'Betaalwijze: {method}.', es:'Forma de pago: {method}.', fr:'Mode de paiement : {method}.', de:'Zahlungsweise: {method}.' },
+  'bdoc-condition-h': { en:'CONDITION', nl:'STAAT', es:'CONDICIÓN', fr:'ÉTAT', de:'ZUSTAND' },
+  'bdoc-asis-text': { en:'The item is sold as-is. The Seller makes no warranties regarding the condition, fitness, or functionality of the item. The Buyer has inspected the item and accepts it in its current state.', nl:'Het artikel wordt verkocht in de huidige staat. De verkoper geeft geen garanties met betrekking tot de staat, geschiktheid of werking van het artikel. De koper heeft het artikel geïnspecteerd en accepteert het in de huidige staat.', es:'El artículo se vende tal como está. El vendedor no otorga garantías sobre el estado, aptitud o funcionalidad del artículo. El comprador ha inspeccionado el artículo y lo acepta en su estado actual.', fr:'L\'article est vendu en l\'état. Le vendeur ne donne aucune garantie concernant l\'état, l\'aptitude ou le fonctionnement de l\'article. L\'acheteur a inspecté l\'article et l\'accepte dans son état actuel.', de:'Der Gegenstand wird wie besehen verkauft. Der Verkäufer gibt keine Garantien bezüglich Zustand, Eignung oder Funktionalität. Der Käufer hat den Gegenstand besichtigt und akzeptiert ihn im aktuellen Zustand.' },
+  'bdoc-good-text': { en:'The Seller declares that the item is in good working condition at the time of sale.', nl:'De verkoper verklaart dat het artikel in goede werkende staat verkeert op het moment van verkoop.', es:'El vendedor declara que el artículo se encuentra en buen estado de funcionamiento al momento de la venta.', fr:'Le vendeur déclare que l\'article est en bon état de fonctionnement au moment de la vente.', de:'Der Verkäufer erklärt, dass der Gegenstand zum Zeitpunkt des Verkaufs in gutem Betriebszustand ist.' },
+  'bdoc-ownership-h': { en:'OWNERSHIP & LIENS', nl:'EIGENDOM & PANDRECHTEN', es:'PROPIEDAD Y GRAVÁMENES', fr:'PROPRIÉTÉ & PRIVILÈGES', de:'EIGENTUM & PFANDRECHTE' },
+  'bdoc-ownership-text': { en:'The Seller declares to be the lawful owner of the item and that it is free from any liens, claims, or encumbrances. Ownership transfers to the Buyer upon receipt of full payment.', nl:'De verkoper verklaart de rechtmatige eigenaar van het artikel te zijn en dat het vrij is van pandrechten, vorderingen of bezwaringen. Het eigendom gaat over op de koper bij ontvangst van de volledige betaling.', es:'El vendedor declara ser el propietario legítimo del artículo y que está libre de gravámenes, reclamaciones o cargas. La propiedad se transfiere al comprador tras el pago completo.', fr:'Le vendeur déclare être le propriétaire légitime de l\'article et qu\'il est libre de tout privilège, réclamation ou charge. La propriété est transférée à l\'acheteur dès réception du paiement intégral.', de:'Der Verkäufer erklärt, rechtmäßiger Eigentümer des Gegenstands zu sein und dass dieser frei von Pfandrechten, Ansprüchen oder Belastungen ist. Das Eigentum geht bei vollständiger Zahlung auf den Käufer über.' },
+  'bdoc-disputes-h': { en:'DISPUTES', nl:'GESCHILLEN', es:'DISPUTAS', fr:'LITIGES', de:'STREITIGKEITEN' },
+  'bdoc-disputes-text': { en:'Any dispute arising from this agreement shall first be resolved through negotiation. If no resolution is reached, the dispute shall be submitted to the competent court under the governing law of this agreement.', nl:'Geschillen voortvloeiend uit deze overeenkomst worden eerst in onderling overleg opgelost. Indien geen overeenstemming wordt bereikt, wordt het geschil voorgelegd aan de bevoegde rechter onder het toepasselijk recht van deze overeenkomst.', es:'Cualquier disputa derivada de este contrato se resolverá primero mediante negociación. Si no se llega a un acuerdo, la disputa se someterá al tribunal competente.', fr:'Tout litige découlant du présent contrat sera d\'abord résolu par négociation. En l\'absence d\'accord, le litige sera soumis au tribunal compétent.', de:'Streitigkeiten aus diesem Vertrag werden zunächst im Verhandlungswege beigelegt. Kommt keine Einigung zustande, wird der Streit dem zuständigen Gericht vorgelegt.' },
   'dt-loan-title':   { en:'Loan Agreement', nl:'Leenovereenkomst', es:'Contrato de préstamo', fr:'Contrat de prêt', de:'Darlehensvertrag' },
   'dt-loan-desc':    { en:'Lend or borrow money', nl:'Geld lenen of uitlenen', es:'Prestar o pedir dinero prestado', fr:'Prêter ou emprunter de l\'argent', de:'Geld verleihen oder leihen' },
   'dt-employment-title': { en:'Employment Contract', nl:'Arbeidsovereenkomst', es:'Contrato de trabajo', fr:'Contrat de travail', de:'Arbeitsvertrag' },
@@ -1725,48 +1795,6 @@ const T = {
   'edit-hint': { en:'Click on any section to edit the text. Your changes will be included in the PDF.', nl:'Klik op een sectie om de tekst aan te passen. Je wijzigingen worden opgenomen in de PDF.', es:'Haz clic en cualquier sección para editar el texto. Los cambios se incluirán en el PDF.', fr:'Cliquez sur une section pour modifier le texte. Vos modifications seront incluses dans le PDF.', de:'Klicken Sie auf einen Abschnitt, um den Text zu bearbeiten. Ihre Änderungen werden in das PDF übernommen.' },
   'last-updated': { en:'Last updated: October 1, 2026', nl:'Laatst bijgewerkt: 1 oktober 2026', es:'Última actualización: 1 de octubre de 2026', fr:'Dernière mise à jour : 1er octobre 2026', de:'Zuletzt aktualisiert: 1. Oktober 2026' },
   'privacy-link': { en:'Privacy Policy', nl:'Privacybeleid', es:'Política de Privacidad', fr:'Politique de Confidentialité', de:'Datenschutzerklärung' },
-  'ls1-title': { en:'Who is the lender?', nl:'Wie is de uitlener?', es:'¿Quién es el prestamista?', fr:'Qui est le prêteur ?', de:'Wer ist der Darlehensgeber?' },
-  'ls1-explain': { en:'The person or entity lending the money.', nl:'De persoon of organisatie die het geld uitleent.', es:'La persona o entidad que presta el dinero.', fr:'La personne ou l\'entité qui prête l\'argent.', de:'Die Person oder Organisation, die das Geld verleiht.' },
-  'ls2-title': { en:'Who is the borrower?', nl:'Wie is de lener?', es:'¿Quién es el prestatario?', fr:'Qui est l\'emprunteur ?', de:'Wer ist der Darlehensnehmer?' },
-  'ls2-explain': { en:'The person or entity receiving the loan.', nl:'De persoon of organisatie die het geld leent.', es:'La persona o entidad que recibe el préstamo.', fr:'La personne ou l\'entité qui reçoit le prêt.', de:'Die Person oder Organisation, die das Darlehen erhält.' },
-  'ls3-title': { en:'Loan details', nl:'Leninggegevens', es:'Detalles del préstamo', fr:'Détails du prêt', de:'Darlehensdetails' },
-  'ls3-explain': { en:'Amount, interest, and repayment terms.', nl:'Bedrag, rente en terugbetalingsvoorwaarden.', es:'Monto, intereses y condiciones de pago.', fr:'Montant, intérêts et conditions de remboursement.', de:'Betrag, Zinsen und Rückzahlungsbedingungen.' },
-  'ls4-title': { en:'Duration and signing', nl:'Looptijd en ondertekening', es:'Duración y firma', fr:'Durée et signature', de:'Laufzeit und Unterschrift' },
-  'ls4-explain': { en:'When does the loan start and end?', nl:'Wanneer begint en eindigt de lening?', es:'¿Cuándo empieza y termina el préstamo?', fr:'Quand le prêt commence-t-il et se termine-t-il ?', de:'Wann beginnt und endet das Darlehen?' },
-  'lbl-loan-amount': { en:'Loan amount', nl:'Leenbedrag', es:'Monto del préstamo', fr:'Montant du prêt', de:'Darlehensbetrag' },
-  'lbl-interest-rate': { en:'Annual interest rate (%)', nl:'Jaarlijkse rente (%)', es:'Tasa de interés anual (%)', fr:'Taux d\'intérêt annuel (%)', de:'Jährlicher Zinssatz (%)' },
-  'hint-interest': { en:'Enter 0 for an interest-free loan', nl:'Vul 0 in voor een renteloze lening', es:'Ingrese 0 para un préstamo sin intereses', fr:'Entrez 0 pour un prêt sans intérêts', de:'0 eingeben für ein zinsloses Darlehen' },
-  'lbl-repay-type': { en:'Repayment', nl:'Terugbetaling', es:'Reembolso', fr:'Remboursement', de:'Rückzahlung' },
-  'opt-monthly': { en:'Monthly installments', nl:'Maandelijkse termijnen', es:'Cuotas mensuales', fr:'Mensualités', de:'Monatliche Raten' },
-  'opt-lumpsum': { en:'Lump sum at end', nl:'Eenmalig aan het einde', es:'Suma global al final', fr:'Somme forfaitaire à la fin', de:'Einmalzahlung am Ende' },
-  'lbl-monthly-amount': { en:'Monthly payment', nl:'Maandelijks bedrag', es:'Pago mensual', fr:'Mensualité', de:'Monatliche Zahlung' },
-  'ldoc-title': { en:'LOAN AGREEMENT', nl:'LEENOVEREENKOMST', es:'CONTRATO DE PRÉSTAMO', fr:'CONTRAT DE PRÊT', de:'DARLEHENSVERTRAG' },
-  'ldoc-between': { en:'This Loan Agreement is entered into between:', nl:'Deze leenovereenkomst is aangegaan tussen:', es:'Este contrato de préstamo se celebra entre:', fr:'Le présent contrat de prêt est conclu entre :', de:'Dieser Darlehensvertrag wird geschlossen zwischen:' },
-  'ldoc-lender': { en:'Lender', nl:'Uitlener', es:'Prestamista', fr:'Prêteur', de:'Darlehensgeber' },
-  'ldoc-borrower': { en:'Borrower', nl:'Lener', es:'Prestatario', fr:'Emprunteur', de:'Darlehensnehmer' },
-  'ldoc-amount-h': { en:'LOAN AMOUNT', nl:'LEENBEDRAG', es:'MONTO DEL PRÉSTAMO', fr:'MONTANT DU PRÊT', de:'DARLEHENSBETRAG' },
-  'ldoc-amount-text': { en:'The Lender agrees to lend the Borrower the sum of {amount}.', nl:'De uitlener stemt ermee in om de lener het bedrag van {amount} te lenen.', es:'El prestamista acuerda prestar al prestatario la suma de {amount}.', fr:'Le prêteur accepte de prêter à l\'emprunteur la somme de {amount}.', de:'Der Darlehensgeber gewährt dem Darlehensnehmer ein Darlehen in Höhe von {amount}.' },
-  'ldoc-interest-h': { en:'INTEREST', nl:'RENTE', es:'INTERESES', fr:'INTÉRÊTS', de:'ZINSEN' },
-  'ldoc-interest-text': { en:'The loan carries an annual interest rate of {rate}%, calculated on the outstanding balance.', nl:'Op de lening is een jaarlijkse rente van {rate}% van toepassing, berekend over het uitstaande saldo.', es:'El préstamo tiene una tasa de interés anual del {rate}%, calculada sobre el saldo pendiente.', fr:'Le prêt porte un taux d\'intérêt annuel de {rate}%, calculé sur le solde restant dû.', de:'Das Darlehen wird mit einem jährlichen Zinssatz von {rate}% verzinst, berechnet auf den ausstehenden Saldo.' },
-  'ldoc-noint-text': { en:'This is an interest-free loan. No interest shall accrue on the principal amount.', nl:'Dit is een renteloze lening. Er wordt geen rente berekend over de hoofdsom.', es:'Este es un préstamo sin intereses. No se acumularán intereses sobre el monto principal.', fr:'Il s\'agit d\'un prêt sans intérêts. Aucun intérêt ne sera appliqué au montant principal.', de:'Dies ist ein zinsloses Darlehen. Auf den Darlehensbetrag werden keine Zinsen erhoben.' },
-  'ldoc-repay-h': { en:'REPAYMENT', nl:'TERUGBETALING', es:'REEMBOLSO', fr:'REMBOURSEMENT', de:'RÜCKZAHLUNG' },
-  'ldoc-monthly-text': { en:'The Borrower shall repay the loan in monthly installments of {currency} {amount}, due on or before the {day}th of each month.', nl:'De lener betaalt de lening terug in maandelijkse termijnen van {currency} {amount}, verschuldigd op of voor de {day}e van elke maand.', es:'El prestatario reembolsará el préstamo en cuotas mensuales de {currency} {amount}, pagaderas el día {day} de cada mes o antes.', fr:'L\'emprunteur remboursera le prêt en mensualités de {currency} {amount}, exigibles au plus tard le {day} de chaque mois.', de:'Der Darlehensnehmer zahlt das Darlehen in monatlichen Raten von {currency} {amount} zurück, fällig bis zum {day}. eines jeden Monats.' },
-  'ldoc-lumpsum-text': { en:'The Borrower shall repay the full loan amount in a single payment on or before {date}.', nl:'De lener betaalt het volledige leenbedrag in één keer terug op of voor {date}.', es:'El prestatario reembolsará el monto total del préstamo en un solo pago antes del {date}.', fr:'L\'emprunteur remboursera le montant total du prêt en un seul versement au plus tard le {date}.', de:'Der Darlehensnehmer zahlt den gesamten Darlehensbetrag in einer Einmalzahlung bis zum {date} zurück.' },
-  'ldoc-late-h': { en:'LATE PAYMENT', nl:'ACHTERSTALLIGE BETALING', es:'PAGO TARDÍO', fr:'RETARD DE PAIEMENT', de:'ZAHLUNGSVERZUG' },
-  'ldoc-late-text': { en:'If a payment is more than 7 days overdue, the Borrower shall pay a late fee of 2% of the overdue amount for each month of delay.', nl:'Indien een betaling meer dan 7 dagen achterstallig is, is de lener een boete van 2% van het achterstallige bedrag verschuldigd voor elke maand vertraging.', es:'Si un pago tiene más de 7 días de retraso, el prestatario pagará un recargo del 2% del monto vencido por cada mes de retraso.', fr:'Si un paiement a plus de 7 jours de retard, l\'emprunteur paiera des pénalités de 2% du montant en souffrance pour chaque mois de retard.', de:'Ist eine Zahlung mehr als 7 Tage überfällig, zahlt der Darlehensnehmer einen Verzugszuschlag von 2% des überfälligen Betrags für jeden Monat des Verzugs.' },
-  'ldoc-early-h': { en:'EARLY REPAYMENT', nl:'VERVROEGDE AFLOSSING', es:'PAGO ANTICIPADO', fr:'REMBOURSEMENT ANTICIPÉ', de:'VORZEITIGE RÜCKZAHLUNG' },
-  'ldoc-early-text': { en:'The Borrower may repay the loan in full or in part at any time without penalty.', nl:'De lener mag de lening op elk moment geheel of gedeeltelijk vervroegd aflossen zonder boete.', es:'El prestatario puede reembolsar el préstamo total o parcialmente en cualquier momento sin penalización.', fr:'L\'emprunteur peut rembourser le prêt en totalité ou en partie à tout moment sans pénalité.', de:'Der Darlehensnehmer kann das Darlehen jederzeit ganz oder teilweise ohne Vorfälligkeitsentschädigung zurückzahlen.' },
-  'ldoc-default-h': { en:'DEFAULT', nl:'WANBETALING', es:'INCUMPLIMIENTO', fr:'DÉFAUT DE PAIEMENT', de:'ZAHLUNGSAUSFALL' },
-  'ldoc-default-text': { en:'If the Borrower fails to make any payment within 30 days of the due date, the full remaining balance becomes immediately due and payable.', nl:'Indien de lener enige betaling niet binnen 30 dagen na de vervaldatum voldoet, wordt het volledige resterende saldo onmiddellijk opeisbaar.', es:'Si el prestatario no realiza algún pago dentro de los 30 días posteriores a la fecha de vencimiento, el saldo total restante será exigible de inmediato.', fr:'Si l\'emprunteur ne s\'acquitte pas d\'un paiement dans les 30 jours suivant la date d\'échéance, le solde restant total devient immédiatement exigible.', de:'Kommt der Darlehensnehmer mit einer Zahlung mehr als 30 Tage in Verzug, wird der gesamte Restbetrag sofort fällig und zahlbar.' },
-  'lbl-sponsor-toggle': { en:'A third party (e.g. employer) pays the rent', nl:'Een derde partij (bijv. werkgever) betaalt de huur', es:'Un tercero (p. ej. empleador) paga el alquiler', fr:'Un tiers (p. ex. employeur) paie le loyer', de:'Ein Dritter (z.B. Arbeitgeber) zahlt die Miete' },
-  'rs2b-title': { en:'Who is the sponsor?', nl:'Wie is de begunstigde/sponsor?', es:'¿Quién es el patrocinador?', fr:'Qui est le garant ?', de:'Wer ist der Sponsor?' },
-  'rs2b-explain': { en:'The party paying the rent (e.g. the tenant\'s employer).', nl:'De partij die de huur betaalt (bijv. de werkgever van de huurder).', es:'La parte que paga el alquiler (p. ej. el empleador del inquilino).', fr:'La partie qui paie le loyer (p. ex. l\'employeur du locataire).', de:'Die Partei, die die Miete zahlt (z.B. der Arbeitgeber des Mieters).' },
-  'lbl-company': { en:'Company / organization name', nl:'Bedrijfs- / organisatienaam', es:'Nombre de la empresa / organización', fr:'Nom de l\'entreprise / organisation', de:'Firmen- / Organisationsname' },
-  'lbl-rep': { en:'Represented by (name)', nl:'Vertegenwoordigd door (naam)', es:'Representado por (nombre)', fr:'Représenté par (nom)', de:'Vertreten durch (Name)' },
-  'ph-company': { en:'E.g. Acme Corp.', nl:'Bijv. Acme B.V.', es:'Ej. Acme S.A.', fr:'Ex. Acme S.A.', de:'Z.B. Acme GmbH' },
-  'rdoc-sponsor': { en:'Sponsor / Paying Party', nl:'Sponsor / Betalende Partij', es:'Patrocinador / Parte Pagadora', fr:'Garant / Partie Payante', de:'Sponsor / Zahlende Partei' },
-  'rdoc-sponsor-h': { en:'SPONSOR & PAYMENT ARRANGEMENT', nl:'SPONSOR & BETALINGSREGELING', es:'PATROCINADOR Y ACUERDO DE PAGO', fr:'GARANT ET ARRANGEMENT DE PAIEMENT', de:'SPONSOR & ZAHLUNGSVEREINBARUNG' },
-  'rdoc-sponsor-text': { en:'The Sponsor agrees to pay the monthly rent directly to the Landlord on behalf of the Tenant. The Sponsor may recover this amount by deducting it from the Tenant\'s gross salary or by other agreed means.', nl:'De sponsor stemt ermee in de maandelijkse huur rechtstreeks aan de verhuurder te betalen namens de huurder. De sponsor mag dit bedrag verrekenen met het brutosalaris van de huurder of op andere overeengekomen wijze.', es:'El patrocinador se compromete a pagar el alquiler mensual directamente al propietario en nombre del inquilino. El patrocinador puede recuperar este monto deduciéndolo del salario bruto del inquilino o por otros medios acordados.', fr:'Le garant s\'engage à payer le loyer mensuel directement au bailleur pour le compte du locataire. Le garant peut récupérer ce montant en le déduisant du salaire brut du locataire ou par d\'autres moyens convenus.', de:'Der Sponsor verpflichtet sich, die monatliche Miete direkt an den Vermieter im Namen des Mieters zu zahlen. Der Sponsor kann diesen Betrag durch Abzug vom Bruttogehalt des Mieters oder auf andere vereinbarte Weise einziehen.' },
   'toggle-basic': { en:'📄 Basic', nl:'📄 Basis', es:'📄 Básico', fr:'📄 Simple', de:'📄 Einfach' },
   'toggle-detailed': { en:'📋 Detailed', nl:'📋 Uitgebreid', es:'📋 Detallado', fr:'📋 Détaillé', de:'📋 Ausführlich' },
   'rdoc-maint-h': { en:'MAINTENANCE', nl:'ONDERHOUD', es:'MANTENIMIENTO', fr:'ENTRETIEN', de:'INSTANDHALTUNG' },
@@ -2367,13 +2395,9 @@ function showJurNotice(containerId, country) {
 
 function selectDocType(type) {
   currentDocType = type;
-  if (type === 'poa') {
-    goStep(1);
-  } else if (type === 'rental') {
-    goRentalStep('r1');
-  } else if (type === 'loan') {
-    goLoanStep('l1');
-  }
+  if (type === 'poa') goStep(1);
+  else if (type === 'rental') goRentalStep('r1');
+  else if (type === 'bos') goBosStep('b1');
 }
 
 // ====== Rental navigation ======
@@ -2438,18 +2462,11 @@ function setRentalDuration(type) {
   document.getElementById('rental-dates').style.display = type==='fixed' ? 'grid' : 'none';
 }
 
-function toggleSponsor() {
-  // Just controls flow — step r2b is shown/skipped based on checkbox
-}
-
 // ====== Rental data ======
 function gatherRentalData() {
-  const hasSponsor = document.getElementById('r-has-sponsor')?.checked || false;
   return {
     landlord: { name:$('rl-name'), id:$('rl-id'), address:$('rl-address'), country:$('rl-country') },
     tenant:   { name:$('rt-name'), id:$('rt-id'), address:$('rt-address'), country:$('rt-country') },
-    hasSponsor,
-    sponsor: hasSponsor ? { name:$('rs-name'), rep:$('rs-rep'), id:$('rs-id'), address:$('rs-address'), country:$('rs-country') } : null,
     property: { address:$('rp-address'), type:rentalPropertyType, furnished:rentalFurnished },
     rent:     parseFloat(document.getElementById('r-rent')?.value)||0,
     currency: document.getElementById('r-currency')?.value||'USD',
@@ -2496,19 +2513,11 @@ function renderRentalPreview() {
     <div class="sec extra-sec"><div class="sec-title">${t('rdoc-disputes-h')}</div><p>${t('rdoc-disputes-text')}</p></div>
   ` : '';
 
-  const sponsorPerson = (s) => `<div class="sec"><div class="sec-title">${t('rdoc-sponsor')}</div><strong>${t('lbl-company')}:</strong> ${s.name||'___'}<br>${s.rep ? '<strong>'+t('lbl-rep')+':</strong> '+s.rep+'<br>' : ''}<strong>${t('doc-id')}:</strong> ${s.id||'___'}<br><strong>${t('doc-address')}:</strong> ${s.address||'___'}<br><strong>${t('doc-country')}:</strong> ${s.country||'___'}</div>`;
-
-  const sponsorSec = d.hasSponsor && d.sponsor ? `
-    ${sponsorPerson(d.sponsor)}
-    <div class="sec"><div class="sec-title">${t('rdoc-sponsor-h')}</div><p>${t('rdoc-sponsor-text')}</p></div>
-  ` : '';
-
   el.innerHTML = `
     <h2>${t('rdoc-title')}</h2>
     <div class="sec"><p>${t('rdoc-between')}</p></div>
     ${person(d.landlord, t('rdoc-landlord'))}
     ${person(d.tenant, t('rdoc-tenant'))}
-    ${d.hasSponsor && d.sponsor ? sponsorPerson(d.sponsor) : ''}
     <div class="sec"><div class="sec-title">${t('rdoc-property-h')}</div>
       <p>${t('rdoc-property-text')}</p>
       <strong>${t('doc-address')}:</strong> ${d.property.address||'___'}<br>
@@ -2519,15 +2528,13 @@ function renderRentalPreview() {
       <p>${rentTxt}</p>
       ${depTxt ? '<p>'+depTxt+'</p>' : ''}
     </div>
-    ${d.hasSponsor && d.sponsor ? '<div class="sec"><div class="sec-title">'+t('rdoc-sponsor-h')+'</div><p>'+t('rdoc-sponsor-text')+'</p></div>' : ''}
     <div class="sec"><div class="sec-title">${t('doc-duration-h')}</div><p>${durTxt}</p></div>
     ${extraSecs}
     <div class="sec"><div class="sec-title">${t('doc-law-h')}</div><p>${t('doc-law-text').replace('{law}',d.law||'___')}</p></div>
     <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate))}</p></div>
-    <div class="sig-grid" style="grid-template-columns:${d.hasSponsor ? '1fr 1fr 1fr' : '1fr 1fr'};">
+    <div class="sig-grid">
       <div><div class="sig-line">${t('rdoc-landlord')}<br>${d.landlord.name||'___'}</div></div>
       <div><div class="sig-line">${t('rdoc-tenant')}<br>${d.tenant.name||'___'}</div></div>
-      ${d.hasSponsor && d.sponsor ? '<div><div class="sig-line">'+t('rdoc-sponsor')+'<br>'+(d.sponsor.name||'___')+'</div></div>' : ''}
     </div>
     ${jurHtml}
   `;
@@ -2566,18 +2573,7 @@ async function downloadRentalPDF() {
   addTxt(`${t('doc-name')}: ${d.tenant.name||'___'}`,{});
   addTxt(`${t('doc-id')}: ${d.tenant.id||'___'}`,{});
   addTxt(`${t('doc-address')}: ${d.tenant.address||'___'}`,{});
-  addTxt(`${t('doc-country')}: ${d.tenant.country||'___'}`,{}); y+=3;
-
-  // Sponsor
-  if (d.hasSponsor && d.sponsor) {
-    addTxt(t('rdoc-sponsor'),{size:11,style:'bold',gap:3});
-    addTxt(`${t('lbl-company')}: ${d.sponsor.name||'___'}`,{});
-    if (d.sponsor.rep) addTxt(`${t('lbl-rep')}: ${d.sponsor.rep}`,{});
-    addTxt(`${t('doc-id')}: ${d.sponsor.id||'___'}`,{});
-    addTxt(`${t('doc-address')}: ${d.sponsor.address||'___'}`,{});
-    addTxt(`${t('doc-country')}: ${d.sponsor.country||'___'}`,{});
-  }
-  y+=4;
+  addTxt(`${t('doc-country')}: ${d.tenant.country||'___'}`,{}); y+=4;
 
   // Property
   addTxt(t('rdoc-property-h'),{size:12,style:'bold',gap:4});
@@ -2591,12 +2587,6 @@ async function downloadRentalPDF() {
   addTxt(t('rdoc-rent-text').replace('{currency}',d.currency).replace('{amount}',d.rent.toLocaleString()).replace('{day}',d.payday),{});
   if(d.deposit>0) addTxt(t('rdoc-deposit-text').replace('{currency}',d.currency).replace('{amount}',d.deposit.toLocaleString()),{});
   y+=3;
-
-  // Sponsor clause
-  if (d.hasSponsor && d.sponsor) {
-    addTxt(t('rdoc-sponsor-h'),{size:12,style:'bold',gap:4});
-    addTxt(t('rdoc-sponsor-text'),{}); y+=3;
-  }
 
   // Duration
   addTxt(t('doc-duration-h'),{size:12,style:'bold',gap:4});
@@ -2627,12 +2617,6 @@ async function downloadRentalPDF() {
   doc.text(t('rdoc-landlord'),mg,y+5); doc.text(d.landlord.name||'',mg,y+9);
   doc.line(mg+95,y,mg+160,y);
   doc.text(t('rdoc-tenant'),mg+95,y+5); doc.text(d.tenant.name||'',mg+95,y+9);
-
-  if (d.hasSponsor && d.sponsor) {
-    y+=30; if(y>260){doc.addPage();y=mg+20;}
-    doc.line(mg,y,mg+65,y);
-    doc.text(t('rdoc-sponsor'),mg,y+5); doc.text(d.sponsor.name||'',mg,y+9);
-  }
 
   // Disclaimer
   y+=25; if(y>270){doc.addPage();y=mg;}
@@ -2674,7 +2658,7 @@ function toggleTheme() {
 })();
 
 // ====== Detail level toggle ======
-const docDetail = { poa: 'basic', rental: 'basic', loan: 'basic' };
+const docDetail = { poa: 'basic', rental: 'basic', bos: 'basic' };
 
 function setDocDetail(docType, level) {
   docDetail[docType] = level;
@@ -2682,7 +2666,224 @@ function setDocDetail(docType, level) {
   document.getElementById(docType+'-detailed-btn').classList.toggle('active', level==='detailed');
   if (docType === 'poa') renderPreview();
   else if (docType === 'rental') renderRentalPreview();
-  else if (docType === 'loan') renderLoanPreview();
+  else if (docType === 'bos') renderBosPreview();
+}
+
+// ====== Bill of Sale ======
+const BOS_STEPS = ['b1','b2','b3','b4','b5','b6'];
+
+function goBosStep(step) {
+  if (step === 0) { goStep(0); return; }
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  const idx = BOS_STEPS.indexOf(step);
+  document.getElementById('progress').style.width = ((idx+1) / BOS_STEPS.length * 100) + '%';
+  if (step === 'b6') renderBosPreview();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function validateBosAndGo(from, to) {
+  const req = { 'b1': ['bs-name','bs-id','bs-address'], 'b2': ['bb-name','bb-id','bb-address'] };
+  let ok = true;
+  (req[from]||[]).forEach(id => {
+    const el = document.getElementById(id);
+    const err = document.getElementById('err-'+id);
+    if (!el.value.trim()) { el.classList.add('field-error'); if(err){err.style.display='block';err.textContent=t('err-required');} ok=false; }
+    else { el.classList.remove('field-error'); if(err) err.style.display='none'; }
+  });
+  if (ok) goBosStep(to);
+}
+
+function toggleBosFields() {
+  const cat = document.getElementById('b-item-cat').value;
+  document.getElementById('bos-vehicle-fields').style.display = cat==='vehicle' ? 'block' : 'none';
+  document.getElementById('bos-boat-fields').style.display = cat==='boat' ? 'block' : 'none';
+  document.getElementById('bos-other-fields').style.display = (cat==='equipment'||cat==='other') ? 'block' : 'none';
+}
+
+function gatherBosData() {
+  const cat = document.getElementById('b-item-cat').value;
+  let item = { category: cat };
+  if (cat === 'vehicle') {
+    item = { ...item, make:$('b-make'), model:$('b-model'), year:$('b-year'), color:$('b-color'), vin:$('b-vin'), plate:$('b-plate'), mileage:$('b-mileage') };
+  } else if (cat === 'boat') {
+    item = { ...item, name:$('b-boat-name'), type:$('b-boat-type'), length:$('b-boat-length'), hull:$('b-hull-id'), reg:$('b-boat-reg') };
+  } else {
+    item = { ...item, desc: document.getElementById('b-item-desc')?.value?.trim()||'' };
+  }
+  return {
+    seller: { name:$('bs-name'), id:$('bs-id'), address:$('bs-address'), country:$('bs-country') },
+    buyer: { name:$('bb-name'), id:$('bb-id'), address:$('bb-address'), country:$('bb-country') },
+    item,
+    price: parseFloat(document.getElementById('b-price')?.value)||0,
+    currency: document.getElementById('b-currency')?.value||'USD',
+    payment: document.getElementById('b-payment')?.value||'cash',
+    condition: document.getElementById('b-condition')?.value||'asis',
+    docDate: document.getElementById('b-doc-date')?.value||'',
+    place: $('b-place'),
+    law: $('b-law'),
+  };
+}
+
+function bosItemDesc(item) {
+  if (item.category === 'vehicle') {
+    let d = '';
+    if (item.year) d += item.year + ' ';
+    if (item.make) d += item.make + ' ';
+    if (item.model) d += item.model;
+    let details = [];
+    if (item.color) details.push(`${t('lbl-color')}: ${item.color}`);
+    if (item.vin) details.push(`${t('lbl-vin')}: ${item.vin}`);
+    if (item.plate) details.push(`${t('lbl-plate')}: ${item.plate}`);
+    if (item.mileage) details.push(`${t('lbl-mileage')}: ${item.mileage}`);
+    return `<strong>${d.trim()||'___'}</strong>${details.length ? '<br>'+details.join('<br>') : ''}`;
+  } else if (item.category === 'boat') {
+    let d = '';
+    if (item.name) d += item.name;
+    if (item.type) d += ' ('+item.type+')';
+    let details = [];
+    if (item.length) details.push(`${t('lbl-boat-length')}: ${item.length} ft`);
+    if (item.hull) details.push(`${t('lbl-hull-id')}: ${item.hull}`);
+    if (item.reg) details.push(`${t('lbl-boat-reg')}: ${item.reg}`);
+    return `<strong>${d.trim()||'___'}</strong>${details.length ? '<br>'+details.join('<br>') : ''}`;
+  } else {
+    return item.desc || '___';
+  }
+}
+
+function bosItemText(item) {
+  if (item.category === 'vehicle') {
+    let parts = [];
+    if (item.year) parts.push(item.year);
+    if (item.make) parts.push(item.make);
+    if (item.model) parts.push(item.model);
+    let s = parts.join(' ') || '___';
+    if (item.color) s += ', '+t('lbl-color')+': '+item.color;
+    if (item.vin) s += ', '+t('lbl-vin')+': '+item.vin;
+    if (item.plate) s += ', '+t('lbl-plate')+': '+item.plate;
+    if (item.mileage) s += ', '+t('lbl-mileage')+': '+item.mileage;
+    return s;
+  } else if (item.category === 'boat') {
+    let s = item.name||'___';
+    if (item.type) s += ' ('+item.type+')';
+    if (item.length) s += ', '+t('lbl-boat-length')+': '+item.length+' ft';
+    if (item.hull) s += ', '+t('lbl-hull-id')+': '+item.hull;
+    if (item.reg) s += ', '+t('lbl-boat-reg')+': '+item.reg;
+    return s;
+  } else {
+    return item.desc || '___';
+  }
+}
+
+function renderBosPreview() {
+  const d = gatherBosData();
+  const el = document.getElementById('bos-preview');
+  const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br><strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
+
+  const amtStr = d.currency + ' ' + d.price.toLocaleString();
+  const payLabel = t('opt-'+d.payment);
+  const condText = d.condition === 'asis' ? t('bdoc-asis-text') : t('bdoc-good-text');
+
+  const detailed = docDetail.bos === 'detailed';
+  const extraSecs = detailed ? `
+    <div class="sec extra-sec"><div class="sec-title">${t('bdoc-ownership-h')}</div><p>${t('bdoc-ownership-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('bdoc-disputes-h')}</div><p>${t('bdoc-disputes-text')}</p></div>
+  ` : '';
+
+  el.innerHTML = `
+    <h2>${t('bdoc-title')}</h2>
+    <div class="sec"><p>${t('bdoc-between')}</p></div>
+    ${person(d.seller, t('bdoc-seller'))}
+    ${person(d.buyer, t('bdoc-buyer'))}
+    <div class="sec"><div class="sec-title">${t('bdoc-item-h')}</div><p>${t('opt-'+d.item.category)}</p>${bosItemDesc(d.item)}</div>
+    <div class="sec"><div class="sec-title">${t('bdoc-price-h')}</div><p>${t('bdoc-price-text').replace('{amount}',amtStr)}</p><p>${t('bdoc-payment-text').replace('{method}',payLabel)}</p></div>
+    <div class="sec"><div class="sec-title">${t('bdoc-condition-h')}</div><p>${condText}</p></div>
+    ${extraSecs}
+    <div class="sec"><div class="sec-title">${t('doc-law-h')}</div><p>${t('doc-law-text').replace('{law}',d.law||'___')}</p></div>
+    <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate))}</p></div>
+    <div class="sig-grid">
+      <div><div class="sig-line">${t('bdoc-seller')}<br>${d.seller.name||'___'}</div></div>
+      <div><div class="sig-line">${t('bdoc-buyer')}<br>${d.buyer.name||'___'}</div></div>
+    </div>
+    <div class="sig-grid" style="margin-top:16px;">
+      <div><div class="sig-line">${t('doc-witness')} 1</div></div>
+      <div><div class="sig-line">${t('doc-witness')} 2</div></div>
+    </div>
+  `;
+}
+
+async function downloadBosPDF() {
+  trackEdits('bos-preview', 'Bill of Sale');
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const d = gatherBosData();
+  const mg = 25, pw = 160;
+  let y = mg;
+  const addTxt = (text, opts={}) => {
+    const sz=opts.size||10, st=opts.style||'normal', al=opts.align||'left';
+    doc.setFontSize(sz); doc.setFont('helvetica',st);
+    const lines = doc.splitTextToSize(text, opts.w||pw);
+    if (y + lines.length*sz*0.4 > 280) { doc.addPage(); y=mg; }
+    doc.text(lines, al==='center'?105:mg, y, {align:al});
+    y += lines.length*sz*0.42 + (opts.gap||2);
+  };
+
+  addTxt(t('bdoc-title'),{size:18,style:'bold',align:'center',gap:8}); y+=3;
+  addTxt(t('bdoc-between'),{size:10,style:'italic'}); y+=2;
+
+  addTxt(t('bdoc-seller'),{size:11,style:'bold',gap:3});
+  addTxt(`${t('doc-name')}: ${d.seller.name||'___'}`,{});
+  addTxt(`${t('doc-id')}: ${d.seller.id||'___'}`,{});
+  addTxt(`${t('doc-address')}: ${d.seller.address||'___'}`,{});
+  addTxt(`${t('doc-country')}: ${d.seller.country||'___'}`,{}); y+=3;
+
+  addTxt(t('bdoc-buyer'),{size:11,style:'bold',gap:3});
+  addTxt(`${t('doc-name')}: ${d.buyer.name||'___'}`,{});
+  addTxt(`${t('doc-id')}: ${d.buyer.id||'___'}`,{});
+  addTxt(`${t('doc-address')}: ${d.buyer.address||'___'}`,{});
+  addTxt(`${t('doc-country')}: ${d.buyer.country||'___'}`,{}); y+=4;
+
+  addTxt(t('bdoc-item-h'),{size:12,style:'bold',gap:4});
+  addTxt(`${t('opt-'+d.item.category)}: ${bosItemText(d.item)}`,{}); y+=3;
+
+  const amtStr = d.currency+' '+d.price.toLocaleString();
+  addTxt(t('bdoc-price-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('bdoc-price-text').replace('{amount}',amtStr),{});
+  addTxt(t('bdoc-payment-text').replace('{method}',t('opt-'+d.payment)),{}); y+=3;
+
+  addTxt(t('bdoc-condition-h'),{size:12,style:'bold',gap:4});
+  addTxt(d.condition==='asis' ? t('bdoc-asis-text') : t('bdoc-good-text'),{}); y+=3;
+
+  if (docDetail.bos === 'detailed') {
+    addTxt(t('bdoc-ownership-h'),{size:12,style:'bold',gap:4}); addTxt(t('bdoc-ownership-text'),{}); y+=3;
+    addTxt(t('bdoc-disputes-h'),{size:12,style:'bold',gap:4}); addTxt(t('bdoc-disputes-text'),{}); y+=3;
+  }
+
+  addTxt(t('doc-law-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('doc-law-text').replace('{law}',d.law||'___'),{}); y+=3;
+  addTxt(t('doc-exec-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate)),{});
+
+  y+=20; if(y>250){doc.addPage();y=mg+20;}
+  doc.setDrawColor(50);
+  doc.line(mg,y,mg+65,y); doc.setFontSize(9);
+  doc.text(t('bdoc-seller'),mg,y+5); doc.text(d.seller.name||'',mg,y+9);
+  doc.line(mg+95,y,mg+160,y);
+  doc.text(t('bdoc-buyer'),mg+95,y+5); doc.text(d.buyer.name||'',mg+95,y+9);
+
+  y+=30; if(y>260){doc.addPage();y=mg+20;}
+  doc.line(mg,y,mg+65,y); doc.text(`${t('doc-witness')} 1`,mg,y+5);
+  doc.line(mg+95,y,mg+160,y); doc.text(`${t('doc-witness')} 2`,mg+95,y+5);
+
+  y+=25; if(y>270){doc.addPage();y=mg;}
+  doc.setFontSize(7); doc.setTextColor(150);
+  doc.text('Generated by documentgenerator.ai', 105, 290, { align:'center' });
+
+  const blob = doc.output('blob');
+  const fn = `Bill_of_Sale_${d.seller.name?d.seller.name.replace(/\s+/g,'_'):'draft'}.pdf`;
+  try { const dl = await window.claude?.use?.('downloads'); if(dl){await dl.save({filename:fn,data:blob});return;} } catch(e){}
+  const u = URL.createObjectURL(blob); const a = document.createElement('a');
+  a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
 
 // ====== Edit mode & tracking ======
@@ -2750,179 +2951,6 @@ function trackEdits(previewId, docType) {
       })
     }).catch(() => {});
   }
-}
-
-// ====== Loan Agreement ======
-const LOAN_STEPS = ['l1','l2','l3','l4','l5'];
-
-function goLoanStep(step) {
-  if (step === 0) { goStep(0); return; }
-  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-  document.getElementById('step-' + step).classList.add('active');
-  const idx = LOAN_STEPS.indexOf(step);
-  document.getElementById('progress').style.width = ((idx+1) / LOAN_STEPS.length * 100) + '%';
-  if (step === 'l5') renderLoanPreview();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function validateLoanAndGo(from, to) {
-  const req = { 'l1': ['ll-name','ll-id','ll-address'], 'l2': ['lb-name','lb-id','lb-address'] };
-  let ok = true;
-  (req[from]||[]).forEach(id => {
-    const el = document.getElementById(id);
-    const err = document.getElementById('err-'+id);
-    if (!el.value.trim()) { el.classList.add('field-error'); if(err){err.style.display='block';err.textContent=t('err-required');} ok=false; }
-    else { el.classList.remove('field-error'); if(err) err.style.display='none'; }
-  });
-  if (ok) goLoanStep(to);
-}
-
-function toggleLoanRepay() {
-  const type = document.getElementById('l-repay-type').value;
-  document.getElementById('loan-monthly-fields').style.display = type === 'monthly' ? 'block' : 'none';
-}
-
-function gatherLoanData() {
-  return {
-    lender: { name:$('ll-name'), id:$('ll-id'), address:$('ll-address'), country:$('ll-country') },
-    borrower: { name:$('lb-name'), id:$('lb-id'), address:$('lb-address'), country:$('lb-country') },
-    amount: parseFloat(document.getElementById('l-amount')?.value)||0,
-    currency: document.getElementById('l-currency')?.value||'USD',
-    interest: parseFloat(document.getElementById('l-interest')?.value)||0,
-    repayType: document.getElementById('l-repay-type')?.value||'monthly',
-    monthly: parseFloat(document.getElementById('l-monthly')?.value)||0,
-    payday: parseInt(document.getElementById('l-payday')?.value)||1,
-    dateStart: document.getElementById('l-date-start')?.value||'',
-    dateEnd: document.getElementById('l-date-end')?.value||'',
-    docDate: document.getElementById('l-doc-date')?.value||'',
-    place: $('l-place'),
-    law: $('l-law'),
-  };
-}
-
-function renderLoanPreview() {
-  const d = gatherLoanData();
-  const el = document.getElementById('loan-preview');
-  const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br><strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
-
-  const amtStr = d.currency + ' ' + d.amount.toLocaleString();
-  const intStr = d.interest > 0 ? t('ldoc-interest-text').replace('{rate}',d.interest) : t('ldoc-noint-text');
-  let repayStr = '';
-  if (d.repayType === 'monthly') {
-    repayStr = t('ldoc-monthly-text').replace('{currency}',d.currency).replace('{amount}',d.monthly.toLocaleString()).replace('{day}',d.payday);
-  } else {
-    repayStr = t('ldoc-lumpsum-text').replace('{date}',fmtDate(d.dateEnd));
-  }
-
-  const detailed = docDetail.loan === 'detailed';
-  const extraSecs = detailed ? `
-    <div class="sec extra-sec"><div class="sec-title">${t('ldoc-late-h')}</div><p>${t('ldoc-late-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('ldoc-early-h')}</div><p>${t('ldoc-early-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('ldoc-default-h')}</div><p>${t('ldoc-default-text')}</p></div>
-  ` : '';
-
-  el.innerHTML = `
-    <h2>${t('ldoc-title')}</h2>
-    <div class="sec"><p>${t('ldoc-between')}</p></div>
-    ${person(d.lender, t('ldoc-lender'))}
-    ${person(d.borrower, t('ldoc-borrower'))}
-    <div class="sec"><div class="sec-title">${t('ldoc-amount-h')}</div><p>${t('ldoc-amount-text').replace('{amount}',amtStr)}</p></div>
-    <div class="sec"><div class="sec-title">${t('ldoc-interest-h')}</div><p>${intStr}</p></div>
-    <div class="sec"><div class="sec-title">${t('ldoc-repay-h')}</div><p>${repayStr}</p></div>
-    <div class="sec"><div class="sec-title">${t('doc-duration-h')}</div><p>${t('doc-fixed-text').replace('{start}',fmtDate(d.dateStart)).replace('{end}',fmtDate(d.dateEnd))}</p></div>
-    ${extraSecs}
-    <div class="sec"><div class="sec-title">${t('doc-law-h')}</div><p>${t('doc-law-text').replace('{law}',d.law||'___')}</p></div>
-    <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate))}</p></div>
-    <div class="sig-grid">
-      <div><div class="sig-line">${t('ldoc-lender')}<br>${d.lender.name||'___'}</div></div>
-      <div><div class="sig-line">${t('ldoc-borrower')}<br>${d.borrower.name||'___'}</div></div>
-    </div>
-    <div class="sig-grid" style="margin-top:16px;">
-      <div><div class="sig-line">${t('doc-witness')} 1</div></div>
-      <div><div class="sig-line">${t('doc-witness')} 2</div></div>
-    </div>
-  `;
-}
-
-async function downloadLoanPDF() {
-  trackEdits('loan-preview', 'Loan Agreement');
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit:'mm', format:'a4' });
-  const d = gatherLoanData();
-  const mg = 25, pw = 160;
-  let y = mg;
-  const addTxt = (text, opts={}) => {
-    const sz=opts.size||10, st=opts.style||'normal', al=opts.align||'left';
-    doc.setFontSize(sz); doc.setFont('helvetica',st);
-    const lines = doc.splitTextToSize(text, opts.w||pw);
-    if (y + lines.length*sz*0.4 > 280) { doc.addPage(); y=mg; }
-    doc.text(lines, al==='center'?105:mg, y, {align:al});
-    y += lines.length*sz*0.42 + (opts.gap||2);
-  };
-
-  addTxt(t('ldoc-title'),{size:18,style:'bold',align:'center',gap:8}); y+=3;
-  addTxt(t('ldoc-between'),{size:10,style:'italic'}); y+=2;
-
-  addTxt(t('ldoc-lender'),{size:11,style:'bold',gap:3});
-  addTxt(`${t('doc-name')}: ${d.lender.name||'___'}`,{});
-  addTxt(`${t('doc-id')}: ${d.lender.id||'___'}`,{});
-  addTxt(`${t('doc-address')}: ${d.lender.address||'___'}`,{});
-  addTxt(`${t('doc-country')}: ${d.lender.country||'___'}`,{}); y+=3;
-
-  addTxt(t('ldoc-borrower'),{size:11,style:'bold',gap:3});
-  addTxt(`${t('doc-name')}: ${d.borrower.name||'___'}`,{});
-  addTxt(`${t('doc-id')}: ${d.borrower.id||'___'}`,{});
-  addTxt(`${t('doc-address')}: ${d.borrower.address||'___'}`,{});
-  addTxt(`${t('doc-country')}: ${d.borrower.country||'___'}`,{}); y+=4;
-
-  const amtStr = d.currency+' '+d.amount.toLocaleString();
-  addTxt(t('ldoc-amount-h'),{size:12,style:'bold',gap:4});
-  addTxt(t('ldoc-amount-text').replace('{amount}',amtStr),{}); y+=3;
-
-  addTxt(t('ldoc-interest-h'),{size:12,style:'bold',gap:4});
-  addTxt(d.interest>0 ? t('ldoc-interest-text').replace('{rate}',d.interest) : t('ldoc-noint-text'),{}); y+=3;
-
-  addTxt(t('ldoc-repay-h'),{size:12,style:'bold',gap:4});
-  if (d.repayType==='monthly') {
-    addTxt(t('ldoc-monthly-text').replace('{currency}',d.currency).replace('{amount}',d.monthly.toLocaleString()).replace('{day}',d.payday),{});
-  } else {
-    addTxt(t('ldoc-lumpsum-text').replace('{date}',fmtDate(d.dateEnd)),{});
-  }
-  y+=3;
-
-  addTxt(t('doc-duration-h'),{size:12,style:'bold',gap:4});
-  addTxt(t('doc-fixed-text').replace('{start}',fmtDate(d.dateStart)).replace('{end}',fmtDate(d.dateEnd)),{}); y+=3;
-
-  if (docDetail.loan === 'detailed') {
-    addTxt(t('ldoc-late-h'),{size:12,style:'bold',gap:4}); addTxt(t('ldoc-late-text'),{}); y+=3;
-    addTxt(t('ldoc-early-h'),{size:12,style:'bold',gap:4}); addTxt(t('ldoc-early-text'),{}); y+=3;
-    addTxt(t('ldoc-default-h'),{size:12,style:'bold',gap:4}); addTxt(t('ldoc-default-text'),{}); y+=3;
-  }
-
-  addTxt(t('doc-law-h'),{size:12,style:'bold',gap:4});
-  addTxt(t('doc-law-text').replace('{law}',d.law||'___'),{}); y+=3;
-  addTxt(t('doc-exec-h'),{size:12,style:'bold',gap:4});
-  addTxt(t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate)),{});
-
-  y+=20; if(y>250){doc.addPage();y=mg+20;}
-  doc.setDrawColor(50);
-  doc.line(mg,y,mg+65,y); doc.setFontSize(9);
-  doc.text(t('ldoc-lender'),mg,y+5); doc.text(d.lender.name||'',mg,y+9);
-  doc.line(mg+95,y,mg+160,y);
-  doc.text(t('ldoc-borrower'),mg+95,y+5); doc.text(d.borrower.name||'',mg+95,y+9);
-
-  y+=30; if(y>260){doc.addPage();y=mg+20;}
-  doc.line(mg,y,mg+65,y); doc.text(`${t('doc-witness')} 1`,mg,y+5);
-  doc.line(mg+95,y,mg+160,y); doc.text(`${t('doc-witness')} 2`,mg+95,y+5);
-
-  doc.setFontSize(7); doc.setTextColor(150);
-  doc.text('Generated by documentgenerator.ai', 105, 290, { align:'center' });
-
-  const blob = doc.output('blob');
-  const fn = `Loan_Agreement_${d.lender.name?d.lender.name.replace(/\s+/g,'_'):'draft'}.pdf`;
-  try { const dl = await window.claude?.use?.('downloads'); if(dl){await dl.save({filename:fn,data:blob});return;} } catch(e){}
-  const u = URL.createObjectURL(blob); const a = document.createElement('a');
-  a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
 
 // ====== Contact / Suggest ======
