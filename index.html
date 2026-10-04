@@ -1473,9 +1473,9 @@ body {
       <div class="step-icon">✍️</div>
       <h2 class="step-title" data-i18n="bs5-title">Signing details</h2>
       <p class="step-explain" data-i18n="bs5-explain">Where and when is this being signed?</p>
-      <div class="field"><label data-i18n="lbl-place">Where is this being signed?</label><input type="text" id="b-place"></div>
+      <div class="field"><label data-i18n="lbl-place">City and country of signing</label><input type="text" id="b-place" data-i18n-placeholder="ph-place" onchange="autoFillLaw('b-place','b-law')"></div>
       <div class="field"><label data-i18n="lbl-date">Date of the document</label><input type="date" id="b-doc-date"></div>
-      <div class="field"><label data-i18n="lbl-law">Which country's laws apply?</label><input type="text" id="b-law"></div>
+      <div class="field"><label data-i18n="lbl-law">Governing law (country)</label><div class="hint" data-i18n="hint-law">Usually the same country as the signing location</div><input type="text" id="b-law"></div>
       <div class="nav"><button class="btn btn-back" onclick="goBosStep('b4')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goBosStep('b6')" data-i18n="btn-preview">Check the document</button></div>
     </div>
   </div>
@@ -1592,9 +1592,9 @@ body {
         <div class="field"><label data-i18n="lbl-from">From</label><input type="date" id="e-date-start"></div>
         <div class="field"><label data-i18n="lbl-until-or-ongoing">Until (leave empty if ongoing)</label><input type="date" id="e-date-end"></div>
       </div>
-      <div class="field"><label data-i18n="lbl-place">Where is this being signed?</label><input type="text" id="e-place"></div>
+      <div class="field"><label data-i18n="lbl-place">City and country of signing</label><input type="text" id="e-place" data-i18n-placeholder="ph-place" onchange="autoFillLaw('e-place','e-law')"></div>
       <div class="field"><label data-i18n="lbl-date">Date of the document</label><input type="date" id="e-doc-date"></div>
-      <div class="field"><label data-i18n="lbl-law">Which country's laws apply?</label><input type="text" id="e-law"></div>
+      <div class="field"><label data-i18n="lbl-law">Governing law (country)</label><div class="hint" data-i18n="hint-law">Usually the same country as the signing location</div><input type="text" id="e-law"></div>
       <div class="nav"><button class="btn btn-back" onclick="goEngStep('e3')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goEngStep('e5')" data-i18n="btn-preview">Check the document</button></div>
     </div>
   </div>
@@ -1698,9 +1698,9 @@ body {
       <div class="step-icon">✍️</div>
       <h2 class="step-title" data-i18n="ws4-title">Signing details</h2>
       <p class="step-explain" data-i18n="ws4-explain">Where and when is this will being signed?</p>
-      <div class="field"><label data-i18n="lbl-place">Where is this being signed?</label><input type="text" id="w-place"></div>
+      <div class="field"><label data-i18n="lbl-place">City and country of signing</label><input type="text" id="w-place" data-i18n-placeholder="ph-place" onchange="autoFillLaw('w-place','w-law')"></div>
       <div class="field"><label data-i18n="lbl-date">Date of the document</label><input type="date" id="w-doc-date"></div>
-      <div class="field"><label data-i18n="lbl-law">Which country's laws apply?</label><input type="text" id="w-law"></div>
+      <div class="field"><label data-i18n="lbl-law">Governing law (country)</label><div class="hint" data-i18n="hint-law">Usually the same country as the signing location</div><input type="text" id="w-law"></div>
       <div class="nav"><button class="btn btn-back" onclick="goWillStep('w3')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goWillStep('w5')" data-i18n="btn-preview">Check the document</button></div>
     </div>
   </div>
@@ -2060,6 +2060,7 @@ const T = {
   'lbl-ben-name': { en:'Name', nl:'Naam', es:'Nombre', fr:'Nom', de:'Name' },
   'lbl-ben-rel': { en:'Relationship', nl:'Relatie', es:'Relación', fr:'Lien', de:'Beziehung' },
   'lbl-ben-share': { en:'Share / bequest', nl:'Aandeel / nalatenschap', es:'Participación / legado', fr:'Part / legs', de:'Anteil / Vermächtnis' },
+  'ph-ben-rel': { en:'e.g. Spouse, Son, Daughter, Organization', nl:'bijv. Echtgeno(o)t(e), Zoon, Dochter, Organisatie', es:'p. ej. Cónyuge, Hijo, Hija, Organización', fr:'p. ex. Conjoint(e), Fils, Fille, Organisation', de:'z.B. Ehepartner, Sohn, Tochter, Organisation' },
   'ph-ben-share': { en:'e.g. 50%, all real estate, residuary estate', nl:'bijv. 50%, alle onroerend goed, restant nalatenschap', es:'p. ej. 50%, todos los inmuebles, patrimonio residual', fr:'p. ex. 50%, tous les biens immobiliers, patrimoine résiduel', de:'z.B. 50%, alle Immobilien, Restnachlass' },
   'wdoc-title': { en:'DRAFT WILL', nl:'CONCEPT-TESTAMENT', es:'BORRADOR DE TESTAMENTO', fr:'PROJET DE TESTAMENT', de:'TESTAMENTENTWURF' },
   'wdoc-draft-notice': { en:'This is a draft to be reviewed and formalized by a notary.', nl:'Dit is een concept dat door een notaris moet worden beoordeeld en bekrachtigd.', es:'Este es un borrador que debe ser revisado y formalizado por un notario.', fr:'Ceci est un projet à faire examiner et formaliser par un notaire.', de:'Dies ist ein Entwurf, der von einem Notar geprüft und beurkundet werden muss.' },
@@ -2328,9 +2329,11 @@ const T = {
   'opt-fixed-desc':   { en:'You choose a start and end date.', nl:'Je kiest een begin- en einddatum.', es:'Tú eliges una fecha de inicio y fin.', fr:'Vous choisissez une date de début et de fin.', de:'Sie wählen ein Start- und Enddatum.' },
   'lbl-from':         { en:'From', nl:'Van', es:'Desde', fr:'Du', de:'Von' },
   'lbl-until':        { en:'Until', nl:'Tot', es:'Hasta', fr:'Au', de:'Bis' },
-  'lbl-place':        { en:'Where is this being signed?', nl:'Waar wordt dit ondertekend?', es:'¿Dónde se firma?', fr:'Où est-ce signé ?', de:'Wo wird unterschrieben?' },
+  'lbl-place':        { en:'City and country of signing', nl:'Stad en land van ondertekening', es:'Ciudad y país de firma', fr:'Ville et pays de signature', de:'Stadt und Land der Unterzeichnung' },
   'lbl-date':         { en:'Date of the document', nl:'Datum van het document', es:'Fecha del documento', fr:'Date du document', de:'Datum des Dokuments' },
-  'lbl-law':          { en:'Which country\'s laws apply?', nl:'Welk land geldt als recht?', es:'¿Qué legislación aplica?', fr:'Quelle législation s\'applique ?', de:'Welches Landesrecht gilt?' },
+  'lbl-law':          { en:'Governing law (country)', nl:'Toepasselijk recht (land)', es:'Legislación aplicable (país)', fr:'Droit applicable (pays)', de:'Anwendbares Recht (Land)' },
+  'ph-place':         { en:'e.g. Philipsburg, Sint Maarten', nl:'bijv. Philipsburg, Sint Maarten', es:'p. ej. Philipsburg, Sint Maarten', fr:'p. ex. Philipsburg, Sint Maarten', de:'z.B. Philipsburg, Sint Maarten' },
+  'hint-law':         { en:'Usually the same country as the signing location', nl:'Meestal hetzelfde land als de ondertekeningslocatie', es:'Generalmente el mismo país que el lugar de firma', fr:'Généralement le même pays que le lieu de signature', de:'Normalerweise dasselbe Land wie der Unterzeichnungsort' },
   'tip-law':          { en:'Usually the country where the power of attorney will be used', nl:'Meestal het land waar de volmacht wordt gebruikt', es:'Generalmente el país donde se usará el poder', fr:'Généralement le pays où la procuration sera utilisée', de:'Normalerweise das Land, in dem die Vollmacht verwendet wird' },
 
   // Scope items (UI)
@@ -3364,6 +3367,17 @@ async function downloadEngPDF() {
   a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
 
+// ====== Auto-fill law from place ======
+function autoFillLaw(placeId, lawId) {
+  const place = document.getElementById(placeId)?.value?.trim() || '';
+  const law = document.getElementById(lawId);
+  if (law && !law.value.trim() && place) {
+    // Extract country part (after last comma, or the whole string)
+    const parts = place.split(',');
+    law.value = parts.length > 1 ? parts[parts.length - 1].trim() : place;
+  }
+}
+
 // ====== Last Will & Testament ======
 const WILL_STEPS = ['w1','w2','w3','w4','w5'];
 
@@ -3399,7 +3413,7 @@ function addBeneficiary() {
   div.innerHTML = `<button onclick="this.parentElement.remove()" style="position:absolute;top:8px;right:10px;background:none;border:none;cursor:pointer;font-size:16px;color:var(--text-light);">✕</button>
     <div style="font-weight:600;font-size:13px;margin-bottom:8px;color:var(--text-mid);">#${idx}</div>
     <div class="field"><label data-i18n="lbl-ben-name">${t('lbl-ben-name')}</label><input type="text" class="ben-name" placeholder="${t('ph-name')}"></div>
-    <div class="field"><label data-i18n="lbl-ben-rel">${t('lbl-ben-rel')}</label><input type="text" class="ben-rel" placeholder="e.g. Spouse, Son, Daughter, Organization"></div>
+    <div class="field"><label data-i18n="lbl-ben-rel">${t('lbl-ben-rel')}</label><input type="text" class="ben-rel" placeholder="${t('ph-ben-rel')}"></div>
     <div class="field"><label data-i18n="lbl-ben-share">${t('lbl-ben-share')}</label><input type="text" class="ben-share" placeholder="${t('ph-ben-share')}"></div>`;
   list.appendChild(div);
 }
