@@ -877,17 +877,15 @@ body {
           <h3 data-i18n="dt-loan-title">Loan Agreement</h3>
           <p data-i18n="dt-loan-desc">Lend or borrow money</p>
         </div>
-        <div class="doc-card disabled">
+        <div class="doc-card" onclick="selectDocType('empl')">
           <div class="dc-icon">👔</div>
           <h3 data-i18n="dt-employment-title">Employment Contract</h3>
           <p data-i18n="dt-employment-desc">Hire an employee</p>
-          <span class="dc-badge" data-i18n="dt-soon">Coming soon</span>
         </div>
-        <div class="doc-card disabled">
+        <div class="doc-card" onclick="selectDocType('nda')">
           <div class="dc-icon">🤫</div>
           <h3 data-i18n="dt-nda-title">Non-Disclosure Agreement</h3>
           <p data-i18n="dt-nda-desc">Protect confidential information</p>
-          <span class="dc-badge" data-i18n="dt-soon">Coming soon</span>
         </div>
         <div class="doc-card" onclick="selectDocType('will')">
           <div class="dc-icon">📜</div>
@@ -1656,6 +1654,240 @@ body {
     </div>
   </div>
 
+  <!-- NDA STEP 1: Type & Disclosing party -->
+  <div class="step" id="step-n1">
+    <div class="step-card">
+      <div class="step-icon">🔒</div>
+      <h2 class="step-title" data-i18n="ns1-title">Disclosing party</h2>
+      <p class="step-explain" data-i18n="ns1-explain">The party sharing confidential information — not the person filling in this form.</p>
+      <div class="field"><label data-i18n="lbl-nda-type">Type of NDA</label>
+        <select id="n-type"><option value="oneway" data-i18n="opt-oneway">One-way (one party discloses)</option><option value="mutual" data-i18n="opt-mutual">Mutual (both parties disclose)</option></select>
+      </div>
+      <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-nda-name">Person or company name</div><input type="text" id="nd-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-nd-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="nd-id" data-i18n-placeholder="ph-id"></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="nd-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-nd-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="nd-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goNdaStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateNdaAndGo('n1','n2')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- NDA STEP 2: Receiving party -->
+  <div class="step" id="step-n2">
+    <div class="step-card">
+      <div class="step-icon">📥</div>
+      <h2 class="step-title" data-i18n="ns2-title">Receiving party</h2>
+      <p class="step-explain" data-i18n="ns2-explain">The party receiving the confidential information.</p>
+      <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-nda-name">Person or company name</div><input type="text" id="nr-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-nr-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="nr-id" data-i18n-placeholder="ph-id"></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="nr-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-nr-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="nr-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goNdaStep('n1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateNdaAndGo('n2','n3')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- NDA STEP 3: Scope & duration -->
+  <div class="step" id="step-n3">
+    <div class="step-card">
+      <div class="step-icon">📋</div>
+      <h2 class="step-title" data-i18n="ns3-title">Scope and duration</h2>
+      <p class="step-explain" data-i18n="ns3-explain">What information is covered and for how long?</p>
+      <div class="field"><label data-i18n="lbl-purpose">Purpose of disclosure</label><input type="text" id="n-purpose" data-i18n-placeholder="ph-purpose"></div>
+      <div class="field"><label data-i18n="lbl-nda-duration">Confidentiality period</label>
+        <select id="n-duration"><option value="1" data-i18n="opt-1year">1 year</option><option value="2" data-i18n="opt-2years" selected>2 years</option><option value="3" data-i18n="opt-3years">3 years</option><option value="5" data-i18n="opt-5years">5 years</option><option value="0" data-i18n="opt-indefinite">Indefinite</option></select>
+      </div>
+      <div class="nav"><button class="btn btn-back" onclick="goNdaStep('n2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goNdaStep('n4')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- NDA STEP 4: Signing -->
+  <div class="step" id="step-n4">
+    <div class="step-card">
+      <div class="step-icon">✍️</div>
+      <h2 class="step-title" data-i18n="ns4-title">Signing details</h2>
+      <p class="step-explain" data-i18n="ns4-explain">Where and when is this NDA being signed?</p>
+      <div class="field"><label data-i18n="lbl-place">City and country of signing</label><input type="text" id="n-place" data-i18n-placeholder="ph-place" onchange="autoFillLaw('n-place','n-law')"></div>
+      <div class="field"><label data-i18n="lbl-date">Date of the document</label><input type="date" id="n-doc-date"></div>
+      <div class="field"><label data-i18n="lbl-law">Governing law (country)</label><div class="hint" data-i18n="hint-law">Usually the same country as the signing location</div><input type="text" id="n-law"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goNdaStep('n3')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goNdaStep('n5')" data-i18n="btn-preview">Check the document</button></div>
+    </div>
+  </div>
+
+  <!-- NDA STEP 5: Preview & Download -->
+  <div class="step" id="step-n5">
+    <div class="step-card" style="padding:20px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+        <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-back" onclick="goNdaStep('n1')" data-i18n="btn-edit">Edit</button>
+          <button class="btn btn-download" onclick="downloadNdaPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+        </div>
+      </div>
+      <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
+    </div>
+    <div class="detail-toggle" id="nda-detail-toggle">
+      <button class="active" onclick="setDocDetail('nda','basic')" id="nda-basic-btn" data-i18n="toggle-basic">📄 Basic</button>
+      <button onclick="setDocDetail('nda','detailed')" id="nda-detailed-btn" data-i18n="toggle-detailed">📋 Detailed</button>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <button class="btn-edit-doc" onclick="toggleEditMode('nda-preview')" id="edit-btn-nda-preview" data-i18n="btn-customize">✏️ Customize document</button>
+    </div>
+    <div class="edit-hint" id="edit-hint-nda-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
+    <div class="preview-box" id="nda-preview"></div>
+    <div class="attach-box">
+      <div class="attach-title" data-i18n="lbl-attachments">📎 Attachments</div>
+      <div id="nda-attach-list"></div>
+      <button class="btn-add-attach" onclick="addAttachment('nda')" data-i18n="btn-add-attach">+ Add attachment</button>
+    </div>
+    <details class="doc-settings">
+      <summary data-i18n="lbl-doc-settings">Document settings</summary>
+      <div class="ds-body">
+        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="nda-header" data-i18n-placeholder="ph-header"></div>
+        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="nda-footer" data-i18n-placeholder="ph-footer"></div>
+        <div class="field"><label data-i18n="lbl-fontsize">Font size</label><select id="nda-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select></div>
+        <div class="field"><label data-i18n="lbl-fontfamily">Font</label><select id="nda-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select></div>
+      </div>
+    </details>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-mid);cursor:pointer;">
+        <input type="checkbox" id="nda-page-numbers" style="width:16px;height:16px;accent-color:var(--pri);">
+        <span data-i18n="lbl-page-numbers">Number pages</span>
+      </label>
+      <button class="btn btn-download" onclick="downloadNdaPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+    </div>
+  </div>
+
+  <!-- EMPL STEP 1: Employer -->
+  <div class="step" id="step-m1">
+    <div class="step-card">
+      <div class="step-icon">🏢</div>
+      <h2 class="step-title" data-i18n="ms1-title">Employer details</h2>
+      <p class="step-explain" data-i18n="ms1-explain">The company or person hiring — not the person filling in this form.</p>
+      <div class="field"><label data-i18n="lbl-company">Company / organization name</label><input type="text" id="em-company" data-i18n-placeholder="ph-company"><div class="error-msg" id="err-em-company" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-rep">Represented by (name)</label><input type="text" id="em-rep"></div>
+      <div class="field"><label data-i18n="lbl-role">Title / role</label><input type="text" id="em-role" placeholder="e.g. Director, HR Manager"></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="em-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-em-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="em-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goEmplStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateEmplAndGo('m1','m2')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- EMPL STEP 2: Employee -->
+  <div class="step" id="step-m2">
+    <div class="step-card">
+      <div class="step-icon">🧑‍💼</div>
+      <h2 class="step-title" data-i18n="ms2-title">Employee details</h2>
+      <p class="step-explain" data-i18n="ms2-explain">The person being hired.</p>
+      <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-name">As it appears on your ID or passport</div><input type="text" id="em-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-em-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="em-id" data-i18n-placeholder="ph-id"></div>
+      <div class="field"><label data-i18n="lbl-dob">Date of birth</label><input type="date" id="em-dob"></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="em-emp-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-em-emp-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="em-emp-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goEmplStep('m1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateEmplAndGo('m2','m3')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- EMPL STEP 3: Job details -->
+  <div class="step" id="step-m3">
+    <div class="step-card">
+      <div class="step-icon">📋</div>
+      <h2 class="step-title" data-i18n="ms3-title">Job details</h2>
+      <p class="step-explain" data-i18n="ms3-explain">Position, schedule, and work location.</p>
+      <div class="field"><label data-i18n="lbl-jobtitle">Job title</label><input type="text" id="em-jobtitle"><div class="error-msg" id="err-em-jobtitle" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-department">Department (optional)</label><input type="text" id="em-dept"></div>
+      <div class="field"><label data-i18n="lbl-worklocation">Work location</label><input type="text" id="em-workloc"></div>
+      <div class="field-row">
+        <div class="field"><label data-i18n="lbl-employment-type">Type</label>
+          <select id="em-type"><option value="fulltime" data-i18n="opt-fulltime">Full-time</option><option value="parttime" data-i18n="opt-parttime">Part-time</option></select>
+        </div>
+        <div class="field"><label data-i18n="lbl-hours">Hours per week</label><input type="number" id="em-hours" min="1" max="60" value="40"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label data-i18n="lbl-startdate">Start date</label><input type="date" id="em-startdate"></div>
+        <div class="field"><label data-i18n="lbl-probation">Probation period</label>
+          <select id="em-probation"><option value="none" data-i18n="opt-none">None</option><option value="1" data-i18n="opt-1month">1 month</option><option value="2" data-i18n="opt-2months">2 months</option><option value="3" data-i18n="opt-3months">3 months</option><option value="6" data-i18n="opt-6months">6 months</option></select>
+        </div>
+      </div>
+      <div class="nav"><button class="btn btn-back" onclick="goEmplStep('m2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateEmplAndGo('m3','m4')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- EMPL STEP 4: Compensation -->
+  <div class="step" id="step-m4">
+    <div class="step-card">
+      <div class="step-icon">💰</div>
+      <h2 class="step-title" data-i18n="ms4-title">Compensation</h2>
+      <p class="step-explain" data-i18n="ms4-explain">Salary and payment frequency.</p>
+      <div class="field-row">
+        <div class="field"><label data-i18n="lbl-salary">Gross salary</label><input type="number" id="em-salary" min="0" step="0.01"></div>
+        <div class="field"><label data-i18n="lbl-currency">Currency</label>
+          <select id="em-currency"><option>USD</option><option>EUR</option><option>ANG</option><option>GBP</option><option>AWG</option><option>GYD</option><option>SRD</option><option>TTD</option><option>BBD</option><option>CHF</option><option>CAD</option></select>
+        </div>
+      </div>
+      <div class="field"><label data-i18n="lbl-payfrequency">Payment frequency</label>
+        <select id="em-payfreq"><option value="monthly" data-i18n="opt-monthly">Monthly</option><option value="biweekly" data-i18n="opt-biweekly">Bi-weekly</option><option value="weekly" data-i18n="opt-weekly">Weekly</option></select>
+      </div>
+      <div class="field"><label data-i18n="lbl-vacation">Vacation days per year</label><input type="number" id="em-vacation" min="0" value="15"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goEmplStep('m3')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goEmplStep('m5')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- EMPL STEP 5: Signing -->
+  <div class="step" id="step-m5">
+    <div class="step-card">
+      <div class="step-icon">✍️</div>
+      <h2 class="step-title" data-i18n="ms5-title">Signing details</h2>
+      <p class="step-explain" data-i18n="ms5-explain">Where and when is this contract being signed?</p>
+      <div class="field"><label data-i18n="lbl-place">City and country of signing</label><input type="text" id="m-place" data-i18n-placeholder="ph-place" onchange="autoFillLaw('m-place','m-law')"></div>
+      <div class="field"><label data-i18n="lbl-date">Date of the document</label><input type="date" id="m-doc-date"></div>
+      <div class="field"><label data-i18n="lbl-law">Governing law (country)</label><div class="hint" data-i18n="hint-law">Usually the same country as the signing location</div><input type="text" id="m-law"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goEmplStep('m4')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goEmplStep('m6')" data-i18n="btn-preview">Check the document</button></div>
+    </div>
+  </div>
+
+  <!-- EMPL STEP 6: Preview & Download -->
+  <div class="step" id="step-m6">
+    <div class="step-card" style="padding:20px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+        <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-back" onclick="goEmplStep('m1')" data-i18n="btn-edit">Edit</button>
+          <button class="btn btn-download" onclick="downloadEmplPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+        </div>
+      </div>
+      <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
+    </div>
+    <div class="detail-toggle" id="empl-detail-toggle">
+      <button class="active" onclick="setDocDetail('empl','basic')" id="empl-basic-btn" data-i18n="toggle-basic">📄 Basic</button>
+      <button onclick="setDocDetail('empl','detailed')" id="empl-detailed-btn" data-i18n="toggle-detailed">📋 Detailed</button>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <button class="btn-edit-doc" onclick="toggleEditMode('empl-preview')" id="edit-btn-empl-preview" data-i18n="btn-customize">✏️ Customize document</button>
+    </div>
+    <div class="edit-hint" id="edit-hint-empl-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
+    <div class="preview-box" id="empl-preview"></div>
+    <div class="attach-box">
+      <div class="attach-title" data-i18n="lbl-attachments">📎 Attachments</div>
+      <div id="empl-attach-list"></div>
+      <button class="btn-add-attach" onclick="addAttachment('empl')" data-i18n="btn-add-attach">+ Add attachment</button>
+    </div>
+    <details class="doc-settings">
+      <summary data-i18n="lbl-doc-settings">Document settings</summary>
+      <div class="ds-body">
+        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="empl-header" data-i18n-placeholder="ph-header"></div>
+        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="empl-footer" data-i18n-placeholder="ph-footer"></div>
+        <div class="field"><label data-i18n="lbl-fontsize">Font size</label><select id="empl-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select></div>
+        <div class="field"><label data-i18n="lbl-fontfamily">Font</label><select id="empl-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select></div>
+      </div>
+    </details>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-mid);cursor:pointer;">
+        <input type="checkbox" id="empl-page-numbers" style="width:16px;height:16px;accent-color:var(--pri);">
+        <span data-i18n="lbl-page-numbers">Number pages</span>
+      </label>
+      <button class="btn btn-download" onclick="downloadEmplPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+    </div>
+  </div>
+
   <!-- LOAN STEP 1: Lender -->
   <div class="step" id="step-l1">
     <div class="step-card">
@@ -1901,6 +2133,10 @@ body {
       <h3>v4.3</h3>
       <div class="log-date">4 oktober 2026</div>
       <ul>
+        <li>Geheimhoudingsovereenkomst (NDA) toegevoegd: eenzijdig of wederzijds, verstrekkende partij, ontvangende partij, doel, geheimhoudingsperiode (1-5 jaar of onbeperkt)</li>
+        <li>NDA basic/uitgebreid: + toegestane verstrekkingen, teruggave materialen, rechtsmiddelen</li>
+        <li>Arbeidsovereenkomst (Employment Contract) toegevoegd: werkgever, werknemer, functie, werklocatie, voltijd/deeltijd, proeftijd, salaris, vakantiedagen</li>
+        <li>Arbeidsovereenkomst basic/uitgebreid: + beëindigingsclausule, vertrouwelijkheidsclausule</li>
         <li>Leenovereenkomst (Loan Agreement) volledig uitgebouwd: uitlener, lener, bedrag, rente (of renteloos), maandelijkse termijnen of eenmalige aflossing, looptijd</li>
         <li>Loan Agreement basic/uitgebreid: + achterstallige betaling (2% boete), vervroegde aflossing, wanbetaling (30 dagen → alles opeisbaar)</li>
         <li>Concept-testament: vereenvoudigde taal, duidelijke concept-melding, snelkeuze begunstigden</li>
@@ -2335,6 +2571,97 @@ const T = {
   'bdoc-disputes-text': { en:'Any dispute arising from this agreement shall first be resolved through negotiation. If no resolution is reached, the dispute shall be submitted to the competent court under the governing law of this agreement.', nl:'Geschillen voortvloeiend uit deze overeenkomst worden eerst in onderling overleg opgelost. Indien geen overeenstemming wordt bereikt, wordt het geschil voorgelegd aan de bevoegde rechter onder het toepasselijk recht van deze overeenkomst.', es:'Cualquier disputa derivada de este contrato se resolverá primero mediante negociación. Si no se llega a un acuerdo, la disputa se someterá al tribunal competente.', fr:'Tout litige découlant du présent contrat sera d\'abord résolu par négociation. En l\'absence d\'accord, le litige sera soumis au tribunal compétent.', de:'Streitigkeiten aus diesem Vertrag werden zunächst im Verhandlungswege beigelegt. Kommt keine Einigung zustande, wird der Streit dem zuständigen Gericht vorgelegt.' },
   'dt-loan-title':   { en:'Loan Agreement', nl:'Leenovereenkomst', es:'Contrato de préstamo', fr:'Contrat de prêt', de:'Darlehensvertrag' },
   'dt-loan-desc':    { en:'Lend or borrow money', nl:'Geld lenen of uitlenen', es:'Prestar o pedir dinero prestado', fr:'Prêter ou emprunter de l\'argent', de:'Geld verleihen oder leihen' },
+  'ns1-title': { en:'Disclosing party', nl:'Gegevens van de verstrekkende partij', es:'Datos de la parte reveladora', fr:'Coordonnées de la partie divulgatrice', de:'Angaben der offenlegenden Partei' },
+  'ns1-explain': { en:'The party sharing confidential information — not the person filling in this form.', nl:'De partij die vertrouwelijke informatie deelt — niet degene die dit formulier invult.', es:'La parte que comparte información confidencial — no quien completa este formulario.', fr:'La partie qui partage des informations confidentielles — pas celle qui remplit ce formulaire.', de:'Die Partei, die vertrauliche Informationen teilt — nicht die Person, die dieses Formular ausfüllt.' },
+  'ns2-title': { en:'Receiving party', nl:'Gegevens van de ontvangende partij', es:'Datos de la parte receptora', fr:'Coordonnées de la partie réceptrice', de:'Angaben der empfangenden Partei' },
+  'ns2-explain': { en:'The party receiving the confidential information.', nl:'De partij die de vertrouwelijke informatie ontvangt.', es:'La parte que recibe la información confidencial.', fr:'La partie qui reçoit les informations confidentielles.', de:'Die Partei, die die vertraulichen Informationen erhält.' },
+  'ns3-title': { en:'Scope and duration', nl:'Omvang en duur', es:'Alcance y duración', fr:'Portée et durée', de:'Umfang und Dauer' },
+  'ns3-explain': { en:'What information is covered and for how long?', nl:'Welke informatie valt eronder en voor hoe lang?', es:'¿Qué información cubre y por cuánto tiempo?', fr:'Quelles informations sont couvertes et pour combien de temps ?', de:'Welche Informationen sind abgedeckt und für wie lange?' },
+  'ns4-title': { en:'Signing details', nl:'Ondertekeningsgegevens', es:'Detalles de la firma', fr:'Détails de la signature', de:'Unterschriftsdetails' },
+  'ns4-explain': { en:'Where and when is this NDA being signed?', nl:'Waar en wanneer wordt deze geheimhoudingsverklaring ondertekend?', es:'¿Dónde y cuándo se firma este acuerdo?', fr:'Où et quand cet accord est-il signé ?', de:'Wo und wann wird diese Vereinbarung unterschrieben?' },
+  'lbl-nda-type': { en:'Type of NDA', nl:'Type geheimhoudingsverklaring', es:'Tipo de acuerdo', fr:'Type d\'accord', de:'Art der Vereinbarung' },
+  'opt-oneway': { en:'One-way (one party discloses)', nl:'Eenzijdig (één partij verstrekt)', es:'Unilateral (una parte revela)', fr:'Unilatéral (une partie divulgue)', de:'Einseitig (eine Partei offenbart)' },
+  'opt-mutual': { en:'Mutual (both parties disclose)', nl:'Wederzijds (beide partijen verstrekken)', es:'Mutuo (ambas partes revelan)', fr:'Mutuel (les deux parties divulguent)', de:'Gegenseitig (beide Parteien offenbaren)' },
+  'hint-nda-name': { en:'Person or company name', nl:'Persoon of bedrijfsnaam', es:'Nombre de persona o empresa', fr:'Nom de personne ou d\'entreprise', de:'Personen- oder Firmenname' },
+  'lbl-purpose': { en:'Purpose of disclosure', nl:'Doel van de verstrekking', es:'Propósito de la divulgación', fr:'Objet de la divulgation', de:'Zweck der Offenlegung' },
+  'ph-purpose': { en:'e.g. Exploring a potential business partnership', nl:'bijv. Verkenning van een mogelijke zakelijke samenwerking', es:'p. ej. Explorar una posible asociación comercial', fr:'p. ex. Explorer un partenariat commercial potentiel', de:'z.B. Prüfung einer möglichen Geschäftspartnerschaft' },
+  'lbl-nda-duration': { en:'Confidentiality period', nl:'Geheimhoudingsperiode', es:'Período de confidencialidad', fr:'Période de confidentialité', de:'Vertraulichkeitszeitraum' },
+  'opt-1year': { en:'1 year', nl:'1 jaar', es:'1 año', fr:'1 an', de:'1 Jahr' },
+  'opt-2years': { en:'2 years', nl:'2 jaar', es:'2 años', fr:'2 ans', de:'2 Jahre' },
+  'opt-3years': { en:'3 years', nl:'3 jaar', es:'3 años', fr:'3 ans', de:'3 Jahre' },
+  'opt-5years': { en:'5 years', nl:'5 jaar', es:'5 años', fr:'5 ans', de:'5 Jahre' },
+  'opt-indefinite': { en:'Indefinite', nl:'Onbeperkt', es:'Indefinido', fr:'Indéfini', de:'Unbegrenzt' },
+  'ndoc-title': { en:'NON-DISCLOSURE AGREEMENT', nl:'GEHEIMHOUDINGSOVEREENKOMST', es:'ACUERDO DE NO DIVULGACIÓN', fr:'ACCORD DE NON-DIVULGATION', de:'GEHEIMHALTUNGSVEREINBARUNG' },
+  'ndoc-mutual-title': { en:'MUTUAL NON-DISCLOSURE AGREEMENT', nl:'WEDERZIJDSE GEHEIMHOUDINGSOVEREENKOMST', es:'ACUERDO MUTUO DE NO DIVULGACIÓN', fr:'ACCORD MUTUEL DE NON-DIVULGATION', de:'GEGENSEITIGE GEHEIMHALTUNGSVEREINBARUNG' },
+  'ndoc-between': { en:'This Non-Disclosure Agreement is entered into between:', nl:'Deze geheimhoudingsovereenkomst is aangegaan tussen:', es:'Este acuerdo de no divulgación se celebra entre:', fr:'Le présent accord de non-divulgation est conclu entre :', de:'Diese Geheimhaltungsvereinbarung wird geschlossen zwischen:' },
+  'doc-party': { en:'Party', nl:'Partij', es:'Parte', fr:'Partie', de:'Partei' },
+  'ndoc-disclosing': { en:'Disclosing Party', nl:'Verstrekkende partij', es:'Parte reveladora', fr:'Partie divulgatrice', de:'Offenlegende Partei' },
+  'ndoc-receiving': { en:'Receiving Party', nl:'Ontvangende partij', es:'Parte receptora', fr:'Partie réceptrice', de:'Empfangende Partei' },
+  'ndoc-purpose-h': { en:'PURPOSE', nl:'DOEL', es:'PROPÓSITO', fr:'OBJET', de:'ZWECK' },
+  'ndoc-purpose-text': { en:'The confidential information is shared for the following purpose: {purpose}.', nl:'De vertrouwelijke informatie wordt gedeeld voor het volgende doel: {purpose}.', es:'La información confidencial se comparte con el siguiente propósito: {purpose}.', fr:'Les informations confidentielles sont partagées dans le but suivant : {purpose}.', de:'Die vertraulichen Informationen werden zu folgendem Zweck geteilt: {purpose}.' },
+  'ndoc-definition-h': { en:'CONFIDENTIAL INFORMATION', nl:'VERTROUWELIJKE INFORMATIE', es:'INFORMACIÓN CONFIDENCIAL', fr:'INFORMATIONS CONFIDENTIELLES', de:'VERTRAULICHE INFORMATIONEN' },
+  'ndoc-definition-text': { en:'Confidential information includes all non-public information, whether written, oral, or in any other form, shared by the Disclosing Party. This includes but is not limited to: business plans, financial data, client lists, technical designs, trade secrets, and any other proprietary information.', nl:'Vertrouwelijke informatie omvat alle niet-openbare informatie, schriftelijk, mondeling of in enige andere vorm, die door de verstrekkende partij wordt gedeeld. Dit omvat maar is niet beperkt tot: bedrijfsplannen, financiële gegevens, klantenlijsten, technische ontwerpen, bedrijfsgeheimen en alle andere bedrijfseigen informatie.', es:'La información confidencial incluye toda información no pública, ya sea escrita, oral o en cualquier otra forma, compartida por la parte reveladora. Esto incluye pero no se limita a: planes de negocio, datos financieros, listas de clientes, diseños técnicos, secretos comerciales y cualquier otra información propietaria.', fr:'Les informations confidentielles comprennent toutes les informations non publiques, qu\'elles soient écrites, orales ou sous toute autre forme, partagées par la partie divulgatrice. Cela inclut mais ne se limite pas à : plans d\'affaires, données financières, listes de clients, conceptions techniques, secrets commerciaux et toute autre information propriétaire.', de:'Vertrauliche Informationen umfassen alle nicht-öffentlichen Informationen, ob schriftlich, mündlich oder in sonstiger Form, die von der offenlegenden Partei geteilt werden. Dies umfasst, ist aber nicht beschränkt auf: Geschäftspläne, Finanzdaten, Kundenlisten, technische Entwürfe, Geschäftsgeheimnisse und sonstige proprietäre Informationen.' },
+  'ndoc-obligations-h': { en:'OBLIGATIONS', nl:'VERPLICHTINGEN', es:'OBLIGACIONES', fr:'OBLIGATIONS', de:'PFLICHTEN' },
+  'ndoc-obligations-text': { en:'The Receiving Party agrees to keep all confidential information strictly confidential, not to disclose it to any third party, and to use it only for the stated purpose.', nl:'De ontvangende partij stemt ermee in alle vertrouwelijke informatie strikt vertrouwelijk te houden, deze niet aan derden te verstrekken en uitsluitend te gebruiken voor het genoemde doel.', es:'La parte receptora acepta mantener toda la información confidencial estrictamente confidencial, no divulgarla a terceros y utilizarla únicamente para el propósito establecido.', fr:'La partie réceptrice s\'engage à garder strictement confidentielles toutes les informations confidentielles, à ne pas les divulguer à des tiers et à ne les utiliser que dans le but déclaré.', de:'Die empfangende Partei verpflichtet sich, alle vertraulichen Informationen streng vertraulich zu behandeln, sie nicht an Dritte weiterzugeben und sie nur für den genannten Zweck zu verwenden.' },
+  'ndoc-mutual-text': { en:'As this is a mutual NDA, both parties are equally bound by the obligations above. Each party is both a Disclosing Party and a Receiving Party.', nl:'Aangezien dit een wederzijdse geheimhoudingsovereenkomst is, zijn beide partijen gelijkelijk gebonden aan bovenstaande verplichtingen. Elke partij is zowel verstrekkende als ontvangende partij.', es:'Al ser un acuerdo mutuo, ambas partes están igualmente vinculadas por las obligaciones anteriores. Cada parte es tanto parte reveladora como parte receptora.', fr:'S\'agissant d\'un accord mutuel, les deux parties sont également liées par les obligations ci-dessus. Chaque partie est à la fois partie divulgatrice et partie réceptrice.', de:'Da es sich um eine gegenseitige Vereinbarung handelt, sind beide Parteien gleichermaßen an die oben genannten Pflichten gebunden. Jede Partei ist sowohl offenlegende als auch empfangende Partei.' },
+  'ndoc-duration-h': { en:'DURATION', nl:'DUUR', es:'DURACIÓN', fr:'DURÉE', de:'DAUER' },
+  'ndoc-duration-text': { en:'The confidentiality obligations in this agreement shall remain in effect for {duration} from the date of signing.', nl:'De geheimhoudingsverplichtingen in deze overeenkomst blijven van kracht gedurende {duration} vanaf de datum van ondertekening.', es:'Las obligaciones de confidencialidad en este acuerdo permanecerán vigentes durante {duration} desde la fecha de firma.', fr:'Les obligations de confidentialité de cet accord resteront en vigueur pendant {duration} à compter de la date de signature.', de:'Die Vertraulichkeitspflichten in dieser Vereinbarung gelten für {duration} ab dem Datum der Unterzeichnung.' },
+  'ndoc-duration-indef': { en:'The confidentiality obligations in this agreement shall remain in effect indefinitely.', nl:'De geheimhoudingsverplichtingen in deze overeenkomst blijven voor onbeperkte tijd van kracht.', es:'Las obligaciones de confidencialidad en este acuerdo permanecerán vigentes indefinidamente.', fr:'Les obligations de confidentialité de cet accord resteront en vigueur indéfiniment.', de:'Die Vertraulichkeitspflichten in dieser Vereinbarung gelten unbefristet.' },
+  'ndoc-permitted-h': { en:'PERMITTED DISCLOSURES', nl:'TOEGESTANE VERSTREKKINGEN', es:'DIVULGACIONES PERMITIDAS', fr:'DIVULGATIONS AUTORISÉES', de:'ZULÄSSIGE OFFENLEGUNGEN' },
+  'ndoc-permitted-text': { en:'The Receiving Party may disclose confidential information to employees, advisors, or agents who need to know it for the stated purpose, provided they are bound by similar confidentiality obligations.', nl:'De ontvangende partij mag vertrouwelijke informatie verstrekken aan werknemers, adviseurs of vertegenwoordigers die deze nodig hebben voor het genoemde doel, mits zij gebonden zijn aan vergelijkbare geheimhoudingsverplichtingen.', es:'La parte receptora puede divulgar información confidencial a empleados, asesores o agentes que necesiten conocerla para el propósito establecido, siempre que estén sujetos a obligaciones de confidencialidad similares.', fr:'La partie réceptrice peut divulguer des informations confidentielles à des employés, conseillers ou agents qui en ont besoin pour l\'objet déclaré, à condition qu\'ils soient soumis à des obligations de confidentialité similaires.', de:'Die empfangende Partei darf vertrauliche Informationen an Mitarbeiter, Berater oder Vertreter weitergeben, die sie für den genannten Zweck benötigen, sofern diese an vergleichbare Vertraulichkeitspflichten gebunden sind.' },
+  'ndoc-return-h': { en:'RETURN OF MATERIALS', nl:'TERUGGAVE VAN MATERIALEN', es:'DEVOLUCIÓN DE MATERIALES', fr:'RESTITUTION DES DOCUMENTS', de:'RÜCKGABE VON UNTERLAGEN' },
+  'ndoc-return-text': { en:'Upon request or termination of this agreement, the Receiving Party shall promptly return or destroy all confidential materials and confirm in writing that it has done so.', nl:'Op verzoek of bij beëindiging van deze overeenkomst dient de ontvangende partij alle vertrouwelijke materialen onmiddellijk terug te geven of te vernietigen en schriftelijk te bevestigen dat dit is gebeurd.', es:'A solicitud o terminación de este acuerdo, la parte receptora deberá devolver o destruir prontamente todos los materiales confidenciales y confirmar por escrito que lo ha hecho.', fr:'Sur demande ou à la résiliation de cet accord, la partie réceptrice devra restituer ou détruire rapidement tous les documents confidentiels et confirmer par écrit l\'avoir fait.', de:'Auf Verlangen oder bei Beendigung dieser Vereinbarung hat die empfangende Partei alle vertraulichen Unterlagen unverzüglich zurückzugeben oder zu vernichten und dies schriftlich zu bestätigen.' },
+  'ndoc-remedies-h': { en:'REMEDIES', nl:'RECHTSMIDDELEN', es:'REMEDIOS', fr:'RECOURS', de:'RECHTSBEHELFE' },
+  'ndoc-remedies-text': { en:'Both parties acknowledge that a breach of this agreement may cause irreparable harm for which monetary damages alone would be insufficient. The injured party shall be entitled to seek injunctive relief in addition to any other remedies available at law.', nl:'Beide partijen erkennen dat een schending van deze overeenkomst onherstelbare schade kan veroorzaken waarvoor financiële compensatie alleen onvoldoende zou zijn. De benadeelde partij is gerechtigd een rechterlijk bevel te vorderen naast alle andere beschikbare rechtsmiddelen.', es:'Ambas partes reconocen que un incumplimiento de este acuerdo puede causar daños irreparables para los cuales la compensación monetaria sola sería insuficiente. La parte perjudicada tendrá derecho a solicitar medidas cautelares además de cualquier otro recurso disponible por ley.', fr:'Les deux parties reconnaissent qu\'une violation de cet accord peut causer un préjudice irréparable pour lequel des dommages pécuniaires seuls seraient insuffisants. La partie lésée sera en droit de demander une injonction en plus de tout autre recours disponible en droit.', de:'Beide Parteien erkennen an, dass ein Verstoß gegen diese Vereinbarung einen irreparablen Schaden verursachen kann, für den eine finanzielle Entschädigung allein nicht ausreichen würde. Die geschädigte Partei ist berechtigt, eine einstweilige Verfügung zu beantragen, zusätzlich zu allen anderen gesetzlich verfügbaren Rechtsbehelfen.' },
+  'ms1-title': { en:'Employer details', nl:'Gegevens van de werkgever', es:'Datos del empleador', fr:'Coordonnées de l\'employeur', de:'Angaben des Arbeitgebers' },
+  'ms1-explain': { en:'The company or person hiring — not the person filling in this form.', nl:'Het bedrijf of de persoon die iemand aanneemt — niet degene die dit formulier invult.', es:'La empresa o persona que contrata — no quien completa este formulario.', fr:'L\'entreprise ou la personne qui embauche — pas celle qui remplit ce formulaire.', de:'Das Unternehmen oder die Person, die einstellt — nicht die Person, die dieses Formular ausfüllt.' },
+  'ms2-title': { en:'Employee details', nl:'Gegevens van de werknemer', es:'Datos del empleado', fr:'Coordonnées de l\'employé(e)', de:'Angaben des Arbeitnehmers' },
+  'ms2-explain': { en:'The person being hired.', nl:'De persoon die wordt aangenomen.', es:'La persona que será contratada.', fr:'La personne embauchée.', de:'Die Person, die eingestellt wird.' },
+  'ms3-title': { en:'Job details', nl:'Functiegegevens', es:'Detalles del puesto', fr:'Détails du poste', de:'Stellendetails' },
+  'ms3-explain': { en:'Position, schedule, and work location.', nl:'Functie, werktijden en werklocatie.', es:'Puesto, horario y ubicación de trabajo.', fr:'Poste, horaire et lieu de travail.', de:'Position, Arbeitszeiten und Arbeitsort.' },
+  'ms4-title': { en:'Compensation', nl:'Vergoeding', es:'Compensación', fr:'Rémunération', de:'Vergütung' },
+  'ms4-explain': { en:'Salary and payment frequency.', nl:'Salaris en betalingsfrequentie.', es:'Salario y frecuencia de pago.', fr:'Salaire et fréquence de paiement.', de:'Gehalt und Zahlungsfrequenz.' },
+  'ms5-title': { en:'Signing details', nl:'Ondertekeningsgegevens', es:'Detalles de la firma', fr:'Détails de la signature', de:'Unterschriftsdetails' },
+  'ms5-explain': { en:'Where and when is this contract being signed?', nl:'Waar en wanneer wordt dit contract ondertekend?', es:'¿Dónde y cuándo se firma este contrato?', fr:'Où et quand ce contrat est-il signé ?', de:'Wo und wann wird dieser Vertrag unterschrieben?' },
+  'lbl-jobtitle': { en:'Job title', nl:'Functietitel', es:'Título del puesto', fr:'Intitulé du poste', de:'Stellenbezeichnung' },
+  'lbl-department': { en:'Department (optional)', nl:'Afdeling (optioneel)', es:'Departamento (opcional)', fr:'Service (optionnel)', de:'Abteilung (optional)' },
+  'lbl-worklocation': { en:'Work location', nl:'Werklocatie', es:'Ubicación de trabajo', fr:'Lieu de travail', de:'Arbeitsort' },
+  'lbl-employment-type': { en:'Type', nl:'Type', es:'Tipo', fr:'Type', de:'Art' },
+  'opt-fulltime': { en:'Full-time', nl:'Voltijd', es:'Tiempo completo', fr:'Temps plein', de:'Vollzeit' },
+  'opt-parttime': { en:'Part-time', nl:'Deeltijd', es:'Medio tiempo', fr:'Temps partiel', de:'Teilzeit' },
+  'lbl-hours': { en:'Hours per week', nl:'Uren per week', es:'Horas por semana', fr:'Heures par semaine', de:'Stunden pro Woche' },
+  'lbl-startdate': { en:'Start date', nl:'Startdatum', es:'Fecha de inicio', fr:'Date de début', de:'Startdatum' },
+  'lbl-probation': { en:'Probation period', nl:'Proeftijd', es:'Período de prueba', fr:'Période d\'essai', de:'Probezeit' },
+  'opt-none': { en:'None', nl:'Geen', es:'Ninguno', fr:'Aucune', de:'Keine' },
+  'opt-1month': { en:'1 month', nl:'1 maand', es:'1 mes', fr:'1 mois', de:'1 Monat' },
+  'opt-2months': { en:'2 months', nl:'2 maanden', es:'2 meses', fr:'2 mois', de:'2 Monate' },
+  'opt-3months': { en:'3 months', nl:'3 maanden', es:'3 meses', fr:'3 mois', de:'3 Monate' },
+  'opt-6months': { en:'6 months', nl:'6 maanden', es:'6 meses', fr:'6 mois', de:'6 Monate' },
+  'lbl-salary': { en:'Gross salary', nl:'Brutosalaris', es:'Salario bruto', fr:'Salaire brut', de:'Bruttogehalt' },
+  'lbl-payfrequency': { en:'Payment frequency', nl:'Betalingsfrequentie', es:'Frecuencia de pago', fr:'Fréquence de paiement', de:'Zahlungsfrequenz' },
+  'opt-biweekly': { en:'Bi-weekly', nl:'Tweewekelijks', es:'Quincenal', fr:'Bimensuel', de:'Zweiwöchentlich' },
+  'opt-weekly': { en:'Weekly', nl:'Wekelijks', es:'Semanal', fr:'Hebdomadaire', de:'Wöchentlich' },
+  'lbl-vacation': { en:'Vacation days per year', nl:'Vakantiedagen per jaar', es:'Días de vacaciones por año', fr:'Jours de congé par an', de:'Urlaubstage pro Jahr' },
+  'mdoc-title': { en:'EMPLOYMENT CONTRACT', nl:'ARBEIDSOVEREENKOMST', es:'CONTRATO DE TRABAJO', fr:'CONTRAT DE TRAVAIL', de:'ARBEITSVERTRAG' },
+  'mdoc-between': { en:'This Employment Contract is entered into between:', nl:'Deze arbeidsovereenkomst is aangegaan tussen:', es:'Este contrato de trabajo se celebra entre:', fr:'Le présent contrat de travail est conclu entre :', de:'Dieser Arbeitsvertrag wird geschlossen zwischen:' },
+  'mdoc-employer': { en:'Employer', nl:'Werkgever', es:'Empleador', fr:'Employeur', de:'Arbeitgeber' },
+  'mdoc-employee': { en:'Employee', nl:'Werknemer', es:'Empleado', fr:'Employé(e)', de:'Arbeitnehmer' },
+  'mdoc-position-h': { en:'POSITION & DUTIES', nl:'FUNCTIE & TAKEN', es:'PUESTO Y FUNCIONES', fr:'POSTE ET FONCTIONS', de:'POSITION & AUFGABEN' },
+  'mdoc-position-text': { en:'The Employee is hired as {jobtitle}{dept}, working {hours} hours per week ({type}), based at {location}.', nl:'De werknemer wordt aangenomen als {jobtitle}{dept}, werkend {hours} uur per week ({type}), gestationeerd te {location}.', es:'El empleado es contratado como {jobtitle}{dept}, trabajando {hours} horas por semana ({type}), con sede en {location}.', fr:'L\'employé(e) est engagé(e) en tant que {jobtitle}{dept}, travaillant {hours} heures par semaine ({type}), basé(e) à {location}.', de:'Der Arbeitnehmer wird als {jobtitle}{dept} eingestellt, arbeitet {hours} Stunden pro Woche ({type}), mit Arbeitsort {location}.' },
+  'mdoc-start-h': { en:'START DATE & PROBATION', nl:'STARTDATUM & PROEFTIJD', es:'FECHA DE INICIO Y PERÍODO DE PRUEBA', fr:'DATE DE DÉBUT ET PÉRIODE D\'ESSAI', de:'STARTDATUM & PROBEZEIT' },
+  'mdoc-start-text': { en:'The employment begins on {date}.', nl:'Het dienstverband begint op {date}.', es:'El empleo comienza el {date}.', fr:'L\'emploi commence le {date}.', de:'Das Arbeitsverhältnis beginnt am {date}.' },
+  'mdoc-probation-text': { en:'There is a probation period of {months} month(s) during which either party may terminate with {days} days\' notice.', nl:'Er geldt een proeftijd van {months} maand(en) waarin beide partijen het dienstverband kunnen beëindigen met {days} dagen opzegtermijn.', es:'Existe un período de prueba de {months} mes(es) durante el cual cualquiera de las partes puede rescindir con {days} días de preaviso.', fr:'Il y a une période d\'essai de {months} mois pendant laquelle chaque partie peut résilier avec un préavis de {days} jours.', de:'Es gilt eine Probezeit von {months} Monat(en), während der jede Partei mit einer Frist von {days} Tagen kündigen kann.' },
+  'mdoc-salary-h': { en:'COMPENSATION', nl:'VERGOEDING', es:'COMPENSACIÓN', fr:'RÉMUNÉRATION', de:'VERGÜTUNG' },
+  'mdoc-salary-text': { en:'The Employee shall receive a gross salary of {currency} {amount} per {frequency}, subject to applicable taxes and deductions.', nl:'De werknemer ontvangt een brutosalaris van {currency} {amount} per {frequency}, onder aftrek van toepasselijke belastingen en inhoudingen.', es:'El empleado recibirá un salario bruto de {currency} {amount} por {frequency}, sujeto a impuestos y deducciones aplicables.', fr:'L\'employé(e) recevra un salaire brut de {currency} {amount} par {frequency}, sous réserve des taxes et déductions applicables.', de:'Der Arbeitnehmer erhält ein Bruttogehalt von {currency} {amount} pro {frequency}, abzüglich geltender Steuern und Abzüge.' },
+  'mdoc-vacation-h': { en:'VACATION', nl:'VAKANTIE', es:'VACACIONES', fr:'CONGÉS', de:'URLAUB' },
+  'mdoc-vacation-text': { en:'The Employee is entitled to {days} vacation days per calendar year.', nl:'De werknemer heeft recht op {days} vakantiedagen per kalenderjaar.', es:'El empleado tiene derecho a {days} días de vacaciones por año calendario.', fr:'L\'employé(e) a droit à {days} jours de congé par année civile.', de:'Der Arbeitnehmer hat Anspruch auf {days} Urlaubstage pro Kalenderjahr.' },
+  'mdoc-termination-h': { en:'TERMINATION', nl:'BEËINDIGING', es:'TERMINACIÓN', fr:'RÉSILIATION', de:'KÜNDIGUNG' },
+  'mdoc-termination-text': { en:'After the probation period, either party may terminate this contract with one month\'s written notice, unless a longer period is required by law.', nl:'Na de proeftijd kan elk van de partijen dit contract beëindigen met een schriftelijke opzegtermijn van één maand, tenzij de wet een langere termijn vereist.', es:'Después del período de prueba, cualquiera de las partes puede rescindir este contrato con un preaviso escrito de un mes, salvo que la ley exija un plazo mayor.', fr:'Après la période d\'essai, chaque partie peut résilier ce contrat avec un préavis écrit d\'un mois, sauf si la loi exige un délai plus long.', de:'Nach der Probezeit kann jede Partei diesen Vertrag mit einer schriftlichen Kündigungsfrist von einem Monat kündigen, sofern das Gesetz keine längere Frist vorschreibt.' },
+  'mdoc-confidentiality-h': { en:'CONFIDENTIALITY', nl:'VERTROUWELIJKHEID', es:'CONFIDENCIALIDAD', fr:'CONFIDENTIALITÉ', de:'VERTRAULICHKEIT' },
+  'mdoc-confidentiality-text': { en:'The Employee agrees to keep all business information, client data, and trade secrets confidential during and after employment.', nl:'De werknemer stemt ermee in alle bedrijfsinformatie, klantgegevens en bedrijfsgeheimen vertrouwelijk te houden tijdens en na het dienstverband.', es:'El empleado acepta mantener confidencial toda la información comercial, datos de clientes y secretos comerciales durante y después del empleo.', fr:'L\'employé(e) s\'engage à garder confidentielles toutes les informations commerciales, données clients et secrets d\'affaires pendant et après l\'emploi.', de:'Der Arbeitnehmer verpflichtet sich, alle Geschäftsinformationen, Kundendaten und Geschäftsgeheimnisse während und nach dem Arbeitsverhältnis vertraulich zu behandeln.' },
+  'freq-monthly': { en:'month', nl:'maand', es:'mes', fr:'mois', de:'Monat' },
+  'freq-biweekly': { en:'two weeks', nl:'twee weken', es:'quincena', fr:'quinzaine', de:'zwei Wochen' },
+  'freq-weekly': { en:'week', nl:'week', es:'semana', fr:'semaine', de:'Woche' },
   'ls1-title': { en:'Lender details', nl:'Gegevens van de uitlener', es:'Datos del prestamista', fr:'Coordonnées du prêteur', de:'Angaben des Darlehensgebers' },
   'ls1-explain': { en:'The person or entity lending the money — not the person filling in this form.', nl:'De persoon of organisatie die het geld uitleent — niet degene die dit formulier invult.', es:'La persona o entidad que presta el dinero — no quien completa este formulario.', fr:'La personne ou l\'entité qui prête l\'argent — pas celle qui remplit ce formulaire.', de:'Die Person oder Organisation, die das Geld verleiht — nicht die Person, die dieses Formular ausfüllt.' },
   'ls2-title': { en:'Borrower details', nl:'Gegevens van de lener', es:'Datos del prestatario', fr:'Coordonnées de l\'emprunteur', de:'Angaben des Darlehensnehmers' },
@@ -3116,6 +3443,8 @@ function selectDocType(type) {
   else if (type === 'rental') goRentalStep('r1');
   else if (type === 'bos') goBosStep('b1');
   else if (type === 'eng') goEngStep('e1');
+  else if (type === 'nda') goNdaStep('n1');
+  else if (type === 'empl') goEmplStep('m1');
   else if (type === 'loan') goLoanStep('l1');
   else if (type === 'will') goWillStep('w1');
 }
@@ -3380,7 +3709,7 @@ function toggleTheme() {
 })();
 
 // ====== Detail level toggle ======
-const docDetail = { poa: 'basic', rental: 'basic', bos: 'basic', eng: 'basic', loan: 'basic', will: 'basic' };
+const docDetail = { poa: 'basic', rental: 'basic', bos: 'basic', eng: 'basic', nda: 'basic', empl: 'basic', loan: 'basic', will: 'basic' };
 
 function setDocDetail(docType, level) {
   docDetail[docType] = level;
@@ -3390,6 +3719,8 @@ function setDocDetail(docType, level) {
   else if (docType === 'rental') renderRentalPreview();
   else if (docType === 'bos') renderBosPreview();
   else if (docType === 'eng') renderEngPreview();
+  else if (docType === 'nda') renderNdaPreview();
+  else if (docType === 'empl') renderEmplPreview();
   else if (docType === 'loan') renderLoanPreview();
   else if (docType === 'will') renderWillPreview();
 }
@@ -3559,6 +3890,323 @@ async function downloadEngPDF() {
 
   const blob = doc.output('blob');
   const fn = `Engagement_Letter_${d.client.name?d.client.name.replace(/\s+/g,'_'):'draft'}.pdf`;
+  try { const dl = await window.claude?.use?.('downloads'); if(dl){await dl.save({filename:fn,data:blob});return;} } catch(e){}
+  const u = URL.createObjectURL(blob); const a = document.createElement('a');
+  a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
+}
+
+// ====== Non-Disclosure Agreement ======
+const NDA_STEPS = ['n1','n2','n3','n4','n5'];
+
+function goNdaStep(step) {
+  if (step === 0) { goStep(0); return; }
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  const idx = NDA_STEPS.indexOf(step);
+  document.getElementById('progress').style.width = ((idx+1) / NDA_STEPS.length * 100) + '%';
+  updateStepNav('dt-nda-title', idx+1, NDA_STEPS.length);
+  if (step === 'n5') renderNdaPreview();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function validateNdaAndGo(from, to) {
+  const req = { 'n1': ['nd-name','nd-address'], 'n2': ['nr-name','nr-address'] };
+  let ok = true;
+  (req[from]||[]).forEach(id => {
+    const el = document.getElementById(id);
+    const err = document.getElementById('err-'+id);
+    if (!el.value.trim()) { el.classList.add('field-error'); if(err){err.style.display='block';err.textContent=t('err-required');} ok=false; }
+    else { el.classList.remove('field-error'); if(err) err.style.display='none'; }
+  });
+  if (ok) goNdaStep(to);
+}
+
+function gatherNdaData() {
+  const durMap = { '1': t('opt-1year'), '2': t('opt-2years'), '3': t('opt-3years'), '5': t('opt-5years'), '0': t('opt-indefinite') };
+  return {
+    type: document.getElementById('n-type')?.value||'oneway',
+    disclosing: { name:$('nd-name'), id:$('nd-id'), address:$('nd-address'), country:$('nd-country') },
+    receiving: { name:$('nr-name'), id:$('nr-id'), address:$('nr-address'), country:$('nr-country') },
+    purpose: $('n-purpose'),
+    duration: document.getElementById('n-duration')?.value||'2',
+    durationLabel: durMap[document.getElementById('n-duration')?.value||'2'],
+    docDate: document.getElementById('n-doc-date')?.value||'',
+    place: $('n-place'), law: $('n-law'),
+  };
+}
+
+function renderNdaPreview() {
+  const d = gatherNdaData();
+  const el = document.getElementById('nda-preview');
+  const isMutual = d.type === 'mutual';
+  const title = isMutual ? t('ndoc-mutual-title') : t('ndoc-title');
+  const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br>${p.id?'<strong>'+t('doc-id')+':</strong> '+p.id+'<br>':''}<strong>${t('doc-address')}:</strong> ${p.address||'___'}<br><strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
+  const durText = d.duration === '0' ? t('ndoc-duration-indef') : t('ndoc-duration-text').replace('{duration}',d.durationLabel);
+
+  const detailed = docDetail.nda === 'detailed';
+  const extraSecs = detailed ? `
+    <div class="sec extra-sec"><div class="sec-title">${t('ndoc-permitted-h')}</div><p>${t('ndoc-permitted-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('ndoc-return-h')}</div><p>${t('ndoc-return-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('ndoc-remedies-h')}</div><p>${t('ndoc-remedies-text')}</p></div>
+  ` : '';
+
+  el.innerHTML = `
+    <h2>${title}</h2>
+    <div class="sec"><p>${t('ndoc-between')}</p></div>
+    ${person(d.disclosing, isMutual?t('doc-party')+' 1':t('ndoc-disclosing'))}
+    ${person(d.receiving, isMutual?t('doc-party')+' 2':t('ndoc-receiving'))}
+    <div class="sec"><div class="sec-title">${t('ndoc-purpose-h')}</div><p>${t('ndoc-purpose-text').replace('{purpose}',d.purpose||'___')}</p></div>
+    <div class="sec"><div class="sec-title">${t('ndoc-definition-h')}</div><p>${t('ndoc-definition-text')}</p></div>
+    <div class="sec"><div class="sec-title">${t('ndoc-obligations-h')}</div><p>${t('ndoc-obligations-text')}</p>${isMutual?'<p style="margin-top:8px;">'+t('ndoc-mutual-text')+'</p>':''}</div>
+    <div class="sec"><div class="sec-title">${t('ndoc-duration-h')}</div><p>${durText}</p></div>
+    ${extraSecs}
+    <div class="sec"><div class="sec-title">${t('doc-law-h')}</div><p>${t('doc-law-text').replace('{law}',d.law||'___')}</p></div>
+    <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate))}</p></div>
+    <div class="sig-grid">
+      <div><div class="sig-line">${isMutual?t('doc-party')+' 1':t('ndoc-disclosing')}<br>${d.disclosing.name||'___'}</div></div>
+      <div><div class="sig-line">${isMutual?t('doc-party')+' 2':t('ndoc-receiving')}<br>${d.receiving.name||'___'}</div></div>
+    </div>
+  `;
+}
+
+async function downloadNdaPDF() {
+  trackEdits('nda-preview', 'NDA');
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const d = gatherNdaData();
+  const ds = getDocSettings('nda');
+  const mg = 25, pw = 160;
+  const isMutual = d.type === 'mutual';
+  let y = ds.header ? mg + 4 : mg;
+  const addTxt = (text, opts={}) => {
+    const sz=opts.size||ds.fontSize, st=opts.style||'normal', al=opts.align||'left';
+    doc.setFontSize(sz); doc.setFont(ds.fontFamily,st);
+    const lines = doc.splitTextToSize(text, opts.w||pw);
+    if (y + lines.length*sz*0.4 > 278) { doc.addPage(); y=ds.header?mg+4:mg; }
+    doc.text(lines, al==='center'?105:mg, y, {align:al});
+    y += lines.length*sz*0.42 + (opts.gap||2);
+  };
+
+  addTxt(isMutual?t('ndoc-mutual-title'):t('ndoc-title'),{size:18,style:'bold',align:'center',gap:8}); y+=3;
+  addTxt(t('ndoc-between'),{size:10,style:'italic'}); y+=2;
+
+  const lbl1 = isMutual?t('doc-party')+' 1':t('ndoc-disclosing');
+  const lbl2 = isMutual?t('doc-party')+' 2':t('ndoc-receiving');
+  addTxt(lbl1,{size:11,style:'bold',gap:3});
+  addTxt(`${t('doc-name')}: ${d.disclosing.name||'___'}`,{});
+  if(d.disclosing.id) addTxt(`${t('doc-id')}: ${d.disclosing.id}`,{});
+  addTxt(`${t('doc-address')}: ${d.disclosing.address||'___'}`,{});
+  addTxt(`${t('doc-country')}: ${d.disclosing.country||'___'}`,{}); y+=3;
+
+  addTxt(lbl2,{size:11,style:'bold',gap:3});
+  addTxt(`${t('doc-name')}: ${d.receiving.name||'___'}`,{});
+  if(d.receiving.id) addTxt(`${t('doc-id')}: ${d.receiving.id}`,{});
+  addTxt(`${t('doc-address')}: ${d.receiving.address||'___'}`,{});
+  addTxt(`${t('doc-country')}: ${d.receiving.country||'___'}`,{}); y+=4;
+
+  addTxt(t('ndoc-purpose-h'),{size:12,style:'bold',gap:4}); addTxt(t('ndoc-purpose-text').replace('{purpose}',d.purpose||'___'),{}); y+=3;
+  addTxt(t('ndoc-definition-h'),{size:12,style:'bold',gap:4}); addTxt(t('ndoc-definition-text'),{}); y+=3;
+  addTxt(t('ndoc-obligations-h'),{size:12,style:'bold',gap:4}); addTxt(t('ndoc-obligations-text'),{});
+  if(isMutual) addTxt(t('ndoc-mutual-text'),{}); y+=3;
+
+  addTxt(t('ndoc-duration-h'),{size:12,style:'bold',gap:4});
+  addTxt(d.duration==='0'?t('ndoc-duration-indef'):t('ndoc-duration-text').replace('{duration}',d.durationLabel),{}); y+=3;
+
+  if (docDetail.nda === 'detailed') {
+    addTxt(t('ndoc-permitted-h'),{size:12,style:'bold',gap:4}); addTxt(t('ndoc-permitted-text'),{}); y+=3;
+    addTxt(t('ndoc-return-h'),{size:12,style:'bold',gap:4}); addTxt(t('ndoc-return-text'),{}); y+=3;
+    addTxt(t('ndoc-remedies-h'),{size:12,style:'bold',gap:4}); addTxt(t('ndoc-remedies-text'),{}); y+=3;
+  }
+
+  addTxt(t('doc-law-h'),{size:12,style:'bold',gap:4}); addTxt(t('doc-law-text').replace('{law}',d.law||'___'),{}); y+=3;
+  addTxt(t('doc-exec-h'),{size:12,style:'bold',gap:4}); addTxt(t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate)),{});
+
+  y+=20; if(y>250){doc.addPage();y=mg+20;}
+  doc.setDrawColor(50);
+  doc.line(mg,y,mg+65,y); doc.setFontSize(9);
+  doc.text(lbl1,mg,y+5); doc.text(d.disclosing.name||'',mg,y+9);
+  doc.line(mg+95,y,mg+160,y);
+  doc.text(lbl2,mg+95,y+5); doc.text(d.receiving.name||'',mg+95,y+9);
+
+  y = addAttachmentsToPDF(doc, 'nda', mg, pw, y+20);
+  addHeaderFooter(doc, ds);
+  addPageNumbers(doc, 'nda-page-numbers');
+
+  const blob = doc.output('blob');
+  const fn = `NDA_${d.disclosing.name?d.disclosing.name.replace(/\s+/g,'_'):'draft'}.pdf`;
+  try { const dl = await window.claude?.use?.('downloads'); if(dl){await dl.save({filename:fn,data:blob});return;} } catch(e){}
+  const u = URL.createObjectURL(blob); const a = document.createElement('a');
+  a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
+}
+
+// ====== Employment Contract ======
+const EMPL_STEPS = ['m1','m2','m3','m4','m5','m6'];
+
+function goEmplStep(step) {
+  if (step === 0) { goStep(0); return; }
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  const idx = EMPL_STEPS.indexOf(step);
+  document.getElementById('progress').style.width = ((idx+1) / EMPL_STEPS.length * 100) + '%';
+  updateStepNav('dt-employment-title', idx+1, EMPL_STEPS.length);
+  if (step === 'm6') renderEmplPreview();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function validateEmplAndGo(from, to) {
+  const req = { 'm1': ['em-company','em-address'], 'm2': ['em-name','em-emp-address'], 'm3': ['em-jobtitle'] };
+  let ok = true;
+  (req[from]||[]).forEach(id => {
+    const el = document.getElementById(id);
+    const err = document.getElementById('err-'+id);
+    if (!el.value.trim()) { el.classList.add('field-error'); if(err){err.style.display='block';err.textContent=t('err-required');} ok=false; }
+    else { el.classList.remove('field-error'); if(err) err.style.display='none'; }
+  });
+  if (ok) goEmplStep(to);
+}
+
+function gatherEmplData() {
+  const freqMap = { monthly: t('freq-monthly'), biweekly: t('freq-biweekly'), weekly: t('freq-weekly') };
+  const typeMap = { fulltime: t('opt-fulltime'), parttime: t('opt-parttime') };
+  return {
+    employer: { company:$('em-company'), rep:$('em-rep'), role:$('em-role'), address:$('em-address'), country:$('em-country') },
+    employee: { name:$('em-name'), id:$('em-id'), dob:document.getElementById('em-dob')?.value||'', address:$('em-emp-address'), country:$('em-emp-country') },
+    jobtitle: $('em-jobtitle'), dept: $('em-dept'), workloc: $('em-workloc'),
+    type: document.getElementById('em-type')?.value||'fulltime',
+    typeLabel: typeMap[document.getElementById('em-type')?.value||'fulltime'],
+    hours: parseInt(document.getElementById('em-hours')?.value)||40,
+    startdate: document.getElementById('em-startdate')?.value||'',
+    probation: document.getElementById('em-probation')?.value||'none',
+    salary: parseFloat(document.getElementById('em-salary')?.value)||0,
+    currency: document.getElementById('em-currency')?.value||'USD',
+    payfreq: document.getElementById('em-payfreq')?.value||'monthly',
+    payfreqLabel: freqMap[document.getElementById('em-payfreq')?.value||'monthly'],
+    vacation: parseInt(document.getElementById('em-vacation')?.value)||15,
+    docDate: document.getElementById('m-doc-date')?.value||'',
+    place: $('m-place'), law: $('m-law'),
+  };
+}
+
+function renderEmplPreview() {
+  const d = gatherEmplData();
+  const el = document.getElementById('empl-preview');
+  const deptStr = d.dept ? `, ${t('lbl-department').replace(' (optional)','').replace(' (optioneel)','')}: ${d.dept}` : '';
+  const posText = t('mdoc-position-text').replace('{jobtitle}',d.jobtitle||'___').replace('{dept}',deptStr).replace('{hours}',d.hours).replace('{type}',d.typeLabel).replace('{location}',d.workloc||'___');
+  const salText = t('mdoc-salary-text').replace('{currency}',d.currency).replace('{amount}',d.salary.toLocaleString()).replace('{frequency}',d.payfreqLabel);
+  let startText = t('mdoc-start-text').replace('{date}',fmtDate(d.startdate));
+  if (d.probation !== 'none') {
+    const days = parseInt(d.probation) <= 2 ? 7 : 14;
+    startText += ' ' + t('mdoc-probation-text').replace('{months}',d.probation).replace('{days}',days);
+  }
+  const detailed = docDetail.empl === 'detailed';
+  const extraSecs = detailed ? `
+    <div class="sec extra-sec"><div class="sec-title">${t('mdoc-termination-h')}</div><p>${t('mdoc-termination-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('mdoc-confidentiality-h')}</div><p>${t('mdoc-confidentiality-text')}</p></div>
+  ` : '';
+
+  el.innerHTML = `
+    <h2>${t('mdoc-title')}</h2>
+    <div class="sec"><p>${t('mdoc-between')}</p></div>
+    <div class="sec"><div class="sec-title">${t('mdoc-employer')}</div>
+      <strong>${t('lbl-company')}:</strong> ${d.employer.company||'___'}<br>
+      ${d.employer.rep ? '<strong>'+t('lbl-rep')+':</strong> '+d.employer.rep+'<br>' : ''}
+      ${d.employer.role ? '<strong>'+t('lbl-role')+':</strong> '+d.employer.role+'<br>' : ''}
+      <strong>${t('doc-address')}:</strong> ${d.employer.address||'___'}<br>
+      <strong>${t('doc-country')}:</strong> ${d.employer.country||'___'}
+    </div>
+    <div class="sec"><div class="sec-title">${t('mdoc-employee')}</div>
+      <strong>${t('doc-name')}:</strong> ${d.employee.name||'___'}<br>
+      ${d.employee.id ? '<strong>'+t('doc-id')+':</strong> '+d.employee.id+'<br>' : ''}
+      ${d.employee.dob ? '<strong>'+t('lbl-dob')+':</strong> '+fmtDate(d.employee.dob)+'<br>' : ''}
+      <strong>${t('doc-address')}:</strong> ${d.employee.address||'___'}<br>
+      <strong>${t('doc-country')}:</strong> ${d.employee.country||'___'}
+    </div>
+    <div class="sec"><div class="sec-title">${t('mdoc-position-h')}</div><p>${posText}</p></div>
+    <div class="sec"><div class="sec-title">${t('mdoc-start-h')}</div><p>${startText}</p></div>
+    <div class="sec"><div class="sec-title">${t('mdoc-salary-h')}</div><p>${salText}</p></div>
+    <div class="sec"><div class="sec-title">${t('mdoc-vacation-h')}</div><p>${t('mdoc-vacation-text').replace('{days}',d.vacation)}</p></div>
+    ${extraSecs}
+    <div class="sec"><div class="sec-title">${t('doc-law-h')}</div><p>${t('doc-law-text').replace('{law}',d.law||'___')}</p></div>
+    <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate))}</p></div>
+    <div class="sig-grid">
+      <div><div class="sig-line">${t('mdoc-employer')}<br>${d.employer.company||'___'}</div></div>
+      <div><div class="sig-line">${t('mdoc-employee')}<br>${d.employee.name||'___'}</div></div>
+    </div>
+  `;
+}
+
+async function downloadEmplPDF() {
+  trackEdits('empl-preview', 'Employment Contract');
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const d = gatherEmplData();
+  const ds = getDocSettings('empl');
+  const mg = 25, pw = 160;
+  let y = ds.header ? mg + 4 : mg;
+  const addTxt = (text, opts={}) => {
+    const sz=opts.size||ds.fontSize, st=opts.style||'normal', al=opts.align||'left';
+    doc.setFontSize(sz); doc.setFont(ds.fontFamily,st);
+    const lines = doc.splitTextToSize(text, opts.w||pw);
+    if (y + lines.length*sz*0.4 > 278) { doc.addPage(); y=ds.header?mg+4:mg; }
+    doc.text(lines, al==='center'?105:mg, y, {align:al});
+    y += lines.length*sz*0.42 + (opts.gap||2);
+  };
+
+  addTxt(t('mdoc-title'),{size:18,style:'bold',align:'center',gap:8}); y+=3;
+  addTxt(t('mdoc-between'),{size:10,style:'italic'}); y+=2;
+
+  addTxt(t('mdoc-employer'),{size:11,style:'bold',gap:3});
+  addTxt(`${t('lbl-company')}: ${d.employer.company||'___'}`,{});
+  if (d.employer.rep) addTxt(`${t('lbl-rep')}: ${d.employer.rep}`,{});
+  if (d.employer.role) addTxt(`${t('lbl-role')}: ${d.employer.role}`,{});
+  addTxt(`${t('doc-address')}: ${d.employer.address||'___'}`,{});
+  addTxt(`${t('doc-country')}: ${d.employer.country||'___'}`,{}); y+=3;
+
+  addTxt(t('mdoc-employee'),{size:11,style:'bold',gap:3});
+  addTxt(`${t('doc-name')}: ${d.employee.name||'___'}`,{});
+  if (d.employee.id) addTxt(`${t('doc-id')}: ${d.employee.id}`,{});
+  if (d.employee.dob) addTxt(`${t('lbl-dob')}: ${fmtDate(d.employee.dob)}`,{});
+  addTxt(`${t('doc-address')}: ${d.employee.address||'___'}`,{});
+  addTxt(`${t('doc-country')}: ${d.employee.country||'___'}`,{}); y+=4;
+
+  const deptStr = d.dept ? `, ${t('lbl-department').replace(' (optional)','').replace(' (optioneel)','')}: ${d.dept}` : '';
+  addTxt(t('mdoc-position-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('mdoc-position-text').replace('{jobtitle}',d.jobtitle||'___').replace('{dept}',deptStr).replace('{hours}',d.hours).replace('{type}',d.typeLabel).replace('{location}',d.workloc||'___'),{}); y+=3;
+
+  addTxt(t('mdoc-start-h'),{size:12,style:'bold',gap:4});
+  let startPdf = t('mdoc-start-text').replace('{date}',fmtDate(d.startdate));
+  if (d.probation !== 'none') { const days = parseInt(d.probation) <= 2 ? 7 : 14; startPdf += ' ' + t('mdoc-probation-text').replace('{months}',d.probation).replace('{days}',days); }
+  addTxt(startPdf,{}); y+=3;
+
+  addTxt(t('mdoc-salary-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('mdoc-salary-text').replace('{currency}',d.currency).replace('{amount}',d.salary.toLocaleString()).replace('{frequency}',d.payfreqLabel),{}); y+=3;
+
+  addTxt(t('mdoc-vacation-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('mdoc-vacation-text').replace('{days}',d.vacation),{}); y+=3;
+
+  if (docDetail.empl === 'detailed') {
+    addTxt(t('mdoc-termination-h'),{size:12,style:'bold',gap:4}); addTxt(t('mdoc-termination-text'),{}); y+=3;
+    addTxt(t('mdoc-confidentiality-h'),{size:12,style:'bold',gap:4}); addTxt(t('mdoc-confidentiality-text'),{}); y+=3;
+  }
+
+  addTxt(t('doc-law-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('doc-law-text').replace('{law}',d.law||'___'),{}); y+=3;
+  addTxt(t('doc-exec-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate)),{});
+
+  y+=20; if(y>250){doc.addPage();y=mg+20;}
+  doc.setDrawColor(50);
+  doc.line(mg,y,mg+65,y); doc.setFontSize(9);
+  doc.text(t('mdoc-employer'),mg,y+5); doc.text(d.employer.company||'',mg,y+9);
+  doc.line(mg+95,y,mg+160,y);
+  doc.text(t('mdoc-employee'),mg+95,y+5); doc.text(d.employee.name||'',mg+95,y+9);
+
+  y = addAttachmentsToPDF(doc, 'empl', mg, pw, y+20);
+  addHeaderFooter(doc, ds);
+  addPageNumbers(doc, 'empl-page-numbers');
+
+  const blob = doc.output('blob');
+  const fn = `Employment_Contract_${d.employee.name?d.employee.name.replace(/\s+/g,'_'):'draft'}.pdf`;
   try { const dl = await window.claude?.use?.('downloads'); if(dl){await dl.save({filename:fn,data:blob});return;} } catch(e){}
   const u = URL.createObjectURL(blob); const a = document.createElement('a');
   a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
