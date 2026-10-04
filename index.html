@@ -483,6 +483,20 @@ body {
   animation: fadeIn 0.3s;
 }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.attach-box {
+  margin-top: 14px;
+  padding: 14px;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.attach-box .attach-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+.attach-row { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
+.attach-row input { flex:1; padding:8px 10px; border:1px solid var(--border); border-radius:6px; font-size:13px; font-family:inherit; background:var(--card); color:var(--text); }
+.attach-row button { background:none; border:none; cursor:pointer; font-size:18px; color:var(--text-light); padding:4px; }
+.attach-row button:hover { color:var(--error); }
+.btn-add-attach { background:none; border:1px dashed var(--border); border-radius:6px; padding:8px 14px; font-size:12px; font-weight:500; color:var(--text-mid); cursor:pointer; font-family:inherit; width:100%; }
+.btn-add-attach:hover { border-color:var(--pri); color:var(--pri); }
 
 /* Intro */
 .intro-points {
@@ -995,6 +1009,11 @@ body {
     </div>
     <div class="edit-hint" id="edit-hint-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
     <div class="preview-box" id="preview"></div>
+    <div class="attach-box">
+      <div class="attach-title" data-i18n="lbl-attachments">📎 Attachments</div>
+      <div id="poa-attach-list"></div>
+      <button class="btn-add-attach" onclick="addAttachment('poa')" data-i18n="btn-add-attach">+ Add attachment</button>
+    </div>
     <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
       <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-mid);cursor:pointer;">
         <input type="checkbox" id="poa-page-numbers" style="width:16px;height:16px;accent-color:var(--pri);">
@@ -1221,6 +1240,11 @@ body {
     <div class="edit-hint" id="edit-hint-rental-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
     <div class="preview-box" id="rental-preview"></div>
     <div class="disclaimer-box" data-i18n="rental-disclaimer">⚠ This document is generated as a starting point. Rental laws vary by country and region. We strongly recommend having this agreement reviewed by a local legal professional before signing.</div>
+    <div class="attach-box">
+      <div class="attach-title" data-i18n="lbl-attachments">📎 Attachments</div>
+      <div id="rental-attach-list"></div>
+      <button class="btn-add-attach" onclick="addAttachment('rental')" data-i18n="btn-add-attach">+ Add attachment</button>
+    </div>
     <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
       <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-mid);cursor:pointer;">
         <input type="checkbox" id="rental-page-numbers" style="width:16px;height:16px;accent-color:var(--pri);">
@@ -1370,6 +1394,11 @@ body {
     </div>
     <div class="edit-hint" id="edit-hint-bos-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
     <div class="preview-box" id="bos-preview"></div>
+    <div class="attach-box">
+      <div class="attach-title" data-i18n="lbl-attachments">📎 Attachments</div>
+      <div id="bos-attach-list"></div>
+      <button class="btn-add-attach" onclick="addAttachment('bos')" data-i18n="btn-add-attach">+ Add attachment</button>
+    </div>
     <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
       <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-mid);cursor:pointer;">
         <input type="checkbox" id="bos-page-numbers" style="width:16px;height:16px;accent-color:var(--pri);">
@@ -1394,6 +1423,7 @@ body {
         <li>Prijs, valuta, betaalwijze (contant/overschrijving/gemengd), staat (as-is of goede staat)</li>
         <li>Basic/Detailed: uitgebreid voegt eigendomsverklaring en geschillenregeling toe</li>
         <li>Jurisdictie-checklist voor Sint Maarten voertuigoverdracht: NAf. 5 zegel, benodigde documenten (ID, rijbewijs, verzekeringspolis, keuringskaart, Carte Grise)</li>
+        <li>Bijlagen-functie: gebruiker kan bijlagenamen toevoegen, worden genummerd in de PDF onder "BIJLAGEN"</li>
         <li>Optionele paginanummering in PDF ("1 van 3") — checkbox bij alle documenttypes, in 5 talen</li>
         <li>Volledige ondersteuning in 5 talen</li>
       </ul>
@@ -1809,6 +1839,10 @@ const T = {
   'edit-hint': { en:'Click on any section to edit the text. Your changes will be included in the PDF.', nl:'Klik op een sectie om de tekst aan te passen. Je wijzigingen worden opgenomen in de PDF.', es:'Haz clic en cualquier sección para editar el texto. Los cambios se incluirán en el PDF.', fr:'Cliquez sur une section pour modifier le texte. Vos modifications seront incluses dans le PDF.', de:'Klicken Sie auf einen Abschnitt, um den Text zu bearbeiten. Ihre Änderungen werden in das PDF übernommen.' },
   'last-updated': { en:'Last updated: October 3, 2026', nl:'Laatst bijgewerkt: 3 oktober 2026', es:'Última actualización: 3 de octubre de 2026', fr:'Dernière mise à jour : 3 octobre 2026', de:'Zuletzt aktualisiert: 3. Oktober 2026' },
   'privacy-link': { en:'Privacy Policy', nl:'Privacybeleid', es:'Política de Privacidad', fr:'Politique de Confidentialité', de:'Datenschutzerklärung' },
+  'lbl-attachments': { en:'📎 Attachments', nl:'📎 Bijlagen', es:'📎 Anexos', fr:'📎 Pièces jointes', de:'📎 Anlagen' },
+  'btn-add-attach': { en:'+ Add attachment', nl:'+ Bijlage toevoegen', es:'+ Añadir anexo', fr:'+ Ajouter une pièce jointe', de:'+ Anlage hinzufügen' },
+  'ph-attach': { en:'e.g. Copy of ID, Vehicle inspection card', nl:'bijv. Kopie ID, Keuringskaart voertuig', es:'p. ej. Copia de ID, Tarjeta de inspección', fr:'p. ex. Copie d\'ID, Carte d\'inspection', de:'z.B. Kopie des Ausweises, Prüfkarte' },
+  'doc-attach-h': { en:'ATTACHMENTS', nl:'BIJLAGEN', es:'ANEXOS', fr:'PIÈCES JOINTES', de:'ANLAGEN' },
   'bos-checklist-title': { en:'📋 Required for vehicle transfer in your country', nl:'📋 Vereist voor voertuigoverdracht in jouw land', es:'📋 Requisitos para la transferencia de vehículo en tu país', fr:'📋 Documents requis pour le transfert de véhicule dans votre pays', de:'📋 Erforderlich für die Fahrzeugübertragung in Ihrem Land' },
   'lbl-page-numbers': { en:'Number pages', nl:'Pagina\'s nummeren', es:'Numerar páginas', fr:'Numéroter les pages', de:'Seiten nummerieren' },
   'page-of': { en:'of', nl:'van', es:'de', fr:'sur', de:'von' },
@@ -2214,6 +2248,7 @@ async function downloadPDF() {
   doc.line(mg+95, y, mg+160, y);
   doc.text(`${t('doc-witness')} 2`, mg+95, y+5);
 
+  y = addAttachmentsToPDF(doc, 'poa', mg, pw, y);
   doc.setFontSize(7);
   doc.setTextColor(150);
   doc.text('Generated by documentgenerator.ai', 105, 290, { align: 'center' });
@@ -2662,6 +2697,7 @@ async function downloadRentalPDF() {
   const discLines = doc.splitTextToSize(disc,pw);
   doc.text(discLines,mg,y); y+=discLines.length*3.5;
 
+  y = addAttachmentsToPDF(doc, 'rental', mg, pw, y);
   // Footer
   doc.setFontSize(7); doc.setTextColor(150);
   doc.text('Generated by documentgenerator.ai',105,290,{align:'center'});
@@ -2705,6 +2741,47 @@ function setDocDetail(docType, level) {
   if (docType === 'poa') renderPreview();
   else if (docType === 'rental') renderRentalPreview();
   else if (docType === 'bos') renderBosPreview();
+}
+
+// ====== Attachments ======
+function addAttachment(docType) {
+  const list = document.getElementById(docType + '-attach-list');
+  const idx = list.children.length + 1;
+  const row = document.createElement('div');
+  row.className = 'attach-row';
+  row.innerHTML = `<span style="font-size:12px;color:var(--text-light);min-width:20px;">${idx}.</span><input type="text" class="attach-input" data-i18n-placeholder="ph-attach" placeholder="${t('ph-attach')}"><button onclick="this.parentElement.remove();renumberAttachments('${docType}')" title="Remove">✕</button>`;
+  list.appendChild(row);
+}
+
+function renumberAttachments(docType) {
+  const list = document.getElementById(docType + '-attach-list');
+  Array.from(list.children).forEach((row, i) => {
+    row.querySelector('span').textContent = (i + 1) + '.';
+  });
+}
+
+function getAttachments(docType) {
+  const list = document.getElementById(docType + '-attach-list');
+  if (!list) return [];
+  return Array.from(list.querySelectorAll('.attach-input'))
+    .map(inp => inp.value.trim())
+    .filter(v => v);
+}
+
+function addAttachmentsToPDF(doc, docType, mg, pw, y) {
+  const attachments = getAttachments(docType);
+  if (attachments.length === 0) return y;
+  y += 8;
+  if (y > 260) { doc.addPage(); y = 25; }
+  doc.setFontSize(12); doc.setFont('helvetica','bold');
+  doc.text(t('doc-attach-h'), mg, y); y += 6;
+  doc.setFontSize(10); doc.setFont('helvetica','normal');
+  attachments.forEach((name, i) => {
+    if (y > 275) { doc.addPage(); y = 25; }
+    doc.text(`${i+1}. ${name}`, mg + 4, y);
+    y += 5;
+  });
+  return y;
 }
 
 // ====== Page numbering helper ======
@@ -2942,6 +3019,7 @@ async function downloadBosPDF() {
   doc.line(mg+95,y,mg+160,y); doc.text(`${t('doc-witness')} 2`,mg+95,y+5);
 
   y+=25; if(y>270){doc.addPage();y=mg;}
+  y = addAttachmentsToPDF(doc, 'bos', mg, pw, y);
   doc.setFontSize(7); doc.setTextColor(150);
   doc.text('Generated by documentgenerator.ai', 105, 290, { align:'center' });
   addPageNumbers(doc, 'bos-page-numbers');
