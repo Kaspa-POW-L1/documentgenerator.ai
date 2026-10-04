@@ -1433,6 +1433,20 @@ input[type=number] { -moz-appearance: textfield; }
         </select>
       </div>
       <div id="bos-vehicle-fields">
+        <div class="field"><label data-i18n="lbl-vehicle-type">Vehicle type</label>
+          <select id="b-vehicle-type">
+            <option value="car" data-i18n="opt-car">Car</option>
+            <option value="motorcycle" data-i18n="opt-motorcycle">Motorcycle</option>
+            <option value="scooter" data-i18n="opt-scooter">Scooter</option>
+            <option value="truck" data-i18n="opt-truck">Truck</option>
+            <option value="suv" data-i18n="opt-suv">SUV</option>
+            <option value="van" data-i18n="opt-van">Van</option>
+            <option value="bus" data-i18n="opt-bus">Bus</option>
+            <option value="atv" data-i18n="opt-atv">ATV / Quad</option>
+            <option value="trailer" data-i18n="opt-trailer">Trailer</option>
+            <option value="other-vehicle" data-i18n="opt-other-vehicle">Other vehicle</option>
+          </select>
+        </div>
         <div class="field-row">
           <div class="field"><label data-i18n="lbl-make">Make</label><input type="text" id="b-make" placeholder="e.g. Toyota"></div>
           <div class="field"><label data-i18n="lbl-model">Model</label><input type="text" id="b-model" placeholder="e.g. Hilux"></div>
@@ -2567,6 +2581,17 @@ const T = {
   'bs5-explain': { en:'Where and when is this being signed?', nl:'Waar en wanneer wordt dit ondertekend?', es:'¿Dónde y cuándo se firma?', fr:'Où et quand est-ce signé ?', de:'Wo und wann wird unterschrieben?' },
   'lbl-item-cat': { en:'Category', nl:'Categorie', es:'Categoría', fr:'Catégorie', de:'Kategorie' },
   'opt-vehicle': { en:'Vehicle', nl:'Voertuig', es:'Vehículo', fr:'Véhicule', de:'Fahrzeug' },
+  'lbl-vehicle-type': { en:'Vehicle type', nl:'Type voertuig', es:'Tipo de vehículo', fr:'Type de véhicule', de:'Fahrzeugtyp' },
+  'opt-car': { en:'Car', nl:'Auto', es:'Automóvil', fr:'Voiture', de:'Auto' },
+  'opt-motorcycle': { en:'Motorcycle', nl:'Motor', es:'Motocicleta', fr:'Moto', de:'Motorrad' },
+  'opt-scooter': { en:'Scooter', nl:'Scooter', es:'Scooter', fr:'Scooter', de:'Roller' },
+  'opt-truck': { en:'Truck', nl:'Vrachtwagen', es:'Camión', fr:'Camion', de:'LKW' },
+  'opt-suv': { en:'SUV', nl:'SUV', es:'SUV', fr:'SUV', de:'SUV' },
+  'opt-van': { en:'Van', nl:'Bestelbus', es:'Furgoneta', fr:'Fourgon', de:'Transporter' },
+  'opt-bus': { en:'Bus', nl:'Bus', es:'Autobús', fr:'Bus', de:'Bus' },
+  'opt-atv': { en:'ATV / Quad', nl:'ATV / Quad', es:'ATV / Quad', fr:'Quad', de:'ATV / Quad' },
+  'opt-trailer': { en:'Trailer', nl:'Aanhanger', es:'Remolque', fr:'Remorque', de:'Anhänger' },
+  'opt-other-vehicle': { en:'Other vehicle', nl:'Overig voertuig', es:'Otro vehículo', fr:'Autre véhicule', de:'Sonstiges Fahrzeug' },
   'opt-boat': { en:'Boat', nl:'Boot', es:'Barco', fr:'Bateau', de:'Boot' },
   'opt-equipment': { en:'Equipment / Machinery', nl:'Apparatuur / Machines', es:'Equipo / Maquinaria', fr:'Équipement / Machine', de:'Ausrüstung / Maschinen' },
   'opt-other-item': { en:'Other', nl:'Anders', es:'Otro', fr:'Autre', de:'Sonstiges' },
@@ -4866,7 +4891,8 @@ function gatherBosData() {
   const cat = document.getElementById('b-item-cat').value;
   let item = { category: cat };
   if (cat === 'vehicle') {
-    item = { ...item, make:$('b-make'), model:$('b-model'), year:$('b-year'), color:$('b-color'), vin:$('b-vin'), plate:$('b-plate'), mileage:$('b-mileage'), mileageUnit:document.getElementById('b-mileage-unit')?.value||'km' };
+    const vtype = document.getElementById('b-vehicle-type')?.value||'car';
+    item = { ...item, vehicleType:vtype, vehicleTypeLabel:t('opt-'+vtype), make:$('b-make'), model:$('b-model'), year:$('b-year'), color:$('b-color'), vin:$('b-vin'), plate:$('b-plate'), mileage:$('b-mileage'), mileageUnit:document.getElementById('b-mileage-unit')?.value||'km' };
   } else if (cat === 'boat') {
     item = { ...item, name:$('b-boat-name'), type:$('b-boat-type'), length:$('b-boat-length'), hull:$('b-hull-id'), reg:$('b-boat-reg') };
   } else {
@@ -4889,6 +4915,7 @@ function gatherBosData() {
 function bosItemDesc(item) {
   if (item.category === 'vehicle') {
     let d = '';
+    if (item.vehicleTypeLabel) d += item.vehicleTypeLabel + ': ';
     if (item.year) d += item.year + ' ';
     if (item.make) d += item.make + ' ';
     if (item.model) d += item.model;
@@ -4915,6 +4942,7 @@ function bosItemDesc(item) {
 function bosItemText(item) {
   if (item.category === 'vehicle') {
     let parts = [];
+    if (item.vehicleTypeLabel) parts.push(item.vehicleTypeLabel+':');
     if (item.year) parts.push(item.year);
     if (item.make) parts.push(item.make);
     if (item.model) parts.push(item.model);
