@@ -821,6 +821,11 @@ body {
           <h3 data-i18n="dt-rental-title">Rental Agreement</h3>
           <p data-i18n="dt-rental-desc">Lease a property or room</p>
         </div>
+        <div class="doc-card" onclick="selectDocType('eng')">
+          <div class="dc-icon">🤝</div>
+          <h3 data-i18n="dt-eng-title">Engagement Letter</h3>
+          <p data-i18n="dt-eng-desc">Define a professional service agreement</p>
+        </div>
         <div class="doc-card disabled">
           <div class="dc-icon">💰</div>
           <h3 data-i18n="dt-loan-title">Loan Agreement</h3>
@@ -1485,6 +1490,121 @@ body {
     </div>
   </div>
 
+  <!-- ENG STEP 1: Service Provider -->
+  <div class="step" id="step-e1">
+    <div class="step-card">
+      <div class="step-icon">🏢</div>
+      <h2 class="step-title" data-i18n="es1-title">Who is the service provider?</h2>
+      <p class="step-explain" data-i18n="es1-explain">The professional or firm providing the services.</p>
+      <div class="field"><label data-i18n="lbl-company">Company / organization name</label><input type="text" id="ep-company" data-i18n-placeholder="ph-company"><div class="error-msg" id="err-ep-company" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-rep">Represented by (name)</label><input type="text" id="ep-rep" data-i18n-placeholder="ph-name"></div>
+      <div class="field"><label data-i18n="lbl-role">Title / role</label><input type="text" id="ep-role" placeholder="e.g. Managing Partner"></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="ep-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-ep-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="ep-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goEngStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateEngAndGo('e1','e2')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- ENG STEP 2: Client -->
+  <div class="step" id="step-e2">
+    <div class="step-card">
+      <div class="step-icon">👤</div>
+      <h2 class="step-title" data-i18n="es2-title">Who is the client?</h2>
+      <p class="step-explain" data-i18n="es2-explain">The person or entity receiving the services.</p>
+      <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-name">As it appears on your ID or passport</div><input type="text" id="ec-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-ec-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="ec-id" data-i18n-placeholder="ph-id"></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="ec-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-ec-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="ec-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goEngStep('e1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateEngAndGo('e2','e3')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- ENG STEP 3: Scope & fees -->
+  <div class="step" id="step-e3">
+    <div class="step-card">
+      <div class="step-icon">📋</div>
+      <h2 class="step-title" data-i18n="es3-title">Scope and fees</h2>
+      <p class="step-explain" data-i18n="es3-explain">Describe the services and the fee arrangement.</p>
+      <div class="field"><label data-i18n="lbl-scope">Scope of services</label><textarea id="e-scope" rows="3" style="width:100%;font-family:inherit;font-size:13px;padding:10px;border:1px solid var(--border);border-radius:8px;resize:vertical;background:var(--card);color:var(--text);" data-i18n-placeholder="ph-scope"></textarea></div>
+      <div class="field-row">
+        <div class="field"><label data-i18n="lbl-fee">Fee amount</label><input type="number" id="e-fee" min="0" step="0.01"></div>
+        <div class="field"><label data-i18n="lbl-currency">Currency</label>
+          <select id="e-currency"><option>USD</option><option>EUR</option><option>ANG</option><option>GBP</option><option>AWG</option><option>GYD</option><option>SRD</option><option>TTD</option><option>BBD</option><option>CHF</option><option>CAD</option></select>
+        </div>
+      </div>
+      <div class="field"><label data-i18n="lbl-billing">Billing frequency</label>
+        <select id="e-billing">
+          <option value="fixed" data-i18n="opt-fixed-fee">Fixed fee</option>
+          <option value="hourly" data-i18n="opt-hourly">Hourly rate</option>
+          <option value="monthly" data-i18n="opt-monthly-retainer">Monthly retainer</option>
+        </select>
+      </div>
+      <div class="field"><label data-i18n="lbl-payment-terms">Payment terms (days)</label><input type="number" id="e-pay-terms" min="0" value="30"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goEngStep('e2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goEngStep('e4')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- ENG STEP 4: Duration & signing -->
+  <div class="step" id="step-e4">
+    <div class="step-card">
+      <div class="step-icon">✍️</div>
+      <h2 class="step-title" data-i18n="es4-title">Duration and signing</h2>
+      <p class="step-explain" data-i18n="es4-explain">When does the engagement start?</p>
+      <div class="field-row">
+        <div class="field"><label data-i18n="lbl-from">From</label><input type="date" id="e-date-start"></div>
+        <div class="field"><label data-i18n="lbl-until-or-ongoing">Until (leave empty if ongoing)</label><input type="date" id="e-date-end"></div>
+      </div>
+      <div class="field"><label data-i18n="lbl-place">Where is this being signed?</label><input type="text" id="e-place"></div>
+      <div class="field"><label data-i18n="lbl-date">Date of the document</label><input type="date" id="e-doc-date"></div>
+      <div class="field"><label data-i18n="lbl-law">Which country's laws apply?</label><input type="text" id="e-law"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goEngStep('e3')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goEngStep('e5')" data-i18n="btn-preview">Check the document</button></div>
+    </div>
+  </div>
+
+  <!-- ENG STEP 5: Preview & Download -->
+  <div class="step" id="step-e5">
+    <div class="step-card" style="padding:20px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+        <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-back" onclick="goEngStep('e1')" data-i18n="btn-edit">Edit</button>
+          <button class="btn btn-download" onclick="downloadEngPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+        </div>
+      </div>
+      <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
+    </div>
+    <div class="detail-toggle" id="eng-detail-toggle">
+      <button class="active" onclick="setDocDetail('eng','basic')" id="eng-basic-btn" data-i18n="toggle-basic">📄 Basic</button>
+      <button onclick="setDocDetail('eng','detailed')" id="eng-detailed-btn" data-i18n="toggle-detailed">📋 Detailed</button>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <button class="btn-edit-doc" onclick="toggleEditMode('eng-preview')" id="edit-btn-eng-preview" data-i18n="btn-customize">✏️ Customize document</button>
+    </div>
+    <div class="edit-hint" id="edit-hint-eng-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
+    <div class="preview-box" id="eng-preview"></div>
+    <div class="attach-box">
+      <div class="attach-title" data-i18n="lbl-attachments">📎 Attachments</div>
+      <div id="eng-attach-list"></div>
+      <button class="btn-add-attach" onclick="addAttachment('eng')" data-i18n="btn-add-attach">+ Add attachment</button>
+    </div>
+    <details class="doc-settings">
+      <summary data-i18n="lbl-doc-settings">Document settings</summary>
+      <div class="ds-body">
+        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="eng-header" data-i18n-placeholder="ph-header"></div>
+        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="eng-footer" data-i18n-placeholder="ph-footer"></div>
+        <div class="field"><label data-i18n="lbl-fontsize">Font size</label><select id="eng-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select></div>
+        <div class="field"><label data-i18n="lbl-fontfamily">Font</label><select id="eng-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select></div>
+      </div>
+    </details>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-mid);cursor:pointer;">
+        <input type="checkbox" id="eng-page-numbers" style="width:16px;height:16px;accent-color:var(--pri);">
+        <span data-i18n="lbl-page-numbers">Number pages</span>
+      </label>
+      <button class="btn btn-download" onclick="downloadEngPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+    </div>
+  </div>
+
 <!-- Changelog (admin only — ?admin in URL) -->
 <div class="modal-overlay" id="changelog-modal">
   <div class="modal">
@@ -1500,6 +1620,8 @@ body {
         <li>Prijs, valuta, betaalwijze (contant/overschrijving/gemengd), staat (as-is of goede staat)</li>
         <li>Basic/Detailed: uitgebreid voegt eigendomsverklaring en geschillenregeling toe</li>
         <li>Jurisdictie-checklist voor Sint Maarten voertuigoverdracht: NAf. 5 zegel, benodigde documenten (ID, rijbewijs, verzekeringspolis, keuringskaart, Carte Grise)</li>
+        <li>Engagement Letter (Opdrachtbevestiging) toegevoegd: dienstverlener, opdrachtgever, scope, vergoeding (vast/uur/maandelijks), betalingstermijn, looptijd</li>
+        <li>Engagement Letter basic/uitgebreid: + vertrouwelijkheid, aansprakelijkheidsbeperking, beëindigingsclausule</li>
         <li>Documentinstellingen: aanpasbare koptekst, voettekst, lettergrootte (9-12pt), en lettertype (Helvetica, Times New Roman, Courier)</li>
         <li>Bijlagen-functie: gebruiker kan bijlagenamen toevoegen, worden genummerd in de PDF onder "BIJLAGEN"</li>
         <li>Optionele paginanummering in PDF ("1 van 3") — checkbox bij alle documenttypes, in 5 talen</li>
@@ -1770,6 +1892,44 @@ const T = {
   'dt-poa-desc':     { en:'Let someone act on your behalf', nl:'Laat iemand namens jou handelen', es:'Permite que alguien actúe en tu nombre', fr:'Permettre à quelqu\'un d\'agir en votre nom', de:'Jemanden in Ihrem Namen handeln lassen' },
   'dt-rental-title': { en:'Rental Agreement', nl:'Huurcontract', es:'Contrato de alquiler', fr:'Contrat de location', de:'Mietvertrag' },
   'dt-rental-desc':  { en:'Lease a property or room', nl:'Verhuur een woning of kamer', es:'Alquilar una propiedad o habitación', fr:'Louer un bien ou une chambre', de:'Eine Immobilie oder ein Zimmer vermieten' },
+  'dt-eng-title': { en:'Engagement Letter', nl:'Opdrachtbevestiging', es:'Carta de compromiso', fr:'Lettre de mission', de:'Auftragsbestätigung' },
+  'dt-eng-desc': { en:'Define a professional service agreement', nl:'Leg een professionele dienstverlening vast', es:'Defina un acuerdo de servicios profesionales', fr:'Définissez un accord de services professionnels', de:'Definieren Sie eine professionelle Dienstleistungsvereinbarung' },
+  'es1-title': { en:'Who is the service provider?', nl:'Wie is de dienstverlener?', es:'¿Quién es el proveedor de servicios?', fr:'Qui est le prestataire ?', de:'Wer ist der Dienstleister?' },
+  'es1-explain': { en:'The professional or firm providing the services.', nl:'De professional of het kantoor dat de diensten levert.', es:'El profesional o firma que proporciona los servicios.', fr:'Le professionnel ou le cabinet fournissant les services.', de:'Der Fachmann oder die Firma, die die Dienstleistungen erbringt.' },
+  'es2-title': { en:'Who is the client?', nl:'Wie is de opdrachtgever?', es:'¿Quién es el cliente?', fr:'Qui est le client ?', de:'Wer ist der Auftraggeber?' },
+  'es2-explain': { en:'The person or entity receiving the services.', nl:'De persoon of organisatie die de diensten ontvangt.', es:'La persona o entidad que recibe los servicios.', fr:'La personne ou l\'entité recevant les services.', de:'Die Person oder Organisation, die die Dienstleistungen erhält.' },
+  'es3-title': { en:'Scope and fees', nl:'Omvang en vergoeding', es:'Alcance y honorarios', fr:'Portée et honoraires', de:'Umfang und Gebühren' },
+  'es3-explain': { en:'Describe the services and the fee arrangement.', nl:'Beschrijf de diensten en de vergoedingsafspraken.', es:'Describa los servicios y el acuerdo de honorarios.', fr:'Décrivez les services et les modalités d\'honoraires.', de:'Beschreiben Sie die Dienstleistungen und die Gebührenvereinbarung.' },
+  'es4-title': { en:'Duration and signing', nl:'Looptijd en ondertekening', es:'Duración y firma', fr:'Durée et signature', de:'Laufzeit und Unterschrift' },
+  'es4-explain': { en:'When does the engagement start?', nl:'Wanneer begint de opdracht?', es:'¿Cuándo comienza el compromiso?', fr:'Quand la mission commence-t-elle ?', de:'Wann beginnt der Auftrag?' },
+  'lbl-role': { en:'Title / role', nl:'Titel / functie', es:'Título / cargo', fr:'Titre / fonction', de:'Titel / Funktion' },
+  'lbl-scope': { en:'Scope of services', nl:'Omvang van de dienstverlening', es:'Alcance de los servicios', fr:'Portée des services', de:'Umfang der Dienstleistungen' },
+  'ph-scope': { en:'e.g. Tax advisory, bookkeeping, payroll administration', nl:'bijv. Belastingadvies, boekhouding, loonadministratie', es:'p. ej. Asesoría fiscal, contabilidad, nóminas', fr:'p. ex. Conseil fiscal, comptabilité, gestion de paie', de:'z.B. Steuerberatung, Buchhaltung, Lohnbuchhaltung' },
+  'lbl-fee': { en:'Fee amount', nl:'Vergoeding', es:'Honorario', fr:'Honoraire', de:'Gebühr' },
+  'lbl-billing': { en:'Billing frequency', nl:'Facturering', es:'Frecuencia de facturación', fr:'Fréquence de facturation', de:'Abrechnungsfrequenz' },
+  'opt-fixed-fee': { en:'Fixed fee', nl:'Vast bedrag', es:'Tarifa fija', fr:'Forfait', de:'Festpreis' },
+  'opt-hourly': { en:'Hourly rate', nl:'Uurtarief', es:'Tarifa por hora', fr:'Taux horaire', de:'Stundensatz' },
+  'opt-monthly-retainer': { en:'Monthly retainer', nl:'Maandelijkse vergoeding', es:'Anticipo mensual', fr:'Provision mensuelle', de:'Monatliches Honorar' },
+  'lbl-payment-terms': { en:'Payment terms (days)', nl:'Betalingstermijn (dagen)', es:'Plazo de pago (días)', fr:'Délai de paiement (jours)', de:'Zahlungsfrist (Tage)' },
+  'lbl-until-or-ongoing': { en:'Until (leave empty if ongoing)', nl:'Tot (leeg laten als doorlopend)', es:'Hasta (dejar vacío si continuo)', fr:'Jusqu\'au (laisser vide si continu)', de:'Bis (leer lassen wenn laufend)' },
+  'edoc-title': { en:'ENGAGEMENT LETTER', nl:'OPDRACHTBEVESTIGING', es:'CARTA DE COMPROMISO', fr:'LETTRE DE MISSION', de:'AUFTRAGSBESTÄTIGUNG' },
+  'edoc-intro': { en:'This letter confirms the terms of our engagement.', nl:'Deze brief bevestigt de voorwaarden van onze opdracht.', es:'Esta carta confirma los términos de nuestro compromiso.', fr:'Cette lettre confirme les termes de notre mission.', de:'Dieses Schreiben bestätigt die Bedingungen unseres Auftrags.' },
+  'edoc-provider': { en:'Service Provider', nl:'Dienstverlener', es:'Proveedor de Servicios', fr:'Prestataire', de:'Dienstleister' },
+  'edoc-client': { en:'Client', nl:'Opdrachtgever', es:'Cliente', fr:'Client', de:'Auftraggeber' },
+  'edoc-scope-h': { en:'SCOPE OF SERVICES', nl:'OMVANG DIENSTVERLENING', es:'ALCANCE DE LOS SERVICIOS', fr:'PORTÉE DES SERVICES', de:'LEISTUNGSUMFANG' },
+  'edoc-scope-text': { en:'The Service Provider agrees to provide the following services to the Client:', nl:'De dienstverlener stemt ermee in de volgende diensten aan de opdrachtgever te leveren:', es:'El proveedor se compromete a prestar los siguientes servicios al cliente:', fr:'Le prestataire s\'engage à fournir les services suivants au client :', de:'Der Dienstleister verpflichtet sich, dem Auftraggeber folgende Leistungen zu erbringen:' },
+  'edoc-fee-h': { en:'FEES & PAYMENT', nl:'VERGOEDING & BETALING', es:'HONORARIOS Y PAGO', fr:'HONORAIRES ET PAIEMENT', de:'GEBÜHREN & ZAHLUNG' },
+  'edoc-fixed-text': { en:'The total fee for the services is {amount}. Payment is due within {days} days of invoice date.', nl:'De totale vergoeding voor de diensten bedraagt {amount}. Betaling is verschuldigd binnen {days} dagen na factuurdatum.', es:'El honorario total por los servicios es {amount}. El pago vence dentro de los {days} días siguientes a la fecha de factura.', fr:'Les honoraires totaux pour les services s\'élèvent à {amount}. Le paiement est dû dans les {days} jours suivant la date de facture.', de:'Das Gesamthonorar für die Dienstleistungen beträgt {amount}. Die Zahlung ist innerhalb von {days} Tagen nach Rechnungsdatum fällig.' },
+  'edoc-hourly-text': { en:'Services are billed at a rate of {amount} per hour. Payment is due within {days} days of invoice date.', nl:'Diensten worden gefactureerd tegen een tarief van {amount} per uur. Betaling is verschuldigd binnen {days} dagen na factuurdatum.', es:'Los servicios se facturan a una tarifa de {amount} por hora. El pago vence dentro de los {days} días siguientes a la fecha de factura.', fr:'Les services sont facturés au tarif de {amount} par heure. Le paiement est dû dans les {days} jours suivant la date de facture.', de:'Die Dienstleistungen werden zu einem Stundensatz von {amount} abgerechnet. Die Zahlung ist innerhalb von {days} Tagen nach Rechnungsdatum fällig.' },
+  'edoc-retainer-text': { en:'The Client shall pay a monthly retainer of {amount}. Payment is due within {days} days of invoice date.', nl:'De opdrachtgever betaalt een maandelijkse vergoeding van {amount}. Betaling is verschuldigd binnen {days} dagen na factuurdatum.', es:'El cliente pagará un anticipo mensual de {amount}. El pago vence dentro de los {days} días siguientes a la fecha de factura.', fr:'Le client versera une provision mensuelle de {amount}. Le paiement est dû dans les {days} jours suivant la date de facture.', de:'Der Auftraggeber zahlt ein monatliches Honorar von {amount}. Die Zahlung ist innerhalb von {days} Tagen nach Rechnungsdatum fällig.' },
+  'edoc-duration-h': { en:'DURATION', nl:'LOOPTIJD', es:'DURACIÓN', fr:'DURÉE', de:'LAUFZEIT' },
+  'edoc-ongoing-text': { en:'This engagement begins on {start} and continues until terminated by either party with reasonable written notice.', nl:'Deze opdracht vangt aan op {start} en loopt door tot beëindiging door een van de partijen met redelijke schriftelijke opzegging.', es:'Este compromiso comienza el {start} y continúa hasta que cualquiera de las partes lo termine con aviso escrito razonable.', fr:'Cette mission débute le {start} et se poursuit jusqu\'à sa résiliation par l\'une des parties moyennant un préavis écrit raisonnable.', de:'Dieser Auftrag beginnt am {start} und läuft bis zur Kündigung durch eine der Parteien mit angemessener schriftlicher Frist.' },
+  'edoc-confid-h': { en:'CONFIDENTIALITY', nl:'VERTROUWELIJKHEID', es:'CONFIDENCIALIDAD', fr:'CONFIDENTIALITÉ', de:'VERTRAULICHKEIT' },
+  'edoc-confid-text': { en:'Both parties agree to keep all information exchanged during this engagement strictly confidential, unless disclosure is required by law.', nl:'Beide partijen komen overeen alle tijdens deze opdracht uitgewisselde informatie strikt vertrouwelijk te behandelen, tenzij openbaarmaking wettelijk verplicht is.', es:'Ambas partes acuerdan mantener toda la información intercambiada durante este compromiso estrictamente confidencial, salvo que la divulgación sea requerida por ley.', fr:'Les deux parties conviennent de garder strictement confidentielles toutes les informations échangées pendant cette mission, sauf si la divulgation est exigée par la loi.', de:'Beide Parteien vereinbaren, alle während dieses Auftrags ausgetauschten Informationen streng vertraulich zu behandeln, es sei denn, die Offenlegung ist gesetzlich vorgeschrieben.' },
+  'edoc-liability-h': { en:'LIMITATION OF LIABILITY', nl:'BEPERKING AANSPRAKELIJKHEID', es:'LIMITACIÓN DE RESPONSABILIDAD', fr:'LIMITATION DE RESPONSABILITÉ', de:'HAFTUNGSBESCHRÄNKUNG' },
+  'edoc-liability-text': { en:'The Service Provider\'s liability is limited to the total fees paid under this engagement. The Service Provider shall not be liable for indirect, consequential, or incidental damages.', nl:'De aansprakelijkheid van de dienstverlener is beperkt tot het totaal aan vergoedingen betaald onder deze opdracht. De dienstverlener is niet aansprakelijk voor indirecte, gevolgschade of incidentele schade.', es:'La responsabilidad del proveedor se limita al total de honorarios pagados bajo este compromiso. El proveedor no será responsable de daños indirectos, consecuentes o incidentales.', fr:'La responsabilité du prestataire est limitée au montant total des honoraires versés dans le cadre de cette mission. Le prestataire ne sera pas responsable des dommages indirects ou accessoires.', de:'Die Haftung des Dienstleisters ist auf die Gesamtgebühren beschränkt, die im Rahmen dieses Auftrags gezahlt wurden. Der Dienstleister haftet nicht für indirekte Schäden oder Folgeschäden.' },
+  'edoc-term-h': { en:'TERMINATION', nl:'BEËINDIGING', es:'TERMINACIÓN', fr:'RÉSILIATION', de:'KÜNDIGUNG' },
+  'edoc-term-text': { en:'Either party may terminate this engagement by giving 30 days\' written notice. Fees for services rendered up to the termination date remain due.', nl:'Elke partij kan deze opdracht beëindigen met 30 dagen schriftelijke opzegging. Vergoedingen voor geleverde diensten tot de datum van beëindiging blijven verschuldigd.', es:'Cualquiera de las partes puede terminar este compromiso con 30 días de aviso por escrito. Los honorarios por servicios prestados hasta la fecha de terminación siguen siendo exigibles.', fr:'Chaque partie peut résilier cette mission moyennant un préavis écrit de 30 jours. Les honoraires pour les services rendus jusqu\'à la date de résiliation restent dus.', de:'Jede Partei kann diesen Auftrag mit einer Frist von 30 Tagen schriftlich kündigen. Die Gebühren für bis zum Kündigungsdatum erbrachte Leistungen bleiben fällig.' },
   'dt-bos-title': { en:'Bill of Sale', nl:'Koopovereenkomst', es:'Contrato de compraventa', fr:'Acte de vente', de:'Kaufvertrag' },
   'dt-bos-desc': { en:'Sell or buy a vehicle, boat, or item', nl:'Verkoop of koop een voertuig, boot of artikel', es:'Vende o compra un vehículo, barco o artículo', fr:'Vendez ou achetez un véhicule, bateau ou article', de:'Verkaufen oder kaufen Sie ein Fahrzeug, Boot oder Gegenstand' },
   'bs1-title': { en:'Who is the seller?', nl:'Wie is de verkoper?', es:'¿Quién es el vendedor?', fr:'Qui est le vendeur ?', de:'Wer ist der Verkäufer?' },
@@ -2554,6 +2714,7 @@ function selectDocType(type) {
   if (type === 'poa') goStep(1);
   else if (type === 'rental') goRentalStep('r1');
   else if (type === 'bos') goBosStep('b1');
+  else if (type === 'eng') goEngStep('e1');
 }
 
 // ====== Rental navigation ======
@@ -2815,7 +2976,7 @@ function toggleTheme() {
 })();
 
 // ====== Detail level toggle ======
-const docDetail = { poa: 'basic', rental: 'basic', bos: 'basic' };
+const docDetail = { poa: 'basic', rental: 'basic', bos: 'basic', eng: 'basic' };
 
 function setDocDetail(docType, level) {
   docDetail[docType] = level;
@@ -2824,6 +2985,176 @@ function setDocDetail(docType, level) {
   if (docType === 'poa') renderPreview();
   else if (docType === 'rental') renderRentalPreview();
   else if (docType === 'bos') renderBosPreview();
+  else if (docType === 'eng') renderEngPreview();
+}
+
+// ====== Engagement Letter ======
+const ENG_STEPS = ['e1','e2','e3','e4','e5'];
+
+function goEngStep(step) {
+  if (step === 0) { goStep(0); return; }
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  const idx = ENG_STEPS.indexOf(step);
+  document.getElementById('progress').style.width = ((idx+1) / ENG_STEPS.length * 100) + '%';
+  if (step === 'e5') renderEngPreview();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function validateEngAndGo(from, to) {
+  const req = { 'e1': ['ep-company','ep-address'], 'e2': ['ec-name','ec-address'] };
+  let ok = true;
+  (req[from]||[]).forEach(id => {
+    const el = document.getElementById(id);
+    const err = document.getElementById('err-'+id);
+    if (!el.value.trim()) { el.classList.add('field-error'); if(err){err.style.display='block';err.textContent=t('err-required');} ok=false; }
+    else { el.classList.remove('field-error'); if(err) err.style.display='none'; }
+  });
+  if (ok) goEngStep(to);
+}
+
+function gatherEngData() {
+  return {
+    provider: { company:$('ep-company'), rep:$('ep-rep'), role:$('ep-role'), address:$('ep-address'), country:$('ep-country') },
+    client: { name:$('ec-name'), id:$('ec-id'), address:$('ec-address'), country:$('ec-country') },
+    scope: document.getElementById('e-scope')?.value?.trim()||'',
+    fee: parseFloat(document.getElementById('e-fee')?.value)||0,
+    currency: document.getElementById('e-currency')?.value||'USD',
+    billing: document.getElementById('e-billing')?.value||'fixed',
+    payTerms: parseInt(document.getElementById('e-pay-terms')?.value)||30,
+    dateStart: document.getElementById('e-date-start')?.value||'',
+    dateEnd: document.getElementById('e-date-end')?.value||'',
+    docDate: document.getElementById('e-doc-date')?.value||'',
+    place: $('e-place'),
+    law: $('e-law'),
+  };
+}
+
+function renderEngPreview() {
+  const d = gatherEngData();
+  const el = document.getElementById('eng-preview');
+  const amtStr = d.currency + ' ' + d.fee.toLocaleString();
+  let feeText = '';
+  if (d.billing === 'fixed') feeText = t('edoc-fixed-text').replace('{amount}',amtStr).replace('{days}',d.payTerms);
+  else if (d.billing === 'hourly') feeText = t('edoc-hourly-text').replace('{amount}',amtStr).replace('{days}',d.payTerms);
+  else feeText = t('edoc-retainer-text').replace('{amount}',amtStr).replace('{days}',d.payTerms);
+
+  let durText = '';
+  if (d.dateEnd) durText = t('doc-fixed-text').replace('{start}',fmtDate(d.dateStart)).replace('{end}',fmtDate(d.dateEnd));
+  else durText = t('edoc-ongoing-text').replace('{start}',fmtDate(d.dateStart));
+
+  const detailed = docDetail.eng === 'detailed';
+  const extraSecs = detailed ? `
+    <div class="sec extra-sec"><div class="sec-title">${t('edoc-confid-h')}</div><p>${t('edoc-confid-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('edoc-liability-h')}</div><p>${t('edoc-liability-text')}</p></div>
+    <div class="sec extra-sec"><div class="sec-title">${t('edoc-term-h')}</div><p>${t('edoc-term-text')}</p></div>
+  ` : '';
+
+  el.innerHTML = `
+    <h2>${t('edoc-title')}</h2>
+    <div class="sec"><p>${t('edoc-intro')}</p></div>
+    <div class="sec"><div class="sec-title">${t('edoc-provider')}</div>
+      <strong>${t('lbl-company')}:</strong> ${d.provider.company||'___'}<br>
+      ${d.provider.rep ? '<strong>'+t('lbl-rep')+':</strong> '+d.provider.rep+'<br>' : ''}
+      ${d.provider.role ? '<strong>'+t('lbl-role')+':</strong> '+d.provider.role+'<br>' : ''}
+      <strong>${t('doc-address')}:</strong> ${d.provider.address||'___'}<br>
+      <strong>${t('doc-country')}:</strong> ${d.provider.country||'___'}
+    </div>
+    <div class="sec"><div class="sec-title">${t('edoc-client')}</div>
+      <strong>${t('doc-name')}:</strong> ${d.client.name||'___'}<br>
+      ${d.client.id ? '<strong>'+t('doc-id')+':</strong> '+d.client.id+'<br>' : ''}
+      <strong>${t('doc-address')}:</strong> ${d.client.address||'___'}<br>
+      <strong>${t('doc-country')}:</strong> ${d.client.country||'___'}
+    </div>
+    <div class="sec"><div class="sec-title">${t('edoc-scope-h')}</div><p>${t('edoc-scope-text')}</p><p style="white-space:pre-wrap;">${d.scope||'___'}</p></div>
+    <div class="sec"><div class="sec-title">${t('edoc-fee-h')}</div><p>${feeText}</p></div>
+    <div class="sec"><div class="sec-title">${t('edoc-duration-h')}</div><p>${durText}</p></div>
+    ${extraSecs}
+    <div class="sec"><div class="sec-title">${t('doc-law-h')}</div><p>${t('doc-law-text').replace('{law}',d.law||'___')}</p></div>
+    <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate))}</p></div>
+    <div class="sig-grid">
+      <div><div class="sig-line">${t('edoc-provider')}<br>${d.provider.company||'___'}</div></div>
+      <div><div class="sig-line">${t('edoc-client')}<br>${d.client.name||'___'}</div></div>
+    </div>
+  `;
+}
+
+async function downloadEngPDF() {
+  trackEdits('eng-preview', 'Engagement Letter');
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const d = gatherEngData();
+  const ds = getDocSettings('eng');
+  const mg = 25, pw = 160;
+  let y = ds.header ? mg + 4 : mg;
+  const addTxt = (text, opts={}) => {
+    const sz=opts.size||ds.fontSize, st=opts.style||'normal', al=opts.align||'left';
+    doc.setFontSize(sz); doc.setFont(ds.fontFamily,st);
+    const lines = doc.splitTextToSize(text, opts.w||pw);
+    if (y + lines.length*sz*0.4 > 278) { doc.addPage(); y=ds.header?mg+4:mg; }
+    doc.text(lines, al==='center'?105:mg, y, {align:al});
+    y += lines.length*sz*0.42 + (opts.gap||2);
+  };
+
+  addTxt(t('edoc-title'),{size:18,style:'bold',align:'center',gap:8}); y+=3;
+  addTxt(t('edoc-intro'),{size:10,style:'italic'}); y+=2;
+
+  addTxt(t('edoc-provider'),{size:11,style:'bold',gap:3});
+  addTxt(`${t('lbl-company')}: ${d.provider.company||'___'}`,{});
+  if (d.provider.rep) addTxt(`${t('lbl-rep')}: ${d.provider.rep}`,{});
+  if (d.provider.role) addTxt(`${t('lbl-role')}: ${d.provider.role}`,{});
+  addTxt(`${t('doc-address')}: ${d.provider.address||'___'}`,{});
+  addTxt(`${t('doc-country')}: ${d.provider.country||'___'}`,{}); y+=3;
+
+  addTxt(t('edoc-client'),{size:11,style:'bold',gap:3});
+  addTxt(`${t('doc-name')}: ${d.client.name||'___'}`,{});
+  if (d.client.id) addTxt(`${t('doc-id')}: ${d.client.id}`,{});
+  addTxt(`${t('doc-address')}: ${d.client.address||'___'}`,{});
+  addTxt(`${t('doc-country')}: ${d.client.country||'___'}`,{}); y+=4;
+
+  addTxt(t('edoc-scope-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('edoc-scope-text'),{});
+  addTxt(d.scope||'___',{}); y+=3;
+
+  const amtStr = d.currency+' '+d.fee.toLocaleString();
+  addTxt(t('edoc-fee-h'),{size:12,style:'bold',gap:4});
+  if (d.billing==='fixed') addTxt(t('edoc-fixed-text').replace('{amount}',amtStr).replace('{days}',d.payTerms),{});
+  else if (d.billing==='hourly') addTxt(t('edoc-hourly-text').replace('{amount}',amtStr).replace('{days}',d.payTerms),{});
+  else addTxt(t('edoc-retainer-text').replace('{amount}',amtStr).replace('{days}',d.payTerms),{});
+  y+=3;
+
+  addTxt(t('edoc-duration-h'),{size:12,style:'bold',gap:4});
+  if (d.dateEnd) addTxt(t('doc-fixed-text').replace('{start}',fmtDate(d.dateStart)).replace('{end}',fmtDate(d.dateEnd)),{});
+  else addTxt(t('edoc-ongoing-text').replace('{start}',fmtDate(d.dateStart)),{});
+  y+=3;
+
+  if (docDetail.eng === 'detailed') {
+    addTxt(t('edoc-confid-h'),{size:12,style:'bold',gap:4}); addTxt(t('edoc-confid-text'),{}); y+=3;
+    addTxt(t('edoc-liability-h'),{size:12,style:'bold',gap:4}); addTxt(t('edoc-liability-text'),{}); y+=3;
+    addTxt(t('edoc-term-h'),{size:12,style:'bold',gap:4}); addTxt(t('edoc-term-text'),{}); y+=3;
+  }
+
+  addTxt(t('doc-law-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('doc-law-text').replace('{law}',d.law||'___'),{}); y+=3;
+  addTxt(t('doc-exec-h'),{size:12,style:'bold',gap:4});
+  addTxt(t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate)),{});
+
+  y+=20; if(y>250){doc.addPage();y=mg+20;}
+  doc.setDrawColor(50);
+  doc.line(mg,y,mg+65,y); doc.setFontSize(9);
+  doc.text(t('edoc-provider'),mg,y+5); doc.text(d.provider.company||'',mg,y+9);
+  doc.line(mg+95,y,mg+160,y);
+  doc.text(t('edoc-client'),mg+95,y+5); doc.text(d.client.name||'',mg+95,y+9);
+
+  y = addAttachmentsToPDF(doc, 'eng', mg, pw, y+20);
+  addHeaderFooter(doc, ds);
+  addPageNumbers(doc, 'eng-page-numbers');
+
+  const blob = doc.output('blob');
+  const fn = `Engagement_Letter_${d.client.name?d.client.name.replace(/\s+/g,'_'):'draft'}.pdf`;
+  try { const dl = await window.claude?.use?.('downloads'); if(dl){await dl.save({filename:fn,data:blob});return;} } catch(e){}
+  const u = URL.createObjectURL(blob); const a = document.createElement('a');
+  a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
 
 // ====== Document settings helper ======
