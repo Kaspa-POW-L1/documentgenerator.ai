@@ -563,6 +563,20 @@ body {
   transition: all 0.15s;
 }
 .date-quick button:hover { border-color: var(--pri); color: var(--pri); }
+.ben-quick { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.ben-quick button {
+  padding: 8px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ben-quick button:hover { border-color: var(--pri); background: var(--pri-light); color: var(--pri-dark); }
 
 /* Intro */
 .intro-points {
@@ -1686,8 +1700,18 @@ body {
       <div class="step-icon">👥</div>
       <h2 class="step-title" data-i18n="ws3-title">Who are the beneficiaries?</h2>
       <p class="step-explain" data-i18n="ws3-explain">Add one or more people or organizations who will inherit.</p>
+      <p style="font-size:12px;font-weight:600;color:var(--text-mid);margin-bottom:6px;" data-i18n="ws3-quick-label">Click to add:</p>
+      <div class="ben-quick">
+        <button onclick="addBeneficiaryWithRel('rel-spouse')">👫 <span data-i18n="rel-spouse">Spouse</span></button>
+        <button onclick="addBeneficiaryWithRel('rel-son')">👦 <span data-i18n="rel-son">Son</span></button>
+        <button onclick="addBeneficiaryWithRel('rel-daughter')">👧 <span data-i18n="rel-daughter">Daughter</span></button>
+        <button onclick="addBeneficiaryWithRel('rel-brother')">🧑 <span data-i18n="rel-brother">Brother</span></button>
+        <button onclick="addBeneficiaryWithRel('rel-sister')">👩 <span data-i18n="rel-sister">Sister</span></button>
+        <button onclick="addBeneficiaryWithRel('rel-grandchild')">👶 <span data-i18n="rel-grandchild">Grandchild</span></button>
+        <button onclick="addBeneficiaryWithRel('rel-organization')">🏢 <span data-i18n="rel-organization">Organization</span></button>
+      </div>
       <div id="will-beneficiaries"></div>
-      <button class="btn-add-attach" onclick="addBeneficiary()" data-i18n="btn-add-beneficiary" style="margin-top:8px;">+ Add beneficiary</button>
+      <button class="btn-add-attach" onclick="addBeneficiary()" data-i18n="btn-add-beneficiary" style="margin-top:8px;">+ Other</button>
       <div class="nav"><button class="btn btn-back" onclick="goWillStep('w2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goWillStep('w4')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
@@ -2056,7 +2080,15 @@ const T = {
   'opt-divorced': { en:'Divorced', nl:'Gescheiden', es:'Divorciado/a', fr:'Divorcé(e)', de:'Geschieden' },
   'opt-widowed': { en:'Widowed', nl:'Weduwe/weduwnaar', es:'Viudo/a', fr:'Veuf/veuve', de:'Verwitwet' },
   'lbl-relationship': { en:'Relationship to testator', nl:'Relatie tot erflater', es:'Relación con el testador', fr:'Lien avec le testateur', de:'Beziehung zum Erblasser' },
-  'btn-add-beneficiary': { en:'+ Add beneficiary', nl:'+ Begunstigde toevoegen', es:'+ Añadir beneficiario', fr:'+ Ajouter un bénéficiaire', de:'+ Begünstigten hinzufügen' },
+  'btn-add-beneficiary': { en:'+ Other', nl:'+ Anders', es:'+ Otro', fr:'+ Autre', de:'+ Sonstige' },
+  'ws3-quick-label': { en:'Click to add:', nl:'Klik om toe te voegen:', es:'Haz clic para añadir:', fr:'Cliquez pour ajouter :', de:'Klicken zum Hinzufügen:' },
+  'rel-spouse': { en:'Spouse', nl:'Echtgeno(o)t(e)', es:'Cónyuge', fr:'Conjoint(e)', de:'Ehepartner' },
+  'rel-son': { en:'Son', nl:'Zoon', es:'Hijo', fr:'Fils', de:'Sohn' },
+  'rel-daughter': { en:'Daughter', nl:'Dochter', es:'Hija', fr:'Fille', de:'Tochter' },
+  'rel-brother': { en:'Brother', nl:'Broer', es:'Hermano', fr:'Frère', de:'Bruder' },
+  'rel-sister': { en:'Sister', nl:'Zus', es:'Hermana', fr:'Sœur', de:'Schwester' },
+  'rel-grandchild': { en:'Grandchild', nl:'Kleinkind', es:'Nieto/a', fr:'Petit-enfant', de:'Enkelkind' },
+  'rel-organization': { en:'Organization', nl:'Organisatie', es:'Organización', fr:'Organisation', de:'Organisation' },
   'lbl-ben-name': { en:'Name', nl:'Naam', es:'Nombre', fr:'Nom', de:'Name' },
   'lbl-ben-rel': { en:'Relationship', nl:'Relatie', es:'Relación', fr:'Lien', de:'Beziehung' },
   'lbl-ben-share': { en:'Share / bequest', nl:'Aandeel / nalatenschap', es:'Participación / legado', fr:'Part / legs', de:'Anteil / Vermächtnis' },
@@ -3388,7 +3420,7 @@ function goWillStep(step) {
   const idx = WILL_STEPS.indexOf(step);
   document.getElementById('progress').style.width = ((idx+1) / WILL_STEPS.length * 100) + '%';
   updateStepNav('dt-will-title', idx+1, WILL_STEPS.length);
-  if (step === 'w3' && document.getElementById('will-beneficiaries').children.length === 0) addBeneficiary();
+  // beneficiaries are added via quick buttons or "+ Other"
   if (step === 'w5') renderWillPreview();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -3405,17 +3437,34 @@ function validateWillAndGo(from, to) {
   if (ok) goWillStep(to);
 }
 
-function addBeneficiary() {
+function addBeneficiary(rel) {
   const list = document.getElementById('will-beneficiaries');
   const idx = list.children.length + 1;
+  const relText = rel || '';
   const div = document.createElement('div');
-  div.style.cssText = 'border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;position:relative;background:var(--input-bg);';
-  div.innerHTML = `<button onclick="this.parentElement.remove()" style="position:absolute;top:8px;right:10px;background:none;border:none;cursor:pointer;font-size:16px;color:var(--text-light);">✕</button>
-    <div style="font-weight:600;font-size:13px;margin-bottom:8px;color:var(--text-mid);">#${idx}</div>
-    <div class="field"><label data-i18n="lbl-ben-name">${t('lbl-ben-name')}</label><input type="text" class="ben-name" placeholder="${t('ph-name')}"></div>
-    <div class="field"><label data-i18n="lbl-ben-rel">${t('lbl-ben-rel')}</label><input type="text" class="ben-rel" placeholder="${t('ph-ben-rel')}"></div>
-    <div class="field"><label data-i18n="lbl-ben-share">${t('lbl-ben-share')}</label><input type="text" class="ben-share" placeholder="${t('ph-ben-share')}"></div>`;
+  div.style.cssText = 'border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;position:relative;background:var(--input-bg);animation:fadeIn 0.3s;';
+  div.innerHTML = `<button onclick="this.parentElement.remove();renumberBeneficiaries()" style="position:absolute;top:8px;right:10px;background:none;border:none;cursor:pointer;font-size:16px;color:var(--text-light);">✕</button>
+    <div class="ben-num" style="font-weight:600;font-size:13px;margin-bottom:8px;color:var(--text-mid);">${relText ? relText + ' #' + idx : '#' + idx}</div>
+    <div class="field"><label>${t('lbl-ben-name')}</label><input type="text" class="ben-name" placeholder="${t('ph-name')}"></div>
+    <div class="field"><label>${t('lbl-ben-rel')}</label><input type="text" class="ben-rel" value="${relText}" placeholder="${t('ph-ben-rel')}"></div>
+    <div class="field"><label>${t('lbl-ben-share')}</label><input type="text" class="ben-share" placeholder="${t('ph-ben-share')}"></div>`;
   list.appendChild(div);
+  // Scroll to the new beneficiary and focus the name field
+  div.scrollIntoView({ behavior:'smooth', block:'center' });
+  div.querySelector('.ben-name').focus();
+}
+
+function addBeneficiaryWithRel(relKey) {
+  addBeneficiary(t(relKey));
+}
+
+function renumberBeneficiaries() {
+  const list = document.getElementById('will-beneficiaries');
+  Array.from(list.children).forEach((div, i) => {
+    const num = div.querySelector('.ben-num');
+    const rel = div.querySelector('.ben-rel')?.value || '';
+    if (num) num.textContent = rel ? rel + ' #' + (i+1) : '#' + (i+1);
+  });
 }
 
 function getBeneficiaries() {
