@@ -162,13 +162,6 @@ body {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 32px 28px;
-  max-width: 440px;
-  margin: 0 auto;
-}
-.preview-box, .attach-box, .doc-settings, .detail-toggle, .edit-hint, .disclaimer-box {
-  max-width: 440px;
-  margin-left: auto;
-  margin-right: auto;
 }
 @media (max-width: 500px) {
   .step-card { padding: 24px 18px; }
@@ -808,7 +801,7 @@ body {
 
   <!-- STEP 0: Document Chooser -->
   <div class="step active" id="step-0">
-    <div class="step-card" style="max-width:560px;">
+    <div class="step-card">
       <h1 class="step-title" data-i18n="chooser-title">What document do you need?</h1>
       <p class="step-explain" data-i18n="chooser-explain">Pick a document type to get started.</p>
 
