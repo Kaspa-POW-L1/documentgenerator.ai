@@ -3178,8 +3178,8 @@ function renderPreview() {
 
   const detailed = docDetail.poa === 'detailed';
   const extraSecs = `
-    <div class="sec extra-sec"><div class="sec-title">${t('doc-revoke-h')}</div><p>${t('doc-revoke-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('doc-liability-h')}</div><p>${t('doc-liability-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('doc-revoke-h')}</div><p>${t('doc-revoke-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('doc-liability-h')}</div><p>${t('doc-liability-text')}</p></div>
   `;
 
   el.innerHTML = `
@@ -3628,12 +3628,12 @@ function renderRentalPreview() {
 
   const detailed = docDetail.rental === 'detailed';
   const extraSecs = `
-    <div class="sec extra-sec"><div class="sec-title">${t('rdoc-maint-h')}</div><p>${t('rdoc-maint-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('rdoc-utilities-h')}</div><p>${t('rdoc-utilities-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('rdoc-notice-h')}</div><p>${t('rdoc-notice-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('rdoc-sublet-h')}</div><p>${t('rdoc-sublet-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('rdoc-rules-h')}</div><p>${t('rdoc-rules-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('rdoc-disputes-h')}</div><p>${t('rdoc-disputes-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('rdoc-maint-h')}</div><p>${t('rdoc-maint-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('rdoc-utilities-h')}</div><p>${t('rdoc-utilities-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('rdoc-notice-h')}</div><p>${t('rdoc-notice-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('rdoc-sublet-h')}</div><p>${t('rdoc-sublet-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('rdoc-rules-h')}</div><p>${t('rdoc-rules-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('rdoc-disputes-h')}</div><p>${t('rdoc-disputes-text')}</p></div>
   `;
 
   el.innerHTML = `
@@ -3856,9 +3856,9 @@ function renderEngPreview() {
 
   const detailed = docDetail.eng === 'detailed';
   const extraSecs = `
-    <div class="sec extra-sec"><div class="sec-title">${t('edoc-confid-h')}</div><p>${t('edoc-confid-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('edoc-liability-h')}</div><p>${t('edoc-liability-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('edoc-term-h')}</div><p>${t('edoc-term-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('edoc-confid-h')}</div><p>${t('edoc-confid-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('edoc-liability-h')}</div><p>${t('edoc-liability-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('edoc-term-h')}</div><p>${t('edoc-term-text')}</p></div>
   `;
 
   el.innerHTML = `
@@ -4018,9 +4018,9 @@ function renderNdaPreview() {
 
   const detailed = docDetail.nda === 'detailed';
   const extraSecs = `
-    <div class="sec extra-sec"><div class="sec-title">${t('ndoc-permitted-h')}</div><p>${t('ndoc-permitted-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('ndoc-return-h')}</div><p>${t('ndoc-return-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('ndoc-remedies-h')}</div><p>${t('ndoc-remedies-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('ndoc-permitted-h')}</div><p>${t('ndoc-permitted-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('ndoc-return-h')}</div><p>${t('ndoc-return-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('ndoc-remedies-h')}</div><p>${t('ndoc-remedies-text')}</p></div>
   `;
 
   el.innerHTML = `
@@ -4173,8 +4173,8 @@ function renderEmplPreview() {
   }
   const detailed = docDetail.empl === 'detailed';
   const extraSecs = `
-    <div class="sec extra-sec"><div class="sec-title">${t('mdoc-termination-h')}</div><p>${t('mdoc-termination-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('mdoc-confidentiality-h')}</div><p>${t('mdoc-confidentiality-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('mdoc-termination-h')}</div><p>${t('mdoc-termination-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('mdoc-confidentiality-h')}</div><p>${t('mdoc-confidentiality-text')}</p></div>
   `;
 
   el.innerHTML = `
@@ -4343,9 +4343,9 @@ function renderLoanPreview() {
 
   const detailed = docDetail.loan === 'detailed';
   const extraSecs = `
-    <div class="sec extra-sec"><div class="sec-title">${t('ldoc-late-h')}</div><p>${t('ldoc-late-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('ldoc-early-h')}</div><p>${t('ldoc-early-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('ldoc-default-h')}</div><p>${t('ldoc-default-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('ldoc-late-h')}</div><p>${t('ldoc-late-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('ldoc-early-h')}</div><p>${t('ldoc-early-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('ldoc-default-h')}</div><p>${t('ldoc-default-text')}</p></div>
   `;
 
   el.innerHTML = `
@@ -4664,9 +4664,9 @@ function renderWillPreview() {
 
   const detailed = docDetail.will === 'detailed';
   const extraSecs = `
-    <div class="sec extra-sec"><div class="sec-title">${t('wdoc-debts-h')}</div><p>${t('wdoc-debts-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('wdoc-guardian-h')}</div><p>${t('wdoc-guardian-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('wdoc-funeral-h')}</div><p>${t('wdoc-funeral-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('wdoc-debts-h')}</div><p>${t('wdoc-debts-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('wdoc-guardian-h')}</div><p>${t('wdoc-guardian-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('wdoc-funeral-h')}</div><p>${t('wdoc-funeral-text')}</p></div>
   `;
 
   el.innerHTML = `
@@ -5003,8 +5003,8 @@ function renderBosPreview() {
 
   const detailed = docDetail.bos === 'detailed';
   const extraSecs = `
-    <div class="sec extra-sec"><div class="sec-title">${t('bdoc-ownership-h')}</div><p>${t('bdoc-ownership-text')}</p></div>
-    <div class="sec extra-sec"><div class="sec-title">${t('bdoc-disputes-h')}</div><p>${t('bdoc-disputes-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('bdoc-ownership-h')}</div><p>${t('bdoc-ownership-text')}</p></div>
+    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('bdoc-disputes-h')}</div><p>${t('bdoc-disputes-text')}</p></div>
   `;
 
   el.innerHTML = `
