@@ -1409,7 +1409,16 @@ body {
           <div class="field"><label data-i18n="lbl-vin">VIN / Chassis number</label><input type="text" id="b-vin"></div>
           <div class="field"><label data-i18n="lbl-plate">License plate</label><input type="text" id="b-plate"></div>
         </div>
-        <div class="field"><label data-i18n="lbl-mileage">Mileage (km)</label><input type="number" id="b-mileage" min="0"></div>
+        <div class="field-row">
+          <div class="field"><label data-i18n="lbl-mileage">Mileage</label><input type="number" id="b-mileage" min="0"></div>
+          <div class="field"><label data-i18n="lbl-mileage-unit">Unit</label>
+            <select id="b-mileage-unit" onchange="showMileageWarning()">
+              <option value="km">km</option>
+              <option value="miles">miles</option>
+            </select>
+          </div>
+        </div>
+        <div id="mileage-warning" style="display:none;padding:8px 12px;background:var(--warn-light);border-left:3px solid var(--warn);border-radius:6px;font-size:12px;color:#92400E;margin-top:-4px;" data-i18n="mileage-warning">⚠ Double-check: did you select the right unit? US/Japan imports usually show miles; European vehicles use km.</div>
       </div>
       <div id="bos-boat-fields" style="display:none;">
         <div class="field-row">
@@ -1639,7 +1648,7 @@ body {
     <div class="step-card">
       <div class="step-icon">🧓</div>
       <h2 class="step-title" data-i18n="ws1-title">Who is the testator?</h2>
-      <p class="step-explain" data-i18n="ws1-explain">The person making this will.</p>
+      <p class="step-explain" data-i18n="ws1-explain">The person making this draft will.</p>
       <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-name">As it appears on your ID or passport</div><input type="text" id="wt-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-wt-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="wt-id" data-i18n-placeholder="ph-id"></div>
       <div class="field"><label data-i18n="lbl-dob">Date of birth</label><input type="date" id="wt-dob"></div>
@@ -1662,7 +1671,7 @@ body {
     <div class="step-card">
       <div class="step-icon">⚖️</div>
       <h2 class="step-title" data-i18n="ws2-title">Who is the executor?</h2>
-      <p class="step-explain" data-i18n="ws2-explain">The person who will carry out the instructions in this will.</p>
+      <p class="step-explain" data-i18n="ws2-explain">The person who will carry out the instructions in this draft.</p>
       <div class="field"><label data-i18n="lbl-name">Full name</label><input type="text" id="we-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-we-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="we-id" data-i18n-placeholder="ph-id"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="we-address" data-i18n-placeholder="ph-address"></div>
@@ -2033,13 +2042,13 @@ const T = {
   'dt-rental-title': { en:'Rental Agreement', nl:'Huurcontract', es:'Contrato de alquiler', fr:'Contrat de location', de:'Mietvertrag' },
   'dt-rental-desc':  { en:'Lease a property or room', nl:'Verhuur een woning of kamer', es:'Alquilar una propiedad o habitación', fr:'Louer un bien ou une chambre', de:'Eine Immobilie oder ein Zimmer vermieten' },
   'ws1-title': { en:'Who is the testator?', nl:'Wie is de erflater?', es:'¿Quién es el testador?', fr:'Qui est le testateur ?', de:'Wer ist der Erblasser?' },
-  'ws1-explain': { en:'The person making this will.', nl:'De persoon die dit testament maakt.', es:'La persona que hace este testamento.', fr:'La personne qui rédige ce testament.', de:'Die Person, die dieses Testament erstellt.' },
+  'ws1-explain': { en:'The person making this draft will.', nl:'De persoon die dit concept-testament opstelt.', es:'La persona que prepara este borrador de testamento.', fr:'La personne qui prépare ce projet de testament.', de:'Die Person, die diesen Testamententwurf erstellt.' },
   'ws2-title': { en:'Who is the executor?', nl:'Wie is de executeur?', es:'¿Quién es el albacea?', fr:'Qui est l\'exécuteur ?', de:'Wer ist der Testamentsvollstrecker?' },
-  'ws2-explain': { en:'The person who will carry out the instructions in this will.', nl:'De persoon die de instructies in dit testament uitvoert.', es:'La persona que ejecutará las instrucciones de este testamento.', fr:'La personne qui exécutera les instructions de ce testament.', de:'Die Person, die die Anweisungen in diesem Testament ausführt.' },
+  'ws2-explain': { en:'The person who will carry out the instructions in this draft.', nl:'De persoon die de instructies in dit concept uitvoert.', es:'La persona que ejecutará las instrucciones de este borrador.', fr:'La personne qui exécutera les instructions de ce projet.', de:'Die Person, die die Anweisungen in diesem Entwurf ausführt.' },
   'ws3-title': { en:'Who are the beneficiaries?', nl:'Wie zijn de begunstigden?', es:'¿Quiénes son los beneficiarios?', fr:'Qui sont les bénéficiaires ?', de:'Wer sind die Begünstigten?' },
   'ws3-explain': { en:'Add one or more people or organizations who will inherit.', nl:'Voeg een of meer personen of organisaties toe die erven.', es:'Añada una o más personas u organizaciones que heredarán.', fr:'Ajoutez une ou plusieurs personnes ou organisations qui hériteront.', de:'Fügen Sie eine oder mehrere Personen oder Organisationen hinzu, die erben werden.' },
   'ws4-title': { en:'Signing details', nl:'Ondertekeningsgegevens', es:'Detalles de la firma', fr:'Détails de la signature', de:'Unterschriftsdetails' },
-  'ws4-explain': { en:'Where and when is this will being signed?', nl:'Waar en wanneer wordt dit testament ondertekend?', es:'¿Dónde y cuándo se firma este testamento?', fr:'Où et quand ce testament est-il signé ?', de:'Wo und wann wird dieses Testament unterschrieben?' },
+  'ws4-explain': { en:'Where and when is this draft being signed?', nl:'Waar en wanneer wordt dit concept ondertekend?', es:'¿Dónde y cuándo se firma este borrador?', fr:'Où et quand ce projet est-il signé ?', de:'Wo und wann wird dieser Entwurf unterschrieben?' },
   'lbl-dob': { en:'Date of birth', nl:'Geboortedatum', es:'Fecha de nacimiento', fr:'Date de naissance', de:'Geburtsdatum' },
   'lbl-marital': { en:'Marital status', nl:'Burgerlijke staat', es:'Estado civil', fr:'État civil', de:'Familienstand' },
   'opt-single': { en:'Single', nl:'Ongehuwd', es:'Soltero/a', fr:'Célibataire', de:'Ledig' },
@@ -2130,7 +2139,9 @@ const T = {
   'lbl-color': { en:'Color', nl:'Kleur', es:'Color', fr:'Couleur', de:'Farbe' },
   'lbl-vin': { en:'VIN / Chassis number', nl:'VIN / Chassisnummer', es:'VIN / Número de chasis', fr:'VIN / Numéro de châssis', de:'FIN / Fahrgestellnummer' },
   'lbl-plate': { en:'License plate', nl:'Kenteken', es:'Matrícula', fr:'Plaque d\'immatriculation', de:'Kennzeichen' },
-  'lbl-mileage': { en:'Mileage (km)', nl:'Kilometerstand', es:'Kilometraje', fr:'Kilométrage', de:'Kilometerstand' },
+  'lbl-mileage': { en:'Mileage', nl:'Tellerstand', es:'Kilometraje', fr:'Kilométrage', de:'Kilometerstand' },
+  'lbl-mileage-unit': { en:'Unit', nl:'Eenheid', es:'Unidad', fr:'Unité', de:'Einheit' },
+  'mileage-warning': { en:'⚠ Double-check: did you select the right unit? US/Japan imports usually show miles; European vehicles use km.', nl:'⚠ Controleer: heb je de juiste eenheid gekozen? Amerikaanse/Japanse imports tonen meestal mijlen; Europese voertuigen gebruiken km.', es:'⚠ Verifique: ¿seleccionó la unidad correcta? Las importaciones de EE.UU./Japón suelen mostrar millas; los vehículos europeos usan km.', fr:'⚠ Vérifiez : avez-vous sélectionné la bonne unité ? Les importations US/Japon affichent généralement des miles ; les véhicules européens utilisent les km.', de:'⚠ Überprüfen Sie: Haben Sie die richtige Einheit gewählt? US/Japan-Importe zeigen meist Meilen; europäische Fahrzeuge verwenden km.' },
   'lbl-boat-name': { en:'Boat name', nl:'Bootnaam', es:'Nombre del barco', fr:'Nom du bateau', de:'Bootsname' },
   'lbl-boat-type': { en:'Type', nl:'Type', es:'Tipo', fr:'Type', de:'Typ' },
   'lbl-boat-length': { en:'Length (ft)', nl:'Lengte (ft)', es:'Eslora (ft)', fr:'Longueur (ft)', de:'Länge (ft)' },
@@ -3547,6 +3558,7 @@ function fmtDateISO(offset) {
 
 function initDateQuickPicks() {
   document.querySelectorAll('input[type="date"]').forEach(input => {
+    if (input.id && input.id.includes('dob')) return;
     if (input.parentElement.querySelector('.date-quick')) return;
     const div = document.createElement('div');
     div.className = 'date-quick';
@@ -3666,6 +3678,11 @@ function validateBosAndGo(from, to) {
   if (ok) goBosStep(to);
 }
 
+function showMileageWarning() {
+  const w = document.getElementById('mileage-warning');
+  if (w) { w.style.display = 'block'; setTimeout(() => w.style.display = 'none', 6000); }
+}
+
 function toggleBosFields() {
   const cat = document.getElementById('b-item-cat').value;
   document.getElementById('bos-vehicle-fields').style.display = cat==='vehicle' ? 'block' : 'none';
@@ -3677,7 +3694,7 @@ function gatherBosData() {
   const cat = document.getElementById('b-item-cat').value;
   let item = { category: cat };
   if (cat === 'vehicle') {
-    item = { ...item, make:$('b-make'), model:$('b-model'), year:$('b-year'), color:$('b-color'), vin:$('b-vin'), plate:$('b-plate'), mileage:$('b-mileage') };
+    item = { ...item, make:$('b-make'), model:$('b-model'), year:$('b-year'), color:$('b-color'), vin:$('b-vin'), plate:$('b-plate'), mileage:$('b-mileage'), mileageUnit:document.getElementById('b-mileage-unit')?.value||'km' };
   } else if (cat === 'boat') {
     item = { ...item, name:$('b-boat-name'), type:$('b-boat-type'), length:$('b-boat-length'), hull:$('b-hull-id'), reg:$('b-boat-reg') };
   } else {
@@ -3707,7 +3724,7 @@ function bosItemDesc(item) {
     if (item.color) details.push(`${t('lbl-color')}: ${item.color}`);
     if (item.vin) details.push(`${t('lbl-vin')}: ${item.vin}`);
     if (item.plate) details.push(`${t('lbl-plate')}: ${item.plate}`);
-    if (item.mileage) details.push(`${t('lbl-mileage')}: ${item.mileage}`);
+    if (item.mileage) details.push(`${t('lbl-mileage')}: ${item.mileage} ${item.mileageUnit||'km'}`);
     return `<strong>${d.trim()||'___'}</strong>${details.length ? '<br>'+details.join('<br>') : ''}`;
   } else if (item.category === 'boat') {
     let d = '';
@@ -3733,7 +3750,7 @@ function bosItemText(item) {
     if (item.color) s += ', '+t('lbl-color')+': '+item.color;
     if (item.vin) s += ', '+t('lbl-vin')+': '+item.vin;
     if (item.plate) s += ', '+t('lbl-plate')+': '+item.plate;
-    if (item.mileage) s += ', '+t('lbl-mileage')+': '+item.mileage;
+    if (item.mileage) s += ', '+t('lbl-mileage')+': '+item.mileage+' '+(item.mileageUnit||'km');
     return s;
   } else if (item.category === 'boat') {
     let s = item.name||'___';
