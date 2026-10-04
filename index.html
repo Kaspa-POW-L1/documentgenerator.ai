@@ -1069,7 +1069,7 @@ input[type=number] { -moz-appearance: textfield; }
           </div>
           <div class="field">
             <label data-i18n="lbl-until">Until</label>
-            <input type="date" id="date-end">
+            <input type="date" id="date-end" onchange="validateDateRange('date-start','date-end')">
           </div>
         </div>
       </div>
@@ -1315,7 +1315,7 @@ input[type=number] { -moz-appearance: textfield; }
         </div>
         <div class="field">
           <label data-i18n="lbl-until">Until</label>
-          <input type="date" id="r-date-end">
+          <input type="date" id="r-date-end" onchange="validateDateRange('r-date-start','r-date-end')">
         </div>
       </div>
       <div style="margin-top:14px;">
@@ -1641,7 +1641,7 @@ input[type=number] { -moz-appearance: textfield; }
       <p class="step-explain" data-i18n="es4-explain">When does the engagement start?</p>
       <div class="field-row">
         <div class="field"><label data-i18n="lbl-from">From</label><input type="date" id="e-date-start"></div>
-        <div class="field"><label data-i18n="lbl-until-or-ongoing">Until (leave empty if ongoing)</label><input type="date" id="e-date-end"></div>
+        <div class="field"><label data-i18n="lbl-until-or-ongoing">Until (leave empty if ongoing)</label><input type="date" id="e-date-end" onchange="validateDateRange('e-date-start','e-date-end')"></div>
       </div>
       <div class="field"><label data-i18n="lbl-place">City and country of signing</label><input type="text" id="e-place" data-i18n-placeholder="ph-place" onchange="autoFillLaw('e-place','e-law')"></div>
       <div class="field"><label data-i18n="lbl-date">Date of the document</label><input type="date" id="e-doc-date"></div>
@@ -1995,7 +1995,7 @@ input[type=number] { -moz-appearance: textfield; }
       <p class="step-explain" data-i18n="ls4-explain">When does the loan start and end?</p>
       <div class="field-row">
         <div class="field"><label data-i18n="lbl-from">From</label><input type="date" id="l-date-start"></div>
-        <div class="field"><label data-i18n="lbl-until">Until</label><input type="date" id="l-date-end"></div>
+        <div class="field"><label data-i18n="lbl-until">Until</label><input type="date" id="l-date-end" onchange="validateDateRange('l-date-start','l-date-end')"></div>
       </div>
       <div class="field"><label data-i18n="lbl-place">City and country of signing</label><input type="text" id="l-place" data-i18n-placeholder="ph-place" onchange="autoFillLaw('l-place','l-law')"></div>
       <div class="field"><label data-i18n="lbl-date">Date of the document</label><input type="date" id="l-doc-date"></div>
@@ -2852,6 +2852,7 @@ const T = {
   'edit-hint': { en:'Click on any section to edit the text. Your changes will be included in the PDF.', nl:'Klik op een sectie om de tekst aan te passen. Je wijzigingen worden opgenomen in de PDF.', es:'Haz clic en cualquier sección para editar el texto. Los cambios se incluirán en el PDF.', fr:'Cliquez sur une section pour modifier le texte. Vos modifications seront incluses dans le PDF.', de:'Klicken Sie auf einen Abschnitt, um den Text zu bearbeiten. Ihre Änderungen werden in das PDF übernommen.' },
   'last-updated-prefix': { en:'Last updated:', nl:'Laatst bijgewerkt:', es:'Última actualización:', fr:'Dernière mise à jour :', de:'Zuletzt aktualisiert:' },
   'privacy-link': { en:'Privacy Policy', nl:'Privacybeleid', es:'Política de Privacidad', fr:'Politique de Confidentialité', de:'Datenschutzerklärung' },
+  'warn-date-range': { en:'End date is before the start date', nl:'Einddatum ligt vóór de startdatum', es:'La fecha de fin es anterior a la de inicio', fr:'La date de fin est antérieure à la date de début', de:'Das Enddatum liegt vor dem Startdatum' },
   'warn-empty-fields': { en:'Some fields are still empty. You can continue, but the document may be incomplete.', nl:'Sommige velden zijn nog leeg. Je kunt doorgaan, maar het document is mogelijk onvolledig.', es:'Algunos campos están vacíos. Puede continuar, pero el documento podría estar incompleto.', fr:'Certains champs sont encore vides. Vous pouvez continuer, mais le document pourrait être incomplet.', de:'Einige Felder sind noch leer. Sie können fortfahren, aber das Dokument ist möglicherweise unvollständig.' },
   'upsell-detailed': { en:'Switch to Detailed ↑', nl:'Schakel naar Uitgebreid ↑', es:'Cambiar a Detallado ↑', fr:'Passer en Détaillé ↑', de:'Zu Detailliert wechseln ↑' },
   'confirm-new': { en:'Start a new document? Any unsaved data will be lost.', nl:'Nieuw document beginnen? Niet-opgeslagen gegevens gaan verloren.', es:'¿Comenzar un nuevo documento? Los datos no guardados se perderán.', fr:'Commencer un nouveau document ? Les données non enregistrées seront perdues.', de:'Neues Dokument beginnen? Nicht gespeicherte Daten gehen verloren.' },
@@ -3085,7 +3086,7 @@ function goStep(n) {
   document.getElementById('progress').style.width = (n / totalSteps * 100) + '%';
   if (n === 0) updateStepNav(null);
   else updateStepNav('dt-poa-title', n, totalSteps);
-  if (n === 5) renderPreview(); checkEmptyFields();
+  if (n === 5) { renderPreview(); checkEmptyFields(); }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -3533,7 +3534,7 @@ function goRentalStep(step) {
   if (step === 'r3') buildPropTypeGrid();
   if (step === 'r4') showJurNotice('jur-notice-rent', document.getElementById('rl-country').value);
   if (step === 'r5') showJurNotice('jur-notice-duration', document.getElementById('rl-country').value);
-  if (step === 'r6') renderRentalPreview(); checkEmptyFields();
+  if (step === 'r6') { renderRentalPreview(); checkEmptyFields(); }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -3807,7 +3808,7 @@ function goEngStep(step) {
   const idx = ENG_STEPS.indexOf(step);
   document.getElementById('progress').style.width = ((idx+1) / ENG_STEPS.length * 100) + '%';
   updateStepNav('dt-eng-title', idx+1, ENG_STEPS.length);
-  if (step === 'e5') renderEngPreview(); checkEmptyFields();
+  if (step === 'e5') { renderEngPreview(); checkEmptyFields(); }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -3977,7 +3978,7 @@ function goNdaStep(step) {
   const idx = NDA_STEPS.indexOf(step);
   document.getElementById('progress').style.width = ((idx+1) / NDA_STEPS.length * 100) + '%';
   updateStepNav('dt-nda-title', idx+1, NDA_STEPS.length);
-  if (step === 'n5') renderNdaPreview(); checkEmptyFields();
+  if (step === 'n5') { renderNdaPreview(); checkEmptyFields(); }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -4121,7 +4122,7 @@ function goEmplStep(step) {
   const idx = EMPL_STEPS.indexOf(step);
   document.getElementById('progress').style.width = ((idx+1) / EMPL_STEPS.length * 100) + '%';
   updateStepNav('dt-employment-title', idx+1, EMPL_STEPS.length);
-  if (step === 'm6') renderEmplPreview(); checkEmptyFields();
+  if (step === 'm6') { renderEmplPreview(); checkEmptyFields(); }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -4294,7 +4295,7 @@ function goLoanStep(step) {
   const idx = LOAN_STEPS.indexOf(step);
   document.getElementById('progress').style.width = ((idx+1) / LOAN_STEPS.length * 100) + '%';
   updateStepNav('dt-loan-title', idx+1, LOAN_STEPS.length);
-  if (step === 'l5') renderLoanPreview(); checkEmptyFields();
+  if (step === 'l5') { renderLoanPreview(); checkEmptyFields(); }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -4450,6 +4451,33 @@ async function downloadLoanPDF() {
   a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
 
+// ====== Date range validation ======
+function validateDateRange(startId, endId) {
+  const s = document.getElementById(startId)?.value;
+  const e = document.getElementById(endId)?.value;
+  if (s && e && e < s) {
+    const el = document.getElementById(endId);
+    el.classList.add('field-error');
+    // Show warning next to field
+    let warn = el.parentElement.querySelector('.date-range-warn');
+    if (!warn) {
+      warn = document.createElement('div');
+      warn.className = 'date-range-warn';
+      warn.style.cssText = 'font-size:12px;color:#DC2626;margin-top:4px;';
+      el.after(warn);
+    }
+    warn.textContent = '⚠ ' + t('warn-date-range');
+    return false;
+  }
+  const el = document.getElementById(endId);
+  if (el) {
+    el.classList.remove('field-error');
+    const warn = el.parentElement?.querySelector('.date-range-warn');
+    if (warn) warn.remove();
+  }
+  return true;
+}
+
 // ====== Soft validation warning ======
 function checkEmptyFields() {
   const activeStep = document.querySelector('.step.active');
@@ -4555,7 +4583,7 @@ function goWillStep(step) {
   document.getElementById('progress').style.width = ((idx+1) / WILL_STEPS.length * 100) + '%';
   updateStepNav('dt-will-title', idx+1, WILL_STEPS.length);
   // beneficiaries are added via quick buttons or "+ Other"
-  if (step === 'w5') renderWillPreview(); checkEmptyFields();
+  if (step === 'w5') { renderWillPreview(); checkEmptyFields(); }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -4859,7 +4887,7 @@ function goBosStep(step) {
   const idx = BOS_STEPS.indexOf(step);
   document.getElementById('progress').style.width = ((idx+1) / BOS_STEPS.length * 100) + '%';
   updateStepNav('dt-bos-title', idx+1, BOS_STEPS.length);
-  if (step === 'b6') renderBosPreview(); checkEmptyFields();
+  if (step === 'b6') { renderBosPreview(); checkEmptyFields(); }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
