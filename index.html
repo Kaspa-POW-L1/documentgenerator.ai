@@ -2821,6 +2821,17 @@ function applyLang() {
   if (pc && PRIVACY[lang]) pc.innerHTML = PRIVACY[lang];
 }
 
+const SCOPES = [
+  {id:'banking', icon:'🏦'},
+  {id:'realestate', icon:'🏠'},
+  {id:'tax', icon:'📊'},
+  {id:'legal', icon:'⚖️'},
+  {id:'business', icon:'💼'},
+  {id:'government', icon:'🏛️'},
+  {id:'insurance', icon:'🛡️'},
+  {id:'vehicle', icon:'🚗'}
+];
+
 function buildScopeGrid() {
   const grid = document.getElementById('scope-grid');
   grid.innerHTML = '';
