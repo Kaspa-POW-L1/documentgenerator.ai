@@ -3205,6 +3205,12 @@ function applyLocale(locale) {
 }
 
 // ====== Document type selection ======
+let lang = 'en';
+let currentStep = 0;
+let totalSteps = 5;
+let poaType = 'general';
+let durationType = 'indefinite';
+let selectedScopes = new Set();
 let currentDocType = 'poa';
 let rentalPropertyType = 'apartment';
 let rentalFurnished = false;
