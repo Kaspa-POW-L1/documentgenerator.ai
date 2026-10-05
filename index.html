@@ -105,16 +105,17 @@ body {
 .lang-toggle {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 6px;
   justify-content: center;
-  max-width: 100%;
-  padding: 8px 0 4px;
+  padding: 10px 16px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
 }
 .lang-btn {
-  padding: 5px 10px;
-  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border: 2px solid transparent;
   border-radius: 20px;
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.06);
   cursor: pointer;
   color: var(--text-light);
   font-size: 12px;
@@ -124,12 +125,12 @@ body {
   white-space: nowrap;
 }
 .lang-btn:hover {
-  background: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.14);
   color: var(--text);
   border-color: var(--pri);
 }
 @media (max-width: 420px) {
-  .lang-btn { padding: 4px 8px; font-size: 11px; }
+  .lang-btn { padding: 5px 9px; font-size: 11px; }
   .brand { font-size: 14px; }
 }
 .lang-btn.active {
@@ -137,6 +138,7 @@ body {
   color: #fff;
   border-color: var(--pri);
   font-weight: 600;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.3);
 }
 
 /* Progress */
@@ -864,32 +866,30 @@ input[type=number] { -moz-appearance: textfield; }
 </head>
 <body>
 
-<header class="header" style="flex-wrap:wrap;">
-  <div style="display:flex;align-items:center;justify-content:space-between;width:100%;">
-    <div class="brand">document<span>generator</span>.ai</div>
-    <button onclick="toggleTheme()" id="theme-btn" style="background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:16px;line-height:1;" title="Toggle dark mode">☀️</button>
-  </div>
-  <div class="lang-toggle">
-      <button class="lang-btn active" onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
-      <button class="lang-btn" onclick="setLang('es')" id="btn-es">🇪🇸 ES</button>
-      <button class="lang-btn" onclick="setLang('fr')" id="btn-fr">🇫🇷 FR</button>
-      <button class="lang-btn" onclick="setLang('de')" id="btn-de">🇩🇪 DE</button>
-      <button class="lang-btn" onclick="setLang('pt')" id="btn-pt">🇧🇷 PT</button>
-      <button class="lang-btn" onclick="setLang('it')" id="btn-it">🇮🇹 IT</button>
-      <button class="lang-btn" onclick="setLang('ru')" id="btn-ru">🇷🇺 RU</button>
-      <button class="lang-btn" onclick="setLang('zh')" id="btn-zh">🇨🇳 中文</button>
-      <button class="lang-btn" onclick="setLang('ja')" id="btn-ja">🇯🇵 日本語</button>
-      <button class="lang-btn" onclick="setLang('ar')" id="btn-ar">🇸🇦 عربي</button>
-      <button class="lang-btn" onclick="setLang('ko')" id="btn-ko">🇰🇷 한국어</button>
-      <button class="lang-btn" onclick="setLang('tr')" id="btn-tr">🇹🇷 TR</button>
-      <button class="lang-btn" onclick="setLang('pl')" id="btn-pl">🇵🇱 PL</button>
-      <button class="lang-btn" onclick="setLang('hi')" id="btn-hi">🇮🇳 हिन्दी</button>
-      <button class="lang-btn" onclick="setLang('fa')" id="btn-fa">🇮🇷 فارسی</button>
-      <button class="lang-btn" onclick="setLang('he')" id="btn-he">🇮🇱 עברית</button>
-      <button class="lang-btn" onclick="setLang('sw')" id="btn-sw">🇰🇪 SW</button>
-      <button class="lang-btn" onclick="setLang('nl')" id="btn-nl">🇳🇱 NL</button>
-    </div>
+<header class="header">
+  <div class="brand">document<span>generator</span>.ai</div>
+  <button onclick="toggleTheme()" id="theme-btn" style="background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:16px;line-height:1;" title="Toggle dark mode">☀️</button>
 </header>
+<div class="lang-toggle">
+  <button class="lang-btn active" onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
+  <button class="lang-btn" onclick="setLang('es')" id="btn-es">🇪🇸 ES</button>
+  <button class="lang-btn" onclick="setLang('fr')" id="btn-fr">🇫🇷 FR</button>
+  <button class="lang-btn" onclick="setLang('de')" id="btn-de">🇩🇪 DE</button>
+  <button class="lang-btn" onclick="setLang('pt')" id="btn-pt">🇧🇷 PT</button>
+  <button class="lang-btn" onclick="setLang('it')" id="btn-it">🇮🇹 IT</button>
+  <button class="lang-btn" onclick="setLang('ru')" id="btn-ru">🇷🇺 RU</button>
+  <button class="lang-btn" onclick="setLang('zh')" id="btn-zh">🇨🇳 中文</button>
+  <button class="lang-btn" onclick="setLang('ja')" id="btn-ja">🇯🇵 日本語</button>
+  <button class="lang-btn" onclick="setLang('ar')" id="btn-ar">🇸🇦 عربي</button>
+  <button class="lang-btn" onclick="setLang('ko')" id="btn-ko">🇰🇷 한국어</button>
+  <button class="lang-btn" onclick="setLang('tr')" id="btn-tr">🇹🇷 TR</button>
+  <button class="lang-btn" onclick="setLang('pl')" id="btn-pl">🇵🇱 PL</button>
+  <button class="lang-btn" onclick="setLang('hi')" id="btn-hi">🇮🇳 हिन्दी</button>
+  <button class="lang-btn" onclick="setLang('fa')" id="btn-fa">🇮🇷 فارسی</button>
+  <button class="lang-btn" onclick="setLang('he')" id="btn-he">🇮🇱 עברית</button>
+  <button class="lang-btn" onclick="setLang('sw')" id="btn-sw">🇰🇪 SW</button>
+  <button class="lang-btn" onclick="setLang('nl')" id="btn-nl">🇳🇱 NL</button>
+</div>
 
 <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
 
