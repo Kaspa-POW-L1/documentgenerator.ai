@@ -2804,11 +2804,13 @@ function applyLang() {
   // Update last-updated timestamp
   const luEl = document.getElementById('last-updated-text');
   if (luEl) {
-    const d = new Date(document.lastModified);
-    const locales = { en:'en-US', nl:'nl-NL', es:'es-ES', fr:'fr-FR', de:'de-DE', pt:'pt-BR', it:'it-IT', ru:'ru-RU', zh:'zh-CN', ja:'ja-JP', ar:'ar-SA' };
-    const fmt = d.toLocaleDateString(locales[lang]||'en-US', { year:'numeric', month:'long', day:'numeric' });
-    const time = d.toLocaleTimeString(locales[lang]||'en-US', { hour:'2-digit', minute:'2-digit' });
-    luEl.textContent = `${t('last-updated-prefix')} ${fmt} — ${time}`;
+    try {
+      const d = new Date(document.lastModified);
+      const locales = { en:'en-US', nl:'nl-NL', es:'es-ES', fr:'fr-FR', de:'de-DE', pt:'pt-BR', it:'it-IT', ru:'ru-RU', zh:'zh-CN', ja:'ja-JP', ar:'ar-SA' };
+      const fmt = d.toLocaleDateString(locales[lang]||'en-US', { year:'numeric', month:'long', day:'numeric' });
+      const time = d.toLocaleTimeString(locales[lang]||'en-US', { hour:'2-digit', minute:'2-digit' });
+      luEl.textContent = `${t('last-updated-prefix')} ${fmt} — ${time}`;
+    } catch(e) { luEl.textContent = t('last-updated-prefix') + ' October 2026'; }
   }
   // Update privacy policy content
   const pc = document.getElementById('privacy-content');
