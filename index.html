@@ -163,6 +163,120 @@ body {
   padding: 20px 20px 100px;
 }
 
+/* Split-screen layout */
+.split-wrap {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  gap: 24px;
+}
+.split-wrap .container {
+  flex: 1 1 55%;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+  padding: 20px 0 100px;
+}
+.live-preview-panel {
+  flex: 0 0 42%;
+  position: sticky;
+  top: 72px;
+  align-self: flex-start;
+  max-height: calc(100vh - 90px);
+  overflow-y: auto;
+  padding: 20px 0;
+  display: none;
+}
+.live-preview-panel.visible {
+  display: block;
+}
+.live-preview-panel .preview-box {
+  max-height: none;
+  font-size: 11.5px;
+  line-height: 1.7;
+  padding: 32px 24px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+.live-preview-panel .preview-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+.live-preview-panel .preview-placeholder {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-light);
+  font-size: 13px;
+}
+/* Mobile: hide preview panel, show toggle button */
+@media (max-width: 900px) {
+  .split-wrap {
+    display: block;
+    padding: 0;
+  }
+  .split-wrap .container {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 20px 20px 100px;
+  }
+  .live-preview-panel {
+    display: none !important;
+  }
+  .mobile-preview-btn {
+    display: flex !important;
+  }
+}
+.mobile-preview-btn {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: var(--pri);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(26,86,219,0.3);
+  z-index: 90;
+  align-items: center;
+  gap: 6px;
+}
+.mobile-preview-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+}
+.mobile-preview-overlay.show {
+  display: block;
+}
+.mobile-preview-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: var(--card);
+  border-radius: 16px 16px 0 0;
+  padding: 20px 20px 40px;
+  z-index: 1000;
+}
+.mobile-preview-sheet .preview-box {
+  max-height: none;
+}
+
 /* Step nav */
 .step-nav {
   display: none;
@@ -893,6 +1007,7 @@ input[type=number] { -moz-appearance: textfield; }
 
 <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
 
+<div class="split-wrap">
 <div class="container">
 
   <div class="step-nav" id="step-nav">
@@ -2635,6 +2750,29 @@ input[type=number] { -moz-appearance: textfield; }
   </div>
 </div>
 
+<!-- Live preview panel (desktop) -->
+<div class="live-preview-panel" id="live-preview-panel">
+  <div class="preview-label" data-i18n="live-preview-label">Live preview</div>
+  <div class="preview-box" id="live-preview-box">
+    <div class="preview-placeholder" id="live-preview-placeholder" data-i18n="live-preview-hint">Start filling in the form to see your document here.</div>
+  </div>
+</div>
+</div>
+
+<!-- Mobile preview button -->
+<button class="mobile-preview-btn" onclick="toggleMobilePreview()">📄 Preview</button>
+
+<!-- Mobile preview overlay -->
+<div class="mobile-preview-overlay" id="mobile-preview-overlay" onclick="toggleMobilePreview()">
+  <div class="mobile-preview-sheet" onclick="event.stopPropagation()">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <span style="font-weight:600;" data-i18n="live-preview-label">Live preview</span>
+      <button onclick="toggleMobilePreview()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-mid);">&times;</button>
+    </div>
+    <div class="preview-box" id="mobile-preview-box"></div>
+  </div>
+</div>
+
 <!-- Floating contact/suggest button -->
 <div style="text-align:center;padding:16px 0 8px;font-size:11px;color:var(--text-light);">
   <span id="last-updated-text"></span>
@@ -2820,7 +2958,7 @@ function applyLang() {
   const luEl = document.getElementById('last-updated-text');
   if (luEl) {
     try {
-      const d = new Date('2026-10-05');
+      const d = new Date('2026-10-06');
       const locales = { en:'en-US', nl:'nl-NL', es:'es-ES', fr:'fr-FR', de:'de-DE', pt:'pt-BR', it:'it-IT', ru:'ru-RU', zh:'zh-CN', ja:'ja-JP', ar:'ar-SA', ko:'ko-KR', tr:'tr-TR', pl:'pl-PL', hi:'hi-IN', fa:'fa-IR', he:'he-IL', sw:'sw-KE' };
       const fmt = d.toLocaleDateString(locales[lang]||'en-US', { year:'numeric', month:'long', day:'numeric' });
       luEl.textContent = `${t('last-updated-prefix')} ${fmt}`;
@@ -2950,9 +3088,7 @@ function fmtDate(ds) {
 }
 
 // ====== Preview ======
-function renderPreview() {
-  const d = gatherData();
-  const el = document.getElementById('preview');
+function buildPOADocument(d) {
 
   const person = (p) => `<strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br><strong>${t('doc-country')}:</strong> ${p.country||'___'}`;
 
@@ -2976,7 +3112,7 @@ function renderPreview() {
     <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('doc-liability-h')}</div><p>${t('doc-liability-text')}</p></div>
   `;
 
-  el.innerHTML = `
+  return `
     <h2>${t('doc-title')}</h2>
     <div class="sec"><div class="sec-title">${t('doc-preamble')}</div>${person(d.g1)}</div>
     <p style="margin:14px 0;font-style:italic;">${t('doc-grants')}</p>
@@ -2996,6 +3132,11 @@ function renderPreview() {
     </div>
   `;
 }
+function renderPreview() {
+  const d = gatherData();
+  document.getElementById('preview').innerHTML = buildPOADocument(d);
+}
+
 
 // ====== PDF ======
 async function downloadPDF() {
@@ -3408,9 +3549,7 @@ function gatherRentalData() {
 function $(id) { return document.getElementById(id)?.value?.trim()||''; }
 
 // ====== Rental preview ======
-function renderRentalPreview() {
-  const d = gatherRentalData();
-  const el = document.getElementById('rental-preview');
+function buildRentalDocument(d) {
   const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br><strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
 
   const typeLabel = t('opt-'+d.property.type);
@@ -3438,7 +3577,7 @@ function renderRentalPreview() {
     <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('rdoc-disputes-h')}</div><p>${t('rdoc-disputes-text')}</p></div>
   `;
 
-  el.innerHTML = `
+  return `
     <h2>${t('rdoc-title')}</h2>
     <div class="sec"><p>${t('rdoc-between')}</p></div>
     ${person(d.landlord, t('rdoc-landlord'))}
@@ -3468,7 +3607,7 @@ function renderRentalPreview() {
 
 // ====== Rental PDF ======
 async function downloadRentalPDF() {
-  trackEdits('rental-preview', 'Rental Agreement');
+
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'mm', format:'a4' });
   const d = gatherRentalData();
@@ -3563,6 +3702,12 @@ async function downloadRentalPDF() {
   try { const dl=await window.claude?.use?.('downloads'); if(dl){await dl.save({filename:fn,data:blob});return;} } catch(e){}
   const u=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
+function renderRentalPreview() {
+  const d = gatherRentalData();
+  document.getElementById('rental-preview').innerHTML = buildRentalDocument(d);
+  trackEdits('rental-preview', 'Rental');
+}
+
 
 // ====== Theme toggle ======
 function toggleTheme() {
@@ -3646,9 +3791,7 @@ function gatherEngData() {
   };
 }
 
-function renderEngPreview() {
-  const d = gatherEngData();
-  const el = document.getElementById('eng-preview');
+function buildEngDocument(d) {
   const amtStr = d.currency + ' ' + d.fee.toLocaleString();
   let feeText = '';
   if (d.billing === 'fixed') feeText = t('edoc-fixed-text').replace('{amount}',amtStr).replace('{days}',d.payTerms);
@@ -3666,7 +3809,7 @@ function renderEngPreview() {
     <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('edoc-term-h')}</div><p>${t('edoc-term-text')}</p></div>
   `;
 
-  el.innerHTML = `
+  return `
     <h2>${t('edoc-title')}</h2>
     <div class="sec"><p>${t('edoc-intro')}</p></div>
     <div class="sec"><div class="sec-title">${t('edoc-provider')}</div>
@@ -3697,7 +3840,7 @@ function renderEngPreview() {
 }
 
 async function downloadEngPDF() {
-  trackEdits('eng-preview', 'Engagement Letter');
+
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'mm', format:'a4' });
   const d = gatherEngData();
@@ -3775,6 +3918,12 @@ async function downloadEngPDF() {
   const u = URL.createObjectURL(blob); const a = document.createElement('a');
   a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
+function renderEngPreview() {
+  const d = gatherEngData();
+  document.getElementById('eng-preview').innerHTML = buildEngDocument(d);
+  trackEdits('eng-preview', 'Eng');
+}
+
 
 // ====== Receipt ======
 const RECEIPT_STEPS = ['rc1','rc2','rc3','rc4'];
@@ -3798,11 +3947,9 @@ function gatherReceiptData() {
   const methodMap = { cash:t('opt-cash'), bank:t('opt-bank'), check:t('opt-check'), card:t('opt-card'), other:t('opt-other-method') };
   return { receiver:{name:$('rc-name'),address:$('rc-address'),country:$('rc-country')}, payer:{name:$('rc-from-name'),address:$('rc-from-address'),country:$('rc-from-country')}, number:$('rc-number'), amount:parseFloat(document.getElementById('rc-amount')?.value)||0, currency:document.getElementById('rc-currency')?.value||'USD', forWhat:$('rc-for'), method:document.getElementById('rc-method')?.value||'cash', methodLabel:methodMap[document.getElementById('rc-method')?.value||'cash'], date:document.getElementById('rc-date')?.value||'' };
 }
-function renderReceiptPreview() {
-  const d = gatherReceiptData();
-  const el = document.getElementById('receipt-preview');
+function buildReceiptDocument(d) {
   const amt = d.currency + ' ' + d.amount.toLocaleString(undefined,{minimumFractionDigits:2});
-  el.innerHTML = `
+  return `
     <h2>${t('rcdoc-title')}</h2>
     ${d.number ? '<div class="sec"><strong>#'+d.number+'</strong></div>' : ''}
     <div class="sec"><div class="sec-title">${t('rc1-title')}</div><strong>${d.receiver.name||'___'}</strong>${d.receiver.address?'<br>'+d.receiver.address:''}${d.receiver.country?'<br>'+d.receiver.country:''}</div>
@@ -3811,7 +3958,7 @@ function renderReceiptPreview() {
     <div class="sig-grid"><div><div class="sig-line">${t('rc1-title')}<br>${d.receiver.name||'___'}</div></div></div>`;
 }
 async function downloadReceiptPDF() {
-  trackEdits('receipt-preview','Receipt');
+
   const{jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});const d=gatherReceiptData();const ds=getDocSettings('receipt');const mg=25,pw=160;let y=ds.header?mg+4:mg;
   const addTxt=(text,opts={})=>{const sz=opts.size||ds.fontSize,st=opts.style||'normal',al=opts.align||'left';doc.setFontSize(sz);doc.setFont(ds.fontFamily,st);const lines=doc.splitTextToSize(text,opts.w||pw);if(y+lines.length*sz*0.4>278){doc.addPage();y=ds.header?mg+4:mg;}doc.text(lines,al==='center'?105:mg,y,{align:al});y+=lines.length*sz*0.42+(opts.gap||2);};
   const amt=d.currency+' '+d.amount.toLocaleString(undefined,{minimumFractionDigits:2});
@@ -3828,6 +3975,12 @@ async function downloadReceiptPDF() {
   try{const dl=await window.claude?.use?.('downloads');if(dl){await dl.save({filename:fn,data:blob});return;}}catch(e){}
   const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=fn;a.click();URL.revokeObjectURL(u);
 }
+function renderReceiptPreview() {
+  const d = gatherReceiptData();
+  document.getElementById('receipt-preview').innerHTML = buildReceiptDocument(d);
+  trackEdits('receipt-preview', 'Receipt');
+}
+
 
 // ====== Receipt ↔ Invoice linking ======
 function receiptFromInvoice() {
@@ -3924,9 +4077,7 @@ function gatherInvoiceData() {
   const methodMap = { cash:t('opt-cash'), bank:t('opt-bank'), check:t('opt-check'), card:t('opt-card'), other:t('opt-other-method') };
   return { from:{name:$('iv-from-name'),address:$('iv-from-address'),country:$('iv-from-country'),email:$('iv-from-email'),phone:$('iv-from-phone')}, to:{name:$('iv-to-name'),address:$('iv-to-address'),country:$('iv-to-country')}, number:$('iv-number'), currency:document.getElementById('iv-currency')?.value||'USD', lines, subtotal:sub, taxRate, tax, total:sub+tax, date:document.getElementById('iv-date')?.value||'', due:document.getElementById('iv-due')?.value||'', method:document.getElementById('iv-method')?.value||'bank', methodLabel:methodMap[document.getElementById('iv-method')?.value||'bank'], bank:$('iv-bank'), notes:$('iv-notes') };
 }
-function renderInvoicePreview() {
-  const d = gatherInvoiceData();
-  const el = document.getElementById('invoice-preview');
+function buildInvoiceDocument(d) {
   const fmt = (n) => d.currency + ' ' + n.toLocaleString(undefined,{minimumFractionDigits:2});
   let linesHtml = '<table style="width:100%;border-collapse:collapse;font-size:12px;margin:8px 0;"><thead><tr style="border-bottom:2px solid var(--border);text-align:left;"><th style="padding:6px;">#</th><th style="padding:6px;">'+t('lbl-line-desc')+'</th><th style="padding:6px;text-align:center;">'+t('lbl-line-qty')+'</th><th style="padding:6px;text-align:right;">'+t('lbl-line-price')+'</th><th style="padding:6px;text-align:right;">'+t('ivdoc-total')+'</th></tr></thead><tbody>';
   d.lines.forEach((l,i) => { linesHtml += `<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px;">${i+1}</td><td style="padding:6px;">${l.desc}</td><td style="padding:6px;text-align:center;">${l.qty}</td><td style="padding:6px;text-align:right;">${fmt(l.price)}</td><td style="padding:6px;text-align:right;">${fmt(l.qty*l.price)}</td></tr>`; });
@@ -3935,7 +4086,7 @@ function renderInvoicePreview() {
   if (d.taxRate > 0) totalsHtml += `<div>${t('ivdoc-tax').replace('{rate}',d.taxRate)}: ${fmt(d.tax)}</div>`;
   totalsHtml += `<div style="font-size:16px;font-weight:700;margin-top:4px;">${t('ivdoc-total')}: ${fmt(d.total)}</div></div>`;
 
-  el.innerHTML = `
+  return `
     <h2>${t('ivdoc-title')}</h2>
     <div class="sec" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;">
       <div><div class="sec-title">${t('iv1-title')}</div><strong>${d.from.name||'___'}</strong>${d.from.address?'<br>'+d.from.address:''}${d.from.country?'<br>'+d.from.country:''}${d.from.email?'<br>'+d.from.email:''}${d.from.phone?'<br>'+d.from.phone:''}</div>
@@ -3952,7 +4103,7 @@ function renderInvoicePreview() {
     ${lateInterestHtml(d.law||d.from?.country||'')}`;
 }
 async function downloadInvoicePDF() {
-  trackEdits('invoice-preview','Invoice');
+
   const{jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});const d=gatherInvoiceData();const ds=getDocSettings('invoice');const mg=25,pw=160;let y=ds.header?mg+4:mg;
   const addTxt=(text,opts={})=>{const sz=opts.size||ds.fontSize,st=opts.style||'normal',al=opts.align||'left';doc.setFontSize(sz);doc.setFont(ds.fontFamily,st);const lines=doc.splitTextToSize(text,opts.w||pw);if(y+lines.length*sz*0.4>278){doc.addPage();y=ds.header?mg+4:mg;}doc.text(lines,al==='center'?105:mg,y,{align:al});y+=lines.length*sz*0.42+(opts.gap||2);};
   const fmt=(n)=>d.currency+' '+n.toLocaleString(undefined,{minimumFractionDigits:2});
@@ -3992,6 +4143,12 @@ async function downloadInvoicePDF() {
   try{const dl=await window.claude?.use?.('downloads');if(dl){await dl.save({filename:fn,data:blob});return;}}catch(e){}
   const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=fn;a.click();URL.revokeObjectURL(u);
 }
+function renderInvoicePreview() {
+  const d = gatherInvoiceData();
+  document.getElementById('invoice-preview').innerHTML = buildInvoiceDocument(d);
+  trackEdits('invoice-preview', 'Invoice');
+}
+
 
 // ====== Non-Disclosure Agreement ======
 const NDA_STEPS = ['n1','n2','n3','n4','n5'];
@@ -4033,9 +4190,7 @@ function gatherNdaData() {
   };
 }
 
-function renderNdaPreview() {
-  const d = gatherNdaData();
-  const el = document.getElementById('nda-preview');
+function buildNdaDocument(d) {
   const isMutual = d.type === 'mutual';
   const title = isMutual ? t('ndoc-mutual-title') : t('ndoc-title');
   const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br>${p.id?'<strong>'+t('doc-id')+':</strong> '+p.id+'<br>':''}<strong>${t('doc-address')}:</strong> ${p.address||'___'}<br><strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
@@ -4048,7 +4203,7 @@ function renderNdaPreview() {
     <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('ndoc-remedies-h')}</div><p>${t('ndoc-remedies-text')}</p></div>
   `;
 
-  el.innerHTML = `
+  return `
     <h2>${title}</h2>
     <div class="sec"><p>${t('ndoc-between')}</p></div>
     ${person(d.disclosing, isMutual?t('doc-party')+' 1':t('ndoc-disclosing'))}
@@ -4068,7 +4223,7 @@ function renderNdaPreview() {
 }
 
 async function downloadNdaPDF() {
-  trackEdits('nda-preview', 'NDA');
+
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'mm', format:'a4' });
   const d = gatherNdaData();
@@ -4136,6 +4291,12 @@ async function downloadNdaPDF() {
   const u = URL.createObjectURL(blob); const a = document.createElement('a');
   a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
+function renderNdaPreview() {
+  const d = gatherNdaData();
+  document.getElementById('nda-preview').innerHTML = buildNdaDocument(d);
+  trackEdits('nda-preview', 'Nda');
+}
+
 
 // ====== Employment Contract ======
 const EMPL_STEPS = ['m1','m2','m3','m4','m5','m6'];
@@ -4185,9 +4346,7 @@ function gatherEmplData() {
   };
 }
 
-function renderEmplPreview() {
-  const d = gatherEmplData();
-  const el = document.getElementById('empl-preview');
+function buildEmplDocument(d) {
   const deptStr = d.dept ? `, ${t('lbl-department').replace(' (optional)','').replace(' (optioneel)','')}: ${d.dept}` : '';
   const posText = t('mdoc-position-text').replace('{jobtitle}',d.jobtitle||'___').replace('{dept}',deptStr).replace('{hours}',d.hours).replace('{type}',d.typeLabel).replace('{location}',d.workloc||'___');
   const salText = t('mdoc-salary-text').replace('{currency}',d.currency).replace('{amount}',d.salary.toLocaleString()).replace('{frequency}',d.payfreqLabel);
@@ -4202,7 +4361,7 @@ function renderEmplPreview() {
     <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('mdoc-confidentiality-h')}</div><p>${t('mdoc-confidentiality-text')}</p></div>
   `;
 
-  el.innerHTML = `
+  return `
     <h2>${t('mdoc-title')}</h2>
     <div class="sec"><p>${t('mdoc-between')}</p></div>
     <div class="sec"><div class="sec-title">${t('mdoc-employer')}</div>
@@ -4234,7 +4393,7 @@ function renderEmplPreview() {
 }
 
 async function downloadEmplPDF() {
-  trackEdits('empl-preview', 'Employment Contract');
+
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'mm', format:'a4' });
   const d = gatherEmplData();
@@ -4309,6 +4468,12 @@ async function downloadEmplPDF() {
   const u = URL.createObjectURL(blob); const a = document.createElement('a');
   a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
+function renderEmplPreview() {
+  const d = gatherEmplData();
+  document.getElementById('empl-preview').innerHTML = buildEmplDocument(d);
+  trackEdits('empl-preview', 'Empl');
+}
+
 
 // ====== Loan Agreement ======
 const LOAN_STEPS = ['l1','l2','l3','l4','l5'];
@@ -4358,9 +4523,7 @@ function gatherLoanData() {
   };
 }
 
-function renderLoanPreview() {
-  const d = gatherLoanData();
-  const el = document.getElementById('loan-preview');
+function buildLoanDocument(d) {
   const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br><strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
   const amtStr = d.currency + ' ' + d.amount.toLocaleString();
   const intStr = d.interest > 0 ? t('ldoc-interest-text').replace('{rate}',d.interest) : t('ldoc-noint-text');
@@ -4373,7 +4536,7 @@ function renderLoanPreview() {
     <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('ldoc-default-h')}</div><p>${t('ldoc-default-text')}</p></div>
   `;
 
-  el.innerHTML = `
+  return `
     <h2>${t('ldoc-title')}</h2>
     <div class="sec"><p>${t('ldoc-between')}</p></div>
     ${person(d.lender, t('ldoc-lender'))}
@@ -4398,7 +4561,7 @@ function renderLoanPreview() {
 }
 
 async function downloadLoanPDF() {
-  trackEdits('loan-preview', 'Loan Agreement');
+
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'mm', format:'a4' });
   const d = gatherLoanData();
@@ -4478,6 +4641,12 @@ async function downloadLoanPDF() {
   const u = URL.createObjectURL(blob); const a = document.createElement('a');
   a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
+function renderLoanPreview() {
+  const d = gatherLoanData();
+  document.getElementById('loan-preview').innerHTML = buildLoanDocument(d);
+  trackEdits('loan-preview', 'Loan');
+}
+
 
 // ====== Date range validation ======
 function validateDateRange(startId, endId) {
@@ -4726,9 +4895,7 @@ function gatherWillData() {
   };
 }
 
-function renderWillPreview() {
-  const d = gatherWillData();
-  const el = document.getElementById('will-preview');
+function buildWillDocument(d) {
   const maritalLabel = t('opt-'+d.testator.marital);
   const decl = t('wdoc-declaration').replace('{name}',d.testator.name||'___').replace('{dob}',fmtDate(d.testator.dob)).replace('{address}',d.testator.address||'___').replace('{country}',d.testator.country||'___');
   const execText = t('wdoc-executor-text').replace('{name}',d.executor.name||'___').replace('{rel}',d.executor.rel||'___');
@@ -4746,7 +4913,7 @@ function renderWillPreview() {
     <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('wdoc-funeral-h')}</div><p>${t('wdoc-funeral-text')}</p></div>
   `;
 
-  el.innerHTML = `
+  return `
     <h2>${t('wdoc-title')}</h2>
     <div class="sec" style="background:var(--warn-light);padding:10px 14px;border-radius:6px;border-left:3px solid var(--warn);"><p style="font-size:12px;font-weight:600;color:#92400E;">${t('wdoc-draft-notice')}</p></div>
     <div class="sec"><p>${decl}</p></div>
@@ -4772,7 +4939,7 @@ function renderWillPreview() {
 }
 
 async function downloadWillPDF() {
-  trackEdits('will-preview', 'Last Will');
+
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'mm', format:'a4' });
   const d = gatherWillData();
@@ -4841,6 +5008,12 @@ async function downloadWillPDF() {
   const u = URL.createObjectURL(blob); const a = document.createElement('a');
   a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
+function renderWillPreview() {
+  const d = gatherWillData();
+  document.getElementById('will-preview').innerHTML = buildWillDocument(d);
+  trackEdits('will-preview', 'Will');
+}
+
 
 // ====== Step navigation bar ======
 function updateStepNav(docTitleKey, stepNum, totalSteps) {
@@ -5088,9 +5261,7 @@ function bosItemText(item) {
   }
 }
 
-function renderBosPreview() {
-  const d = gatherBosData();
-  const el = document.getElementById('bos-preview');
+function buildBosDocument(d) {
   const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br><strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
 
   const amtStr = d.currency + ' ' + d.price.toLocaleString();
@@ -5103,7 +5274,7 @@ function renderBosPreview() {
     <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('bdoc-disputes-h')}</div><p>${t('bdoc-disputes-text')}</p></div>
   `;
 
-  el.innerHTML = `
+  return `
     <h2>${t('bdoc-title')}</h2>
     <div class="sec"><p>${t('bdoc-between')}</p></div>
     ${person(d.seller, t('bdoc-seller'))}
@@ -5139,7 +5310,7 @@ function renderBosPreview() {
 }
 
 async function downloadBosPDF() {
-  trackEdits('bos-preview', 'Bill of Sale');
+
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'mm', format:'a4' });
   const d = gatherBosData();
@@ -5215,6 +5386,12 @@ async function downloadBosPDF() {
   const u = URL.createObjectURL(blob); const a = document.createElement('a');
   a.href=u; a.download=fn; a.click(); URL.revokeObjectURL(u);
 }
+function renderBosPreview() {
+  const d = gatherBosData();
+  document.getElementById('bos-preview').innerHTML = buildBosDocument(d);
+  trackEdits('bos-preview', 'Bos');
+}
+
 
 // ====== Edit mode & tracking ======
 const originalContent = {};
@@ -5393,6 +5570,135 @@ if (location.search.includes('admin')) {
   buildScopeGrid();
   initDateQuickPicks();
   autoRestore();
+
+// ====== Live Preview ======
+function livePreview() {
+  if (!currentDocType || currentDocType === '') return;
+  const panel = document.getElementById('live-preview-panel');
+  const box = document.getElementById('live-preview-box');
+  const mbox = document.getElementById('mobile-preview-box');
+  if (!panel || !box) return;
+
+  // Show the panel
+  panel.classList.add('visible');
+  const placeholder = document.getElementById('live-preview-placeholder');
+  if (placeholder) placeholder.style.display = 'none';
+
+  // Call the right render function, targeting our live preview box
+  let html = '';
+  try {
+    if (currentDocType === 'poa') html = generatePOAHtml();
+    else if (currentDocType === 'rental') html = generateRentalHtml();
+    else if (currentDocType === 'bos') html = generateBosHtml();
+    else if (currentDocType === 'eng') html = generateEngHtml();
+    else if (currentDocType === 'receipt') html = generateReceiptHtml();
+    else if (currentDocType === 'invoice') html = generateInvoiceHtml();
+    else if (currentDocType === 'nda') html = generateNdaHtml();
+    else if (currentDocType === 'empl') html = generateEmplHtml();
+    else if (currentDocType === 'loan') html = generateLoanHtml();
+    else if (currentDocType === 'will') html = generateWillHtml();
+  } catch(e) {
+    html = '<div class="preview-placeholder">' + t('live-preview-hint') + '</div>';
+  }
+
+  if (html) {
+    box.innerHTML = html;
+    if (mbox) mbox.innerHTML = html;
+  }
+}
+
+// Generate HTML functions - these call the gather + render logic
+// We need to extract the HTML generation from the existing render functions
+// For now, we'll call the existing render functions and copy the output
+function generatePOAHtml() {
+  const d = gatherData();
+  return buildPOADocument(d);
+}
+
+function generateRentalHtml() {
+  const d = gatherRentalData();
+  return buildRentalDocument(d);
+}
+
+function generateBosHtml() {
+  const d = gatherBosData();
+  return buildBosDocument(d);
+}
+
+function generateEngHtml() {
+  const d = gatherEngData();
+  return buildEngDocument(d);
+}
+
+function generateReceiptHtml() {
+  const d = gatherReceiptData();
+  return buildReceiptDocument(d);
+}
+
+function generateInvoiceHtml() {
+  const d = gatherInvoiceData();
+  return buildInvoiceDocument(d);
+}
+
+function generateNdaHtml() {
+  const d = gatherNdaData();
+  return buildNdaDocument(d);
+}
+
+function generateEmplHtml() {
+  const d = gatherEmplData();
+  return buildEmplDocument(d);
+}
+
+function generateLoanHtml() {
+  const d = gatherLoanData();
+  return buildLoanDocument(d);
+}
+
+function generateWillHtml() {
+  const d = gatherWillData();
+  return buildWillDocument(d);
+}
+
+function toggleMobilePreview() {
+  const overlay = document.getElementById('mobile-preview-overlay');
+  overlay.classList.toggle('show');
+  if (overlay.classList.contains('show')) livePreview();
+}
+
+// Attach input listeners to all form fields
+function attachLivePreviewListeners() {
+  document.querySelectorAll('.container input, .container select, .container textarea').forEach(el => {
+    el.addEventListener('input', debounce(livePreview, 300));
+    el.addEventListener('change', debounce(livePreview, 150));
+  });
+  // Also listen for choice-card clicks (scope, duration, etc.)
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.choice-card') || e.target.closest('.lang-btn')) {
+      setTimeout(livePreview, 100);
+    }
+  });
+}
+
+function debounce(fn, ms) {
+  let timer;
+  return function(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), ms);
+  };
+}
+
+// Show/hide preview panel when doc type is selected
+const origSelectDocType = selectDocType;
+selectDocType = function(type) {
+  origSelectDocType(type);
+  setTimeout(livePreview, 200);
+};
+
+// Initialize listeners once DOM is ready
+setTimeout(attachLivePreviewListeners, 500);
+
+
 })();
 </script>
 <script data-goatcounter="https://documentgenerator.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
