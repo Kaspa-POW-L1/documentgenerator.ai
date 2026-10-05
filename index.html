@@ -280,20 +280,27 @@ body {
 /* Step nav */
 .step-nav {
   display: none;
-  justify-content: space-between;
   align-items: center;
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  padding: 14px 16px;
-  margin-bottom: 12px;
+  margin: 0 auto 12px;
+  padding: 14px 24px;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  gap: 16px;
 }
-.step-nav .sn-doc { font-weight: 700; font-size: 16px; color: var(--pri); }
-.step-nav .sn-progress { font-size: 14px; font-weight: 600; color: var(--text-mid); }
+.step-nav .sn-doc { font-weight: 700; font-size: 15px; color: var(--pri); white-space: nowrap; }
+.step-nav .sn-dots { display: flex; align-items: center; gap: 6px; flex: 1; justify-content: center; }
+.step-nav .sn-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--border); transition: all 0.3s;
+}
+.step-nav .sn-dot.done { background: var(--pri); }
+.step-nav .sn-dot.active { background: var(--pri); width: 28px; border-radius: 5px; }
+.step-nav .sn-dot-line { width: 16px; height: 2px; background: var(--border); transition: background 0.3s; }
+.step-nav .sn-dot-line.done { background: var(--pri); }
+.step-nav .sn-progress { font-size: 13px; font-weight: 500; color: var(--text-light); white-space: nowrap; }
 /* Step card */
 .step { display: none; }
 .step.active { display: block; max-width: 560px; margin: 0 auto; }
@@ -1012,6 +1019,7 @@ input[type=number] { -moz-appearance: textfield; }
 
 <div class="step-nav" id="step-nav">
   <span class="sn-doc" id="sn-doc"></span>
+  <div class="sn-dots" id="sn-dots"></div>
   <span class="sn-progress" id="sn-progress"></span>
 </div>
 <div class="split-wrap">
@@ -5024,6 +5032,14 @@ function updateStepNav(docTitleKey, stepNum, totalSteps) {
   nav.style.display = 'flex';
   document.getElementById('sn-doc').textContent = t(docTitleKey);
   document.getElementById('sn-progress').textContent = t('step-of').replace('{n}', stepNum).replace('{total}', totalSteps);
+  // Render step dots
+  const dots = document.getElementById('sn-dots');
+  let html = '';
+  for (let i = 1; i <= totalSteps; i++) {
+    if (i > 1) html += `<div class="sn-dot-line${i <= stepNum ? ' done' : ''}"></div>`;
+    html += `<div class="sn-dot${i < stepNum ? ' done' : ''}${i === stepNum ? ' active' : ''}"></div>`;
+  }
+  dots.innerHTML = html;
 }
 
 // ====== Date quick-pick ======
