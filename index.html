@@ -282,6 +282,9 @@ body {
   display: none;
   justify-content: space-between;
   align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
   padding: 14px 16px;
   margin-bottom: 12px;
   background: var(--card);
@@ -1007,13 +1010,12 @@ input[type=number] { -moz-appearance: textfield; }
 
 <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
 
+<div class="step-nav" id="step-nav">
+  <span class="sn-doc" id="sn-doc"></span>
+  <span class="sn-progress" id="sn-progress"></span>
+</div>
 <div class="split-wrap">
 <div class="container">
-
-  <div class="step-nav" id="step-nav">
-    <span class="sn-doc" id="sn-doc"></span>
-    <span class="sn-progress" id="sn-progress"></span>
-  </div>
 
   <!-- STEP 0: Document Chooser -->
   <div class="step active" id="step-0">
