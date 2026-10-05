@@ -3607,8 +3607,8 @@ function detectLocale() {
 }
 
 function applyLocale(locale) {
-  // Update address placeholders for all languages
-  T['ph-address'] = locale.addr;
+  // Update address placeholder for current language
+  T['ph-address'] = locale.addr[lang] || locale.addr.en || T['ph-address'];
 
   // Set default country fields (all document types)
   if (locale.country) {
@@ -5049,7 +5049,7 @@ function startNewDocument() {
   if (benList) benList.innerHTML = '';
   goStep(0);
   // Re-apply locale defaults
-  try { const tz = Intl.DateTimeFormat().resolvedOptions().timeZone; const loc = LOCALES[tz]; if(loc) applyLocale(loc); } catch(e){}
+  try { const tz = Intl.DateTimeFormat().resolvedOptions().timeZone; const loc = LOCALE_MAP[tz]; if(loc) applyLocale(loc); } catch(e){}
 }
 
 // ====== Auto-fill law from place ======
