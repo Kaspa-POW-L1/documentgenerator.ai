@@ -876,6 +876,9 @@ input[type=number] { -moz-appearance: textfield; }
       <button class="lang-btn" onclick="setLang('tr')" id="btn-tr">🇹🇷 TR</button>
       <button class="lang-btn" onclick="setLang('pl')" id="btn-pl">🇵🇱 PL</button>
       <button class="lang-btn" onclick="setLang('hi')" id="btn-hi">🇮🇳 हिन्दी</button>
+      <button class="lang-btn" onclick="setLang('fa')" id="btn-fa">🇮🇷 فارسی</button>
+      <button class="lang-btn" onclick="setLang('he')" id="btn-he">🇮🇱 עברית</button>
+      <button class="lang-btn" onclick="setLang('sw')" id="btn-sw">🇰🇪 SW</button>
       <button class="lang-btn" onclick="setLang('nl')" id="btn-nl">🇳🇱 NL</button>
     </div>
 </header>
@@ -2778,8 +2781,8 @@ function setLang(l) {
   lang = l;
   try { localStorage.setItem('dg_lang', l); } catch(e) {}
   // RTL for Arabic
-  document.documentElement.setAttribute('dir', l === 'ar' ? 'rtl' : 'ltr');
-  ['en','nl','es','fr','de','pt','it','ru','zh','ja','ar','ko','tr','pl','hi'].forEach(c => {
+  document.documentElement.setAttribute('dir', ['ar','fa','he'].includes(l) ? 'rtl' : 'ltr');
+  ['en','nl','es','fr','de','pt','it','ru','zh','ja','ar','ko','tr','pl','hi','fa','he','sw'].forEach(c => {
     const btn = document.getElementById('btn-'+c);
     if (btn) btn.classList.toggle('active', c === l);
   });
@@ -2810,7 +2813,7 @@ function applyLang() {
   if (luEl) {
     try {
       const d = new Date(document.lastModified);
-      const locales = { en:'en-US', nl:'nl-NL', es:'es-ES', fr:'fr-FR', de:'de-DE', pt:'pt-BR', it:'it-IT', ru:'ru-RU', zh:'zh-CN', ja:'ja-JP', ar:'ar-SA', ko:'ko-KR', tr:'tr-TR', pl:'pl-PL', hi:'hi-IN' };
+      const locales = { en:'en-US', nl:'nl-NL', es:'es-ES', fr:'fr-FR', de:'de-DE', pt:'pt-BR', it:'it-IT', ru:'ru-RU', zh:'zh-CN', ja:'ja-JP', ar:'ar-SA', ko:'ko-KR', tr:'tr-TR', pl:'pl-PL', hi:'hi-IN', fa:'fa-IR', he:'he-IL', sw:'sw-KE' };
       const fmt = d.toLocaleDateString(locales[lang]||'en-US', { year:'numeric', month:'long', day:'numeric' });
       const time = d.toLocaleTimeString(locales[lang]||'en-US', { hour:'2-digit', minute:'2-digit' });
       luEl.textContent = `${t('last-updated-prefix')} ${fmt} — ${time}`;
