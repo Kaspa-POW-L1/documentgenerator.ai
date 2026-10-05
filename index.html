@@ -5354,18 +5354,20 @@ function buildBosDocument(d) {
       <div><div class="sig-line">${t('doc-witness')} 2</div></div>
     </div>
   `;
+}
 
-  // Add jurisdiction checklist if available
+function renderBosChecklist(d) {
   const bosCountry = d.law || d.seller.country;
   const bosJur = getBosJurRules(bosCountry, d.item.category);
   if (bosJur) {
     const items = bosJur[lang] || bosJur.en;
-    el.innerHTML += `<div style="margin-top:16px;padding:14px;background:#fffbe6;border:1px solid #e6d27a;border-radius:8px;font-size:13px;">
+    return `<div style="margin-top:16px;padding:14px;background:#fffbe6;border:1px solid #e6d27a;border-radius:8px;font-size:13px;">
       <strong>${t('bos-checklist-title')}</strong>
       <ul style="margin:8px 0 0 16px;line-height:1.7;">${items.map(r => '<li>'+r+'</li>').join('')}</ul>
       <p style="margin-top:10px;font-size:11px;color:#92400E;">⚠ This checklist is for reference only and is not part of the generated document.</p>
     </div>`;
   }
+  return '';
 }
 
 async function downloadBosPDF() {
@@ -5447,7 +5449,7 @@ async function downloadBosPDF() {
 }
 function renderBosPreview() {
   const d = gatherBosData();
-  document.getElementById('bos-preview').innerHTML = buildBosDocument(d);
+  document.getElementById('bos-preview').innerHTML = buildBosDocument(d) + renderBosChecklist(d);
   trackEdits('bos-preview', 'Bos');
 }
 
