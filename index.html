@@ -373,6 +373,13 @@ body {
   color: var(--text);
   margin-bottom: 5px;
 }
+.date-fmt-hint {
+  font-size: 11px;
+  color: var(--pri);
+  margin-top: 3px;
+  font-style: italic;
+  min-height: 16px;
+}
 .field .hint {
   font-size: 12px;
   color: var(--text-light);
@@ -2997,7 +3004,7 @@ function applyLang() {
     try {
       const d = new Date('2026-10-06');
       const locales = { en:'en-US', nl:'nl-NL', es:'es-ES', fr:'fr-FR', de:'de-DE', pt:'pt-BR', it:'it-IT', ru:'ru-RU', zh:'zh-CN', ja:'ja-JP', ar:'ar-SA', ko:'ko-KR', tr:'tr-TR', pl:'pl-PL', hi:'hi-IN', fa:'fa-IR', he:'he-IL', sw:'sw-KE' };
-      const fmt = d.toLocaleDateString(locales[lang]||'en-US', { year:'numeric', month:'long', day:'numeric' });
+      const fmt = d.toLocaleDateString(locales[lang]||'en-US', { year:'numeric', month:'short', day:'numeric' });
       luEl.textContent = `${t('last-updated-prefix')} ${fmt}`;
     } catch(e) { luEl.textContent = t('last-updated-prefix') + ' October 5, 2026'; }
   }
@@ -5759,6 +5766,31 @@ selectDocType = function(type) {
 // Initialize listeners once DOM is ready
 setTimeout(attachLivePreviewListeners, 500);
 
+
+
+// Date format preview hints
+function initDateHints() {
+  document.querySelectorAll('input[type="date"]').forEach(input => {
+    // Skip if hint already exists
+    if (input.nextElementSibling && input.nextElementSibling.classList.contains('date-fmt-hint')) return;
+    const hint = document.createElement('div');
+    hint.className = 'date-fmt-hint';
+    input.insertAdjacentElement('afterend', hint);
+    const update = () => {
+      hint.textContent = input.value ? '→ ' + fmtDate(input.value) : '';
+    };
+    input.addEventListener('input', update);
+    input.addEventListener('change', update);
+    update();
+  });
+}
+setTimeout(initDateHints, 600);
+// Re-init when doc type changes (new date fields may appear)
+const origSelectForDates = selectDocType;
+selectDocType = function(type) {
+  origSelectForDates(type);
+  setTimeout(initDateHints, 300);
+};
 
 })();
 </script>
