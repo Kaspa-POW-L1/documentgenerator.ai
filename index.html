@@ -260,7 +260,43 @@ body {
   .live-preview-panel {
     display: none !important;
   }
-  .mobile-preview-btn {
+  
+/* Hide duplicate preview in final steps on desktop (live preview panel shows it) */
+@media (min-width: 901px) {
+  #step-5 .preview-box,
+  #step-r6 .preview-box,
+  #step-b6 .preview-box,
+  #step-e5 .preview-box,
+  #step-rc4 .preview-box,
+  #step-iv5 .preview-box,
+  #step-n5 .preview-box,
+  #step-m6 .preview-box,
+  #step-l5 .preview-box,
+  #step-w5 .preview-box,
+  #step-5 .edit-hint,
+  #step-r6 .edit-hint,
+  #step-b6 .edit-hint,
+  #step-e5 .edit-hint,
+  #step-rc4 .edit-hint,
+  #step-iv5 .edit-hint,
+  #step-n5 .edit-hint,
+  #step-m6 .edit-hint,
+  #step-l5 .edit-hint,
+  #step-w5 .edit-hint,
+  #step-5 .btn-edit-doc,
+  #step-r6 .btn-edit-doc,
+  #step-b6 .btn-edit-doc,
+  #step-e5 .btn-edit-doc,
+  #step-rc4 .btn-edit-doc,
+  #step-iv5 .btn-edit-doc,
+  #step-n5 .btn-edit-doc,
+  #step-m6 .btn-edit-doc,
+  #step-l5 .btn-edit-doc,
+  #step-w5 .btn-edit-doc {
+    display: none !important;
+  }
+}
+.mobile-preview-btn {
     display: flex !important;
   }
 }
@@ -3006,6 +3042,8 @@ function applyLang() {
   });
   buildScopeGrid();
   if (currentStep === 5) renderPreview();
+  // Re-render live preview and step nav in new language
+  setTimeout(livePreview, 50);
   // Update last-updated timestamp
   const luEl = document.getElementById('last-updated-text');
   if (luEl) {
@@ -5103,6 +5141,7 @@ function updateStepNav(docTitleKey, stepNum, totalSteps) {
     html += `<div class="sn-dot${i < stepNum ? ' done' : ''}${i === stepNum ? ' active' : ''}"></div>`;
   }
   dots.innerHTML = html;
+  setTimeout(livePreview, 100);
 }
 
 // ====== Date quick-pick ======
