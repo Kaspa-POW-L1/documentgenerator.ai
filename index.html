@@ -1217,7 +1217,7 @@ input[type=number] { -moz-appearance: textfield; }
       </div>
       <div class="nav">
         <button class="btn btn-back" onclick="goStep(0)" data-i18n="btn-back">Back</button>
-        <button class="btn btn-next" onclick="validateAndGo(1, 2)" data-i18n="btn-next">Next</button>
+        <button class="btn btn-next" onclick="goStep(2)" data-i18n="btn-next">Next</button>
       </div>
     </div>
   </div>
@@ -1251,7 +1251,7 @@ input[type=number] { -moz-appearance: textfield; }
       </div>
       <div class="nav">
         <button class="btn btn-back" onclick="goStep(1)" data-i18n="btn-back">Back</button>
-        <button class="btn btn-next" onclick="validateAndGo(2, 3)" data-i18n="btn-next">Next</button>
+        <button class="btn btn-next" onclick="goStep(3)" data-i18n="btn-next">Next</button>
       </div>
     </div>
   </div>
@@ -1421,7 +1421,7 @@ input[type=number] { -moz-appearance: textfield; }
       </div>
       <div class="nav">
         <button class="btn btn-back" onclick="goRentalStep(0)" data-i18n="btn-back">Back</button>
-        <button class="btn btn-next" onclick="validateRentalAndGo('r1','r2')" data-i18n="btn-next">Next</button>
+        <button class="btn btn-next" onclick="goRentalStep('r2')" data-i18n="btn-next">Next</button>
       </div>
     </div>
   </div>
@@ -1455,7 +1455,7 @@ input[type=number] { -moz-appearance: textfield; }
       </div>
       <div class="nav">
         <button class="btn btn-back" onclick="goRentalStep('r1')" data-i18n="btn-back">Back</button>
-        <button class="btn btn-next" onclick="validateRentalAndGo('r2','r3')" data-i18n="btn-next">Next</button>
+        <button class="btn btn-next" onclick="goRentalStep('r3')" data-i18n="btn-next">Next</button>
       </div>
     </div>
   </div>
@@ -1488,7 +1488,7 @@ input[type=number] { -moz-appearance: textfield; }
       </div>
       <div class="nav">
         <button class="btn btn-back" onclick="goRentalStep('r2')" data-i18n="btn-back">Back</button>
-        <button class="btn btn-next" onclick="validateRentalAndGo('r3','r4')" data-i18n="btn-next">Next</button>
+        <button class="btn btn-next" onclick="goRentalStep('r4')" data-i18n="btn-next">Next</button>
       </div>
     </div>
   </div>
@@ -1652,7 +1652,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="bs-id" data-i18n-placeholder="ph-id"><div class="error-msg" id="err-bs-id" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><div class="hint" data-i18n="hint-address">Street, number, and city</div><input type="text" id="bs-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-bs-address" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="bs-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goBosStep('b3')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateBosAndGo('b1','b2')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goBosStep('b3')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goBosStep('b2')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -1666,7 +1666,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="bb-id" data-i18n-placeholder="ph-id"><div class="error-msg" id="err-bb-id" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><div class="hint" data-i18n="hint-address">Street, number, and city</div><input type="text" id="bb-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-bb-address" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="bb-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goBosStep('b1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateBosAndGo('b2','b4')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goBosStep('b1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goBosStep('b4')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -1859,7 +1859,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-role">Title / role</label><input type="text" id="ep-role" placeholder="e.g. Managing Partner"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="ep-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-ep-address" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="ep-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goEngStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateEngAndGo('e1','e2')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goEngStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goEngStep('e2')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -1873,7 +1873,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="ec-id" data-i18n-placeholder="ph-id"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="ec-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-ec-address" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="ec-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goEngStep('e1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateEngAndGo('e2','e3')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goEngStep('e1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goEngStep('e3')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -1990,7 +1990,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-name">Full name</label><input type="text" id="rc-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-rc-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="rc-address" data-i18n-placeholder="ph-address"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="rc-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goReceiptStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateReceiptAndGo('rc1','rc2')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goReceiptStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goReceiptStep('rc2')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -2003,7 +2003,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-name">Full name</label><input type="text" id="rc-from-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-rc-from-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="rc-from-address" data-i18n-placeholder="ph-address"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="rc-from-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goReceiptStep('rc1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateReceiptAndGo('rc2','rc3')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goReceiptStep('rc1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goReceiptStep('rc3')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -2073,7 +2073,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="iv-from-country"></div>
       <div class="field"><label data-i18n="lbl-email">Email (optional)</label><input type="email" id="iv-from-email"></div>
       <div class="field"><label data-i18n="lbl-phone">Phone (optional)</label><input type="text" id="iv-from-phone"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goInvoiceStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateInvoiceAndGo('iv1','iv2')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goInvoiceStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goInvoiceStep('iv2')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -2086,7 +2086,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-name">Full name / company</label><input type="text" id="iv-to-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-iv-to-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="iv-to-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-iv-to-address" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="iv-to-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goInvoiceStep('iv1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateInvoiceAndGo('iv2','iv3')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goInvoiceStep('iv1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goInvoiceStep('iv3')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -2176,7 +2176,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="nd-id" data-i18n-placeholder="ph-id"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="nd-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-nd-address" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="nd-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goNdaStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateNdaAndGo('n1','n2')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goNdaStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goNdaStep('n2')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -2190,7 +2190,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="nr-id" data-i18n-placeholder="ph-id"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="nr-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-nr-address" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="nr-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goNdaStep('n1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateNdaAndGo('n2','n3')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goNdaStep('n1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goNdaStep('n3')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -2277,7 +2277,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-role">Title / role</label><input type="text" id="em-role" placeholder="e.g. Director, HR Manager"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="em-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-em-address" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="em-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goEmplStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateEmplAndGo('m1','m2')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goEmplStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goEmplStep('m2')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -2292,7 +2292,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-dob">Date of birth</label><input type="date" id="em-dob"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="em-emp-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-em-emp-address" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="em-emp-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goEmplStep('m1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateEmplAndGo('m2','m3')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goEmplStep('m1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goEmplStep('m3')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -2317,7 +2317,7 @@ input[type=number] { -moz-appearance: textfield; }
           <select id="em-probation"><option value="none" data-i18n="opt-none">None</option><option value="1" data-i18n="opt-1month">1 month</option><option value="2" data-i18n="opt-2months">2 months</option><option value="3" data-i18n="opt-3months">3 months</option><option value="6" data-i18n="opt-6months">6 months</option></select>
         </div>
       </div>
-      <div class="nav"><button class="btn btn-back" onclick="goEmplStep('m2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateEmplAndGo('m3','m4')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goEmplStep('m2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goEmplStep('m4')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -2426,7 +2426,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="ll-id" data-i18n-placeholder="ph-id"><div class="error-msg" id="err-ll-id" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><div class="hint" data-i18n="hint-address">Street, number, and city</div><input type="text" id="ll-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-ll-address" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="ll-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goLoanStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateLoanAndGo('l1','l2')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goLoanStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goLoanStep('l2')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -2440,7 +2440,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="lb-id" data-i18n-placeholder="ph-id"><div class="error-msg" id="err-lb-id" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><div class="hint" data-i18n="hint-address">Street, number, and city</div><input type="text" id="lb-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-lb-address" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="lb-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goLoanStep('l1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateLoanAndGo('l2','l3')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goLoanStep('l1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goLoanStep('l3')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -2570,7 +2570,7 @@ input[type=number] { -moz-appearance: textfield; }
           <option value="widowed" data-i18n="opt-widowed">Widowed</option>
         </select>
       </div>
-      <div class="nav"><button class="btn btn-back" onclick="goWillStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateWillAndGo('w1','w2')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goWillStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goWillStep('w2')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
@@ -2584,7 +2584,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="we-id" data-i18n-placeholder="ph-id"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="we-address" data-i18n-placeholder="ph-address"></div>
       <div class="field"><label data-i18n="lbl-relationship">Relationship to testator</label><input type="text" id="we-rel" placeholder="e.g. Spouse, Son, Attorney"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goWillStep('w1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateWillAndGo('w2','w3')" data-i18n="btn-next">Next</button></div>
+      <div class="nav"><button class="btn btn-back" onclick="goWillStep('w1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goWillStep('w3')" data-i18n="btn-next">Next</button></div>
     </div>
   </div>
 
