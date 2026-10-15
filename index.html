@@ -5703,6 +5703,13 @@ function livePreview() {
   const mbox = document.getElementById('mobile-preview-box');
   if (!panel || !box) return;
 
+  // On the document chooser (step 0) no document has been picked yet: hide the preview
+  const chooser = document.getElementById('step-0');
+  if (chooser && chooser.classList.contains('active')) {
+    panel.classList.remove('visible');
+    return;
+  }
+
   // Show the panel
   panel.classList.add('visible');
   const placeholder = document.getElementById('live-preview-placeholder');
