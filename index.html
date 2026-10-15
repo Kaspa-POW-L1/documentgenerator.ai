@@ -1509,7 +1509,7 @@ input[type=number] { -moz-appearance: textfield; }
           <select id="r-currency">
             <option value="USD">USD — US Dollar</option>
             <option value="EUR">EUR — Euro</option>
-            <option value="CMg">CMg — Caribbean Guilder</option>
+            <option value="XCG">XCG — Caribbean Guilder (Cg)</option>
             <option value="GBP">GBP — British Pound</option>
             <option value="AWG">AWG — Aruban Florin</option>
             <option value="XCD">XCD — East Caribbean Dollar</option>
@@ -1751,7 +1751,7 @@ input[type=number] { -moz-appearance: textfield; }
         <div class="field"><label data-i18n="lbl-currency">Currency</label>
           <select id="b-currency"><option value="USD">USD — US Dollar</option>
             <option value="EUR">EUR — Euro</option>
-            <option value="CMg">CMg — Caribbean Guilder</option>
+            <option value="XCG">XCG — Caribbean Guilder (Cg)</option>
             <option value="GBP">GBP — British Pound</option>
             <option value="AWG">AWG — Aruban Florin</option>
             <option value="XCD">XCD — East Caribbean Dollar</option>
@@ -1889,7 +1889,7 @@ input[type=number] { -moz-appearance: textfield; }
         <div class="field"><label data-i18n="lbl-currency">Currency</label>
           <select id="e-currency"><option value="USD">USD — US Dollar</option>
             <option value="EUR">EUR — Euro</option>
-            <option value="CMg">CMg — Caribbean Guilder</option>
+            <option value="XCG">XCG — Caribbean Guilder (Cg)</option>
             <option value="GBP">GBP — British Pound</option>
             <option value="AWG">AWG — Aruban Florin</option>
             <option value="XCD">XCD — East Caribbean Dollar</option>
@@ -2015,16 +2015,16 @@ input[type=number] { -moz-appearance: textfield; }
       <p class="step-explain" data-i18n="rc3-explain">How much was paid, for what, and how?</p>
       <div class="field"><label data-i18n="lbl-receipt-number">Receipt number (optional)</label><input type="text" id="rc-number" placeholder="e.g. R-2026-001"></div>
       <div class="field-row">
-        <div class="field"><label data-i18n="lbl-loan-amount">Amount</label><input type="number" id="rc-amount" min="0" step="0.01"></div>
+        <div class="field"><label data-i18n="lbl-amount">Amount</label><input type="number" id="rc-amount" min="0" step="0.01"></div>
         <div class="field"><label data-i18n="lbl-currency">Currency</label>
-          <select id="rc-currency"><option value="USD">USD — US Dollar</option><option value="EUR">EUR — Euro</option><option value="CMg">CMg — Caribbean Guilder</option><option value="GBP">GBP — British Pound</option><option value="AWG">AWG — Aruban Florin</option><option value="XCD">XCD — East Caribbean Dollar</option><option value="DOP">DOP — Dominican Peso</option><option value="JMD">JMD — Jamaican Dollar</option><option value="TTD">TTD — Trinidad &amp; Tobago Dollar</option><option value="BBD">BBD — Barbadian Dollar</option><option value="GYD">GYD — Guyanese Dollar</option><option value="SRD">SRD — Surinamese Dollar</option><option value="HTG">HTG — Haitian Gourde</option><option value="CHF">CHF — Swiss Franc</option><option value="CAD">CAD — Canadian Dollar</option><option value="AUD">AUD — Australian Dollar</option><option value="MXN">MXN — Mexican Peso</option><option value="other">Other</option></select>
+          <select id="rc-currency"><option value="USD">USD — US Dollar</option><option value="EUR">EUR — Euro</option><option value="XCG">XCG — Caribbean Guilder (Cg)</option><option value="GBP">GBP — British Pound</option><option value="AWG">AWG — Aruban Florin</option><option value="XCD">XCD — East Caribbean Dollar</option><option value="DOP">DOP — Dominican Peso</option><option value="JMD">JMD — Jamaican Dollar</option><option value="TTD">TTD — Trinidad &amp; Tobago Dollar</option><option value="BBD">BBD — Barbadian Dollar</option><option value="GYD">GYD — Guyanese Dollar</option><option value="SRD">SRD — Surinamese Dollar</option><option value="HTG">HTG — Haitian Gourde</option><option value="CHF">CHF — Swiss Franc</option><option value="CAD">CAD — Canadian Dollar</option><option value="AUD">AUD — Australian Dollar</option><option value="MXN">MXN — Mexican Peso</option><option value="other">Other</option></select>
         </div>
       </div>
       <div class="field"><label data-i18n="lbl-for">For</label><input type="text" id="rc-for" data-i18n-placeholder="ph-for"></div>
       <div class="field"><label data-i18n="lbl-payment-method">Payment method</label>
         <select id="rc-method"><option value="cash" data-i18n="opt-cash">Cash</option><option value="bank" data-i18n="opt-bank">Bank transfer</option><option value="check" data-i18n="opt-check">Check</option><option value="card" data-i18n="opt-card">Card</option><option value="other" data-i18n="opt-other-method">Other</option></select>
       </div>
-      <div class="field"><label data-i18n="lbl-date">Date of payment</label><input type="date" id="rc-date"></div>
+      <div class="field"><label data-i18n="lbl-payment-date">Date of payment</label><input type="date" id="rc-date"></div>
       <div class="nav"><button class="btn btn-back" onclick="goReceiptStep('rc2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goReceiptStep('rc4')" data-i18n="btn-preview">Check the document</button></div>
     </div>
   </div>
@@ -2099,7 +2099,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field-row">
         <div class="field"><label data-i18n="lbl-invoice-number">Invoice number</label><input type="text" id="iv-number" placeholder="e.g. INV-2026-001"></div>
         <div class="field"><label data-i18n="lbl-currency">Currency</label>
-          <select id="iv-currency"><option value="USD">USD — US Dollar</option><option value="EUR">EUR — Euro</option><option value="CMg">CMg — Caribbean Guilder</option><option value="GBP">GBP — British Pound</option><option value="AWG">AWG — Aruban Florin</option><option value="XCD">XCD — East Caribbean Dollar</option><option value="DOP">DOP — Dominican Peso</option><option value="JMD">JMD — Jamaican Dollar</option><option value="TTD">TTD — Trinidad &amp; Tobago Dollar</option><option value="BBD">BBD — Barbadian Dollar</option><option value="GYD">GYD — Guyanese Dollar</option><option value="SRD">SRD — Surinamese Dollar</option><option value="HTG">HTG — Haitian Gourde</option><option value="CHF">CHF — Swiss Franc</option><option value="CAD">CAD — Canadian Dollar</option><option value="AUD">AUD — Australian Dollar</option><option value="MXN">MXN — Mexican Peso</option><option value="other">Other</option></select>
+          <select id="iv-currency"><option value="USD">USD — US Dollar</option><option value="EUR">EUR — Euro</option><option value="XCG">XCG — Caribbean Guilder (Cg)</option><option value="GBP">GBP — British Pound</option><option value="AWG">AWG — Aruban Florin</option><option value="XCD">XCD — East Caribbean Dollar</option><option value="DOP">DOP — Dominican Peso</option><option value="JMD">JMD — Jamaican Dollar</option><option value="TTD">TTD — Trinidad &amp; Tobago Dollar</option><option value="BBD">BBD — Barbadian Dollar</option><option value="GYD">GYD — Guyanese Dollar</option><option value="SRD">SRD — Surinamese Dollar</option><option value="HTG">HTG — Haitian Gourde</option><option value="CHF">CHF — Swiss Franc</option><option value="CAD">CAD — Canadian Dollar</option><option value="AUD">AUD — Australian Dollar</option><option value="MXN">MXN — Mexican Peso</option><option value="other">Other</option></select>
         </div>
       </div>
       <div id="invoice-lines"></div>
@@ -2332,7 +2332,7 @@ input[type=number] { -moz-appearance: textfield; }
         <div class="field"><label data-i18n="lbl-currency">Currency</label>
           <select id="em-currency"><option value="USD">USD — US Dollar</option>
             <option value="EUR">EUR — Euro</option>
-            <option value="CMg">CMg — Caribbean Guilder</option>
+            <option value="XCG">XCG — Caribbean Guilder (Cg)</option>
             <option value="GBP">GBP — British Pound</option>
             <option value="AWG">AWG — Aruban Florin</option>
             <option value="XCD">XCD — East Caribbean Dollar</option>
@@ -2455,7 +2455,7 @@ input[type=number] { -moz-appearance: textfield; }
         <div class="field"><label data-i18n="lbl-currency">Currency</label>
           <select id="l-currency"><option value="USD">USD — US Dollar</option>
             <option value="EUR">EUR — Euro</option>
-            <option value="CMg">CMg — Caribbean Guilder</option>
+            <option value="XCG">XCG — Caribbean Guilder (Cg)</option>
             <option value="GBP">GBP — British Pound</option>
             <option value="AWG">AWG — Aruban Florin</option>
             <option value="XCD">XCD — East Caribbean Dollar</option>
@@ -2919,7 +2919,7 @@ input[type=number] { -moz-appearance: textfield; }
 <script>
 const PRIVACY = {
   en: `<h2>Privacy Policy</h2>
-<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Effective: October 1, 2026</p>
+<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Effective: October 15, 2026</p>
 <p><strong>documentgenerator.ai</strong> is a free document generation tool. This policy explains what data we collect and how we use it.</p>
 <h3 style="margin-top:16px;">1. Documents you create</h3>
 <p>All documents are generated <strong>entirely in your browser</strong>. No personal data — names, addresses, ID numbers, or document content — is sent to our servers or stored anywhere. Nothing you enter leaves your browser.</p>
@@ -2930,14 +2930,14 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. Feedback & suggestions</h3>
 <p>If you use the feedback form (💬), your message is sent via <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> to our email. We do not collect your email address unless you include it voluntarily in your message.</p>
 <h3 style="margin-top:16px;">4. Cookies & local storage</h3>
-<p>We use browser local storage only to remember your language preference. We do not use tracking cookies or third-party analytics.</p>
+<p>We do not use tracking cookies. Your browser's local storage (on your own device) is used for your language and theme preference and for a temporary copy of the text you type in a form, so you do not lose your work. That copy is removed after 24 hours, or as soon as you download a document or start a new one. ID/passport numbers, dates of birth and bank details are never saved. This data never leaves your device and you can remove it at any time by clearing the site data in your browser.</p>
 <h3 style="margin-top:16px;">5. Third-party services</h3>
-<p>We use <strong>Formspree</strong> for the feedback form, <strong>GoatCounter</strong> for privacy-friendly visitor statistics (no cookies, no personal data), and <strong>Google Fonts</strong> for typography. These services may log standard web request data (IP address, browser type). See their respective privacy policies.</p>
+<p>We use <strong>Formspree</strong> for the feedback form, <strong>GoatCounter</strong> for privacy-friendly visitor statistics (no cookies, no personal data), and <strong>Google Fonts</strong> for typography, <strong>Cloudflare (cdnjs)</strong> and <strong>jsDelivr</strong> to load the PDF library, and <strong>Vercel</strong> for hosting. These services may log standard web request data (IP address, browser type). See their respective privacy policies.</p>
 <h3 style="margin-top:16px;">6. Contact</h3>
 <p>Questions about this policy? Use the 💬 button.</p>`,
 
   nl: `<h2>Privacybeleid</h2>
-<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Ingangsdatum: 1 oktober 2026</p>
+<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Ingangsdatum: 15 oktober 2026</p>
 <p><strong>documentgenerator.ai</strong> is een gratis tool voor het genereren van documenten. Dit beleid legt uit welke gegevens we verzamelen en hoe we die gebruiken.</p>
 <h3 style="margin-top:16px;">1. Documenten die je maakt</h3>
 <p>Alle documenten worden <strong>volledig in je browser</strong> gegenereerd. Geen persoonlijke gegevens — namen, adressen, ID-nummers of documentinhoud — worden naar onze servers gestuurd of ergens opgeslagen. Niets wat je invult verlaat je browser.</p>
@@ -2948,14 +2948,14 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. Feedback & suggesties</h3>
 <p>Als je het feedbackformulier (💬) gebruikt, wordt je bericht via <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> naar ons e-mailadres gestuurd. We verzamelen je e-mailadres niet, tenzij je het zelf in je bericht vermeldt.</p>
 <h3 style="margin-top:16px;">4. Cookies & lokale opslag</h3>
-<p>We gebruiken lokale browseropslag alleen om je taalvoorkeur te onthouden. We gebruiken geen tracking cookies of analytics van derden.</p>
+<p>We gebruiken geen tracking cookies. De lokale opslag van je browser (op je eigen apparaat) wordt gebruikt voor je taal- en themavoorkeur en voor een tijdelijke kopie van de tekst die je in een formulier typt, zodat je je werk niet kwijtraakt. Die kopie wordt na 24 uur verwijderd, of zodra je een document downloadt of een nieuw document begint. ID-/paspoortnummers, geboortedatums en bankgegevens worden nooit opgeslagen. Deze gegevens verlaten je apparaat niet en je kunt ze altijd verwijderen door de sitegegevens in je browser te wissen.</p>
 <h3 style="margin-top:16px;">5. Diensten van derden</h3>
-<p>We gebruiken <strong>Formspree</strong> voor het feedbackformulier, <strong>GoatCounter</strong> voor privacyvriendelijke bezoekersstatistieken (geen cookies, geen persoonlijke gegevens), en <strong>Google Fonts</strong> voor typografie. Deze diensten kunnen standaard webverzoekgegevens loggen (IP-adres, browsertype). Zie hun respectievelijke privacybeleid.</p>
+<p>We gebruiken <strong>Formspree</strong> voor het feedbackformulier, <strong>GoatCounter</strong> voor privacyvriendelijke bezoekersstatistieken (geen cookies, geen persoonlijke gegevens), en <strong>Google Fonts</strong> voor typografie, <strong>Cloudflare (cdnjs)</strong> en <strong>jsDelivr</strong> om de PDF-bibliotheek te laden, en <strong>Vercel</strong> voor hosting. Deze diensten kunnen standaard webverzoekgegevens loggen (IP-adres, browsertype). Zie hun respectievelijke privacybeleid.</p>
 <h3 style="margin-top:16px;">6. Contact</h3>
 <p>Vragen over dit beleid? Gebruik de 💬-knop.</p>`,
 
   es: `<h2>Política de Privacidad</h2>
-<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Vigente desde: 1 de octubre de 2026</p>
+<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Vigente desde: 15 de octubre de 2026</p>
 <p><strong>documentgenerator.ai</strong> es una herramienta gratuita para generar documentos. Esta política explica qué datos recopilamos y cómo los usamos.</p>
 <h3 style="margin-top:16px;">1. Documentos que creas</h3>
 <p>Todos los documentos se generan <strong>completamente en tu navegador</strong>. No se envían datos personales — nombres, direcciones, números de identificación o contenido — a nuestros servidores. Nada de lo que ingresas sale de tu navegador.</p>
@@ -2964,15 +2964,15 @@ const PRIVACY = {
 <ul style="padding-left:18px;font-size:13px;"><li>Tipo de documento</li><li>Idioma seleccionado</li><li>Tu zona horaria / región</li><li>Qué secciones personalizaste (solo nombres, nunca contenido)</li></ul>
 <h3 style="margin-top:16px;">3. Comentarios y sugerencias</h3>
 <p>Si usas el formulario (💬), tu mensaje se envía a través de Formspree. No recopilamos tu correo electrónico a menos que lo incluyas.</p>
-<h3 style="margin-top:16px;">4. Cookies</h3>
-<p>Usamos almacenamiento local solo para tu preferencia de idioma. No usamos cookies de rastreo.</p>
+<h3 style="margin-top:16px;">4. Cookies y almacenamiento local</h3>
+<p>No usamos cookies de rastreo. El almacenamiento local de tu navegador (en tu propio dispositivo) guarda tu idioma y tema, y una copia temporal del texto que escribes en un formulario para que no pierdas tu trabajo. Esa copia se elimina a las 24 horas, o al descargar un documento o iniciar uno nuevo. Los números de identificación o pasaporte, las fechas de nacimiento y los datos bancarios nunca se guardan. Estos datos no salen de tu dispositivo.</p>
 <h3 style="margin-top:16px;">5. Servicios de terceros</h3>
-<p>Usamos <strong>Formspree</strong> para comentarios, <strong>GoatCounter</strong> para estadísticas de visitantes (sin cookies, sin datos personales), y <strong>Google Fonts</strong> para tipografía.</p>
+<p>Usamos <strong>Formspree</strong> para comentarios, <strong>GoatCounter</strong> para estadísticas de visitantes (sin cookies, sin datos personales), <strong>Google Fonts</strong> para tipografía, <strong>Cloudflare (cdnjs)</strong> y <strong>jsDelivr</strong> para cargar la biblioteca de PDF, y <strong>Vercel</strong> como alojamiento.</p>
 <h3 style="margin-top:16px;">6. Contacto</h3>
 <p>¿Preguntas? Usa el botón 💬.</p>`,
 
   fr: `<h2>Politique de Confidentialité</h2>
-<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">En vigueur : 1er octobre 2026</p>
+<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">En vigueur : 15 octobre 2026</p>
 <p><strong>documentgenerator.ai</strong> est un outil gratuit de génération de documents. Cette politique explique les données que nous collectons et comment nous les utilisons.</p>
 <h3 style="margin-top:16px;">1. Documents créés</h3>
 <p>Tous les documents sont générés <strong>entièrement dans votre navigateur</strong>. Aucune donnée personnelle n'est envoyée à nos serveurs. Rien de ce que vous saisissez ne quitte votre navigateur.</p>
@@ -2981,15 +2981,15 @@ const PRIVACY = {
 <ul style="padding-left:18px;font-size:13px;"><li>Type de document</li><li>Langue sélectionnée</li><li>Fuseau horaire / région</li><li>Sections personnalisées (noms uniquement)</li></ul>
 <h3 style="margin-top:16px;">3. Commentaires</h3>
 <p>Le formulaire (💬) envoie votre message via Formspree. Nous ne collectons pas votre e-mail sauf si vous l'incluez.</p>
-<h3 style="margin-top:16px;">4. Cookies</h3>
-<p>Stockage local pour la langue uniquement. Pas de cookies de suivi.</p>
+<h3 style="margin-top:16px;">4. Cookies et stockage local</h3>
+<p>Nous n'utilisons pas de cookies de suivi. Le stockage local de votre navigateur (sur votre appareil) conserve votre langue et votre thème, ainsi qu'une copie temporaire du texte saisi dans un formulaire afin de ne pas perdre votre travail. Cette copie est supprimée après 24 heures, ou dès que vous téléchargez un document ou en commencez un nouveau. Les numéros d'identité ou de passeport, les dates de naissance et les coordonnées bancaires ne sont jamais enregistrés. Ces données ne quittent pas votre appareil.</p>
 <h3 style="margin-top:16px;">5. Services tiers</h3>
-<p>Nous utilisons <strong>Formspree</strong> pour les commentaires, <strong>GoatCounter</strong> pour les statistiques de visiteurs (sans cookies, sans données personnelles), et <strong>Google Fonts</strong> pour la typographie.</p>
+<p>Nous utilisons <strong>Formspree</strong> pour les commentaires, <strong>GoatCounter</strong> pour les statistiques de visiteurs (sans cookies, sans données personnelles), <strong>Google Fonts</strong> pour la typographie, <strong>Cloudflare (cdnjs)</strong> et <strong>jsDelivr</strong> pour charger la bibliothèque PDF, et <strong>Vercel</strong> pour l'hébergement.</p>
 <h3 style="margin-top:16px;">6. Contact</h3>
 <p>Questions ? Utilisez le bouton 💬.</p>`,
 
   de: `<h2>Datenschutzerklärung</h2>
-<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Gültig ab: 1. Oktober 2026</p>
+<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Gültig ab: 15. Oktober 2026</p>
 <p><strong>documentgenerator.ai</strong> ist ein kostenloses Tool zur Dokumentenerstellung. Diese Erklärung beschreibt, welche Daten wir erheben und wie wir sie verwenden.</p>
 <h3 style="margin-top:16px;">1. Erstellte Dokumente</h3>
 <p>Alle Dokumente werden <strong>vollständig in Ihrem Browser</strong> erstellt. Keine persönlichen Daten werden an unsere Server gesendet. Nichts, was Sie eingeben, verlässt Ihren Browser.</p>
@@ -2998,10 +2998,10 @@ const PRIVACY = {
 <ul style="padding-left:18px;font-size:13px;"><li>Dokumenttyp</li><li>Gewählte Sprache</li><li>Zeitzone / Region</li><li>Angepasste Abschnitte (nur Namen)</li></ul>
 <h3 style="margin-top:16px;">3. Feedback</h3>
 <p>Das Formular (💬) sendet Ihre Nachricht über Formspree. Wir erfassen Ihre E-Mail nur, wenn Sie sie angeben.</p>
-<h3 style="margin-top:16px;">4. Cookies</h3>
-<p>Lokaler Speicher nur für Spracheinstellung. Keine Tracking-Cookies.</p>
+<h3 style="margin-top:16px;">4. Cookies und lokaler Speicher</h3>
+<p>Wir verwenden keine Tracking-Cookies. Der lokale Speicher Ihres Browsers (auf Ihrem eigenen Gerät) enthält Ihre Sprach- und Designeinstellung sowie eine temporäre Kopie der Texte, die Sie in ein Formular eingeben, damit Ihre Arbeit nicht verloren geht. Diese Kopie wird nach 24 Stunden gelöscht, oder sobald Sie ein Dokument herunterladen oder ein neues beginnen. Ausweis-/Passnummern, Geburtsdaten und Bankdaten werden nie gespeichert. Diese Daten verlassen Ihr Gerät nicht.</p>
 <h3 style="margin-top:16px;">5. Drittanbieter</h3>
-<p>Wir verwenden <strong>Formspree</strong> für Feedback, <strong>GoatCounter</strong> für datenschutzfreundliche Besucherstatistiken (keine Cookies, keine persönlichen Daten), und <strong>Google Fonts</strong> für Typografie.</p>
+<p>Wir verwenden <strong>Formspree</strong> für Feedback, <strong>GoatCounter</strong> für datenschutzfreundliche Besucherstatistiken (keine Cookies, keine persönlichen Daten), <strong>Google Fonts</strong> für Typografie, <strong>Cloudflare (cdnjs)</strong> und <strong>jsDelivr</strong> zum Laden der PDF-Bibliothek sowie <strong>Vercel</strong> für das Hosting.</p>
 <h3 style="margin-top:16px;">6. Kontakt</h3>
 <p>Fragen? Nutzen Sie den 💬-Button.</p>`
 };
@@ -3659,7 +3659,7 @@ function buildRentalDocument(d) {
 
   const typeLabel = t('opt-'+d.property.type);
   const furnLabel = d.property.furnished ? t('opt-yes') : t('opt-no');
-  const rentTxt = t('rdoc-rent-text').replace('{currency}',d.currency).replace('{amount}',d.rent.toLocaleString()).replace('{day}',d.payday);
+  const rentTxt = t('rdoc-rent-text').replace('{currency}',d.currency).replace('{amount}',d.rent.toLocaleString()).replace('{day}',fmtDay(d.payday));
   const depTxt = d.deposit > 0 ? t('rdoc-deposit-text').replace('{currency}',d.currency).replace('{amount}',d.deposit.toLocaleString()) : '';
   const durTxt = d.durationType === 'fixed'
     ? t('doc-fixed-text').replace('{start}',fmtDate(d.dateStart)).replace('{end}',fmtDate(d.dateEnd))
@@ -3756,7 +3756,7 @@ async function downloadRentalPDF() {
 
   // Rent
   addTxt(t('rdoc-rent-h'),{size:12,style:'bold',gap:4});
-  addTxt(t('rdoc-rent-text').replace('{currency}',d.currency).replace('{amount}',d.rent.toLocaleString()).replace('{day}',d.payday),{});
+  addTxt(t('rdoc-rent-text').replace('{currency}',d.currency).replace('{amount}',d.rent.toLocaleString()).replace('{day}',fmtDay(d.payday)),{});
   if(d.deposit>0) addTxt(t('rdoc-deposit-text').replace('{currency}',d.currency).replace('{amount}',d.deposit.toLocaleString()),{});
   y+=3;
 
@@ -4060,8 +4060,8 @@ function buildReceiptDocument(d) {
     <h2>${t('rcdoc-title')}</h2>
     ${d.number ? '<div class="sec"><strong>#'+d.number+'</strong></div>' : ''}
     <div class="sec"><div class="sec-title">${t('rc1-title')}</div><strong>${d.receiver.name||'___'}</strong>${d.receiver.address?'<br>'+d.receiver.address:''}${d.receiver.country?'<br>'+d.receiver.country:''}</div>
-    <div class="sec"><p style="font-size:14px;font-weight:600;">${t('rcdoc-received').replace('{from}',d.payer.name||'___').replace('{amount}',amt)}</p><p style="font-size:15px;font-weight:700;margin-top:6px;">${d.forWhat||'___'}</p></div>
-    <div class="sec"><p>${t('rcdoc-method').replace('{method}',d.methodLabel)}</p><p>${t('lbl-date')}: ${fmtDate(d.date)}</p></div>
+    <div class="sec"><p style="font-size:14px;font-weight:600;">${t('rcdoc-received').replace('{from}',d.payer.name||'___').replace('{amount}',amt)}</p>${(d.payer.address||d.payer.country)?'<p style="font-size:12px;">'+[d.payer.address,d.payer.country].filter(Boolean).join(', ')+'</p>':''}<p style="font-size:15px;font-weight:700;margin-top:6px;">${d.forWhat||'___'}</p></div>
+    <div class="sec"><p>${t('rcdoc-method').replace('{method}',d.methodLabel)}</p><p>${t('lbl-payment-date')}: ${fmtDate(d.date)}</p></div>
     <div class="sig-grid"><div><div class="sig-line">${t('rc1-title')}<br>${d.receiver.name||'___'}</div></div></div>`;
 }
 async function downloadReceiptPDF() {
@@ -4073,9 +4073,10 @@ async function downloadReceiptPDF() {
   if(d.number)addTxt('#'+d.number,{size:10,align:'center',gap:4});
   addTxt(t('rc1-title'),{size:11,style:'bold',gap:3});addTxt(d.receiver.name||'___',{});if(d.receiver.address)addTxt(d.receiver.address,{});if(d.receiver.country)addTxt(d.receiver.country,{});y+=4;
   addTxt(t('rcdoc-received').replace('{from}',d.payer.name||'___').replace('{amount}',amt),{size:11,style:'bold',gap:4});
+  if(d.payer.address||d.payer.country)addTxt([d.payer.address,d.payer.country].filter(Boolean).join(', '),{});
   addTxt(d.forWhat||'___',{size:12,style:'bold',gap:4});y+=3;
   addTxt(t('rcdoc-method').replace('{method}',d.methodLabel),{});
-  addTxt(t('lbl-date')+': '+fmtDate(d.date),{});y+=15;
+  addTxt(t('lbl-payment-date')+': '+fmtDate(d.date),{});y+=15;
   if(y>250){doc.addPage();y=mg+20;}doc.setDrawColor(50);doc.line(mg,y,mg+65,y);doc.setFontSize(9);doc.text(d.receiver.name||'___',mg,y+5);
   addHeaderFooter(doc,ds);
   const blob=doc.output('blob');const fn=`Receipt_${d.number||'draft'}.pdf`;
@@ -4205,8 +4206,8 @@ function buildInvoiceDocument(d) {
       <div><strong>${t('lbl-due-date')}:</strong> ${fmtDate(d.due)}</div>
     </div>
     <div class="sec">${linesHtml}${totalsHtml}</div>
-    <div class="sec" style="font-size:12px;"><strong>${t('lbl-payment-method')}:</strong> ${d.methodLabel}${d.bank?'<br><strong>'+t('lbl-bank-details')+':</strong><br>'+d.bank.replace(/\n/g,'<br>'):''}</div>
-    ${d.notes?'<div class="sec" style="font-size:12px;"><strong>'+t('lbl-notes')+':</strong> '+d.notes+'</div>':''}
+    <div class="sec" style="font-size:12px;"><strong>${t('lbl-payment-method')}:</strong> ${d.methodLabel}${d.bank?'<br><strong>'+stripOpt(t('lbl-bank-details'))+':</strong><br>'+d.bank.replace(/\n/g,'<br>'):''}</div>
+    ${d.notes?'<div class="sec" style="font-size:12px;"><strong>'+stripOpt(t('lbl-notes'))+':</strong> '+d.notes+'</div>':''}
     ${lateInterestHtml(d.law||d.from?.country||'')}`;
 }
 async function downloadInvoicePDF() {
@@ -4241,8 +4242,8 @@ async function downloadInvoicePDF() {
 
   doc.setFontSize(ds.fontSize);doc.setFont(ds.fontFamily,'normal');
   addTxt(t('lbl-payment-method')+': '+d.methodLabel,{});
-  if(d.bank)addTxt(t('lbl-bank-details')+':\n'+d.bank,{});
-  if(d.notes)addTxt(t('lbl-notes')+': '+d.notes,{});
+  if(d.bank)addTxt(stripOpt(t('lbl-bank-details'))+':\n'+d.bank,{});
+  if(d.notes)addTxt(stripOpt(t('lbl-notes'))+': '+d.notes,{});
   y+=3;addLateInterestPDF(addTxt,d.law||d.from?.country||'');
 
   addHeaderFooter(doc,ds);addPageNumbers(doc,'invoice-page-numbers');
@@ -4455,8 +4456,7 @@ function gatherEmplData() {
 }
 
 function buildEmplDocument(d) {
-  const deptStr = d.dept ? `, ${t('lbl-department').replace(' (optional)','').replace(' (optioneel)','')}: ${d.dept}` : '';
-  const posText = t('mdoc-position-text').replace('{jobtitle}',d.jobtitle||'___').replace('{dept}',deptStr).replace('{hours}',d.hours).replace('{type}',d.typeLabel).replace('{location}',d.workloc||'___');
+    const posText = (d.dept ? t('mdoc-position-text') : t('mdoc-position-nodept')).replace('{jobtitle}',d.jobtitle||'___').replace('{dept}',d.dept||'').replace('{hours}',d.hours).replace('{type}',d.typeLabel).replace('{location}',d.workloc||'___');
   const salText = t('mdoc-salary-text').replace('{currency}',d.currency).replace('{amount}',d.salary.toLocaleString()).replace('{frequency}',d.payfreqLabel);
   let startText = t('mdoc-start-text').replace('{date}',fmtDate(d.startdate));
   if (d.probation !== 'none') {
@@ -4535,9 +4535,8 @@ async function downloadEmplPDF() {
   addTxt(`${t('doc-address')}: ${d.employee.address||'___'}`,{});
   addTxt(`${t('doc-country')}: ${d.employee.country||'___'}`,{}); y+=4;
 
-  const deptStr = d.dept ? `, ${t('lbl-department').replace(' (optional)','').replace(' (optioneel)','')}: ${d.dept}` : '';
-  addTxt(t('mdoc-position-h'),{size:12,style:'bold',gap:4});
-  addTxt(t('mdoc-position-text').replace('{jobtitle}',d.jobtitle||'___').replace('{dept}',deptStr).replace('{hours}',d.hours).replace('{type}',d.typeLabel).replace('{location}',d.workloc||'___'),{}); y+=3;
+    addTxt(t('mdoc-position-h'),{size:12,style:'bold',gap:4});
+  addTxt((d.dept ? t('mdoc-position-text') : t('mdoc-position-nodept')).replace('{jobtitle}',d.jobtitle||'___').replace('{dept}',d.dept||'').replace('{hours}',d.hours).replace('{type}',d.typeLabel).replace('{location}',d.workloc||'___'),{}); y+=3;
 
   addTxt(t('mdoc-start-h'),{size:12,style:'bold',gap:4});
   let startPdf = t('mdoc-start-text').replace('{date}',fmtDate(d.startdate));
@@ -4636,11 +4635,10 @@ function buildLoanDocument(d) {
   const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br><strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
   const amtStr = d.currency + ' ' + d.amount.toLocaleString();
   const intStr = d.interest > 0 ? t('ldoc-interest-text').replace('{rate}',d.interest) : t('ldoc-noint-text');
-  let repayStr = d.repayType === 'monthly' ? t('ldoc-monthly-text').replace('{currency}',d.currency).replace('{amount}',d.monthly.toLocaleString()).replace('{day}',d.payday) : t('ldoc-lumpsum-text').replace('{date}',fmtDate(d.dateEnd));
+  let repayStr = d.repayType === 'monthly' ? t('ldoc-monthly-text').replace('{currency}',d.currency).replace('{amount}',d.monthly.toLocaleString()).replace('{day}',fmtDay(d.payday)) : t('ldoc-lumpsum-text').replace('{date}',fmtDate(d.dateEnd));
 
   const detailed = docDetail.loan === 'detailed';
   const extraSecs = `
-    <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('ldoc-late-h')}</div><p>${t('ldoc-late-text')}</p></div>
     <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('ldoc-early-h')}</div><p>${t('ldoc-early-text')}</p></div>
     <div class="sec ${extraSecClass(detailed)}" ${extraSecAttr(detailed)}><div class="sec-title">${t('ldoc-default-h')}</div><p>${t('ldoc-default-text')}</p></div>
   `;
@@ -4710,7 +4708,7 @@ async function downloadLoanPDF() {
   addTxt(d.interest>0 ? t('ldoc-interest-text').replace('{rate}',d.interest) : t('ldoc-noint-text'),{}); y+=3;
 
   addTxt(t('ldoc-repay-h'),{size:12,style:'bold',gap:4});
-  if (d.repayType==='monthly') addTxt(t('ldoc-monthly-text').replace('{currency}',d.currency).replace('{amount}',d.monthly.toLocaleString()).replace('{day}',d.payday),{});
+  if (d.repayType==='monthly') addTxt(t('ldoc-monthly-text').replace('{currency}',d.currency).replace('{amount}',d.monthly.toLocaleString()).replace('{day}',fmtDay(d.payday)),{});
   else addTxt(t('ldoc-lumpsum-text').replace('{date}',fmtDate(d.dateEnd)),{});
   y+=3;
 
@@ -4718,7 +4716,6 @@ async function downloadLoanPDF() {
   addTxt(t('doc-fixed-text').replace('{start}',fmtDate(d.dateStart)).replace('{end}',fmtDate(d.dateEnd)),{}); y+=3;
 
   if (docDetail.loan === 'detailed') {
-    addTxt(t('ldoc-late-h'),{size:12,style:'bold',gap:4}); addTxt(t('ldoc-late-text'),{}); y+=3;
     addTxt(t('ldoc-early-h'),{size:12,style:'bold',gap:4}); addTxt(t('ldoc-early-text'),{}); y+=3;
     addTxt(t('ldoc-default-h'),{size:12,style:'bold',gap:4}); addTxt(t('ldoc-default-text'),{}); y+=3;
   }
@@ -4845,6 +4842,16 @@ function getLateInterestRef(law) {
   return '';
 }
 
+function fmtDay(n) {
+  const num = parseInt(n, 10);
+  if (lang !== 'en' || isNaN(num)) return n;
+  const sfx = ['th','st','nd','rd'], v = num % 100;
+  return num + (sfx[(v - 20) % 10] || sfx[v] || sfx[0]);
+}
+function stripOpt(label) {
+  return String(label).replace(/\s*[\(（][^)）]*[\)）]\s*$/, '');
+}
+
 function lateInterestHtml(law) {
   const ref = getLateInterestRef(law);
   const refHtml = ref ? `<p style="font-size:11px;font-style:italic;margin-top:4px;">${t('doc-late-interest-ref').replace('{ref}',ref)}</p>` : '';
@@ -4865,10 +4872,15 @@ function extraSecAttr(detailed) {
 }
 
 // ====== Auto-save ======
+let autoSavePaused = false;
+// Never persist ID/passport numbers, dates of birth or bank details
+const AUTOSAVE_SKIP = /(-id|-dob|-bank)$/;
 function autoSave() {
+  if (autoSavePaused) return;
   try {
     const inputs = {};
     document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
+      if (AUTOSAVE_SKIP.test(el.id)) return;
       if (el.type === 'checkbox') inputs[el.id] = el.checked;
       else if (el.value) inputs[el.id] = el.value;
     });
@@ -4888,7 +4900,7 @@ function autoRestore() {
       const el = document.getElementById(id);
       if (!el) return;
       if (el.type === 'checkbox') el.checked = val;
-      else el.value = val;
+      else el.value = (val === 'CMg' ? 'XCG' : val);
     });
   } catch(e) {}
 }
@@ -4899,6 +4911,19 @@ function clearAutoSave() {
 
 // Save every 5 seconds if anything changed
 setInterval(autoSave, 5000);
+
+// After a document is downloaded: remove the temporary copy and stop saving until the user edits again
+['input','change'].forEach(ev => document.addEventListener(ev, () => { autoSavePaused = false; }, true));
+['downloadPDF','downloadRentalPDF','downloadBosPDF','downloadEngPDF','downloadLoanPDF','downloadEmplPDF','downloadNdaPDF','downloadWillPDF','downloadReceiptPDF','downloadInvoicePDF'].forEach(name => {
+  const orig = window[name];
+  if (typeof orig !== 'function') return;
+  window[name] = async function() {
+    const r = await orig.apply(this, arguments);
+    clearAutoSave();
+    autoSavePaused = true;
+    return r;
+  };
+});
 
 // ====== New document ======
 function startNewDocument() {
@@ -5026,7 +5051,7 @@ function buildWillDocument(d) {
   return `
     <h2>${t('wdoc-title')}</h2>
     <div class="sec" style="background:var(--warn-light);padding:10px 14px;border-radius:6px;border-left:3px solid var(--warn);"><p style="font-size:12px;font-weight:600;color:#92400E;">${t('wdoc-draft-notice')}</p></div>
-    <div class="sec"><p>${decl}</p></div>
+    <div class="sec"><p>${decl}</p>${d.testator.id?'<p><strong>'+t('doc-id')+':</strong> '+d.testator.id+'</p>':''}</div>
     <div class="sec"><div class="sec-title">${t('wdoc-marital-h')}</div><p>${maritalLabel}</p></div>
     <div class="sec"><div class="sec-title">${t('wdoc-executor-h')}</div><p>${execText}</p>
       <strong>${t('doc-name')}:</strong> ${d.executor.name||'___'}<br>
@@ -5039,7 +5064,7 @@ function buildWillDocument(d) {
     <div class="sec"><div class="sec-title">${t('doc-exec-h')}</div><p>${t('doc-exec-text').replace('{place}',d.place||'___').replace('{date}',fmtDate(d.docDate))}</p></div>
     <div class="sec"><p style="font-style:italic;font-size:12px;">${t('wdoc-witness-note')}</p></div>
     <div class="sig-grid">
-      <div><div class="sig-line">${t('doc-name')}: ${d.testator.name||'___'}<br>(${t('ws1-title').replace('?','')})</div></div>
+      <div><div class="sig-line">${t('doc-name')}: ${d.testator.name||'___'}<br>(${t('wdoc-testator')})</div></div>
     </div>
     <div class="sig-grid" style="margin-top:16px;">
       <div><div class="sig-line">${t('doc-witness')} 1</div></div>
@@ -5069,6 +5094,7 @@ async function downloadWillPDF() {
   addTxt(t('wdoc-title'),{size:18,style:'bold',align:'center',gap:8});
   addTxt(t('wdoc-draft-notice'),{size:9,style:'italic',align:'center',gap:6}); y+=3;
   addTxt(t('wdoc-declaration').replace('{name}',d.testator.name||'___').replace('{dob}',fmtDate(d.testator.dob)).replace('{address}',d.testator.address||'___').replace('{country}',d.testator.country||'___'),{}); y+=3;
+  if (d.testator.id) { addTxt(t('doc-id')+': '+d.testator.id,{}); y+=3; }
 
   addTxt(t('wdoc-marital-h'),{size:12,style:'bold',gap:4});
   addTxt(t('opt-'+d.testator.marital),{}); y+=3;
@@ -5103,6 +5129,7 @@ async function downloadWillPDF() {
   doc.setDrawColor(50);
   doc.line(mg,y,mg+pw,y); doc.setFontSize(9);
   doc.text(`${d.testator.name||'___'}`,mg,y+5);
+  doc.text(`(${t('wdoc-testator')})`,mg,y+9.5);
   doc.text('(Testator)',mg,y+9);
 
   y+=30; if(y>260){doc.addPage();y=mg+20;}
@@ -5663,7 +5690,7 @@ if (location.search.includes('admin')) {
   const xcdCountries = ['dominica','grenada','saint lucia','saint kitts','saint vincent','antigua'];
   let defCur = 'USD';
   if (eurCountries.some(e=>c.includes(e))) defCur = 'EUR';
-  else if (angCountries.some(e=>c.includes(e))) defCur = 'CMg';
+  else if (angCountries.some(e=>c.includes(e))) defCur = 'XCG';
   else if (awgCountries.some(e=>c.includes(e))) defCur = 'AWG';
   else if (gbpCountries.some(e=>c.includes(e))) defCur = 'GBP';
   else if (xcdCountries.some(e=>c.includes(e))) defCur = 'XCD';
