@@ -3048,15 +3048,15 @@ function applyLang() {
   const luEl = document.getElementById('last-updated-text');
   if (luEl) {
     try {
-      const d = new Date('2026-10-06');
+      const d = new Date('2026-10-15');
       const locales = { en:'en-US', nl:'nl-NL', es:'es-ES', fr:'fr-FR', de:'de-DE', pt:'pt-BR', it:'it-IT', ru:'ru-RU', zh:'zh-CN', ja:'ja-JP', ar:'ar-SA', ko:'ko-KR', tr:'tr-TR', pl:'pl-PL', hi:'hi-IN', fa:'fa-IR', he:'he-IL', sw:'sw-KE' };
       const fmt = d.toLocaleDateString(locales[lang]||'en-US', { year:'numeric', month:'short', day:'numeric' });
       luEl.textContent = `${t('last-updated-prefix')} ${fmt}`;
-    } catch(e) { luEl.textContent = t('last-updated-prefix') + ' October 5, 2026'; }
+    } catch(e) { luEl.textContent = t('last-updated-prefix') + ' Oct 15, 2026'; }
   }
   // Update privacy policy content
   const pc = document.getElementById('privacy-content');
-  if (pc && PRIVACY[lang]) pc.innerHTML = PRIVACY[lang];
+  if (pc) pc.innerHTML = PRIVACY[lang] || PRIVACY.en;
 }
 
 const SCOPES = [
@@ -5693,6 +5693,7 @@ if (location.search.includes('admin')) {
   buildScopeGrid();
   initDateQuickPicks();
   autoRestore();
+})();
 
 // ====== Live Preview ======
 function livePreview() {
@@ -5846,8 +5847,6 @@ selectDocType = function(type) {
   origSelectForDates(type);
   setTimeout(initDateHints, 300);
 };
-
-})();
 </script>
 <script data-goatcounter="https://documentgenerator.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
