@@ -13,8 +13,15 @@ if (!window.jspdf) {
   document.head.appendChild(s);
 }
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="Fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* Inter, zelf gehost (geen verzoeken naar Google) */
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url('Fonts/inter-latin-ext-wght-normal.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url('Fonts/inter-latin-wght-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 :root {
   --pri: #1A56DB;
   --pri-light: #E1EFFE;
@@ -842,6 +849,23 @@ input[type=number] { -moz-appearance: textfield; }
   box-shadow: var(--shadow-lg);
 }
 
+
+/* Privacybeleid: leesbaarheid en navigatie */
+#privacy-content { font-size: 15px; line-height: 1.65; }
+#privacy-content h3 { font-size: 16px; margin: 22px 0 6px !important; }
+#privacy-content p { margin: 0 0 10px; }
+#privacy-content ul { padding-inline-start: 20px; margin: 0 0 12px; font-size: inherit; }
+#privacy-content li { margin-bottom: 4px; }
+.privacy-summary { background: rgba(37,99,235,.08); border-inline-start: 3px solid #2563eb; border-radius: 8px; padding: 12px 14px; margin: 0 0 8px; font-size: 15px; line-height: 1.55; }
+#privacy-modal .modal { padding-top: 0; padding-bottom: 0; }
+:root[data-theme="dark"] .privacy-summary { background: rgba(96,165,250,.14); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .privacy-summary { background: rgba(96,165,250,.14); } }
+#privacy-modal .modal-head { position: sticky; top: 0; z-index: 2; background: var(--card); display: flex; justify-content: flex-end; padding: 10px 0 2px; margin: 0 -4px; }
+#privacy-modal .modal-close { float: none; font-size: 26px; line-height: 1; padding: 4px 10px; border-radius: 8px; }
+#privacy-modal .modal-close:hover { background: var(--fill, rgba(0,0,0,.06)); }
+#privacy-modal .modal-foot { position: sticky; bottom: 0; background: var(--card); padding: 12px 0 14px; margin-top: 8px; border-top: 1px solid var(--border); text-align: center; }
+#privacy-modal .modal-foot button { background: var(--grad, #2563eb); color: #fff; border: none; border-radius: 10px; padding: 10px 28px; font: inherit; font-weight: 600; cursor: pointer; }
+#privacy-content h2 { margin-top: 0; }
 /* Changelog modal (admin only) */
 .modal-overlay {
   display: none;
@@ -2918,6 +2942,9 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
         <li>Nieuw ontwerp startpagina: hero met vier vertrouwenspunten (gratis, blijft in browser, klaar om te printen, 18 talen), kleur per documenttype, vloeiende animaties (respecteert "minder beweging"), bevestiging na PDF-download compacte tegels op mobiel en het uitlegblok "Vul in / Controleer / Download" onderaan verwijderd (stond dubbel met de hero)</li>
         <li>Emoji vervangen door eigen SVG-iconen (tegels, knoppen, thema- en chatknop), zodat er nergens lege vierkantjes kunnen verschijnen</li>
         <li>Donkere modus vernieuwd: diepere kleuren met lichte gloed, betere leesbaarheid (waarschuwingen, knoppen, tekst), eigen tegelkleuren en het voorbeeld als wit papier, zoals de PDF eruitziet</li>
+        <li>Privacybeleid-venster: korte samenvatting bovenaan, rustiger lettertype/lijsten, kruisje blijft in beeld en Sluiten-knop onderaan</li>
+        <li>Modals (privacybeleid, changelog) sluiten ook met Esc en klik naast het venster</li>
+        <li>Privacybeleid bijgewerkt (bewerkregistratie via Formspree, wanneer de lokale kopie verdwijnt, belastingnummers worden niet bewaard); Google Fonts vervangen door zelf gehost lettertype (map Fonts/)</li>
         <li>Taalkiezer: één uitklapmenu in de header in plaats van 18 knoppen; eerste bezoek volgt de browsertaal</li>
         <li>Fix: dubbel "(Testator)"-label in de testament-PDF verwijderd</li>
         <li>Fix: changelog gecorrigeerd (CMg → XCG) en bijgewerkt</li>
@@ -3157,8 +3184,9 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 <!-- Privacy Policy Modal -->
 <div class="modal-overlay" id="privacy-modal">
   <div class="modal" style="max-width:620px;">
-    <button class="modal-close" onclick="document.getElementById('privacy-modal').classList.remove('show')">&times;</button>
+    <div class="modal-head"><button class="modal-close" aria-label="Close" onclick="document.getElementById('privacy-modal').classList.remove('show')">&times;</button></div>
     <div id="privacy-content"></div>
+    <div class="modal-foot"><button data-i18n="btn-close" onclick="document.getElementById('privacy-modal').classList.remove('show')">Close</button></div>
   </div>
 </div>
 
@@ -3166,89 +3194,97 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 <script>
 const PRIVACY = {
   en: `<h2>Privacy Policy</h2>
-<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Effective: October 15, 2026</p>
+<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Effective: November 5, 2026</p>
+<div class="privacy-summary"><strong>In short:</strong> Your documents are created in your browser and are never sent to us. We only measure anonymously which templates are used. We do not sell data.</div>
 <p><strong>documentgenerator.ai</strong> is a free document generation tool. This policy explains what data we collect and how we use it.</p>
 <h3 style="margin-top:16px;">1. Documents you create</h3>
 <p>All documents are generated <strong>entirely in your browser</strong>. No personal data — names, addresses, ID numbers, or document content — is sent to our servers or stored anywhere. Nothing you enter leaves your browser.</p>
 <h3 style="margin-top:16px;">2. Anonymous usage data</h3>
 <p>When you download a document, we may collect anonymous, non-personal data to improve our templates:</p>
-<ul style="padding-left:18px;font-size:13px;"><li>Document type (e.g. Power of Attorney)</li><li>Language selected</li><li>Your timezone / region (not your IP address or exact location)</li><li>Which sections of the document you customized (section names only, never the content)</li></ul>
-<p>This data cannot identify you and is used solely to improve our templates.</p>
+<ul><li>Document type (e.g. Power of Attorney)</li><li>Language selected</li><li>Your timezone / region (not your IP address or exact location)</li><li>Which sections of the document you customized (section names only, never the content), whether a section was shortened, expanded or removed, and by roughly how many characters its length changed</li></ul>
+<p>This data cannot identify you and is used solely to improve our templates. This data is sent via Formspree (see section 5).</p>
 <h3 style="margin-top:16px;">3. Feedback & suggestions</h3>
-<p>If you use the feedback form (💬), your message is sent via <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> to our email. We do not collect your email address unless you include it voluntarily in your message.</p>
+<p>If you use the feedback form, your message is sent via <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> to our email. We do not collect your email address unless you include it voluntarily in your message.</p>
 <h3 style="margin-top:16px;">4. Cookies & local storage</h3>
-<p>We do not use tracking cookies. Your browser's local storage (on your own device) is used for your language and theme preference and for a temporary copy of the text you type in a form, so you do not lose your work. That copy is removed after 24 hours, or as soon as you download a document or start a new one. ID/passport numbers, dates of birth and bank details are never saved. This data never leaves your device and you can remove it at any time by clearing the site data in your browser.</p>
+<p>We do not use tracking cookies. Your browser's local storage (on your own device) is used for your language and theme preference and for a temporary copy of the text you type in a form, so you do not lose your work. That copy is no longer used after 24 hours and is removed the next time you open the site, or as soon as you download a document or start a new one. ID/passport numbers, dates of birth, bank details and tax numbers are never saved. This data never leaves your device and you can remove it at any time by clearing the site data in your browser.</p>
 <h3 style="margin-top:16px;">5. Third-party services</h3>
-<p>We use <strong>Formspree</strong> for the feedback form, <strong>GoatCounter</strong> for privacy-friendly visitor statistics (no cookies, no personal data), and <strong>Google Fonts</strong> for typography, <strong>Cloudflare (cdnjs)</strong> and <strong>jsDelivr</strong> to load the PDF library, and <strong>Vercel</strong> for hosting. These services may log standard web request data (IP address, browser type). See their respective privacy policies.</p>
+<p>We use <strong>Formspree</strong> for the feedback form and the anonymous usage data (section 2), <strong>GoatCounter</strong> for privacy-friendly visitor statistics (no cookies, no personal data), <strong>Cloudflare (cdnjs)</strong> and <strong>jsDelivr</strong> to load the PDF library, and <strong>Vercel</strong> for hosting. These services may log standard web request data (IP address, browser type). See their respective privacy policies.</p>
 <h3 style="margin-top:16px;">6. Contact</h3>
-<p>Questions about this policy? Use the 💬 button.</p>`,
+<p>Questions about this policy? Use the chat button at the bottom right.</p>`,
 
   nl: `<h2>Privacybeleid</h2>
-<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Ingangsdatum: 15 oktober 2026</p>
+<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Ingangsdatum: 5 november 2026</p>
+<div class="privacy-summary"><strong>Kort samengevat:</strong> Je documenten worden in je browser gemaakt en nooit naar ons gestuurd. We meten alleen anoniem welke sjablonen gebruikt worden. We verkopen geen gegevens.</div>
 <p><strong>documentgenerator.ai</strong> is een gratis tool voor het genereren van documenten. Dit beleid legt uit welke gegevens we verzamelen en hoe we die gebruiken.</p>
 <h3 style="margin-top:16px;">1. Documenten die je maakt</h3>
 <p>Alle documenten worden <strong>volledig in je browser</strong> gegenereerd. Geen persoonlijke gegevens — namen, adressen, ID-nummers of documentinhoud — worden naar onze servers gestuurd of ergens opgeslagen. Niets wat je invult verlaat je browser.</p>
 <h3 style="margin-top:16px;">2. Anonieme gebruiksgegevens</h3>
 <p>Bij het downloaden van een document verzamelen we mogelijk anonieme, niet-persoonlijke gegevens om onze templates te verbeteren:</p>
-<ul style="padding-left:18px;font-size:13px;"><li>Documenttype (bijv. Volmacht)</li><li>Geselecteerde taal</li><li>Je tijdzone / regio (niet je IP-adres of exacte locatie)</li><li>Welke secties van het document je hebt aangepast (alleen sectienamen, nooit de inhoud)</li></ul>
-<p>Deze gegevens zijn niet herleidbaar tot jou en worden uitsluitend gebruikt om onze templates te verbeteren.</p>
+<ul><li>Documenttype (bijv. Volmacht)</li><li>Geselecteerde taal</li><li>Je tijdzone / regio (niet je IP-adres of exacte locatie)</li><li>Welke secties van het document je hebt aangepast (alleen sectienamen, nooit de inhoud), of een sectie is ingekort, uitgebreid of verwijderd, en ongeveer met hoeveel tekens de lengte veranderde</li></ul>
+<p>Deze gegevens zijn niet herleidbaar tot jou en worden uitsluitend gebruikt om onze templates te verbeteren. Deze gegevens worden verstuurd via Formspree (zie punt 5).</p>
 <h3 style="margin-top:16px;">3. Feedback & suggesties</h3>
-<p>Als je het feedbackformulier (💬) gebruikt, wordt je bericht via <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> naar ons e-mailadres gestuurd. We verzamelen je e-mailadres niet, tenzij je het zelf in je bericht vermeldt.</p>
+<p>Als je het feedbackformulier gebruikt, wordt je bericht via <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> naar ons e-mailadres gestuurd. We verzamelen je e-mailadres niet, tenzij je het zelf in je bericht vermeldt.</p>
 <h3 style="margin-top:16px;">4. Cookies & lokale opslag</h3>
-<p>We gebruiken geen tracking cookies. De lokale opslag van je browser (op je eigen apparaat) wordt gebruikt voor je taal- en themavoorkeur en voor een tijdelijke kopie van de tekst die je in een formulier typt, zodat je je werk niet kwijtraakt. Die kopie wordt na 24 uur verwijderd, of zodra je een document downloadt of een nieuw document begint. ID-/paspoortnummers, geboortedatums en bankgegevens worden nooit opgeslagen. Deze gegevens verlaten je apparaat niet en je kunt ze altijd verwijderen door de sitegegevens in je browser te wissen.</p>
+<p>We gebruiken geen tracking cookies. De lokale opslag van je browser (op je eigen apparaat) wordt gebruikt voor je taal- en themavoorkeur en voor een tijdelijke kopie van de tekst die je in een formulier typt, zodat je je werk niet kwijtraakt. Die kopie wordt na 24 uur niet meer gebruikt en wordt verwijderd zodra je de site opnieuw opent, of zodra je een document downloadt of een nieuw document begint. ID-/paspoortnummers, geboortedatums, bankgegevens en belastingnummers worden nooit opgeslagen. Deze gegevens verlaten je apparaat niet en je kunt ze altijd verwijderen door de sitegegevens in je browser te wissen.</p>
 <h3 style="margin-top:16px;">5. Diensten van derden</h3>
-<p>We gebruiken <strong>Formspree</strong> voor het feedbackformulier, <strong>GoatCounter</strong> voor privacyvriendelijke bezoekersstatistieken (geen cookies, geen persoonlijke gegevens), en <strong>Google Fonts</strong> voor typografie, <strong>Cloudflare (cdnjs)</strong> en <strong>jsDelivr</strong> om de PDF-bibliotheek te laden, en <strong>Vercel</strong> voor hosting. Deze diensten kunnen standaard webverzoekgegevens loggen (IP-adres, browsertype). Zie hun respectievelijke privacybeleid.</p>
+<p>We gebruiken <strong>Formspree</strong> voor het feedbackformulier en de anonieme gebruiksgegevens (punt 2), <strong>GoatCounter</strong> voor privacyvriendelijke bezoekersstatistieken (geen cookies, geen persoonlijke gegevens), <strong>Cloudflare (cdnjs)</strong> en <strong>jsDelivr</strong> om de PDF-bibliotheek te laden, en <strong>Vercel</strong> voor hosting. Deze diensten kunnen standaard webverzoekgegevens loggen (IP-adres, browsertype). Zie hun respectievelijke privacybeleid.</p>
 <h3 style="margin-top:16px;">6. Contact</h3>
-<p>Vragen over dit beleid? Gebruik de 💬-knop.</p>`,
+<p>Vragen over dit beleid? Gebruik de chatknop rechtsonder.</p>`,
 
   es: `<h2>Política de Privacidad</h2>
-<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Vigente desde: 15 de octubre de 2026</p>
+<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Vigente desde: 5 de noviembre de 2026</p>
+<div class="privacy-summary"><strong>En resumen:</strong> Tus documentos se crean en tu navegador y nunca se nos envían. Solo medimos de forma anónima qué plantillas se usan. No vendemos datos.</div>
 <p><strong>documentgenerator.ai</strong> es una herramienta gratuita para generar documentos. Esta política explica qué datos recopilamos y cómo los usamos.</p>
 <h3 style="margin-top:16px;">1. Documentos que creas</h3>
 <p>Todos los documentos se generan <strong>completamente en tu navegador</strong>. No se envían datos personales — nombres, direcciones, números de identificación o contenido — a nuestros servidores. Nada de lo que ingresas sale de tu navegador.</p>
 <h3 style="margin-top:16px;">2. Datos de uso anónimos</h3>
 <p>Al descargar un documento, podemos recopilar datos anónimos para mejorar nuestras plantillas:</p>
-<ul style="padding-left:18px;font-size:13px;"><li>Tipo de documento</li><li>Idioma seleccionado</li><li>Tu zona horaria / región</li><li>Qué secciones personalizaste (solo nombres, nunca contenido)</li></ul>
+<ul><li>Tipo de documento</li><li>Idioma seleccionado</li><li>Tu zona horaria / región</li><li>Qué secciones personalizaste (solo nombres, nunca contenido), si una sección se acortó, amplió o eliminó, y aproximadamente en cuántos caracteres cambió su longitud</li></ul>
+<p>Estos datos se envían a través de Formspree (véase el apartado 5).</p>
 <h3 style="margin-top:16px;">3. Comentarios y sugerencias</h3>
-<p>Si usas el formulario (💬), tu mensaje se envía a través de Formspree. No recopilamos tu correo electrónico a menos que lo incluyas.</p>
+<p>Si usas el formulario, tu mensaje se envía a través de Formspree. No recopilamos tu correo electrónico a menos que lo incluyas.</p>
 <h3 style="margin-top:16px;">4. Cookies y almacenamiento local</h3>
-<p>No usamos cookies de rastreo. El almacenamiento local de tu navegador (en tu propio dispositivo) guarda tu idioma y tema, y una copia temporal del texto que escribes en un formulario para que no pierdas tu trabajo. Esa copia se elimina a las 24 horas, o al descargar un documento o iniciar uno nuevo. Los números de identificación o pasaporte, las fechas de nacimiento y los datos bancarios nunca se guardan. Estos datos no salen de tu dispositivo.</p>
+<p>No usamos cookies de rastreo. El almacenamiento local de tu navegador (en tu propio dispositivo) guarda tu idioma y tema, y una copia temporal del texto que escribes en un formulario para que no pierdas tu trabajo. Esa copia deja de usarse a las 24 horas y se elimina la próxima vez que abras el sitio, o al descargar un documento o iniciar uno nuevo. Los números de identificación o pasaporte, las fechas de nacimiento, los datos bancarios y los números fiscales nunca se guardan. Estos datos no salen de tu dispositivo.</p>
 <h3 style="margin-top:16px;">5. Servicios de terceros</h3>
-<p>Usamos <strong>Formspree</strong> para comentarios, <strong>GoatCounter</strong> para estadísticas de visitantes (sin cookies, sin datos personales), <strong>Google Fonts</strong> para tipografía, <strong>Cloudflare (cdnjs)</strong> y <strong>jsDelivr</strong> para cargar la biblioteca de PDF, y <strong>Vercel</strong> como alojamiento.</p>
+<p>Usamos <strong>Formspree</strong> para comentarios y los datos de uso anónimos (apartado 2), <strong>GoatCounter</strong> para estadísticas de visitantes (sin cookies, sin datos personales), <strong>Cloudflare (cdnjs)</strong> y <strong>jsDelivr</strong> para cargar la biblioteca de PDF, y <strong>Vercel</strong> como alojamiento.</p>
 <h3 style="margin-top:16px;">6. Contacto</h3>
-<p>¿Preguntas? Usa el botón 💬.</p>`,
+<p>¿Preguntas? Usa el botón de chat abajo a la derecha.</p>`,
 
   fr: `<h2>Politique de Confidentialité</h2>
-<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">En vigueur : 15 octobre 2026</p>
+<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">En vigueur : 5 novembre 2026</p>
+<div class="privacy-summary"><strong>En bref:</strong> Vos documents sont créés dans votre navigateur et ne nous sont jamais envoyés. Nous mesurons seulement, de façon anonyme, les modèles utilisés. Nous ne vendons aucune donnée.</div>
 <p><strong>documentgenerator.ai</strong> est un outil gratuit de génération de documents. Cette politique explique les données que nous collectons et comment nous les utilisons.</p>
 <h3 style="margin-top:16px;">1. Documents créés</h3>
 <p>Tous les documents sont générés <strong>entièrement dans votre navigateur</strong>. Aucune donnée personnelle n'est envoyée à nos serveurs. Rien de ce que vous saisissez ne quitte votre navigateur.</p>
 <h3 style="margin-top:16px;">2. Données anonymes</h3>
 <p>Lors du téléchargement, nous pouvons collecter des données anonymes :</p>
-<ul style="padding-left:18px;font-size:13px;"><li>Type de document</li><li>Langue sélectionnée</li><li>Fuseau horaire / région</li><li>Sections personnalisées (noms uniquement)</li></ul>
+<ul><li>Type de document</li><li>Langue sélectionnée</li><li>Fuseau horaire / région</li><li>Sections personnalisées (noms uniquement), si une section a été raccourcie, allongée ou supprimée, et de combien de caractères environ sa longueur a changé</li></ul>
+<p>Ces données sont envoyées via Formspree (voir section 5).</p>
 <h3 style="margin-top:16px;">3. Commentaires</h3>
-<p>Le formulaire (💬) envoie votre message via Formspree. Nous ne collectons pas votre e-mail sauf si vous l'incluez.</p>
+<p>Le formulaire envoie votre message via Formspree. Nous ne collectons pas votre e-mail sauf si vous l'incluez.</p>
 <h3 style="margin-top:16px;">4. Cookies et stockage local</h3>
-<p>Nous n'utilisons pas de cookies de suivi. Le stockage local de votre navigateur (sur votre appareil) conserve votre langue et votre thème, ainsi qu'une copie temporaire du texte saisi dans un formulaire afin de ne pas perdre votre travail. Cette copie est supprimée après 24 heures, ou dès que vous téléchargez un document ou en commencez un nouveau. Les numéros d'identité ou de passeport, les dates de naissance et les coordonnées bancaires ne sont jamais enregistrés. Ces données ne quittent pas votre appareil.</p>
+<p>Nous n'utilisons pas de cookies de suivi. Le stockage local de votre navigateur (sur votre appareil) conserve votre langue et votre thème, ainsi qu'une copie temporaire du texte saisi dans un formulaire afin de ne pas perdre votre travail. Cette copie n'est plus utilisée après 24 heures et est supprimée à votre prochaine visite, ou dès que vous téléchargez un document ou en commencez un nouveau. Les numéros d'identité ou de passeport, les dates de naissance, les coordonnées bancaires et les numéros fiscaux ne sont jamais enregistrés. Ces données ne quittent pas votre appareil.</p>
 <h3 style="margin-top:16px;">5. Services tiers</h3>
-<p>Nous utilisons <strong>Formspree</strong> pour les commentaires, <strong>GoatCounter</strong> pour les statistiques de visiteurs (sans cookies, sans données personnelles), <strong>Google Fonts</strong> pour la typographie, <strong>Cloudflare (cdnjs)</strong> et <strong>jsDelivr</strong> pour charger la bibliothèque PDF, et <strong>Vercel</strong> pour l'hébergement.</p>
+<p>Nous utilisons <strong>Formspree</strong> pour les commentaires et les données d'utilisation anonymes (section 2), <strong>GoatCounter</strong> pour les statistiques de visiteurs (sans cookies, sans données personnelles), <strong>Cloudflare (cdnjs)</strong> et <strong>jsDelivr</strong> pour charger la bibliothèque PDF, et <strong>Vercel</strong> pour l'hébergement.</p>
 <h3 style="margin-top:16px;">6. Contact</h3>
-<p>Questions ? Utilisez le bouton 💬.</p>`,
+<p>Questions ? Utilisez le bouton de chat en bas à droite.</p>`,
 
   de: `<h2>Datenschutzerklärung</h2>
-<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Gültig ab: 15. Oktober 2026</p>
+<p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Gültig ab: 5. November 2026</p>
+<div class="privacy-summary"><strong>Kurz gesagt:</strong> Ihre Dokumente werden in Ihrem Browser erstellt und nie an uns gesendet. Wir messen nur anonym, welche Vorlagen genutzt werden. Wir verkaufen keine Daten.</div>
 <p><strong>documentgenerator.ai</strong> ist ein kostenloses Tool zur Dokumentenerstellung. Diese Erklärung beschreibt, welche Daten wir erheben und wie wir sie verwenden.</p>
 <h3 style="margin-top:16px;">1. Erstellte Dokumente</h3>
 <p>Alle Dokumente werden <strong>vollständig in Ihrem Browser</strong> erstellt. Keine persönlichen Daten werden an unsere Server gesendet. Nichts, was Sie eingeben, verlässt Ihren Browser.</p>
 <h3 style="margin-top:16px;">2. Anonyme Nutzungsdaten</h3>
 <p>Beim Download können wir anonyme Daten erfassen:</p>
-<ul style="padding-left:18px;font-size:13px;"><li>Dokumenttyp</li><li>Gewählte Sprache</li><li>Zeitzone / Region</li><li>Angepasste Abschnitte (nur Namen)</li></ul>
+<ul><li>Dokumenttyp</li><li>Gewählte Sprache</li><li>Zeitzone / Region</li><li>Angepasste Abschnitte (nur Namen), ob ein Abschnitt gekürzt, erweitert oder entfernt wurde und um wie viele Zeichen sich seine Länge ungefähr änderte</li></ul>
+<p>Diese Daten werden über Formspree übermittelt (siehe Abschnitt 5).</p>
 <h3 style="margin-top:16px;">3. Feedback</h3>
-<p>Das Formular (💬) sendet Ihre Nachricht über Formspree. Wir erfassen Ihre E-Mail nur, wenn Sie sie angeben.</p>
+<p>Das Formular sendet Ihre Nachricht über Formspree. Wir erfassen Ihre E-Mail nur, wenn Sie sie angeben.</p>
 <h3 style="margin-top:16px;">4. Cookies und lokaler Speicher</h3>
-<p>Wir verwenden keine Tracking-Cookies. Der lokale Speicher Ihres Browsers (auf Ihrem eigenen Gerät) enthält Ihre Sprach- und Designeinstellung sowie eine temporäre Kopie der Texte, die Sie in ein Formular eingeben, damit Ihre Arbeit nicht verloren geht. Diese Kopie wird nach 24 Stunden gelöscht, oder sobald Sie ein Dokument herunterladen oder ein neues beginnen. Ausweis-/Passnummern, Geburtsdaten und Bankdaten werden nie gespeichert. Diese Daten verlassen Ihr Gerät nicht.</p>
+<p>Wir verwenden keine Tracking-Cookies. Der lokale Speicher Ihres Browsers (auf Ihrem eigenen Gerät) enthält Ihre Sprach- und Designeinstellung sowie eine temporäre Kopie der Texte, die Sie in ein Formular eingeben, damit Ihre Arbeit nicht verloren geht. Diese Kopie wird nach 24 Stunden nicht mehr verwendet und beim nächsten Besuch der Seite gelöscht, oder sobald Sie ein Dokument herunterladen oder ein neues beginnen. Ausweis-/Passnummern, Geburtsdaten, Bankdaten und Steuernummern werden nie gespeichert. Diese Daten verlassen Ihr Gerät nicht.</p>
 <h3 style="margin-top:16px;">5. Drittanbieter</h3>
-<p>Wir verwenden <strong>Formspree</strong> für Feedback, <strong>GoatCounter</strong> für datenschutzfreundliche Besucherstatistiken (keine Cookies, keine persönlichen Daten), <strong>Google Fonts</strong> für Typografie, <strong>Cloudflare (cdnjs)</strong> und <strong>jsDelivr</strong> zum Laden der PDF-Bibliothek sowie <strong>Vercel</strong> für das Hosting.</p>
+<p>Wir verwenden <strong>Formspree</strong> für Feedback und die anonymen Nutzungsdaten (Abschnitt 2), <strong>GoatCounter</strong> für datenschutzfreundliche Besucherstatistiken (keine Cookies, keine persönlichen Daten), <strong>Cloudflare (cdnjs)</strong> und <strong>jsDelivr</strong> zum Laden der PDF-Bibliothek sowie <strong>Vercel</strong> für das Hosting.</p>
 <h3 style="margin-top:16px;">6. Kontakt</h3>
 <p>Fragen? Nutzen Sie den 💬-Button.</p>`
 };
@@ -5275,8 +5311,8 @@ function extraSecAttr(detailed) {
 
 // ====== Auto-save ======
 let autoSavePaused = false;
-// Never persist ID/passport numbers, dates of birth or bank details
-const AUTOSAVE_SKIP = /(-id|-dob|-bank)$/;
+// Never persist ID/passport numbers, dates of birth, bank details or tax numbers
+const AUTOSAVE_SKIP = /(-id|-dob|-bank|-tax)$/;
 function autoSave() {
   if (autoSavePaused) return;
   try {
@@ -6321,7 +6357,12 @@ selectDocType = function(type) {
   origSelectForDates(type);
   setTimeout(initDateHints, 300);
 };
+
+// Modals: sluiten met Esc of klik naast het venster
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-overlay.show').forEach(m=>m.classList.remove('show'))});
+document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('mousedown',e=>{if(e.target===m)m.classList.remove('show')}));
 </script>
-<script data-goatcounter="https://documentgenerator.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://documentgenerator.goatcounter.com/count" async src="//gc.zgo.at/count.js">
+</script>
 </body>
 </html>
