@@ -1176,6 +1176,8 @@ input[type=number] { -moz-appearance: textfield; }
         <input type="text" id="g1-address" data-i18n-placeholder="ph-address">
         <div class="error-msg" id="err-g1-address" data-i18n="err-required">This field is required</div>
       </div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="g1-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="g1-postal"></div>
       <div class="field">
         <label data-i18n="lbl-country">Country</label>
         <input type="text" id="g1-country">
@@ -1210,6 +1212,8 @@ input[type=number] { -moz-appearance: textfield; }
         <input type="text" id="g2-address" data-i18n-placeholder="ph-address">
         <div class="error-msg" id="err-g2-address" data-i18n="err-required">This field is required</div>
       </div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="g2-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="g2-postal"></div>
       <div class="field">
         <label data-i18n="lbl-country">Country</label>
         <input type="text" id="g2-country">
@@ -1297,6 +1301,11 @@ input[type=number] { -moz-appearance: textfield; }
           <label data-i18n="lbl-law">Which country's laws apply? <span class="tip" data-tip="">?</span></label>
           <input type="text" id="gov-law">
         </div>
+        <div class="field">
+          <label data-i18n="lbl-witnesses">Witnesses</label>
+          <div class="hint" data-i18n="hint-witnesses">Choose whether the document has signature lines for witnesses</div>
+          <select id="doc-witnesses"><option value="yes" data-i18n="opt-witnesses-yes">With two witnesses</option><option value="no" data-i18n="opt-witnesses-no">Without witnesses</option></select>
+        </div>
       </div>
 
       <div class="nav">
@@ -1380,6 +1389,8 @@ input[type=number] { -moz-appearance: textfield; }
         <input type="text" id="rl-address" data-i18n-placeholder="ph-address">
         <div class="error-msg" id="err-rl-address" data-i18n="err-required">This field is required</div>
       </div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="rl-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="rl-postal"></div>
       <div class="field">
         <label data-i18n="lbl-country">Country</label>
         <input type="text" id="rl-country">
@@ -1414,6 +1425,8 @@ input[type=number] { -moz-appearance: textfield; }
         <input type="text" id="rt-address" data-i18n-placeholder="ph-address">
         <div class="error-msg" id="err-rt-address" data-i18n="err-required">This field is required</div>
       </div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="rt-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="rt-postal"></div>
       <div class="field">
         <label data-i18n="lbl-country">Country</label>
         <input type="text" id="rt-country">
@@ -1436,6 +1449,8 @@ input[type=number] { -moz-appearance: textfield; }
         <input type="text" id="rp-address" data-i18n-placeholder="ph-address">
         <div class="error-msg" id="err-rp-address" data-i18n="err-required">This field is required</div>
       </div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="rp-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="rp-postal"></div>
       <div class="field">
         <label data-i18n="lbl-property-type">Property type</label>
         <div class="choice-grid" id="prop-type-grid"></div>
@@ -1616,6 +1631,8 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-name">As it appears on your ID or passport</div><input type="text" id="bs-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-bs-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="bs-id" data-i18n-placeholder="ph-id"><div class="error-msg" id="err-bs-id" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><div class="hint" data-i18n="hint-address">Street, number, and city</div><input type="text" id="bs-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-bs-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="bs-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="bs-postal"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="bs-country"></div>
       <div class="nav"><button class="btn btn-back" onclick="goBosStep('b3')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goBosStep('b2')" data-i18n="btn-next">Next</button></div>
     </div>
@@ -1630,6 +1647,8 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-name">As it appears on your ID or passport</div><input type="text" id="bb-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-bb-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="bb-id" data-i18n-placeholder="ph-id"><div class="error-msg" id="err-bb-id" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><div class="hint" data-i18n="hint-address">Street, number, and city</div><input type="text" id="bb-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-bb-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="bb-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="bb-postal"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="bb-country"></div>
       <div class="nav"><button class="btn btn-back" onclick="goBosStep('b1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goBosStep('b4')" data-i18n="btn-next">Next</button></div>
     </div>
@@ -1760,6 +1779,9 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-place">City and country of signing</label><input type="text" id="b-place" data-i18n-placeholder="ph-place" onchange="autoFillLaw('b-place','b-law')"></div>
       <div class="field"><label data-i18n="lbl-date">Date of the document</label><input type="date" id="b-doc-date"></div>
       <div class="field"><label data-i18n="lbl-law">Governing law (country)</label><div class="hint" data-i18n="hint-law">Usually the same country as the signing location</div><input type="text" id="b-law"></div>
+      <div class="field"><label data-i18n="lbl-witnesses">Witnesses</label><div class="hint" data-i18n="hint-witnesses">Choose whether the document has signature lines for witnesses</div>
+        <select id="b-witnesses"><option value="yes" data-i18n="opt-witnesses-yes">With two witnesses</option><option value="no" data-i18n="opt-witnesses-no">Without witnesses</option></select>
+      </div>
       <div class="nav"><button class="btn btn-back" onclick="goBosStep('b4')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goBosStep('b6')" data-i18n="btn-preview">Check the document</button></div>
     </div>
   </div>
@@ -1823,6 +1845,8 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-rep">Represented by (name)</label><input type="text" id="ep-rep" data-i18n-placeholder="ph-name"></div>
       <div class="field"><label data-i18n="lbl-role">Title / role</label><input type="text" id="ep-role" placeholder="e.g. Managing Partner"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="ep-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-ep-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="ep-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="ep-postal"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="ep-country"></div>
       <div class="nav"><button class="btn btn-back" onclick="goEngStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goEngStep('e2')" data-i18n="btn-next">Next</button></div>
     </div>
@@ -1837,6 +1861,8 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-name">As it appears on your ID or passport</div><input type="text" id="ec-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-ec-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="ec-id" data-i18n-placeholder="ph-id"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="ec-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-ec-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="ec-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="ec-postal"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="ec-country"></div>
       <div class="nav"><button class="btn btn-back" onclick="goEngStep('e1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goEngStep('e3')" data-i18n="btn-next">Next</button></div>
     </div>
@@ -1954,6 +1980,8 @@ input[type=number] { -moz-appearance: textfield; }
       <p class="step-explain" data-i18n="rc1-explain">The person or business that received the payment.</p>
       <div class="field"><label data-i18n="lbl-name">Full name</label><input type="text" id="rc-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-rc-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="rc-address" data-i18n-placeholder="ph-address"></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="rc-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="rc-postal"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="rc-country"></div>
       <div class="nav"><button class="btn btn-back" onclick="goReceiptStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goReceiptStep('rc2')" data-i18n="btn-next">Next</button></div>
     </div>
@@ -1967,6 +1995,8 @@ input[type=number] { -moz-appearance: textfield; }
       <p class="step-explain" data-i18n="rc2-explain">The person or business that made the payment.</p>
       <div class="field"><label data-i18n="lbl-name">Full name</label><input type="text" id="rc-from-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-rc-from-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="rc-from-address" data-i18n-placeholder="ph-address"></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="rc-from-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="rc-from-postal"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="rc-from-country"></div>
       <div class="nav"><button class="btn btn-back" onclick="goReceiptStep('rc1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goReceiptStep('rc3')" data-i18n="btn-next">Next</button></div>
     </div>
@@ -2035,6 +2065,8 @@ input[type=number] { -moz-appearance: textfield; }
       <p class="step-explain" data-i18n="iv1-explain">The person or business sending the invoice.</p>
       <div class="field"><label data-i18n="lbl-name">Full name / company</label><input type="text" id="iv-from-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-iv-from-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="iv-from-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-iv-from-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="iv-from-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="iv-from-postal"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="iv-from-country"></div>
       <div class="field"><label data-i18n="lbl-email">Email (optional)</label><input type="email" id="iv-from-email"></div>
       <div class="field"><label data-i18n="lbl-phone">Phone (optional)</label><input type="text" id="iv-from-phone"></div>
@@ -2050,6 +2082,8 @@ input[type=number] { -moz-appearance: textfield; }
       <p class="step-explain" data-i18n="iv2-explain">The person or business receiving the invoice.</p>
       <div class="field"><label data-i18n="lbl-name">Full name / company</label><input type="text" id="iv-to-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-iv-to-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="iv-to-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-iv-to-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="iv-to-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="iv-to-postal"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="iv-to-country"></div>
       <div class="nav"><button class="btn btn-back" onclick="goInvoiceStep('iv1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goInvoiceStep('iv3')" data-i18n="btn-next">Next</button></div>
     </div>
@@ -2140,6 +2174,8 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-nda-name">Person or company name</div><input type="text" id="nd-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-nd-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="nd-id" data-i18n-placeholder="ph-id"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="nd-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-nd-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="nd-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="nd-postal"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="nd-country"></div>
       <div class="nav"><button class="btn btn-back" onclick="goNdaStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goNdaStep('n2')" data-i18n="btn-next">Next</button></div>
     </div>
@@ -2154,6 +2190,8 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-nda-name">Person or company name</div><input type="text" id="nr-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-nr-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="nr-id" data-i18n-placeholder="ph-id"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="nr-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-nr-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="nr-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="nr-postal"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="nr-country"></div>
       <div class="nav"><button class="btn btn-back" onclick="goNdaStep('n1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goNdaStep('n3')" data-i18n="btn-next">Next</button></div>
     </div>
@@ -2241,6 +2279,8 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-rep">Represented by (name)</label><input type="text" id="em-rep"></div>
       <div class="field"><label data-i18n="lbl-role">Title / role</label><input type="text" id="em-role" placeholder="e.g. Director, HR Manager"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="em-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-em-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="em-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="em-postal"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="em-country"></div>
       <div class="nav"><button class="btn btn-back" onclick="goEmplStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goEmplStep('m2')" data-i18n="btn-next">Next</button></div>
     </div>
@@ -2256,6 +2296,8 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="em-id" data-i18n-placeholder="ph-id"></div>
       <div class="field"><label data-i18n="lbl-dob">Date of birth</label><input type="date" id="em-dob"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="em-emp-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-em-emp-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="em-emp-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="em-emp-postal"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="em-emp-country"></div>
       <div class="nav"><button class="btn btn-back" onclick="goEmplStep('m1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goEmplStep('m3')" data-i18n="btn-next">Next</button></div>
     </div>
@@ -2390,6 +2432,8 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-name">As it appears on your ID or passport</div><input type="text" id="ll-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-ll-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="ll-id" data-i18n-placeholder="ph-id"><div class="error-msg" id="err-ll-id" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><div class="hint" data-i18n="hint-address">Street, number, and city</div><input type="text" id="ll-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-ll-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="ll-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="ll-postal"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="ll-country"></div>
       <div class="nav"><button class="btn btn-back" onclick="goLoanStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goLoanStep('l2')" data-i18n="btn-next">Next</button></div>
     </div>
@@ -2404,6 +2448,8 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-name">Full name</label><div class="hint" data-i18n="hint-name">As it appears on your ID or passport</div><input type="text" id="lb-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-lb-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="lb-id" data-i18n-placeholder="ph-id"><div class="error-msg" id="err-lb-id" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><div class="hint" data-i18n="hint-address">Street, number, and city</div><input type="text" id="lb-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-lb-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="lb-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="lb-postal"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="lb-country"></div>
       <div class="nav"><button class="btn btn-back" onclick="goLoanStep('l1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goLoanStep('l3')" data-i18n="btn-next">Next</button></div>
     </div>
@@ -2467,6 +2513,7 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-place">City and country of signing</label><input type="text" id="l-place" data-i18n-placeholder="ph-place" onchange="autoFillLaw('l-place','l-law')"></div>
       <div class="field"><label data-i18n="lbl-date">Date of the document</label><input type="date" id="l-doc-date"></div>
       <div class="field"><label data-i18n="lbl-law">Governing law (country)</label><div class="hint" data-i18n="hint-law">Usually the same country as the signing location</div><input type="text" id="l-law"></div>
+      <div class="field"><label data-i18n="lbl-witnesses">Witnesses</label><div class="hint" data-i18n="hint-witnesses">Choose whether the document has signature lines for witnesses</div><select id="l-witnesses"><option value="yes" data-i18n="opt-witnesses-yes">With two witnesses</option><option value="no" data-i18n="opt-witnesses-no">Without witnesses</option></select></div>
       <div class="nav"><button class="btn btn-back" onclick="goLoanStep('l3')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goLoanStep('l5')" data-i18n="btn-preview">Check the document</button></div>
     </div>
   </div>
@@ -2526,6 +2573,8 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="wt-id" data-i18n-placeholder="ph-id"></div>
       <div class="field"><label data-i18n="lbl-dob">Date of birth</label><input type="date" id="wt-dob"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="wt-address" data-i18n-placeholder="ph-address"><div class="error-msg" id="err-wt-address" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="wt-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="wt-postal"></div>
       <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="wt-country"></div>
       <div class="field"><label data-i18n="lbl-marital">Marital status</label>
         <select id="wt-marital">
@@ -2548,6 +2597,8 @@ input[type=number] { -moz-appearance: textfield; }
       <div class="field"><label data-i18n="lbl-name">Full name</label><input type="text" id="we-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-we-name" data-i18n="err-required">This field is required</div></div>
       <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="we-id" data-i18n-placeholder="ph-id"></div>
       <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="we-address" data-i18n-placeholder="ph-address"></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="we-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="we-postal"></div>
       <div class="field"><label data-i18n="lbl-relationship">Relationship to testator</label><input type="text" id="we-rel" placeholder="e.g. Spouse, Son, Attorney"></div>
       <div class="nav"><button class="btn btn-back" onclick="goWillStep('w1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goWillStep('w3')" data-i18n="btn-next">Next</button></div>
     </div>
@@ -2652,6 +2703,9 @@ input[type=number] { -moz-appearance: textfield; }
         <li>Fix: Testament-tegel heet nu consequent "Draft Will"; tekst bij stap "Hoe lang geldig" zegt niet meer "volmacht" bij andere documenten</li>
         <li>Fix: PDF's in ru, zh, ja, ko, ar, fa, he, hi, tr en pl tonen nu de juiste tekens (tekst met niet-Latijnse tekens wordt via de browser getekend; Latijnse tekst blijft selecteerbaar)</li>
         <li>Fix: disclaimer onder de BOS-checklist vertaald naar alle 18 talen; checklisttitel in pt, it en ru vertaald</li>
+        <li>Fix: de knoppen Gisteren/Vandaag/Morgen bij datumvelden werkten niet (vulden de datumhint in plaats van het veld) en gebruikten UTC in plaats van lokale datum</li>
+        <li>Alle documenten: optionele velden "Buurt" en "Postcode" bij alle adressen in alle 10 documenten (formulier, voorbeeld en PDF, alle 18 talen) (formulier, voorbeeld en PDF, alle 18 talen)</li>
+        <li>Volmacht, lening en koopovereenkomst: getuigen nu optioneel (keuze "Met twee getuigen" of "Zonder getuigen" bij ondertekening; standaard met getuigen). Testament blijft met getuigen</li>
         <li>Fix: dubbel "(Testator)"-label in de testament-PDF verwijderd</li>
         <li>Fix: changelog gecorrigeerd (CMg → XCG) en bijgewerkt</li>
       </ul>
@@ -3120,12 +3174,16 @@ function gatherData() {
       name: document.getElementById('g1-name').value.trim(),
       id: document.getElementById('g1-id').value.trim(),
       address: document.getElementById('g1-address').value.trim(),
+      neighborhood: document.getElementById('g1-neighborhood').value.trim(),
+      postal: document.getElementById('g1-postal').value.trim(),
       country: document.getElementById('g1-country').value.trim(),
     },
     g2: {
       name: document.getElementById('g2-name').value.trim(),
       id: document.getElementById('g2-id').value.trim(),
       address: document.getElementById('g2-address').value.trim(),
+      neighborhood: document.getElementById('g2-neighborhood').value.trim(),
+      postal: document.getElementById('g2-postal').value.trim(),
       country: document.getElementById('g2-country').value.trim(),
     },
     poaType,
@@ -3137,6 +3195,7 @@ function gatherData() {
     docDate: document.getElementById('doc-date').value,
     docPlace: document.getElementById('doc-place').value.trim(),
     govLaw: document.getElementById('gov-law').value.trim(),
+    witnesses: (document.getElementById('doc-witnesses')?.value || 'yes') !== 'no',
   };
 }
 
@@ -3174,7 +3233,7 @@ function fmtDate(ds) {
 // ====== Preview ======
 function buildPOADocument(d) {
 
-  const person = (p) => `<strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br><strong>${t('doc-country')}:</strong> ${p.country||'___'}`;
+  const person = (p) => `<strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br>${addrExtraHtml(p)}<strong>${t('doc-country')}:</strong> ${p.country||'___'}`;
 
   let scopeHtml = '';
   if (d.poaType === 'general') {
@@ -3210,10 +3269,10 @@ function buildPOADocument(d) {
       <div><div class="sig-line">${t('doc-grantor-sig')}<br>${d.g1.name||'___'}</div></div>
       <div><div class="sig-line">${t('doc-grantee-sig')}<br>${d.g2.name||'___'}</div></div>
     </div>
-    <div class="sig-grid" style="margin-top:16px;">
+    ${d.witnesses ? `<div class="sig-grid" style="margin-top:16px;">
       <div><div class="sig-line">${t('doc-witness')} 1</div></div>
       <div><div class="sig-line">${t('doc-witness')} 2</div></div>
-    </div>
+    </div>` : ''}
   `;
 }
 function renderPreview() {
@@ -3317,14 +3376,14 @@ async function downloadPDF() {
   y += 2;
   addTxt(`${t('doc-name')}: ${d.g1.name||'___'}`, {});
   addTxt(`${t('doc-id')}: ${d.g1.id||'___'}`, {});
-  addTxt(`${t('doc-address')}: ${d.g1.address||'___'}`, {});
+  addTxt(`${t('doc-address')}: ${d.g1.address||'___'}`, {}); addPdfExtra(addTxt, d.g1);
   addTxt(`${t('doc-country')}: ${d.g1.country||'___'}`, {});
   y += 3;
   addTxt(t('doc-grants'), { style: 'italic', gap: 4 });
   y += 2;
   addTxt(`${t('doc-name')}: ${d.g2.name||'___'}`, {});
   addTxt(`${t('doc-id')}: ${d.g2.id||'___'}`, {});
-  addTxt(`${t('doc-address')}: ${d.g2.address||'___'}`, {});
+  addTxt(`${t('doc-address')}: ${d.g2.address||'___'}`, {}); addPdfExtra(addTxt, d.g2);
   addTxt(`${t('doc-country')}: ${d.g2.country||'___'}`, {});
   y += 4;
 
@@ -3371,12 +3430,14 @@ async function downloadPDF() {
   doc.text(t('doc-grantee-sig'), mg+95, y+5);
   doc.text(d.g2.name||'', mg+95, y+9);
 
+  if (d.witnesses) {
   y += 30;
   if (y > 260) { doc.addPage(); y = mg + 20; }
   doc.line(mg, y, mg+65, y);
   doc.text(`${t('doc-witness')} 1`, mg, y+5);
   doc.line(mg+95, y, mg+160, y);
   doc.text(`${t('doc-witness')} 2`, mg+95, y+5);
+  }
 
   y = addAttachmentsToPDF(doc, 'poa', mg, pw, y);
   addHeaderFooter(doc, ds);
@@ -3683,9 +3744,9 @@ function setRentalDuration(type) {
 // ====== Rental data ======
 function gatherRentalData() {
   return {
-    landlord: { name:$('rl-name'), id:$('rl-id'), address:$('rl-address'), country:$('rl-country') },
-    tenant:   { name:$('rt-name'), id:$('rt-id'), address:$('rt-address'), country:$('rt-country') },
-    property: { address:$('rp-address'), type:rentalPropertyType, furnished:rentalFurnished },
+    landlord: { name:$('rl-name'), id:$('rl-id'), address:$('rl-address'), neighborhood:$('rl-neighborhood'), postal:$('rl-postal'), country:$('rl-country') },
+    tenant:   { name:$('rt-name'), id:$('rt-id'), address:$('rt-address'), neighborhood:$('rt-neighborhood'), postal:$('rt-postal'), country:$('rt-country') },
+    property: { address:$('rp-address'), neighborhood:$('rp-neighborhood'), postal:$('rp-postal'), type:rentalPropertyType, furnished:rentalFurnished },
     rent:     parseFloat(document.getElementById('r-rent')?.value)||0,
     currency: document.getElementById('r-currency')?.value||'USD',
     deposit:  parseFloat(document.getElementById('r-deposit')?.value)||0,
@@ -3702,7 +3763,7 @@ function $(id) { return document.getElementById(id)?.value?.trim()||''; }
 
 // ====== Rental preview ======
 function buildRentalDocument(d) {
-  const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br><strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
+  const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br>${addrExtraHtml(p)}<strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
 
   const typeLabel = t('opt-'+d.property.type);
   const furnLabel = d.property.furnished ? t('opt-yes') : t('opt-no');
@@ -3736,7 +3797,7 @@ function buildRentalDocument(d) {
     ${person(d.tenant, t('rdoc-tenant'))}
     <div class="sec"><div class="sec-title">${t('rdoc-property-h')}</div>
       <p>${t('rdoc-property-text')}</p>
-      <strong>${t('doc-address')}:</strong> ${d.property.address||'___'}<br>
+      <strong>${t('doc-address')}:</strong> ${d.property.address||'___'}<br>${addrExtraHtml(d.property)}
       <strong>${t('rdoc-type')}:</strong> ${typeLabel}<br>
       <strong>${t('rdoc-furnished')}:</strong> ${furnLabel}
     </div>
@@ -3784,20 +3845,20 @@ async function downloadRentalPDF() {
   addTxt(t('rdoc-landlord'),{size:11,style:'bold',gap:3});
   addTxt(`${t('doc-name')}: ${d.landlord.name||'___'}`,{});
   addTxt(`${t('doc-id')}: ${d.landlord.id||'___'}`,{});
-  addTxt(`${t('doc-address')}: ${d.landlord.address||'___'}`,{});
+  addTxt(`${t('doc-address')}: ${d.landlord.address||'___'}`,{}); addPdfExtra(addTxt, d.landlord);
   addTxt(`${t('doc-country')}: ${d.landlord.country||'___'}`,{}); y+=3;
 
   // Tenant
   addTxt(t('rdoc-tenant'),{size:11,style:'bold',gap:3});
   addTxt(`${t('doc-name')}: ${d.tenant.name||'___'}`,{});
   addTxt(`${t('doc-id')}: ${d.tenant.id||'___'}`,{});
-  addTxt(`${t('doc-address')}: ${d.tenant.address||'___'}`,{});
+  addTxt(`${t('doc-address')}: ${d.tenant.address||'___'}`,{}); addPdfExtra(addTxt, d.tenant);
   addTxt(`${t('doc-country')}: ${d.tenant.country||'___'}`,{}); y+=4;
 
   // Property
   addTxt(t('rdoc-property-h'),{size:12,style:'bold',gap:4});
   addTxt(t('rdoc-property-text'),{});
-  addTxt(`${t('doc-address')}: ${d.property.address||'___'}`,{});
+  addTxt(`${t('doc-address')}: ${d.property.address||'___'}`,{}); addPdfExtra(addTxt, d.property);
   addTxt(`${t('rdoc-type')}: ${t('opt-'+d.property.type)}`,{});
   addTxt(`${t('rdoc-furnished')}: ${d.property.furnished?t('opt-yes'):t('opt-no')}`,{}); y+=3;
 
@@ -3929,8 +3990,8 @@ function validateEngAndGo(from, to) {
 
 function gatherEngData() {
   return {
-    provider: { company:$('ep-company'), rep:$('ep-rep'), role:$('ep-role'), address:$('ep-address'), country:$('ep-country') },
-    client: { name:$('ec-name'), id:$('ec-id'), address:$('ec-address'), country:$('ec-country') },
+    provider: { company:$('ep-company'), rep:$('ep-rep'), role:$('ep-role'), address:$('ep-address'), neighborhood:$('ep-neighborhood'), postal:$('ep-postal'), country:$('ep-country') },
+    client: { name:$('ec-name'), id:$('ec-id'), address:$('ec-address'), neighborhood:$('ec-neighborhood'), postal:$('ec-postal'), country:$('ec-country') },
     scope: document.getElementById('e-scope')?.value?.trim()||'',
     fee: parseFloat(document.getElementById('e-fee')?.value)||0,
     currency: document.getElementById('e-currency')?.value||'USD',
@@ -3969,13 +4030,13 @@ function buildEngDocument(d) {
       <strong>${t('lbl-company')}:</strong> ${d.provider.company||'___'}<br>
       ${d.provider.rep ? '<strong>'+t('lbl-rep')+':</strong> '+d.provider.rep+'<br>' : ''}
       ${d.provider.role ? '<strong>'+t('lbl-role')+':</strong> '+d.provider.role+'<br>' : ''}
-      <strong>${t('doc-address')}:</strong> ${d.provider.address||'___'}<br>
+      <strong>${t('doc-address')}:</strong> ${d.provider.address||'___'}<br>${addrExtraHtml(d.provider)}
       <strong>${t('doc-country')}:</strong> ${d.provider.country||'___'}
     </div>
     <div class="sec"><div class="sec-title">${t('edoc-client')}</div>
       <strong>${t('doc-name')}:</strong> ${d.client.name||'___'}<br>
       ${d.client.id ? '<strong>'+t('doc-id')+':</strong> '+d.client.id+'<br>' : ''}
-      <strong>${t('doc-address')}:</strong> ${d.client.address||'___'}<br>
+      <strong>${t('doc-address')}:</strong> ${d.client.address||'___'}<br>${addrExtraHtml(d.client)}
       <strong>${t('doc-country')}:</strong> ${d.client.country||'___'}
     </div>
     <div class="sec"><div class="sec-title">${t('edoc-scope-h')}</div><p>${t('edoc-scope-text')}</p><p style="white-space:pre-wrap;">${d.scope||'___'}</p></div>
@@ -4017,13 +4078,13 @@ async function downloadEngPDF() {
   addTxt(`${t('lbl-company')}: ${d.provider.company||'___'}`,{});
   if (d.provider.rep) addTxt(`${t('lbl-rep')}: ${d.provider.rep}`,{});
   if (d.provider.role) addTxt(`${t('lbl-role')}: ${d.provider.role}`,{});
-  addTxt(`${t('doc-address')}: ${d.provider.address||'___'}`,{});
+  addTxt(`${t('doc-address')}: ${d.provider.address||'___'}`,{}); addPdfExtra(addTxt, d.provider);
   addTxt(`${t('doc-country')}: ${d.provider.country||'___'}`,{}); y+=3;
 
   addTxt(t('edoc-client'),{size:11,style:'bold',gap:3});
   addTxt(`${t('doc-name')}: ${d.client.name||'___'}`,{});
   if (d.client.id) addTxt(`${t('doc-id')}: ${d.client.id}`,{});
-  addTxt(`${t('doc-address')}: ${d.client.address||'___'}`,{});
+  addTxt(`${t('doc-address')}: ${d.client.address||'___'}`,{}); addPdfExtra(addTxt, d.client);
   addTxt(`${t('doc-country')}: ${d.client.country||'___'}`,{}); y+=4;
 
   addTxt(t('edoc-scope-h'),{size:12,style:'bold',gap:4});
@@ -4099,15 +4160,15 @@ function validateReceiptAndGo(from, to) {
 }
 function gatherReceiptData() {
   const methodMap = { cash:t('opt-cash'), bank:t('opt-bank'), check:t('opt-check'), card:t('opt-card'), other:t('opt-other-method') };
-  return { receiver:{name:$('rc-name'),address:$('rc-address'),country:$('rc-country')}, payer:{name:$('rc-from-name'),address:$('rc-from-address'),country:$('rc-from-country')}, number:$('rc-number'), amount:parseFloat(document.getElementById('rc-amount')?.value)||0, currency:document.getElementById('rc-currency')?.value||'USD', forWhat:$('rc-for'), method:document.getElementById('rc-method')?.value||'cash', methodLabel:methodMap[document.getElementById('rc-method')?.value||'cash'], date:document.getElementById('rc-date')?.value||'' };
+  return { receiver:{name:$('rc-name'),address:$('rc-address'), neighborhood:$('rc-neighborhood'), postal:$('rc-postal'),country:$('rc-country')}, payer:{name:$('rc-from-name'),address:$('rc-from-address'), neighborhood:$('rc-from-neighborhood'), postal:$('rc-from-postal'),country:$('rc-from-country')}, number:$('rc-number'), amount:parseFloat(document.getElementById('rc-amount')?.value)||0, currency:document.getElementById('rc-currency')?.value||'USD', forWhat:$('rc-for'), method:document.getElementById('rc-method')?.value||'cash', methodLabel:methodMap[document.getElementById('rc-method')?.value||'cash'], date:document.getElementById('rc-date')?.value||'' };
 }
 function buildReceiptDocument(d) {
   const amt = d.currency + ' ' + d.amount.toLocaleString(undefined,{minimumFractionDigits:2});
   return `
     <h2>${t('rcdoc-title')}</h2>
     ${d.number ? '<div class="sec"><strong>#'+d.number+'</strong></div>' : ''}
-    <div class="sec"><div class="sec-title">${t('rc1-title')}</div><strong>${d.receiver.name||'___'}</strong>${d.receiver.address?'<br>'+d.receiver.address:''}${d.receiver.country?'<br>'+d.receiver.country:''}</div>
-    <div class="sec"><p style="font-size:14px;font-weight:600;">${t('rcdoc-received').replace('{from}',d.payer.name||'___').replace('{amount}',amt)}</p>${(d.payer.address||d.payer.country)?'<p style="font-size:12px;">'+[d.payer.address,d.payer.country].filter(Boolean).join(', ')+'</p>':''}<p style="font-size:15px;font-weight:700;margin-top:6px;">${d.forWhat||'___'}</p></div>
+    <div class="sec"><div class="sec-title">${t('rc1-title')}</div><strong>${d.receiver.name||'___'}</strong>${addrJoin(d.receiver)?'<br>'+addrJoin(d.receiver):''}${d.receiver.country?'<br>'+d.receiver.country:''}</div>
+    <div class="sec"><p style="font-size:14px;font-weight:600;">${t('rcdoc-received').replace('{from}',d.payer.name||'___').replace('{amount}',amt)}</p>${(addrJoin(d.payer)||d.payer.country)?'<p style="font-size:12px;">'+[addrJoin(d.payer),d.payer.country].filter(Boolean).join(', ')+'</p>':''}<p style="font-size:15px;font-weight:700;margin-top:6px;">${d.forWhat||'___'}</p></div>
     <div class="sec"><p>${t('rcdoc-method').replace('{method}',d.methodLabel)}</p><p>${t('lbl-payment-date')}: ${fmtDate(d.date)}</p></div>
     <div class="sig-grid"><div><div class="sig-line">${t('rc1-title')}<br>${d.receiver.name||'___'}</div></div></div>`;
 }
@@ -4118,9 +4179,9 @@ async function downloadReceiptPDF() {
   const amt=d.currency+' '+d.amount.toLocaleString(undefined,{minimumFractionDigits:2});
   addTxt(t('rcdoc-title'),{size:18,style:'bold',align:'center',gap:8});y+=3;
   if(d.number)addTxt('#'+d.number,{size:10,align:'center',gap:4});
-  addTxt(t('rc1-title'),{size:11,style:'bold',gap:3});addTxt(d.receiver.name||'___',{});if(d.receiver.address)addTxt(d.receiver.address,{});if(d.receiver.country)addTxt(d.receiver.country,{});y+=4;
+  addTxt(t('rc1-title'),{size:11,style:'bold',gap:3});addTxt(d.receiver.name||'___',{});if(addrJoin(d.receiver))addTxt(addrJoin(d.receiver),{});if(d.receiver.country)addTxt(d.receiver.country,{});y+=4;
   addTxt(t('rcdoc-received').replace('{from}',d.payer.name||'___').replace('{amount}',amt),{size:11,style:'bold',gap:4});
-  if(d.payer.address||d.payer.country)addTxt([d.payer.address,d.payer.country].filter(Boolean).join(', '),{});
+  if(addrJoin(d.payer)||d.payer.country)addTxt([addrJoin(d.payer),d.payer.country].filter(Boolean).join(', '),{});
   addTxt(d.forWhat||'___',{size:12,style:'bold',gap:4});y+=3;
   addTxt(t('rcdoc-method').replace('{method}',d.methodLabel),{});
   addTxt(t('lbl-payment-date')+': '+fmtDate(d.date),{});y+=15;
@@ -4143,10 +4204,14 @@ function receiptFromInvoice() {
   // Receiver = invoice sender (they received the payment)
   document.getElementById('rc-name').value = d.from.name;
   document.getElementById('rc-address').value = d.from.address;
+  document.getElementById('rc-neighborhood').value = d.from.neighborhood;
+  document.getElementById('rc-postal').value = d.from.postal;
   document.getElementById('rc-country').value = d.from.country;
   // Payer = invoice recipient (they paid)
   document.getElementById('rc-from-name').value = d.to.name;
   document.getElementById('rc-from-address').value = d.to.address;
+  document.getElementById('rc-from-neighborhood').value = d.to.neighborhood;
+  document.getElementById('rc-from-postal').value = d.to.postal;
   document.getElementById('rc-from-country').value = d.to.country;
   // Payment details
   document.getElementById('rc-amount').value = d.total;
@@ -4164,10 +4229,14 @@ function invoiceFromReceipt() {
   // Sender = receipt receiver (they issue the invoice)
   document.getElementById('iv-from-name').value = d.receiver.name;
   document.getElementById('iv-from-address').value = d.receiver.address;
+  document.getElementById('iv-from-neighborhood').value = d.receiver.neighborhood;
+  document.getElementById('iv-from-postal').value = d.receiver.postal;
   document.getElementById('iv-from-country').value = d.receiver.country;
   // Recipient = receipt payer (they receive the invoice)
   document.getElementById('iv-to-name').value = d.payer.name;
   document.getElementById('iv-to-address').value = d.payer.address;
+  document.getElementById('iv-to-neighborhood').value = d.payer.neighborhood;
+  document.getElementById('iv-to-postal').value = d.payer.postal;
   document.getElementById('iv-to-country').value = d.payer.country;
   // Currency
   document.getElementById('iv-currency').value = d.currency;
@@ -4230,7 +4299,7 @@ function gatherInvoiceData() {
   const taxRate = parseFloat(document.getElementById('iv-tax')?.value)||0;
   const tax = sub * taxRate / 100;
   const methodMap = { cash:t('opt-cash'), bank:t('opt-bank'), check:t('opt-check'), card:t('opt-card'), other:t('opt-other-method') };
-  return { from:{name:$('iv-from-name'),address:$('iv-from-address'),country:$('iv-from-country'),email:$('iv-from-email'),phone:$('iv-from-phone')}, to:{name:$('iv-to-name'),address:$('iv-to-address'),country:$('iv-to-country')}, number:$('iv-number'), currency:document.getElementById('iv-currency')?.value||'USD', lines, subtotal:sub, taxRate, tax, total:sub+tax, date:document.getElementById('iv-date')?.value||'', due:document.getElementById('iv-due')?.value||'', method:document.getElementById('iv-method')?.value||'bank', methodLabel:methodMap[document.getElementById('iv-method')?.value||'bank'], bank:$('iv-bank'), notes:$('iv-notes') };
+  return { from:{name:$('iv-from-name'),address:$('iv-from-address'), neighborhood:$('iv-from-neighborhood'), postal:$('iv-from-postal'),country:$('iv-from-country'),email:$('iv-from-email'),phone:$('iv-from-phone')}, to:{name:$('iv-to-name'),address:$('iv-to-address'), neighborhood:$('iv-to-neighborhood'), postal:$('iv-to-postal'),country:$('iv-to-country')}, number:$('iv-number'), currency:document.getElementById('iv-currency')?.value||'USD', lines, subtotal:sub, taxRate, tax, total:sub+tax, date:document.getElementById('iv-date')?.value||'', due:document.getElementById('iv-due')?.value||'', method:document.getElementById('iv-method')?.value||'bank', methodLabel:methodMap[document.getElementById('iv-method')?.value||'bank'], bank:$('iv-bank'), notes:$('iv-notes') };
 }
 function buildInvoiceDocument(d) {
   const fmt = (n) => d.currency + ' ' + n.toLocaleString(undefined,{minimumFractionDigits:2});
@@ -4244,8 +4313,8 @@ function buildInvoiceDocument(d) {
   return `
     <h2>${t('ivdoc-title')}</h2>
     <div class="sec" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-      <div><div class="sec-title">${t('iv1-title')}</div><strong>${d.from.name||'___'}</strong>${d.from.address?'<br>'+d.from.address:''}${d.from.country?'<br>'+d.from.country:''}${d.from.email?'<br>'+d.from.email:''}${d.from.phone?'<br>'+d.from.phone:''}</div>
-      <div style="text-align:right;"><div class="sec-title">${t('iv2-title')}</div><strong>${d.to.name||'___'}</strong>${d.to.address?'<br>'+d.to.address:''}${d.to.country?'<br>'+d.to.country:''}</div>
+      <div><div class="sec-title">${t('iv1-title')}</div><strong>${d.from.name||'___'}</strong>${addrJoin(d.from)?'<br>'+addrJoin(d.from):''}${d.from.country?'<br>'+d.from.country:''}${d.from.email?'<br>'+d.from.email:''}${d.from.phone?'<br>'+d.from.phone:''}</div>
+      <div style="text-align:right;"><div class="sec-title">${t('iv2-title')}</div><strong>${d.to.name||'___'}</strong>${addrJoin(d.to)?'<br>'+addrJoin(d.to):''}${d.to.country?'<br>'+d.to.country:''}</div>
     </div>
     <div class="sec" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:13px;">
       ${d.number?'<div><strong>'+t('lbl-invoice-number')+':</strong> '+d.number+'</div>':''}
@@ -4266,10 +4335,10 @@ async function downloadInvoicePDF() {
   addTxt(t('ivdoc-title'),{size:18,style:'bold',align:'center',gap:8});y+=3;
 
   addTxt(t('iv1-title').replace(' (sender)','').replace(' (afzender)',''),{size:11,style:'bold',gap:3});
-  addTxt(d.from.name||'___',{});if(d.from.address)addTxt(d.from.address,{});if(d.from.country)addTxt(d.from.country,{});if(d.from.email)addTxt(d.from.email,{});if(d.from.phone)addTxt(d.from.phone,{});y+=3;
+  addTxt(d.from.name||'___',{});if(addrJoin(d.from))addTxt(addrJoin(d.from),{});if(d.from.country)addTxt(d.from.country,{});if(d.from.email)addTxt(d.from.email,{});if(d.from.phone)addTxt(d.from.phone,{});y+=3;
 
   addTxt(t('iv2-title').replace(' (recipient)','').replace(' (ontvanger)',''),{size:11,style:'bold',gap:3});
-  addTxt(d.to.name||'___',{});if(d.to.address)addTxt(d.to.address,{});if(d.to.country)addTxt(d.to.country,{});y+=4;
+  addTxt(d.to.name||'___',{});if(addrJoin(d.to))addTxt(addrJoin(d.to),{});if(d.to.country)addTxt(d.to.country,{});y+=4;
 
   if(d.number)addTxt(t('lbl-invoice-number')+': '+d.number,{});
   addTxt(t('lbl-invoice-date')+': '+fmtDate(d.date),{});
@@ -4335,8 +4404,8 @@ function gatherNdaData() {
   const durMap = { '1': t('opt-1year'), '2': t('opt-2years'), '3': t('opt-3years'), '5': t('opt-5years'), '0': t('opt-indefinite') };
   return {
     type: document.getElementById('n-type')?.value||'oneway',
-    disclosing: { name:$('nd-name'), id:$('nd-id'), address:$('nd-address'), country:$('nd-country') },
-    receiving: { name:$('nr-name'), id:$('nr-id'), address:$('nr-address'), country:$('nr-country') },
+    disclosing: { name:$('nd-name'), id:$('nd-id'), address:$('nd-address'), neighborhood:$('nd-neighborhood'), postal:$('nd-postal'), country:$('nd-country') },
+    receiving: { name:$('nr-name'), id:$('nr-id'), address:$('nr-address'), neighborhood:$('nr-neighborhood'), postal:$('nr-postal'), country:$('nr-country') },
     purpose: $('n-purpose'),
     duration: document.getElementById('n-duration')?.value||'2',
     durationLabel: durMap[document.getElementById('n-duration')?.value||'2'],
@@ -4348,7 +4417,7 @@ function gatherNdaData() {
 function buildNdaDocument(d) {
   const isMutual = d.type === 'mutual';
   const title = isMutual ? t('ndoc-mutual-title') : t('ndoc-title');
-  const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br>${p.id?'<strong>'+t('doc-id')+':</strong> '+p.id+'<br>':''}<strong>${t('doc-address')}:</strong> ${p.address||'___'}<br><strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
+  const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br>${p.id?'<strong>'+t('doc-id')+':</strong> '+p.id+'<br>':''}<strong>${t('doc-address')}:</strong> ${p.address||'___'}<br>${addrExtraHtml(p)}<strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
   const durText = d.duration === '0' ? t('ndoc-duration-indef') : t('ndoc-duration-text').replace('{duration}',d.durationLabel);
 
   const detailed = docDetail.nda === 'detailed';
@@ -4404,13 +4473,13 @@ async function downloadNdaPDF() {
   addTxt(lbl1,{size:11,style:'bold',gap:3});
   addTxt(`${t('doc-name')}: ${d.disclosing.name||'___'}`,{});
   if(d.disclosing.id) addTxt(`${t('doc-id')}: ${d.disclosing.id}`,{});
-  addTxt(`${t('doc-address')}: ${d.disclosing.address||'___'}`,{});
+  addTxt(`${t('doc-address')}: ${d.disclosing.address||'___'}`,{}); addPdfExtra(addTxt, d.disclosing);
   addTxt(`${t('doc-country')}: ${d.disclosing.country||'___'}`,{}); y+=3;
 
   addTxt(lbl2,{size:11,style:'bold',gap:3});
   addTxt(`${t('doc-name')}: ${d.receiving.name||'___'}`,{});
   if(d.receiving.id) addTxt(`${t('doc-id')}: ${d.receiving.id}`,{});
-  addTxt(`${t('doc-address')}: ${d.receiving.address||'___'}`,{});
+  addTxt(`${t('doc-address')}: ${d.receiving.address||'___'}`,{}); addPdfExtra(addTxt, d.receiving);
   addTxt(`${t('doc-country')}: ${d.receiving.country||'___'}`,{}); y+=4;
 
   addTxt(t('ndoc-purpose-h'),{size:12,style:'bold',gap:4}); addTxt(t('ndoc-purpose-text').replace('{purpose}',d.purpose||'___'),{}); y+=3;
@@ -4484,8 +4553,8 @@ function gatherEmplData() {
   const freqMap = { monthly: t('freq-monthly'), biweekly: t('freq-biweekly'), weekly: t('freq-weekly') };
   const typeMap = { fulltime: t('opt-fulltime'), parttime: t('opt-parttime') };
   return {
-    employer: { company:$('em-company'), rep:$('em-rep'), role:$('em-role'), address:$('em-address'), country:$('em-country') },
-    employee: { name:$('em-name'), id:$('em-id'), dob:document.getElementById('em-dob')?.value||'', address:$('em-emp-address'), country:$('em-emp-country') },
+    employer: { company:$('em-company'), rep:$('em-rep'), role:$('em-role'), address:$('em-address'), neighborhood:$('em-neighborhood'), postal:$('em-postal'), country:$('em-country') },
+    employee: { name:$('em-name'), id:$('em-id'), dob:document.getElementById('em-dob')?.value||'', address:$('em-emp-address'), neighborhood:$('em-emp-neighborhood'), postal:$('em-emp-postal'), country:$('em-emp-country') },
     jobtitle: $('em-jobtitle'), dept: $('em-dept'), workloc: $('em-workloc'),
     type: document.getElementById('em-type')?.value||'fulltime',
     typeLabel: typeMap[document.getElementById('em-type')?.value||'fulltime'],
@@ -4523,14 +4592,14 @@ function buildEmplDocument(d) {
       <strong>${t('lbl-company')}:</strong> ${d.employer.company||'___'}<br>
       ${d.employer.rep ? '<strong>'+t('lbl-rep')+':</strong> '+d.employer.rep+'<br>' : ''}
       ${d.employer.role ? '<strong>'+t('lbl-role')+':</strong> '+d.employer.role+'<br>' : ''}
-      <strong>${t('doc-address')}:</strong> ${d.employer.address||'___'}<br>
+      <strong>${t('doc-address')}:</strong> ${d.employer.address||'___'}<br>${addrExtraHtml(d.employer)}
       <strong>${t('doc-country')}:</strong> ${d.employer.country||'___'}
     </div>
     <div class="sec"><div class="sec-title">${t('mdoc-employee')}</div>
       <strong>${t('doc-name')}:</strong> ${d.employee.name||'___'}<br>
       ${d.employee.id ? '<strong>'+t('doc-id')+':</strong> '+d.employee.id+'<br>' : ''}
       ${d.employee.dob ? '<strong>'+t('lbl-dob')+':</strong> '+fmtDate(d.employee.dob)+'<br>' : ''}
-      <strong>${t('doc-address')}:</strong> ${d.employee.address||'___'}<br>
+      <strong>${t('doc-address')}:</strong> ${d.employee.address||'___'}<br>${addrExtraHtml(d.employee)}
       <strong>${t('doc-country')}:</strong> ${d.employee.country||'___'}
     </div>
     <div class="sec"><div class="sec-title">${t('mdoc-position-h')}</div><p>${posText}</p></div>
@@ -4572,14 +4641,14 @@ async function downloadEmplPDF() {
   addTxt(`${t('lbl-company')}: ${d.employer.company||'___'}`,{});
   if (d.employer.rep) addTxt(`${t('lbl-rep')}: ${d.employer.rep}`,{});
   if (d.employer.role) addTxt(`${t('lbl-role')}: ${d.employer.role}`,{});
-  addTxt(`${t('doc-address')}: ${d.employer.address||'___'}`,{});
+  addTxt(`${t('doc-address')}: ${d.employer.address||'___'}`,{}); addPdfExtra(addTxt, d.employer);
   addTxt(`${t('doc-country')}: ${d.employer.country||'___'}`,{}); y+=3;
 
   addTxt(t('mdoc-employee'),{size:11,style:'bold',gap:3});
   addTxt(`${t('doc-name')}: ${d.employee.name||'___'}`,{});
   if (d.employee.id) addTxt(`${t('doc-id')}: ${d.employee.id}`,{});
   if (d.employee.dob) addTxt(`${t('lbl-dob')}: ${fmtDate(d.employee.dob)}`,{});
-  addTxt(`${t('doc-address')}: ${d.employee.address||'___'}`,{});
+  addTxt(`${t('doc-address')}: ${d.employee.address||'___'}`,{}); addPdfExtra(addTxt, d.employee);
   addTxt(`${t('doc-country')}: ${d.employee.country||'___'}`,{}); y+=4;
 
     addTxt(t('mdoc-position-h'),{size:12,style:'bold',gap:4});
@@ -4662,8 +4731,8 @@ function toggleLoanRepay() {
 
 function gatherLoanData() {
   return {
-    lender: { name:$('ll-name'), id:$('ll-id'), address:$('ll-address'), country:$('ll-country') },
-    borrower: { name:$('lb-name'), id:$('lb-id'), address:$('lb-address'), country:$('lb-country') },
+    lender: { name:$('ll-name'), id:$('ll-id'), address:$('ll-address'), neighborhood:$('ll-neighborhood'), postal:$('ll-postal'), country:$('ll-country') },
+    borrower: { name:$('lb-name'), id:$('lb-id'), address:$('lb-address'), neighborhood:$('lb-neighborhood'), postal:$('lb-postal'), country:$('lb-country') },
     amount: parseFloat(document.getElementById('l-amount')?.value)||0,
     currency: document.getElementById('l-currency')?.value||'USD',
     interest: parseFloat(document.getElementById('l-interest')?.value)||0,
@@ -4675,11 +4744,12 @@ function gatherLoanData() {
     docDate: document.getElementById('l-doc-date')?.value||'',
     place: $('l-place'),
     law: $('l-law'),
+    witnesses: (document.getElementById('l-witnesses')?.value || 'yes') !== 'no',
   };
 }
 
 function buildLoanDocument(d) {
-  const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br><strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
+  const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br>${addrExtraHtml(p)}<strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
   const amtStr = d.currency + ' ' + d.amount.toLocaleString();
   const intStr = d.interest > 0 ? t('ldoc-interest-text').replace('{rate}',d.interest) : t('ldoc-noint-text');
   let repayStr = d.repayType === 'monthly' ? t('ldoc-monthly-text').replace('{currency}',d.currency).replace('{amount}',d.monthly.toLocaleString()).replace('{day}',fmtDay(d.payday)) : t('ldoc-lumpsum-text').replace('{date}',fmtDate(d.dateEnd));
@@ -4707,10 +4777,10 @@ function buildLoanDocument(d) {
       <div><div class="sig-line">${t('ldoc-lender')}<br>${d.lender.name||'___'}</div></div>
       <div><div class="sig-line">${t('ldoc-borrower')}<br>${d.borrower.name||'___'}</div></div>
     </div>
-    <div class="sig-grid" style="margin-top:16px;">
+    ${d.witnesses ? `<div class="sig-grid" style="margin-top:16px;">
       <div><div class="sig-line">${t('doc-witness')} 1</div></div>
       <div><div class="sig-line">${t('doc-witness')} 2</div></div>
-    </div>
+    </div>` : ''}
   `;
 }
 
@@ -4738,13 +4808,13 @@ async function downloadLoanPDF() {
   addTxt(t('ldoc-lender'),{size:11,style:'bold',gap:3});
   addTxt(`${t('doc-name')}: ${d.lender.name||'___'}`,{});
   addTxt(`${t('doc-id')}: ${d.lender.id||'___'}`,{});
-  addTxt(`${t('doc-address')}: ${d.lender.address||'___'}`,{});
+  addTxt(`${t('doc-address')}: ${d.lender.address||'___'}`,{}); addPdfExtra(addTxt, d.lender);
   addTxt(`${t('doc-country')}: ${d.lender.country||'___'}`,{}); y+=3;
 
   addTxt(t('ldoc-borrower'),{size:11,style:'bold',gap:3});
   addTxt(`${t('doc-name')}: ${d.borrower.name||'___'}`,{});
   addTxt(`${t('doc-id')}: ${d.borrower.id||'___'}`,{});
-  addTxt(`${t('doc-address')}: ${d.borrower.address||'___'}`,{});
+  addTxt(`${t('doc-address')}: ${d.borrower.address||'___'}`,{}); addPdfExtra(addTxt, d.borrower);
   addTxt(`${t('doc-country')}: ${d.borrower.country||'___'}`,{}); y+=4;
 
   const amtStr = d.currency+' '+d.amount.toLocaleString();
@@ -4781,9 +4851,11 @@ async function downloadLoanPDF() {
   doc.line(mg+95,y,mg+160,y);
   doc.text(t('ldoc-borrower'),mg+95,y+5); doc.text(d.borrower.name||'',mg+95,y+9);
 
-  y+=30; if(y>260){doc.addPage();y=mg+20;}
-  doc.line(mg,y,mg+65,y); doc.text(`${t('doc-witness')} 1`,mg,y+5);
-  doc.line(mg+95,y,mg+160,y); doc.text(`${t('doc-witness')} 2`,mg+95,y+5);
+  if (d.witnesses) {
+    y+=30; if(y>260){doc.addPage();y=mg+20;}
+    doc.line(mg,y,mg+65,y); doc.text(`${t('doc-witness')} 1`,mg,y+5);
+    doc.line(mg+95,y,mg+160,y); doc.text(`${t('doc-witness')} 2`,mg+95,y+5);
+  }
 
   y = addAttachmentsToPDF(doc, 'loan', mg, pw, y+20);
   addHeaderFooter(doc, ds);
@@ -5068,8 +5140,8 @@ function getBeneficiaries() {
 
 function gatherWillData() {
   return {
-    testator: { name:$('wt-name'), id:$('wt-id'), dob:document.getElementById('wt-dob')?.value||'', address:$('wt-address'), country:$('wt-country'), marital:document.getElementById('wt-marital')?.value||'single' },
-    executor: { name:$('we-name'), id:$('we-id'), address:$('we-address'), rel:$('we-rel') },
+    testator: { name:$('wt-name'), id:$('wt-id'), dob:document.getElementById('wt-dob')?.value||'', address:$('wt-address'), neighborhood:$('wt-neighborhood'), postal:$('wt-postal'), country:$('wt-country'), marital:document.getElementById('wt-marital')?.value||'single' },
+    executor: { name:$('we-name'), id:$('we-id'), address:$('we-address'), neighborhood:$('we-neighborhood'), postal:$('we-postal'), rel:$('we-rel') },
     beneficiaries: getBeneficiaries(),
     docDate: document.getElementById('w-doc-date')?.value||'',
     place: $('w-place'),
@@ -5079,7 +5151,7 @@ function gatherWillData() {
 
 function buildWillDocument(d) {
   const maritalLabel = t('opt-'+d.testator.marital);
-  const decl = t('wdoc-declaration').replace('{name}',d.testator.name||'___').replace('{dob}',fmtDate(d.testator.dob)).replace('{address}',d.testator.address||'___').replace('{country}',d.testator.country||'___');
+  const decl = t('wdoc-declaration').replace('{name}',d.testator.name||'___').replace('{dob}',fmtDate(d.testator.dob)).replace('{address}',addrJoin(d.testator)||'___').replace('{country}',d.testator.country||'___');
   const execText = t('wdoc-executor-text').replace('{name}',d.executor.name||'___').replace('{rel}',d.executor.rel||'___');
 
   let benHtml = '';
@@ -5103,7 +5175,7 @@ function buildWillDocument(d) {
     <div class="sec"><div class="sec-title">${t('wdoc-executor-h')}</div><p>${execText}</p>
       <strong>${t('doc-name')}:</strong> ${d.executor.name||'___'}<br>
       ${d.executor.id ? '<strong>'+t('doc-id')+':</strong> '+d.executor.id+'<br>' : ''}
-      ${d.executor.address ? '<strong>'+t('doc-address')+':</strong> '+d.executor.address+'<br>' : ''}
+      ${d.executor.address ? '<strong>'+t('doc-address')+':</strong> '+d.executor.address+'<br>'+addrExtraHtml(d.executor) : ''}
     </div>
     <div class="sec"><div class="sec-title">${t('wdoc-beneficiaries-h')}</div>${benHtml}</div>
     ${extraSecs}
@@ -5140,7 +5212,7 @@ async function downloadWillPDF() {
 
   addTxt(t('wdoc-title'),{size:18,style:'bold',align:'center',gap:8});
   addTxt(t('wdoc-draft-notice'),{size:9,style:'italic',align:'center',gap:6}); y+=3;
-  addTxt(t('wdoc-declaration').replace('{name}',d.testator.name||'___').replace('{dob}',fmtDate(d.testator.dob)).replace('{address}',d.testator.address||'___').replace('{country}',d.testator.country||'___'),{}); y+=3;
+  addTxt(t('wdoc-declaration').replace('{name}',d.testator.name||'___').replace('{dob}',fmtDate(d.testator.dob)).replace('{address}',addrJoin(d.testator)||'___').replace('{country}',d.testator.country||'___'),{}); y+=3;
   if (d.testator.id) { addTxt(t('doc-id')+': '+d.testator.id,{}); y+=3; }
 
   addTxt(t('wdoc-marital-h'),{size:12,style:'bold',gap:4});
@@ -5150,7 +5222,7 @@ async function downloadWillPDF() {
   addTxt(t('wdoc-executor-text').replace('{name}',d.executor.name||'___').replace('{rel}',d.executor.rel||'___'),{});
   addTxt(`${t('doc-name')}: ${d.executor.name||'___'}`,{});
   if (d.executor.id) addTxt(`${t('doc-id')}: ${d.executor.id}`,{});
-  if (d.executor.address) addTxt(`${t('doc-address')}: ${d.executor.address}`,{});
+  if (d.executor.address) addTxt(`${t('doc-address')}: ${d.executor.address}`,{}); addPdfExtra(addTxt, d.executor);
   y+=3;
 
   addTxt(t('wdoc-beneficiaries-h'),{size:12,style:'bold',gap:4});
@@ -5217,11 +5289,33 @@ function updateStepNav(docTitleKey, stepNum, totalSteps) {
   setTimeout(livePreview, 100);
 }
 
+// ====== Adres: buurt en postcode (optioneel) ======
+function addrJoin(p) { return [p && p.address, p && p.neighborhood, p && p.postal].filter(Boolean).join(', '); }
+function addrExtraHtml(p) {
+  return (p && p.neighborhood ? '<strong>' + t('doc-neighborhood') + ':</strong> ' + p.neighborhood + '<br>' : '')
+       + (p && p.postal ? '<strong>' + t('doc-postal') + ':</strong> ' + p.postal + '<br>' : '');
+}
+function addPdfExtra(add, p) {
+  if (p && p.neighborhood) add(`${t('doc-neighborhood')}: ${p.neighborhood}`, {});
+  if (p && p.postal) add(`${t('doc-postal')}: ${p.postal}`, {});
+}
+
 // ====== Date quick-pick ======
 function fmtDateISO(offset) {
+  // Lokale datum (niet UTC), anders klopt "vandaag" 's avonds niet
   const d = new Date();
   d.setDate(d.getDate() + offset);
-  return d.toISOString().split('T')[0];
+  const m = String(d.getMonth() + 1).padStart(2, '0'), day = String(d.getDate()).padStart(2, '0');
+  return d.getFullYear() + '-' + m + '-' + day;
+}
+
+function setQuickDate(btn, offset) {
+  const input = btn.closest('.date-quick').parentElement.querySelector('input[type="date"]');
+  if (!input) return;
+  input.value = fmtDateISO(offset);
+  // Laat voorbeeld, datumhint, validatie en automatisch opslaan reageren
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+  input.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
 function initDateQuickPicks() {
@@ -5230,7 +5324,7 @@ function initDateQuickPicks() {
     if (input.parentElement.querySelector('.date-quick')) return;
     const div = document.createElement('div');
     div.className = 'date-quick';
-    div.innerHTML = `<button type="button" onclick="this.parentElement.previousElementSibling.value='${fmtDateISO(-1)}'" data-i18n="dq-yesterday">${t('dq-yesterday')}</button><button type="button" onclick="this.parentElement.previousElementSibling.value='${fmtDateISO(0)}'" data-i18n="dq-today">${t('dq-today')}</button><button type="button" onclick="this.parentElement.previousElementSibling.value='${fmtDateISO(1)}'" data-i18n="dq-tomorrow">${t('dq-tomorrow')}</button>`;
+    div.innerHTML = `<button type="button" onclick="setQuickDate(this,-1)" data-i18n="dq-yesterday">${t('dq-yesterday')}</button><button type="button" onclick="setQuickDate(this,0)" data-i18n="dq-today">${t('dq-today')}</button><button type="button" onclick="setQuickDate(this,1)" data-i18n="dq-tomorrow">${t('dq-tomorrow')}</button>`;
     input.after(div);
   });
 }
@@ -5389,8 +5483,8 @@ function gatherBosData() {
     item = { ...item, desc: document.getElementById('b-item-desc')?.value?.trim()||'' };
   }
   return {
-    seller: { name:$('bs-name'), id:$('bs-id'), address:$('bs-address'), country:$('bs-country') },
-    buyer: { name:$('bb-name'), id:$('bb-id'), address:$('bb-address'), country:$('bb-country') },
+    seller: { name:$('bs-name'), id:$('bs-id'), address:$('bs-address'), neighborhood:$('bs-neighborhood'), postal:$('bs-postal'), country:$('bs-country') },
+    buyer: { name:$('bb-name'), id:$('bb-id'), address:$('bb-address'), neighborhood:$('bb-neighborhood'), postal:$('bb-postal'), country:$('bb-country') },
     item,
     price: parseFloat(document.getElementById('b-price')?.value)||0,
     currency: document.getElementById('b-currency')?.value||'USD',
@@ -5399,6 +5493,7 @@ function gatherBosData() {
     docDate: document.getElementById('b-doc-date')?.value||'',
     place: $('b-place'),
     law: $('b-law'),
+    witnesses: (document.getElementById('b-witnesses')?.value || 'yes') !== 'no',
   };
 }
 
@@ -5455,7 +5550,7 @@ function bosItemText(item) {
 }
 
 function buildBosDocument(d) {
-  const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br><strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
+  const person = (p,label) => `<div class="sec"><div class="sec-title">${label}</div><strong>${t('doc-name')}:</strong> ${p.name||'___'}<br><strong>${t('doc-id')}:</strong> ${p.id||'___'}<br><strong>${t('doc-address')}:</strong> ${p.address||'___'}<br>${addrExtraHtml(p)}<strong>${t('doc-country')}:</strong> ${p.country||'___'}</div>`;
 
   const amtStr = d.currency + ' ' + d.price.toLocaleString();
   const payLabel = t('opt-'+d.payment);
@@ -5483,10 +5578,10 @@ function buildBosDocument(d) {
       <div><div class="sig-line">${t('bdoc-seller')}<br>${d.seller.name||'___'}</div></div>
       <div><div class="sig-line">${t('bdoc-buyer')}<br>${d.buyer.name||'___'}</div></div>
     </div>
-    <div class="sig-grid" style="margin-top:16px;">
+    ${d.witnesses ? `<div class="sig-grid" style="margin-top:16px;">
       <div><div class="sig-line">${t('doc-witness')} 1</div></div>
       <div><div class="sig-line">${t('doc-witness')} 2</div></div>
-    </div>
+    </div>` : ''}
   `;
 }
 
@@ -5529,12 +5624,14 @@ async function downloadBosPDF() {
   addTxt(`${t('doc-name')}: ${d.seller.name||'___'}`,{});
   addTxt(`${t('doc-id')}: ${d.seller.id||'___'}`,{});
   addTxt(`${t('doc-address')}: ${d.seller.address||'___'}`,{});
+  addPdfExtra(addTxt, d.seller);
   addTxt(`${t('doc-country')}: ${d.seller.country||'___'}`,{}); y+=3;
 
   addTxt(t('bdoc-buyer'),{size:11,style:'bold',gap:3});
   addTxt(`${t('doc-name')}: ${d.buyer.name||'___'}`,{});
   addTxt(`${t('doc-id')}: ${d.buyer.id||'___'}`,{});
   addTxt(`${t('doc-address')}: ${d.buyer.address||'___'}`,{});
+  addPdfExtra(addTxt, d.buyer);
   addTxt(`${t('doc-country')}: ${d.buyer.country||'___'}`,{}); y+=4;
 
   addTxt(t('bdoc-item-h'),{size:12,style:'bold',gap:4});
@@ -5567,9 +5664,11 @@ async function downloadBosPDF() {
   doc.line(mg+95,y,mg+160,y);
   doc.text(t('bdoc-buyer'),mg+95,y+5); doc.text(d.buyer.name||'',mg+95,y+9);
 
-  y+=30; if(y>260){doc.addPage();y=mg+20;}
-  doc.line(mg,y,mg+65,y); doc.text(`${t('doc-witness')} 1`,mg,y+5);
-  doc.line(mg+95,y,mg+160,y); doc.text(`${t('doc-witness')} 2`,mg+95,y+5);
+  if (d.witnesses) {
+    y+=30; if(y>260){doc.addPage();y=mg+20;}
+    doc.line(mg,y,mg+65,y); doc.text(`${t('doc-witness')} 1`,mg,y+5);
+    doc.line(mg+95,y,mg+160,y); doc.text(`${t('doc-witness')} 2`,mg+95,y+5);
+  }
 
   y+=25; if(y>270){doc.addPage();y=mg;}
   y = addAttachmentsToPDF(doc, 'bos', mg, pw, y);
