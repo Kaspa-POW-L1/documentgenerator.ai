@@ -261,41 +261,6 @@ body {
     display: none !important;
   }
   
-/* Hide duplicate preview in final steps on desktop (live preview panel shows it) */
-@media (min-width: 901px) {
-  #step-5 .preview-box,
-  #step-r6 .preview-box,
-  #step-b6 .preview-box,
-  #step-e5 .preview-box,
-  #step-rc4 .preview-box,
-  #step-iv5 .preview-box,
-  #step-n5 .preview-box,
-  #step-m6 .preview-box,
-  #step-l5 .preview-box,
-  #step-w5 .preview-box,
-  #step-5 .edit-hint,
-  #step-r6 .edit-hint,
-  #step-b6 .edit-hint,
-  #step-e5 .edit-hint,
-  #step-rc4 .edit-hint,
-  #step-iv5 .edit-hint,
-  #step-n5 .edit-hint,
-  #step-m6 .edit-hint,
-  #step-l5 .edit-hint,
-  #step-w5 .edit-hint,
-  #step-5 .btn-edit-doc,
-  #step-r6 .btn-edit-doc,
-  #step-b6 .btn-edit-doc,
-  #step-e5 .btn-edit-doc,
-  #step-rc4 .btn-edit-doc,
-  #step-iv5 .btn-edit-doc,
-  #step-n5 .btn-edit-doc,
-  #step-m6 .btn-edit-doc,
-  #step-l5 .btn-edit-doc,
-  #step-w5 .btn-edit-doc {
-    display: none !important;
-  }
-}
 .mobile-preview-btn {
     display: flex !important;
   }
@@ -1147,8 +1112,8 @@ input[type=number] { -moz-appearance: textfield; }
         </div>
         <div class="doc-card" onclick="selectDocType('will')">
           <div class="dc-icon">📜</div>
-          <h3 data-i18n="dt-will-title">Last Will & Testament</h3>
-          <p data-i18n="dt-will-desc">Set out your final wishes</p>
+          <h3 data-i18n="dt-will-title">Draft Will</h3>
+          <p data-i18n="dt-will-desc">Prepare your will for the notary</p>
         </div>
         <div class="doc-card" onclick="selectDocType('receipt')">
           <div class="dc-icon">🧾</div>
@@ -1295,7 +1260,7 @@ input[type=number] { -moz-appearance: textfield; }
     <div class="step-card">
       <div class="step-icon">📅</div>
       <h2 class="step-title" data-i18n="s4-title">How long should it last?</h2>
-      <p class="step-explain" data-i18n="s4-explain">Choose how long this power of attorney stays valid.</p>
+      <p class="step-explain" data-i18n="s4-explain">Choose how long this document stays valid.</p>
 
       <div class="dur-card selected" id="dc-indef" onclick="setDuration('indefinite')">
         <h3 data-i18n="opt-indef-title">Until cancelled</h3>
@@ -1551,7 +1516,7 @@ input[type=number] { -moz-appearance: textfield; }
     <div class="step-card">
       <div class="step-icon">📅</div>
       <h2 class="step-title" data-i18n="s4-title">How long should it last?</h2>
-      <p class="step-explain" data-i18n="s4-explain">Choose how long this power of attorney stays valid.</p>
+      <p class="step-explain" data-i18n="s4-explain">Choose how long this document stays valid.</p>
       <div class="dur-card selected" id="rdc-fixed" onclick="setRentalDuration('fixed')">
         <h3 data-i18n="opt-fixed-title">Set a time period</h3>
         <p data-i18n="opt-fixed-desc">You choose a start and end date.</p>
@@ -2677,6 +2642,21 @@ input[type=number] { -moz-appearance: textfield; }
     <button class="modal-close" onclick="document.getElementById('changelog-modal').classList.remove('show')">&times;</button>
     <h2>Changelog — documentgenerator.ai</h2>
     <div class="log-entry">
+      <h3>v4.4</h3>
+      <div class="log-date">5 november 2026</div>
+      <ul>
+        <li>18 talen: vertalingen verplaatst naar translations.js (en, nl, es, fr, de, pt, it, ru, zh, ja, ar, ko, tr, pl, hi, fa, he, sw)</li>
+        <li>Rechts-naar-links (RTL) weergave voor Arabisch, Perzisch en Hebreeuws</li>
+        <li>Split-screen live voorbeeld naast het formulier, plus voorbeeldvenster op mobiel</li>
+        <li>Stappenbalk en automatisch opslaan (24 uur, zonder ID-, geboortedatum- en bankvelden)</li>
+        <li>Fix: Testament-tegel heet nu consequent "Draft Will"; tekst bij stap "Hoe lang geldig" zegt niet meer "volmacht" bij andere documenten</li>
+        <li>Fix: PDF's in ru, zh, ja, ko, ar, fa, he, hi, tr en pl tonen nu de juiste tekens (tekst met niet-Latijnse tekens wordt via de browser getekend; Latijnse tekst blijft selecteerbaar)</li>
+        <li>Fix: disclaimer onder de BOS-checklist vertaald naar alle 18 talen; checklisttitel in pt, it en ru vertaald</li>
+        <li>Fix: dubbel "(Testator)"-label in de testament-PDF verwijderd</li>
+        <li>Fix: changelog gecorrigeerd (CMg → XCG) en bijgewerkt</li>
+      </ul>
+    </div>
+    <div class="log-entry">
       <h3>v4.3</h3>
       <div class="log-date">4 oktober 2026</div>
       <ul>
@@ -2701,7 +2681,7 @@ input[type=number] { -moz-appearance: textfield; }
         <li>Factuur (Invoice) toegevoegd: afzender, ontvanger, dynamische regels (omschrijving, aantal, stukprijs), belasting, subtotaal, totaal, vervaldatum, bankgegevens</li>
         <li>Kwitantie ↔ Factuur koppeling: met één klik een kwitantie maken vanuit een factuur en omgekeerd</li>
         <li>Wettelijke rente-clausule standaard in alle documenten met geldbedragen, met verwijzing naar het juiste wetsartikel per jurisdictie (15+ landen)</li>
-        <li>ANG vervangen door CMg (Caribbean Guilder) — valutanamen toegevoegd, locatie-detectie voor standaardvaluta</li>
+        <li>ANG vervangen door XCG (Caribbean Guilder) — valutanamen toegevoegd, locatie-detectie voor standaardvaluta</li>
         <li>Voertuigtype sub-keuze: auto, motor, scooter, vrachtwagen, SUV, bestelbus, bus, ATV, aanhanger</li>
         <li>Datum en tijd in "laatst bijgewerkt" nu dynamisch</li>
         <li>Documenticoon boven keuzepagina verwijderd</li>
@@ -3048,11 +3028,11 @@ function applyLang() {
   const luEl = document.getElementById('last-updated-text');
   if (luEl) {
     try {
-      const d = new Date('2026-10-15');
+      const d = new Date('2026-11-05');
       const locales = { en:'en-US', nl:'nl-NL', es:'es-ES', fr:'fr-FR', de:'de-DE', pt:'pt-BR', it:'it-IT', ru:'ru-RU', zh:'zh-CN', ja:'ja-JP', ar:'ar-SA', ko:'ko-KR', tr:'tr-TR', pl:'pl-PL', hi:'hi-IN', fa:'fa-IR', he:'he-IL', sw:'sw-KE' };
       const fmt = d.toLocaleDateString(locales[lang]||'en-US', { year:'numeric', month:'short', day:'numeric' });
       luEl.textContent = `${t('last-updated-prefix')} ${fmt}`;
-    } catch(e) { luEl.textContent = t('last-updated-prefix') + ' Oct 15, 2026'; }
+    } catch(e) { luEl.textContent = t('last-updated-prefix') + ' Nov 5, 2026'; }
   }
   // Update privacy policy content
   const pc = document.getElementById('privacy-content');
@@ -3243,11 +3223,78 @@ function renderPreview() {
 
 
 // ====== PDF ======
+// ===== PDF: Unicode-tekst (ru, zh, ja, ar, ko, tr, pl, hi, fa, he, …) =====
+// jsPDF's standaardlettertypen kennen alleen Latin-1. Regels met andere tekens worden
+// daarom door de browser (canvas) getekend en als afbeelding in de PDF geplaatst.
+// Zo werken lettertypen, RTL en samengestelde tekens (Arabisch, Hindi) zonder lettertype-download.
+// Gewone Latijnse tekst blijft echte, selecteerbare PDF-tekst.
+const PDF_NEEDS_CANVAS = /[^\u0000-ÿ–—‘’‚“”„†‡•…‰‹›€™]/;
+const PDF_RTL = /[֐-ࣿיִ-﷿ﹰ-﻿]/;
+const PDF_CJK = /[　-鿿가-힯＀-￯]/;
+function patchPdfUnicode(doc) {
+  const origText = doc.text.bind(doc);
+  const origSplit = doc.splitTextToSize.bind(doc);
+  const S = 4;                        // canvas-pixels per punt (scherpte)
+  const MM = 25.4 / 72;               // punt → mm
+  const ctx = document.createElement('canvas').getContext('2d');
+  const fontCss = () => {
+    const f = doc.getFont(), st = f.fontStyle || 'normal', sz = doc.getFontSize() * S;
+    const fam = /times/i.test(f.fontName) ? '"Times New Roman","Noto Serif","DejaVu Serif",serif'
+      : /courier/i.test(f.fontName) ? '"Courier New","Noto Sans Mono","DejaVu Sans Mono",monospace'
+      : 'Arial,"Segoe UI","Noto Sans","Noto Sans CJK SC","Noto Sans Arabic","Noto Sans Hebrew","Noto Sans Devanagari","DejaVu Sans",sans-serif';
+    return (/italic/.test(st) ? 'italic ' : '') + (/bold/.test(st) ? 'bold ' : '') + sz + 'px ' + fam;
+  };
+  const widthMm = (s) => { ctx.font = fontCss(); ctx.direction = PDF_RTL.test(s) ? 'rtl' : 'ltr'; return ctx.measureText(s).width / S * MM; };
+
+  doc.splitTextToSize = function (text, maxW, opts) {
+    const str = Array.isArray(text) ? text.join('\n') : String(text == null ? '' : text);
+    if (!PDF_NEEDS_CANVAS.test(str)) return origSplit(text, maxW, opts);
+    const out = [];
+    str.split('\n').forEach(par => {
+      if (!PDF_NEEDS_CANVAS.test(par)) { origSplit(par, maxW).forEach(l => out.push(l)); return; }
+      const tokens = par.match(/\s+|[　-鿿가-힯＀-￯]|[^\s　-鿿가-힯＀-￯]+/g) || [''];
+      let line = '';
+      tokens.forEach(tok => {
+        const trial = line + tok;
+        if (line && widthMm(trial.trimEnd()) > maxW && tok.trim()) { out.push(line.trimEnd()); line = tok.trimStart(); }
+        else line = trial;
+      });
+      out.push(line.trimEnd());
+    });
+    return out;
+  };
+
+  doc.text = function (text, x, y, opts) {
+    const lines = Array.isArray(text) ? text : String(text == null ? '' : text).split('\n');
+    if (!lines.some(l => PDF_NEEDS_CANVAS.test(String(l)))) return origText(text, x, y, opts);
+    const size = doc.getFontSize(), lh = size * 1.15 * MM;
+    const align = (opts && opts.align) || 'left';
+    let color = '#000000';
+    try { const c = doc.getTextColor(); if (c) color = c; } catch (e) {}
+    lines.forEach((raw, i) => {
+      const line = String(raw), ly = y + i * lh;
+      if (!PDF_NEEDS_CANVAS.test(line)) { origText(line, x, ly, opts); return; }
+      if (!line.trim()) return;
+      ctx.font = fontCss(); ctx.direction = PDF_RTL.test(line) ? 'rtl' : 'ltr';
+      const wPx = Math.ceil(ctx.measureText(line).width) + 8, hPx = Math.ceil(size * 1.6 * S), base = Math.round(size * 1.15 * S);
+      const cv = document.createElement('canvas'); cv.width = wPx; cv.height = hPx;
+      const c2 = cv.getContext('2d');
+      c2.font = fontCss(); c2.direction = ctx.direction; c2.textAlign = 'left'; c2.textBaseline = 'alphabetic'; c2.fillStyle = color;
+      c2.fillText(line, 4, base);
+      const wMm = wPx / S * MM, hMm = hPx / S * MM;
+      const ix = (align === 'center' ? x - wMm / 2 : align === 'right' ? x - wMm : x) - 4 / S * MM;
+      doc.addImage(cv.toDataURL('image/png'), 'PNG', ix, ly - base / S * MM, wMm, hMm, undefined, 'FAST');
+    });
+    return doc;
+  };
+  return doc;
+}
+
 async function downloadPDF() {
   trackEdits('preview', 'Power of Attorney');
   if (!window.jspdf) { alert('PDF library not loaded. Please disable your ad blocker for this site and reload.'); return; }
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const doc = patchPdfUnicode(new jsPDF({ unit: 'mm', format: 'a4' }));
   const d = gatherData();
   const ds = getDocSettings('poa');
   const mg = 25, pw = 160;
@@ -3715,7 +3762,7 @@ async function downloadRentalPDF() {
 
   if (!window.jspdf) { alert('PDF library not loaded. Please disable your ad blocker for this site and reload.'); return; }
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const doc = patchPdfUnicode(new jsPDF({ unit:'mm', format:'a4' }));
   const d = gatherRentalData();
   const ds = getDocSettings('rental');
   const mg = 25, pw = 160;
@@ -3949,7 +3996,7 @@ async function downloadEngPDF() {
 
   if (!window.jspdf) { alert('PDF library not loaded. Please disable your ad blocker for this site and reload.'); return; }
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const doc = patchPdfUnicode(new jsPDF({ unit:'mm', format:'a4' }));
   const d = gatherEngData();
   const ds = getDocSettings('eng');
   const mg = 25, pw = 160;
@@ -4066,7 +4113,7 @@ function buildReceiptDocument(d) {
 }
 async function downloadReceiptPDF() {
 
-  const{jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});const d=gatherReceiptData();const ds=getDocSettings('receipt');const mg=25,pw=160;let y=ds.header?mg+4:mg;
+  const{jsPDF}=window.jspdf;const doc=patchPdfUnicode(new jsPDF({unit:'mm',format:'a4'}));const d=gatherReceiptData();const ds=getDocSettings('receipt');const mg=25,pw=160;let y=ds.header?mg+4:mg;
   const addTxt=(text,opts={})=>{const sz=opts.size||ds.fontSize,st=opts.style||'normal',al=opts.align||'left';doc.setFontSize(sz);doc.setFont(ds.fontFamily,st);const lines=doc.splitTextToSize(text,opts.w||pw);if(y+lines.length*sz*0.4>278){doc.addPage();y=ds.header?mg+4:mg;}doc.text(lines,al==='center'?105:mg,y,{align:al});y+=lines.length*sz*0.42+(opts.gap||2);};
   const amt=d.currency+' '+d.amount.toLocaleString(undefined,{minimumFractionDigits:2});
   addTxt(t('rcdoc-title'),{size:18,style:'bold',align:'center',gap:8});y+=3;
@@ -4212,7 +4259,7 @@ function buildInvoiceDocument(d) {
 }
 async function downloadInvoicePDF() {
 
-  const{jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});const d=gatherInvoiceData();const ds=getDocSettings('invoice');const mg=25,pw=160;let y=ds.header?mg+4:mg;
+  const{jsPDF}=window.jspdf;const doc=patchPdfUnicode(new jsPDF({unit:'mm',format:'a4'}));const d=gatherInvoiceData();const ds=getDocSettings('invoice');const mg=25,pw=160;let y=ds.header?mg+4:mg;
   const addTxt=(text,opts={})=>{const sz=opts.size||ds.fontSize,st=opts.style||'normal',al=opts.align||'left';doc.setFontSize(sz);doc.setFont(ds.fontFamily,st);const lines=doc.splitTextToSize(text,opts.w||pw);if(y+lines.length*sz*0.4>278){doc.addPage();y=ds.header?mg+4:mg;}doc.text(lines,al==='center'?105:mg,y,{align:al});y+=lines.length*sz*0.42+(opts.gap||2);};
   const fmt=(n)=>d.currency+' '+n.toLocaleString(undefined,{minimumFractionDigits:2});
 
@@ -4334,7 +4381,7 @@ async function downloadNdaPDF() {
 
   if (!window.jspdf) { alert('PDF library not loaded. Please disable your ad blocker for this site and reload.'); return; }
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const doc = patchPdfUnicode(new jsPDF({ unit:'mm', format:'a4' }));
   const d = gatherNdaData();
   const ds = getDocSettings('nda');
   const mg = 25, pw = 160;
@@ -4504,7 +4551,7 @@ async function downloadEmplPDF() {
 
   if (!window.jspdf) { alert('PDF library not loaded. Please disable your ad blocker for this site and reload.'); return; }
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const doc = patchPdfUnicode(new jsPDF({ unit:'mm', format:'a4' }));
   const d = gatherEmplData();
   const ds = getDocSettings('empl');
   const mg = 25, pw = 160;
@@ -4671,7 +4718,7 @@ async function downloadLoanPDF() {
 
   if (!window.jspdf) { alert('PDF library not loaded. Please disable your ad blocker for this site and reload.'); return; }
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const doc = patchPdfUnicode(new jsPDF({ unit:'mm', format:'a4' }));
   const d = gatherLoanData();
   const ds = getDocSettings('loan');
   const mg = 25, pw = 160;
@@ -5077,7 +5124,7 @@ async function downloadWillPDF() {
 
   if (!window.jspdf) { alert('PDF library not loaded. Please disable your ad blocker for this site and reload.'); return; }
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const doc = patchPdfUnicode(new jsPDF({ unit:'mm', format:'a4' }));
   const d = gatherWillData();
   const ds = getDocSettings('will');
   const mg = 25, pw = 160;
@@ -5130,7 +5177,6 @@ async function downloadWillPDF() {
   doc.line(mg,y,mg+pw,y); doc.setFontSize(9);
   doc.text(`${d.testator.name||'___'}`,mg,y+5);
   doc.text(`(${t('wdoc-testator')})`,mg,y+9.5);
-  doc.text('(Testator)',mg,y+9);
 
   y+=30; if(y>260){doc.addPage();y=mg+20;}
   doc.line(mg,y,mg+65,y); doc.text(`${t('doc-witness')} 1`,mg,y+5);
@@ -5452,7 +5498,7 @@ function renderBosChecklist(d) {
     return `<div style="margin-top:16px;padding:14px;background:#fffbe6;border:1px solid #e6d27a;border-radius:8px;font-size:13px;">
       <strong>${t('bos-checklist-title')}</strong>
       <ul style="margin:8px 0 0 16px;line-height:1.7;">${items.map(r => '<li>'+r+'</li>').join('')}</ul>
-      <p style="margin-top:10px;font-size:11px;color:#92400E;">⚠ This checklist is for reference only and is not part of the generated document.</p>
+      <p style="margin-top:10px;font-size:11px;color:#92400E;">${t('bos-note')}</p>
     </div>`;
   }
   return '';
@@ -5462,7 +5508,7 @@ async function downloadBosPDF() {
 
   if (!window.jspdf) { alert('PDF library not loaded. Please disable your ad blocker for this site and reload.'); return; }
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const doc = patchPdfUnicode(new jsPDF({ unit:'mm', format:'a4' }));
   const d = gatherBosData();
   const ds = getDocSettings('bos');
   const mg = 25, pw = 160;
