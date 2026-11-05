@@ -1260,30 +1260,6 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
           <p data-i18n="dt-invoice-desc">Bill for goods or services</p>
         </div>
       </div>
-
-      <div class="intro-points">
-        <div class="intro-point">
-          <div class="ip-icon">✏️</div>
-          <div class="ip-text">
-            <strong data-i18n="intro-p1-title">Fill in a few details</strong>
-            <span data-i18n="intro-p1-text">We ask only what's needed — nothing more.</span>
-          </div>
-        </div>
-        <div class="intro-point">
-          <div class="ip-icon">👀</div>
-          <div class="ip-text">
-            <strong data-i18n="intro-p2-title">Check the result</strong>
-            <span data-i18n="intro-p2-text">See exactly what the document looks like before downloading.</span>
-          </div>
-        </div>
-        <div class="intro-point">
-          <div class="ip-icon">📥</div>
-          <div class="ip-text">
-            <strong data-i18n="intro-p3-title">Download and sign</strong>
-            <span data-i18n="intro-p3-text">Get a PDF ready to print and sign.</span>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -2840,7 +2816,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
         <li>Fix: de knoppen Gisteren/Vandaag/Morgen bij datumvelden werkten niet (vulden de datumhint in plaats van het veld) en gebruikten UTC in plaats van lokale datum</li>
         <li>Alle documenten: optionele velden "Buurt" en "Postcode" bij alle adressen in alle 10 documenten (formulier, voorbeeld en PDF, alle 18 talen) (formulier, voorbeeld en PDF, alle 18 talen)</li>
         <li>Volmacht, lening en koopovereenkomst: getuigen nu optioneel (keuze "Met twee getuigen" of "Zonder getuigen" bij ondertekening; standaard met getuigen). Testament blijft met getuigen</li>
-        <li>Nieuw ontwerp startpagina: hero met drie vertrouwenspunten, kleur per documenttype, vloeiende animaties (respecteert "minder beweging"), bevestiging na PDF-download en compacte tegels op mobiel</li>
+        <li>Nieuw ontwerp startpagina: hero met drie vertrouwenspunten, kleur per documenttype, vloeiende animaties (respecteert "minder beweging"), bevestiging na PDF-download compacte tegels op mobiel en het uitlegblok "Vul in / Controleer / Download" onderaan verwijderd (stond dubbel met de hero)</li>
         <li>Taalkiezer: één uitklapmenu in de header in plaats van 18 knoppen; eerste bezoek volgt de browsertaal</li>
         <li>Fix: dubbel "(Testator)"-label in de testament-PDF verwijderd</li>
         <li>Fix: changelog gecorrigeerd (CMg → XCG) en bijgewerkt</li>
@@ -3224,7 +3200,7 @@ function applyLang() {
     try {
       const d = new Date('2026-11-05');
       const locales = { en:'en-US', nl:'nl-NL', es:'es-ES', fr:'fr-FR', de:'de-DE', pt:'pt-BR', it:'it-IT', ru:'ru-RU', zh:'zh-CN', ja:'ja-JP', ar:'ar-SA', ko:'ko-KR', tr:'tr-TR', pl:'pl-PL', hi:'hi-IN', fa:'fa-IR', he:'he-IL', sw:'sw-KE' };
-      const fmt = d.toLocaleDateString(locales[lang]||'en-US', { year:'numeric', month:'short', day:'numeric' });
+      const fmt = d.toLocaleDateString(locales[lang]||'en-US', { year:'numeric', month:'short', day:'numeric', timeZone:'UTC' });
       luEl.textContent = `${t('last-updated-prefix')} ${fmt}`;
     } catch(e) { luEl.textContent = t('last-updated-prefix') + ' Nov 5, 2026'; }
   }
