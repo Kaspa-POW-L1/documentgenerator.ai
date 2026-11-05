@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>documentgenerator.ai</title>
+<meta name="description" content="Free online document generator: create a power of attorney, rental agreement, bill of sale, loan agreement, NDA, invoice and more as a print-ready PDF. No account, 18 languages, and what you type stays in your browser.">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
 <script>
 if (!window.jspdf) {
@@ -1297,6 +1298,30 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* Uitleg per document (startpagina) */
+.guides { margin-top: 28px; }
+.guides h2 { font-size: 20px; margin: 0 0 12px; }
+.guides-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.guides article { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+.guides article h3 { font-size: 15px; margin: 0 0 6px; }
+.guides article p { font-size: 13.5px; line-height: 1.55; color: var(--text-mid); margin: 0; }
+.guides-note { font-size: 12px; color: var(--text-light); margin-top: 10px; }
+
+/* Over ons & contact */
+#about-content { font-size: 15px; line-height: 1.65; }
+#about-content h2 { margin-top: 0; }
+#about-content h3 { font-size: 16px; margin: 22px 0 6px; }
+#about-content p { margin: 0 0 10px; }
+#about-modal .modal-foot { position: sticky; bottom: 0; background: var(--card); padding: 12px 0 14px; margin-top: 8px; border-top: 1px solid var(--border); text-align: center; }
+#about-modal .modal-foot button { background: var(--grad, #2563eb); color: #fff; border: none; border-radius: 10px; padding: 10px 28px; font: inherit; font-weight: 600; cursor: pointer; }
+
+/* Toestemmingsbanner (alleen zichtbaar als DG_ADS_ENABLED aan staat) */
+#consent-banner { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 1100; display: none; gap: 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; background: var(--card); color: var(--text, inherit); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 12px 40px rgba(0,0,0,.25); padding: 14px 16px; max-width: 760px; margin: 0 auto; }
+#consent-banner.show { display: flex; }
+#consent-banner p { margin: 0; font-size: 14px; line-height: 1.5; flex: 1 1 320px; }
+#consent-banner a { color: var(--pri); }
+.consent-btns { display: flex; gap: 8px; }
 </style>
 </head>
 <body>
@@ -1386,6 +1411,23 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
         </div>
       </div>
     </div>
+
+    <section class="guides">
+      <h2 data-i18n="guides-title">About the documents</h2>
+      <div class="guides-grid">
+        <article><h3 data-i18n="dt-bos-title">Bill of Sale</h3><p data-i18n="guide-bos">A bill of sale records that an item, such as a car, boat or piece of equipment, has been sold: by whom, to whom, for what price and on which date. It protects both seller and buyer and is often needed to register the change of ownership. Include a description that identifies the item, such as a chassis or serial number.</p></article>
+        <article><h3 data-i18n="dt-poa-title">Power of Attorney</h3><p data-i18n="guide-poa">A power of attorney lets someone else (the agent) act on your behalf, for example to sign papers, handle a bank matter or collect a package. You decide whether it is general or limited to specific tasks, and how long it stays valid. Choose someone you trust fully and keep the original safe.</p></article>
+        <article><h3 data-i18n="dt-rental-title">Rental Agreement</h3><p data-i18n="guide-rental">A rental agreement sets out the rent, deposit, duration and rules for a property or room, so landlord and tenant know what to expect. Local law often limits things like the maximum deposit and the notice period, so read the legal notes shown for the countries we cover.</p></article>
+        <article><h3 data-i18n="dt-eng-title">Engagement Letter</h3><p data-i18n="guide-eng">An engagement letter confirms what a professional or freelancer will do for a client, what it costs and how payment works. Agreeing on scope, fees and duration in writing prevents misunderstandings later.</p></article>
+        <article><h3 data-i18n="dt-loan-title">Loan Agreement</h3><p data-i18n="guide-loan">A loan agreement documents the amount lent, whether interest applies and how it is repaid, in instalments or in one sum. Writing it down protects both lender and borrower, also between friends and family.</p></article>
+        <article><h3 data-i18n="dt-employment-title">Employment Contract</h3><p data-i18n="guide-employment">An employment contract records the job, pay, working hours, holidays, probation period and notice terms. Mandatory employment rules differ per country and apply even if the contract says otherwise, so treat the template as a starting point.</p></article>
+        <article><h3 data-i18n="dt-nda-title">Non-Disclosure Agreement</h3><p data-i18n="guide-nda">A non-disclosure agreement (NDA) obliges one or both parties to keep shared information confidential, for example before discussing a business idea or sharing financial data. You set the purpose, the duration and what may still be disclosed.</p></article>
+        <article><h3 data-i18n="dt-will-title">Draft Will</h3><p data-i18n="guide-will">A draft will lets you put your wishes on paper: who inherits what and who carries out your will. It is a draft to take to a notary, not a legally valid will by itself, because most countries require formalities such as witnesses or a notarial deed.</p></article>
+        <article><h3 data-i18n="dt-receipt-title">Receipt</h3><p data-i18n="guide-receipt">A receipt confirms that a payment has been received: who paid, who received it, the amount, the date and what it was for. It is useful as proof for both sides, for example for a cash payment or a deposit.</p></article>
+        <article><h3 data-i18n="dt-invoice-title">Invoice</h3><p data-i18n="guide-invoice">An invoice asks a customer to pay for goods or services and states the amounts, the due date and your payment details. The template includes a late-payment clause with a statutory-interest reference for many countries. Check any local tax requirements, such as VAT numbers.</p></article>
+      </div>
+      <p class="guides-note" data-i18n="guides-note">These explanations are general information, not legal advice.</p>
+    </section>
   </div>
 
   <!-- STEP 1: Who gives the POA? -->
@@ -2931,6 +2973,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
       <h3>v4.4</h3>
       <div class="log-date">5 november 2026</div>
       <ul>
+        <li>Nieuw: uitleg per documenttype op de startpagina, "Over ons &amp; contact" in de voettekst, meta description, en een toestemmingsbanner voor advertenties die uit staat tot DG_ADS_ENABLED op true gaat (met extra privacyparagraaf). Nieuwe teksten bestaan nu in EN en NL; andere talen vallen terug op EN</li>
         <li>Nieuw: knop "PDF delen / mailen" naast elke downloadknop (alle 10 documenten, 18 talen). Opent het deelmenu van het toestel met de PDF als bijlage (Web Share); zonder die ondersteuning wordt de PDF gedownload en opent het mailprogramma</li>
         <li>18 talen: vertalingen verplaatst naar translations.js (en, nl, es, fr, de, pt, it, ru, zh, ja, ar, ko, tr, pl, hi, fa, he, sw)</li>
         <li>Rechts-naar-links (RTL) weergave voor Arabisch, Perzisch en Hebreeuws</li>
@@ -3143,6 +3186,9 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
   <span id="last-updated-text"></span>
   <span style="margin:0 6px;">·</span>
   <a href="#" onclick="event.preventDefault();document.getElementById('privacy-modal').classList.add('show');" style="color:var(--text-light);text-decoration:underline;cursor:pointer;" data-i18n="privacy-link">Privacy Policy</a>
+  <span style="margin:0 6px;">·</span>
+  <a href="#" onclick="event.preventDefault();openAbout();" style="color:var(--text-light);text-decoration:underline;cursor:pointer;" data-i18n="about-link">About &amp; contact</a>
+  <span id="cookie-settings-wrap" style="display:none;"><span style="margin:0 6px;">·</span><a href="#" onclick="event.preventDefault();dgShowConsent();" style="color:var(--text-light);text-decoration:underline;cursor:pointer;" data-i18n="cookie-settings">Cookie settings</a></span>
 </div>
 <button class="fab" onclick="toggleContact()" title="Contact & suggestions"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></button>
 
@@ -3193,8 +3239,24 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
   </div>
 </div>
 
+<!-- Over ons & contact -->
+<div class="modal-overlay" id="about-modal">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-head"><button class="modal-close" aria-label="Close" onclick="closeAbout()">&times;</button></div>
+    <div id="about-content"></div>
+    <div class="modal-foot"><button data-i18n="btn-close" onclick="closeAbout()">Close</button></div>
+  </div>
+</div>
+
 <script src="translations.js"></script>
 <script>
+// ====== Instellingen ======
+// Zet DG_ADS_ENABLED pas op true als er een advertentienetwerk is aangesloten en dgLoadAds() het script laadt.
+// Dan verschijnt de toestemmingsbanner, de link "Cookie-instellingen" en de extra privacyparagraaf.
+const DG_ADS_ENABLED = false;
+// Contactadres dat in "Over ons & contact" getoond wordt, bv. 'contact@documentgenerator.ai'. Leeg = alleen het berichtenformulier.
+const DG_CONTACT_EMAIL = '';
+
 const PRIVACY = {
   en: `<h2>Privacy Policy</h2>
 <p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Effective: November 5, 2026</p>
@@ -3385,7 +3447,7 @@ function applyLang() {
   }
   // Update privacy policy content
   const pc = document.getElementById('privacy-content');
-  if (pc) pc.innerHTML = PRIVACY[lang] || PRIVACY.en;
+  if (pc) pc.innerHTML = (PRIVACY[lang] || PRIVACY.en) + (DG_ADS_ENABLED ? t('privacy-ads-html') : '');
 }
 
 const SCOPES = [
@@ -5427,6 +5489,59 @@ async function dgShare(name) {
     b.parentNode.insertBefore(s, b);
     b.parentNode.style.flexWrap = 'wrap';
   });
+})();
+
+// ====== Over ons & contact ======
+function openAbout() {
+  const mail = DG_CONTACT_EMAIL
+    ? '<p><a href="mailto:' + DG_CONTACT_EMAIL + '" style="color:var(--pri);">' + DG_CONTACT_EMAIL + '</a></p>'
+    : '';
+  document.getElementById('about-content').innerHTML =
+    '<h2>' + t('about-title') + '</h2>' +
+    '<p>' + t('about-body') + '</p>' +
+    '<p>' + t('about-disclaimer') + '</p>' +
+    '<h3>' + t('about-contact') + '</h3>' +
+    '<p>' + t('about-contact-text') + '</p>' + mail +
+    '<p><button class="btn btn-next" onclick="closeAbout();toggleContact();">' + t('about-contact-btn') + '</button></p>';
+  document.getElementById('about-modal').classList.add('show');
+}
+function closeAbout() { document.getElementById('about-modal').classList.remove('show'); }
+
+// ====== Toestemming voor advertenties (slapend zolang DG_ADS_ENABLED false is) ======
+function dgConsent() { try { return localStorage.getItem('dg_consent'); } catch (e) { return null; } }
+function dgLoadAds() {
+  // Hier komt later het script van het advertentienetwerk (bijv. AdSense). Wordt alleen aangeroepen na toestemming.
+}
+function dgSetConsent(v) {
+  const prev = dgConsent();
+  try { localStorage.setItem('dg_consent', v); } catch (e) {}
+  const b = document.getElementById('consent-banner');
+  if (b) b.classList.remove('show');
+  if (v === 'all') dgLoadAds();
+  else if (prev === 'all') location.reload(); // al geladen advertentiescripts verdwijnen pas na herladen
+}
+function dgShowConsent() {
+  let b = document.getElementById('consent-banner');
+  if (!b) {
+    b = document.createElement('div');
+    b.id = 'consent-banner';
+    b.setAttribute('role', 'dialog');
+    b.innerHTML =
+      '<p><span data-i18n="consent-text"></span> <a href="#" data-i18n="privacy-link" onclick="event.preventDefault();document.getElementById(\'privacy-modal\').classList.add(\'show\');"></a></p>' +
+      '<div class="consent-btns"><button class="btn btn-back" data-i18n="consent-reject" onclick="dgSetConsent(\'no\')"></button>' +
+      '<button class="btn btn-next" data-i18n="consent-accept" onclick="dgSetConsent(\'all\')"></button></div>';
+    document.body.appendChild(b);
+    applyLang();
+  }
+  b.classList.add('show');
+}
+(function initConsent() {
+  if (!DG_ADS_ENABLED) return;
+  const w = document.getElementById('cookie-settings-wrap');
+  if (w) w.style.display = '';
+  const c = dgConsent();
+  if (c === 'all') dgLoadAds();
+  else if (c === null) dgShowConsent();
 })();
 
 // ====== New document ======
