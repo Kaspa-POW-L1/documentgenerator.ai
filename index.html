@@ -621,7 +621,7 @@ body {
 }
 .btn-edit-doc {
   background: var(--warn-light);
-  color: #92400E;
+  color: var(--warn-text);
   border: 1px solid var(--warn);
   padding: 8px 16px;
   border-radius: var(--radius);
@@ -630,7 +630,7 @@ body {
   cursor: pointer;
   transition: background 0.2s;
 }
-.btn-edit-doc:hover { background: #FDE68A; }
+.btn-edit-doc:hover { background: color-mix(in srgb, var(--warn) 28%, var(--warn-light)); }
 .btn-edit-doc.active { background: var(--pri-light); color: var(--pri-dark); border-color: var(--pri); }
 .edit-hint {
   font-size: 12px;
@@ -1098,16 +1098,6 @@ input[type=number] { -moz-appearance: textfield; }
   box-shadow: var(--shadow);
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
-.doc-card[onclick*="'bos'"]     { --acc: #059669; }
-.doc-card[onclick*="'poa'"]     { --acc: #2563EB; }
-.doc-card[onclick*="'rental'"]  { --acc: #EA580C; }
-.doc-card[onclick*="'eng'"]     { --acc: #0D9488; }
-.doc-card[onclick*="'loan'"]    { --acc: #D97706; }
-.doc-card[onclick*="'empl'"]    { --acc: #7C3AED; }
-.doc-card[onclick*="'nda'"]     { --acc: #DB2777; }
-.doc-card[onclick*="'will'"]    { --acc: #64748B; }
-.doc-card[onclick*="'receipt'"] { --acc: #0891B2; }
-.doc-card[onclick*="'invoice'"] { --acc: #4F46E5; }
 .doc-card .dc-icon {
   width: 54px; height: 54px; margin: 0 auto 10px; border-radius: 16px;
   display: grid; place-items: center; font-size: 28px;
@@ -1181,6 +1171,102 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 .fab .ic { width: 26px; height: 26px; }
 .mobile-preview-btn .ic { margin-inline-end: .4em; }
 @media (max-width: 500px) { .doc-card .dc-icon .ic { width: 24px; height: 24px; } }
+
+/* ===== Tokens voor licht en donker ===== */
+:root {
+  --fill: #1A56DB; --warn-text: #92400E; --warn-box-bg: #fffbe6; --warn-box-border: #e6d27a;
+  --a-bos:#059669; --a-poa:#2563EB; --a-rental:#EA580C; --a-eng:#0D9488; --a-loan:#D97706;
+  --a-empl:#7C3AED; --a-nda:#DB2777; --a-will:#64748B; --a-receipt:#0891B2; --a-invoice:#4F46E5;
+}
+.doc-card[onclick*="'bos'"]     { --acc: var(--a-bos); }
+.doc-card[onclick*="'poa'"]     { --acc: var(--a-poa); }
+.doc-card[onclick*="'rental'"]  { --acc: var(--a-rental); }
+.doc-card[onclick*="'eng'"]     { --acc: var(--a-eng); }
+.doc-card[onclick*="'loan'"]    { --acc: var(--a-loan); }
+.doc-card[onclick*="'empl'"]    { --acc: var(--a-empl); }
+.doc-card[onclick*="'nda'"]     { --acc: var(--a-nda); }
+.doc-card[onclick*="'will'"]    { --acc: var(--a-will); }
+.doc-card[onclick*="'receipt'"] { --acc: var(--a-receipt); }
+.doc-card[onclick*="'invoice'"] { --acc: var(--a-invoice); }
+.mobile-preview-btn, .fab, .detail-toggle button.active { background: var(--fill); }
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0B1220; --card: #172033; --border: #26354F;
+  --text-light: #94A3B8;
+  --input-bg: #0D1526; --input-focus: #15213A;
+  --fill: #2F66E0;
+  --warn-text: #FCD34D; --warn-box-bg: rgba(251,191,36,.10); --warn-box-border: rgba(251,191,36,.35);
+  --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 6px 20px rgba(0,0,0,.28);
+  --shadow-lg: 0 14px 40px rgba(0,0,0,.5);
+  --a-bos:#34D399; --a-poa:#60A5FA; --a-rental:#FB923C; --a-eng:#2DD4BF; --a-loan:#FBBF24;
+  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#22D3EE; --a-invoice:#818CF8;
+}
+:root[data-theme="dark"] body {
+  background:
+    radial-gradient(900px 420px at 50% -80px, rgba(99,102,241,.20), transparent 70%),
+    radial-gradient(700px 420px at 100% 35%, rgba(37,99,235,.10), transparent 70%),
+    var(--bg);
+  background-attachment: fixed;
+}
+:root[data-theme="dark"] .hero {
+  background: linear-gradient(135deg, #1E40AF 0%, #4338CA 55%, #6D28D9 100%);
+  box-shadow: 0 14px 40px rgba(99,102,241,.28), inset 0 0 0 1px rgba(255,255,255,.10);
+}
+:root[data-theme="dark"] .doc-card { background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0) 60%), var(--card); }
+:root[data-theme="dark"] .doc-card .dc-icon { background: color-mix(in srgb, var(--acc) 20%, var(--card)); }
+:root[data-theme="dark"] .doc-card:hover { box-shadow: 0 14px 34px color-mix(in srgb, var(--acc) 30%, transparent), 0 0 0 1px color-mix(in srgb, var(--acc) 50%, transparent); }
+:root[data-theme="dark"] .lang-select:hover, :root[data-theme="dark"] .lang-select:focus { box-shadow: 0 0 0 3px rgba(96,165,250,.25); }
+/* Voorbeeld als wit papier: zo ziet de PDF er ook uit */
+:root[data-theme="dark"] .preview-box {
+  --pri: #1A56DB; --pri-light: #E1EFFE; --pri-dark: #1444B0;
+  --text: #252830; --text-mid: #525660; --text-light: #8B8F9A; --border: #DCE0E6; --card: #FFFFFF;
+  --preview-bg: #F4F6FA; --preview-text: #2D3748; --preview-sec-bg: rgba(15,23,42,.04);
+  --warn: #F59E0B; --warn-light: #FEF3C7; --warn-text: #92400E; --warn-box-bg: #fffbe6; --warn-box-border: #e6d27a;
+  background: var(--preview-bg); color: var(--preview-text);
+  box-shadow: 0 18px 50px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.06);
+}
+
+@media (prefers-color-scheme: dark) {
+
+:root:not([data-theme="light"]) {
+  color-scheme: dark;
+  --bg: #0B1220; --card: #172033; --border: #26354F;
+  --text-light: #94A3B8;
+  --input-bg: #0D1526; --input-focus: #15213A;
+  --fill: #2F66E0;
+  --warn-text: #FCD34D; --warn-box-bg: rgba(251,191,36,.10); --warn-box-border: rgba(251,191,36,.35);
+  --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 6px 20px rgba(0,0,0,.28);
+  --shadow-lg: 0 14px 40px rgba(0,0,0,.5);
+  --a-bos:#34D399; --a-poa:#60A5FA; --a-rental:#FB923C; --a-eng:#2DD4BF; --a-loan:#FBBF24;
+  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#22D3EE; --a-invoice:#818CF8;
+}
+:root:not([data-theme="light"]) body {
+  background:
+    radial-gradient(900px 420px at 50% -80px, rgba(99,102,241,.20), transparent 70%),
+    radial-gradient(700px 420px at 100% 35%, rgba(37,99,235,.10), transparent 70%),
+    var(--bg);
+  background-attachment: fixed;
+}
+:root:not([data-theme="light"]) .hero {
+  background: linear-gradient(135deg, #1E40AF 0%, #4338CA 55%, #6D28D9 100%);
+  box-shadow: 0 14px 40px rgba(99,102,241,.28), inset 0 0 0 1px rgba(255,255,255,.10);
+}
+:root:not([data-theme="light"]) .doc-card { background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0) 60%), var(--card); }
+:root:not([data-theme="light"]) .doc-card .dc-icon { background: color-mix(in srgb, var(--acc) 20%, var(--card)); }
+:root:not([data-theme="light"]) .doc-card:hover { box-shadow: 0 14px 34px color-mix(in srgb, var(--acc) 30%, transparent), 0 0 0 1px color-mix(in srgb, var(--acc) 50%, transparent); }
+:root:not([data-theme="light"]) .lang-select:hover, :root:not([data-theme="light"]) .lang-select:focus { box-shadow: 0 0 0 3px rgba(96,165,250,.25); }
+/* Voorbeeld als wit papier: zo ziet de PDF er ook uit */
+:root:not([data-theme="light"]) .preview-box {
+  --pri: #1A56DB; --pri-light: #E1EFFE; --pri-dark: #1444B0;
+  --text: #252830; --text-mid: #525660; --text-light: #8B8F9A; --border: #DCE0E6; --card: #FFFFFF;
+  --preview-bg: #F4F6FA; --preview-text: #2D3748; --preview-sec-bg: rgba(15,23,42,.04);
+  --warn: #F59E0B; --warn-light: #FEF3C7; --warn-text: #92400E; --warn-box-bg: #fffbe6; --warn-box-border: #e6d27a;
+  background: var(--preview-bg); color: var(--preview-text);
+  box-shadow: 0 18px 50px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.06);
+}
+
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
@@ -1827,7 +1913,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
             </select>
           </div>
         </div>
-        <div id="mileage-warning" style="display:none;padding:8px 12px;background:var(--warn-light);border-left:3px solid var(--warn);border-radius:6px;font-size:12px;color:#92400E;margin-top:-4px;" data-i18n="mileage-warning">⚠ Double-check: did you select the right unit? US/Japan imports usually show miles; European vehicles use km.</div>
+        <div id="mileage-warning" style="display:none;padding:8px 12px;background:var(--warn-light);border-left:3px solid var(--warn);border-radius:6px;font-size:12px;color:var(--warn-text);margin-top:-4px;" data-i18n="mileage-warning">⚠ Double-check: did you select the right unit? US/Japan imports usually show miles; European vehicles use km.</div>
       </div>
       <div id="bos-boat-fields" style="display:none;">
         <div class="field-row">
@@ -2831,6 +2917,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
         <li>Volmacht, lening en koopovereenkomst: getuigen nu optioneel (keuze "Met twee getuigen" of "Zonder getuigen" bij ondertekening; standaard met getuigen). Testament blijft met getuigen</li>
         <li>Nieuw ontwerp startpagina: hero met vier vertrouwenspunten (gratis, blijft in browser, klaar om te printen, 18 talen), kleur per documenttype, vloeiende animaties (respecteert "minder beweging"), bevestiging na PDF-download compacte tegels op mobiel en het uitlegblok "Vul in / Controleer / Download" onderaan verwijderd (stond dubbel met de hero)</li>
         <li>Emoji vervangen door eigen SVG-iconen (tegels, knoppen, thema- en chatknop), zodat er nergens lege vierkantjes kunnen verschijnen</li>
+        <li>Donkere modus vernieuwd: diepere kleuren met lichte gloed, betere leesbaarheid (waarschuwingen, knoppen, tekst), eigen tegelkleuren en het voorbeeld als wit papier, zoals de PDF eruitziet</li>
         <li>Taalkiezer: één uitklapmenu in de header in plaats van 18 knoppen; eerste bezoek volgt de browsertaal</li>
         <li>Fix: dubbel "(Testator)"-label in de testament-PDF verwijderd</li>
         <li>Fix: changelog gecorrigeerd (CMg → XCG) en bijgewerkt</li>
@@ -3969,7 +4056,7 @@ function buildRentalDocument(d) {
   let jurHtml = '';
   if (jurRules) {
     const items = jurRules[lang]||jurRules.en;
-    jurHtml = `<div style="margin-top:12px;padding:10px;background:#fffbe6;border:1px solid #e6d27a;border-radius:6px;font-size:12px;"><strong>${t('jur-title')}</strong><ul style="margin:4px 0 0 16px;">${items.map(r=>'<li>'+r+'</li>').join('')}</ul></div>`;
+    jurHtml = `<div style="margin-top:12px;padding:10px;background:var(--warn-box-bg);border:1px solid var(--warn-box-border);border-radius:6px;font-size:12px;"><strong>${t('jur-title')}</strong><ul style="margin:4px 0 0 16px;">${items.map(r=>'<li>'+r+'</li>').join('')}</ul></div>`;
   }
 
   const detailed = docDetail.rental === 'detailed';
@@ -5112,7 +5199,7 @@ function checkEmptyFields() {
   if (empty > 3) {
     const warn = document.createElement('div');
     warn.className = 'soft-warning';
-    warn.style.cssText = 'padding:10px 14px;background:var(--warn-light);border-left:3px solid var(--warn);border-radius:6px;font-size:12px;color:#92400E;margin-bottom:12px;';
+    warn.style.cssText = 'padding:10px 14px;background:var(--warn-light);border-left:3px solid var(--warn);border-radius:6px;font-size:12px;color:var(--warn-text);margin-bottom:12px;';
     warn.textContent = '⚠ ' + t('warn-empty-fields');
     const card = activeStep.querySelector('.step-card');
     if (card) card.appendChild(warn);
@@ -5365,7 +5452,7 @@ function buildWillDocument(d) {
 
   return `
     <h2>${t('wdoc-title')}</h2>
-    <div class="sec" style="background:var(--warn-light);padding:10px 14px;border-radius:6px;border-left:3px solid var(--warn);"><p style="font-size:12px;font-weight:600;color:#92400E;">${t('wdoc-draft-notice')}</p></div>
+    <div class="sec" style="background:var(--warn-light);padding:10px 14px;border-radius:6px;border-left:3px solid var(--warn);"><p style="font-size:12px;font-weight:600;color:var(--warn-text);">${t('wdoc-draft-notice')}</p></div>
     <div class="sec"><p>${decl}</p>${d.testator.id?'<p><strong>'+t('doc-id')+':</strong> '+d.testator.id+'</p>':''}</div>
     <div class="sec"><div class="sec-title">${t('wdoc-marital-h')}</div><p>${maritalLabel}</p></div>
     <div class="sec"><div class="sec-title">${t('wdoc-executor-h')}</div><p>${execText}</p>
@@ -5786,10 +5873,10 @@ function renderBosChecklist(d) {
   const bosJur = getBosJurRules(bosCountry, d.item.category);
   if (bosJur) {
     const items = bosJur[lang] || bosJur.en;
-    return `<div style="margin-top:16px;padding:14px;background:#fffbe6;border:1px solid #e6d27a;border-radius:8px;font-size:13px;">
+    return `<div style="margin-top:16px;padding:14px;background:var(--warn-box-bg);border:1px solid var(--warn-box-border);border-radius:8px;font-size:13px;">
       <strong>${t('bos-checklist-title')}</strong>
       <ul style="margin:8px 0 0 16px;line-height:1.7;">${items.map(r => '<li>'+r+'</li>').join('')}</ul>
-      <p style="margin-top:10px;font-size:11px;color:#92400E;">${t('bos-note')}</p>
+      <p style="margin-top:10px;font-size:11px;color:var(--warn-text);">${t('bos-note')}</p>
     </div>`;
   }
   return '';
