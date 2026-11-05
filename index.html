@@ -1029,34 +1029,161 @@ input[type=number] { -moz-appearance: textfield; }
 [dir="rtl"] .error-msg { text-align: right; }
 [dir="rtl"] .btn-group { direction: rtl; }
 [dir="rtl"] .date-quick-picks { direction: ltr; }
+
+/* ===== Design-update v4.4: hero, kleur, animatie, taalkiezer ===== */
+:root {
+  --grad: linear-gradient(135deg, #2563EB 0%, #4F46E5 55%, #7C3AED 100%);
+  --grad-green: linear-gradient(135deg, #059669 0%, #10B981 100%);
+}
+.header {
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+.header::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+  background: var(--grad); opacity: .9; pointer-events: none;
+}
+.brand { font-weight: 800; }
+.brand span {
+  background: var(--grad); -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.lang-select {
+  appearance: auto; font-family: inherit; font-size: 13px; font-weight: 500;
+  color: var(--text); background: var(--card);
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 7px 8px; height: 33px; max-width: 150px; cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+}
+.lang-select:hover, .lang-select:focus { border-color: var(--pri); outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--pri) 20%, transparent); }
+.theme-btn {
+  background: none; border: 1px solid var(--border); border-radius: 8px;
+  padding: 6px 10px; cursor: pointer; font-size: 16px; line-height: 1; height: 33px;
+  transition: border-color .15s, transform .15s;
+}
+.theme-btn:hover { border-color: var(--pri); transform: rotate(-12deg); }
+@media (max-width: 420px) { .lang-select { max-width: 118px; font-size: 12px; } }
+
+/* Hero */
+.hero {
+  position: relative; overflow: hidden; text-align: center; color: #fff;
+  background: var(--grad); border-radius: var(--radius);
+  padding: 30px 22px 24px; margin-bottom: 16px;
+  box-shadow: 0 10px 30px rgba(79,70,229,.28);
+  animation: heroIn .45s ease both;
+}
+.hero::before, .hero::after {
+  content: ''; position: absolute; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(255,255,255,.22), rgba(255,255,255,0) 70%);
+}
+.hero::before { width: 260px; height: 260px; top: -110px; right: -60px; }
+.hero::after { width: 200px; height: 200px; bottom: -110px; left: -50px; }
+.hero h1 {
+  position: relative; font-size: clamp(22px, 4.2vw, 30px); font-weight: 800;
+  letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 16px; color: #fff;
+}
+.hero-chips { position: relative; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.hero-chips li {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600;
+  background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.28);
+  border-radius: 999px; padding: 6px 12px;
+}
+.hero-chips .chip-ic { font-size: 12px; line-height: 1; }
+
+/* Documenttegels: eigen kleur per type */
+.doc-card {
+  --acc: var(--pri);
+  position: relative; border: 1px solid var(--border); border-top: 3px solid var(--acc);
+  box-shadow: var(--shadow);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.doc-card[onclick*="'bos'"]     { --acc: #059669; }
+.doc-card[onclick*="'poa'"]     { --acc: #2563EB; }
+.doc-card[onclick*="'rental'"]  { --acc: #EA580C; }
+.doc-card[onclick*="'eng'"]     { --acc: #0D9488; }
+.doc-card[onclick*="'loan'"]    { --acc: #D97706; }
+.doc-card[onclick*="'empl'"]    { --acc: #7C3AED; }
+.doc-card[onclick*="'nda'"]     { --acc: #DB2777; }
+.doc-card[onclick*="'will'"]    { --acc: #64748B; }
+.doc-card[onclick*="'receipt'"] { --acc: #0891B2; }
+.doc-card[onclick*="'invoice'"] { --acc: #4F46E5; }
+.doc-card .dc-icon {
+  width: 54px; height: 54px; margin: 0 auto 10px; border-radius: 16px;
+  display: grid; place-items: center; font-size: 28px;
+  background: color-mix(in srgb, var(--acc) 14%, var(--card));
+  transition: transform .18s ease;
+}
+.doc-card h3 { font-size: 15px; }
+.doc-card:hover {
+  border-color: var(--acc); border-top-color: var(--acc);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px color-mix(in srgb, var(--acc) 24%, transparent);
+}
+.doc-card:hover .dc-icon { transform: scale(1.08) rotate(-4deg); }
+.doc-card:active { transform: translateY(-1px) scale(.99); }
+.doc-card:focus-visible { outline: 3px solid color-mix(in srgb, var(--acc) 45%, transparent); outline-offset: 2px; }
+
+/* Knoppen en voortgang */
+.btn-next, .btn-start { background: var(--grad); box-shadow: 0 4px 14px rgba(79,70,229,.28); }
+.btn-next:hover, .btn-start:hover { background: var(--grad); filter: brightness(1.08); }
+.btn-download { background: var(--grad-green); box-shadow: 0 4px 14px rgba(5,150,105,.3); }
+.btn-download:hover { opacity: 1; filter: brightness(1.06); }
+.btn { transition: transform .15s ease, filter .15s ease, box-shadow .15s ease, background .15s ease; }
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0) scale(.98); }
+.progress-fill { background: var(--grad); transition: width .45s cubic-bezier(.4,0,.2,1); }
+.lang-btn.active { background: var(--grad); }
+
+/* Stapovergang */
+.step.active { animation: stepIn .28s ease both; }
+@keyframes stepIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes heroIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* Bevestiging na download */
+#dg-toast {
+  position: fixed; left: 50%; bottom: 28px; z-index: 1000;
+  transform: translate(-50%, 24px); opacity: 0; pointer-events: none;
+  display: flex; align-items: center; gap: 8px;
+  background: var(--grad-green); color: #fff; font-weight: 600; font-size: 14px;
+  padding: 12px 20px; border-radius: 999px; box-shadow: 0 10px 30px rgba(5,150,105,.4);
+  transition: opacity .25s ease, transform .25s ease;
+}
+#dg-toast.show { opacity: 1; transform: translate(-50%, 0); }
+#dg-toast .toast-check {
+  display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%;
+  background: rgba(255,255,255,.25); font-size: 12px;
+}
+
+/* Mobiel: compacter, tegels horizontaal zodat meer tegels zichtbaar zijn */
+@media (max-width: 500px) {
+  .hero { padding: 20px 16px 16px; margin-bottom: 12px; }
+  .hero h1 { font-size: 21px; margin-bottom: 12px; }
+  .hero-chips { gap: 6px; }
+  .hero-chips li { font-size: 11.5px; padding: 5px 10px; gap: 5px; }
+  .doc-grid { gap: 8px; margin: 14px 0; }
+  .doc-card { display: grid; grid-template-columns: auto 1fr; column-gap: 14px; align-items: center; text-align: start; padding: 12px 14px; border-top-width: 1px; border-inline-start: 4px solid var(--acc); }
+  .doc-card .dc-icon { grid-row: 1 / span 2; margin: 0; width: 46px; height: 46px; font-size: 24px; }
+  .doc-card h3 { font-size: 15px; margin: 0; align-self: end; }
+  .doc-card p { margin: 0; align-self: start; }
+}
+/* Geen voorbeeldknop op het keuzescherm (er valt nog niets te tonen) */
+body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
 </style>
 </head>
 <body>
 
 <header class="header">
   <div class="brand">document<span>generator</span>.ai</div>
-  <button onclick="toggleTheme()" id="theme-btn" style="background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:16px;line-height:1;" title="Toggle dark mode">☀️</button>
+  <div class="header-actions">
+    <select id="lang-select" class="lang-select" onchange="setLang(this.value)" aria-label="Language" title="Language"><option value="en">🇬🇧 English</option><option value="nl">🇳🇱 Nederlands</option><option value="es">🇪🇸 Español</option><option value="fr">🇫🇷 Français</option><option value="de">🇩🇪 Deutsch</option><option value="pt">🇧🇷 Português</option><option value="it">🇮🇹 Italiano</option><option value="ru">🇷🇺 Русский</option><option value="zh">🇨🇳 中文</option><option value="ja">🇯🇵 日本語</option><option value="ar">🇸🇦 العربية</option><option value="ko">🇰🇷 한국어</option><option value="tr">🇹🇷 Türkçe</option><option value="pl">🇵🇱 Polski</option><option value="hi">🇮🇳 हिन्दी</option><option value="fa">🇮🇷 فارسی</option><option value="he">🇮🇱 עברית</option><option value="sw">🇰🇪 Kiswahili</option></select>
+    <button onclick="toggleTheme()" id="theme-btn" class="theme-btn" title="Toggle dark mode">☀️</button>
+  </div>
 </header>
-<div class="lang-toggle">
-  <button class="lang-btn active" onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
-  <button class="lang-btn" onclick="setLang('es')" id="btn-es">🇪🇸 ES</button>
-  <button class="lang-btn" onclick="setLang('fr')" id="btn-fr">🇫🇷 FR</button>
-  <button class="lang-btn" onclick="setLang('de')" id="btn-de">🇩🇪 DE</button>
-  <button class="lang-btn" onclick="setLang('pt')" id="btn-pt">🇧🇷 PT</button>
-  <button class="lang-btn" onclick="setLang('it')" id="btn-it">🇮🇹 IT</button>
-  <button class="lang-btn" onclick="setLang('ru')" id="btn-ru">🇷🇺 RU</button>
-  <button class="lang-btn" onclick="setLang('zh')" id="btn-zh">🇨🇳 中文</button>
-  <button class="lang-btn" onclick="setLang('ja')" id="btn-ja">🇯🇵 日本語</button>
-  <button class="lang-btn" onclick="setLang('ar')" id="btn-ar">🇸🇦 عربي</button>
-  <button class="lang-btn" onclick="setLang('ko')" id="btn-ko">🇰🇷 한국어</button>
-  <button class="lang-btn" onclick="setLang('tr')" id="btn-tr">🇹🇷 TR</button>
-  <button class="lang-btn" onclick="setLang('pl')" id="btn-pl">🇵🇱 PL</button>
-  <button class="lang-btn" onclick="setLang('hi')" id="btn-hi">🇮🇳 हिन्दी</button>
-  <button class="lang-btn" onclick="setLang('fa')" id="btn-fa">🇮🇷 فارسی</button>
-  <button class="lang-btn" onclick="setLang('he')" id="btn-he">🇮🇱 עברית</button>
-  <button class="lang-btn" onclick="setLang('sw')" id="btn-sw">🇰🇪 SW</button>
-  <button class="lang-btn" onclick="setLang('nl')" id="btn-nl">🇳🇱 NL</button>
-</div>
 
 <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
 
@@ -1070,9 +1197,16 @@ input[type=number] { -moz-appearance: textfield; }
 
   <!-- STEP 0: Document Chooser -->
   <div class="step active" id="step-0">
+    <div class="hero">
+      <h1 data-i18n="hero-title">Your document, ready in minutes</h1>
+      <ul class="hero-chips">
+        <li><span class="chip-ic" aria-hidden="true">✓</span><span data-i18n="hero-chip-free">Free, no account</span></li>
+        <li><span class="chip-ic" aria-hidden="true">🔒</span><span data-i18n="hero-chip-private">Stays in your browser</span></li>
+        <li><span class="chip-ic" aria-hidden="true">🌍</span><span data-i18n="hero-chip-langs">18 languages</span></li>
+      </ul>
+    </div>
     <div class="step-card">
-      <h1 class="step-title" data-i18n="chooser-title">What document do you need?</h1>
-      <p class="step-explain" data-i18n="chooser-explain">Pick a document type to get started.</p>
+      <h2 class="step-title" data-i18n="chooser-title">What document do you need?</h2>
 
       <div class="doc-grid">
         <div class="doc-card" onclick="selectDocType('bos')">
@@ -2706,6 +2840,8 @@ input[type=number] { -moz-appearance: textfield; }
         <li>Fix: de knoppen Gisteren/Vandaag/Morgen bij datumvelden werkten niet (vulden de datumhint in plaats van het veld) en gebruikten UTC in plaats van lokale datum</li>
         <li>Alle documenten: optionele velden "Buurt" en "Postcode" bij alle adressen in alle 10 documenten (formulier, voorbeeld en PDF, alle 18 talen) (formulier, voorbeeld en PDF, alle 18 talen)</li>
         <li>Volmacht, lening en koopovereenkomst: getuigen nu optioneel (keuze "Met twee getuigen" of "Zonder getuigen" bij ondertekening; standaard met getuigen). Testament blijft met getuigen</li>
+        <li>Nieuw ontwerp startpagina: hero met drie vertrouwenspunten, kleur per documenttype, vloeiende animaties (respecteert "minder beweging"), bevestiging na PDF-download en compacte tegels op mobiel</li>
+        <li>Taalkiezer: één uitklapmenu in de header in plaats van 18 knoppen; eerste bezoek volgt de browsertaal</li>
         <li>Fix: dubbel "(Testator)"-label in de testament-PDF verwijderd</li>
         <li>Fix: changelog gecorrigeerd (CMg → XCG) en bijgewerkt</li>
       </ul>
@@ -3054,6 +3190,8 @@ function setLang(l) {
     const btn = document.getElementById('btn-'+c);
     if (btn) btn.classList.toggle('active', c === l);
   });
+  const langSel = document.getElementById('lang-select');
+  if (langSel) langSel.value = l;
   applyLang();
 }
 
@@ -3074,6 +3212,8 @@ function applyLang() {
     if (lbl === 'lbl-id') tip.setAttribute('data-tip', t('tip-id'));
     if (lbl === 'lbl-law') tip.setAttribute('data-tip', t('tip-law'));
   });
+  const langSelEl = document.getElementById('lang-select');
+  if (langSelEl) { langSelEl.setAttribute('aria-label', t('lang-label')); langSelEl.title = t('lang-label'); }
   buildScopeGrid();
   if (currentStep === 5) renderPreview();
   // Re-render live preview and step nav in new language
@@ -3455,6 +3595,30 @@ async function downloadPDF() {
   a.href = u; a.download = fn; a.click();
   URL.revokeObjectURL(u);
 }
+
+// ====== Bevestiging na PDF-download ======
+function showDoneToast() {
+  try {
+    let el = document.getElementById('dg-toast');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'dg-toast'; el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite');
+      document.body.appendChild(el);
+    }
+    el.innerHTML = '<span class="toast-check">✓</span> ' + t('toast-downloaded');
+    el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
+    clearTimeout(showDoneToast._t);
+    showDoneToast._t = setTimeout(() => el.classList.remove('show'), 3200);
+  } catch(e) {}
+}
+(function () {
+  const origClick = HTMLAnchorElement.prototype.click;
+  HTMLAnchorElement.prototype.click = function () {
+    const r = origClick.apply(this, arguments);
+    try { if (this.download && /\.pdf$/i.test(this.download)) showDoneToast(); } catch(e) {}
+    return r;
+  };
+})();
 
 // ====== Locale detection via timezone ======
 // addr uses lang key: addr.en, addr.nl, addr.es, addr.fr, addr.de
@@ -5856,10 +6020,22 @@ if (location.search.includes('admin')) {
   });
 
   // Restore saved language preference (overrides locale)
+  let hadSavedLang = false;
   try {
     const s = localStorage.getItem('dg_lang');
-    if (s) lang = s;
+    if (s) { lang = s; hadSavedLang = true; }
   } catch(e) {}
+  // Eerste bezoek: neem de taal van de browser over als die ondersteund wordt
+  if (!hadSavedLang) {
+    try {
+      const supported = ['en','nl','es','fr','de','pt','it','ru','zh','ja','ar','ko','tr','pl','hi','fa','he','sw'];
+      const prefs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || 'en'];
+      for (const p of prefs) {
+        const code = String(p).toLowerCase().split('-')[0];
+        if (supported.includes(code)) { lang = code; break; }
+      }
+    } catch(e) {}
+  }
 
   setLang(lang);
   buildScopeGrid();
