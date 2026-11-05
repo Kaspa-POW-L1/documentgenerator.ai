@@ -1143,6 +1143,8 @@ input[type=number] { -moz-appearance: textfield; }
 .btn-next:hover, .btn-start:hover { background: var(--grad); filter: brightness(1.08); }
 .btn-download { background: var(--grad-green); box-shadow: 0 4px 14px rgba(5,150,105,.3); }
 .btn-download:hover { opacity: 1; filter: brightness(1.06); }
+.btn-share { background: transparent; color: var(--pri); border: 2px solid var(--pri); box-shadow: none; padding: 12px 22px; font-size: 16px; }
+.btn-share:hover { background: var(--pri); color: #fff; }
 .btn { transition: transform .15s ease, filter .15s ease, box-shadow .15s ease, background .15s ease; }
 .btn:hover { transform: translateY(-1px); }
 .btn:active { transform: translateY(0) scale(.98); }
@@ -2929,6 +2931,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
       <h3>v4.4</h3>
       <div class="log-date">5 november 2026</div>
       <ul>
+        <li>Nieuw: knop "PDF delen / mailen" naast elke downloadknop (alle 10 documenten, 18 talen). Opent het deelmenu van het toestel met de PDF als bijlage (Web Share); zonder die ondersteuning wordt de PDF gedownload en opent het mailprogramma</li>
         <li>18 talen: vertalingen verplaatst naar translations.js (en, nl, es, fr, de, pt, it, ru, zh, ja, ar, ko, tr, pl, hi, fa, he, sw)</li>
         <li>Rechts-naar-links (RTL) weergave voor Arabisch, Perzisch en Hebreeuws</li>
         <li>Split-screen live voorbeeld naast het formulier, plus voorbeeldvenster op mobiel</li>
@@ -3333,11 +3336,12 @@ ICON_SVG['clipboard'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
 ICON_SVG['alert'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.7 18-8-14a2 2 0 0 0-3.5 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>';
 ICON_SVG['check-circle'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="m9 11 3 3L22 4"/></svg>';
 ICON_SVG['scale'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m16 16 3-8 3 8c-.9.7-1.9 1-3 1s-2.1-.3-3-1Z"/><path d="m2 16 3-8 3 8c-.9.7-1.9 1-3 1s-2.1-.3-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>';
-const EMOJI_TO_ICON = { '⬇': 'download', '✏': 'pencil', '📎': 'paperclip', '📄': 'file', '📋': 'clipboard', '⚠': 'alert', '✅': 'check-circle', '⚖': 'scale' };
+ICON_SVG['mail'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>';
+const EMOJI_TO_ICON = { '✉': 'mail', '⬇': 'download', '✏': 'pencil', '📎': 'paperclip', '📄': 'file', '📋': 'clipboard', '⚠': 'alert', '✅': 'check-circle', '⚖': 'scale' };
 // Vervangt een emoji aan het begin van een tekstelement door het bijbehorende SVG-icoon
 function iconize(el) {
   if (!el || el.children.length) return;
-  const m = (el.textContent || '').match(/^\s*([\u2B07\u270F\u{1F4CE}\u{1F4C4}\u{1F4CB}\u26A0\u2705\u2696])\uFE0F?\s*/u);
+  const m = (el.textContent || '').match(/^\s*([\u2B07\u270F\u2709\u{1F4CE}\u{1F4C4}\u{1F4CB}\u26A0\u2705\u2696])\uFE0F?\s*/u);
   if (!m) return;
   const name = EMOJI_TO_ICON[m[1]] || EMOJI_TO_ICON[m[1].replace(/\uFE0F/g, '')];
   if (!name) return;
@@ -3748,7 +3752,7 @@ async function downloadPDF() {
 }
 
 // ====== Bevestiging na PDF-download ======
-function showDoneToast() {
+function showDoneToast(key, ms) {
   try {
     let el = document.getElementById('dg-toast');
     if (!el) {
@@ -3756,10 +3760,10 @@ function showDoneToast() {
       el.id = 'dg-toast'; el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite');
       document.body.appendChild(el);
     }
-    el.innerHTML = '<span class="toast-check">✓</span> ' + t('toast-downloaded');
+    el.innerHTML = '<span class="toast-check">✓</span> ' + t(typeof key === 'string' ? key : 'toast-downloaded');
     el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
     clearTimeout(showDoneToast._t);
-    showDoneToast._t = setTimeout(() => el.classList.remove('show'), 3200);
+    showDoneToast._t = setTimeout(() => el.classList.remove('show'), typeof ms === 'number' ? ms : 3200);
   } catch(e) {}
 }
 (function () {
@@ -5355,6 +5359,7 @@ setInterval(autoSave, 5000);
 ['downloadPDF','downloadRentalPDF','downloadBosPDF','downloadEngPDF','downloadLoanPDF','downloadEmplPDF','downloadNdaPDF','downloadWillPDF','downloadReceiptPDF','downloadInvoicePDF'].forEach(name => {
   const orig = window[name];
   if (typeof orig !== 'function') return;
+  (window.__dgOrig = window.__dgOrig || {})[name] = orig;
   window[name] = async function() {
     const r = await orig.apply(this, arguments);
     clearAutoSave();
@@ -5362,6 +5367,67 @@ setInterval(autoSave, 5000);
     return r;
   };
 });
+
+// ====== PDF delen / e-mailen ======
+// Hergebruikt de bestaande downloadfuncties: tijdelijk vangt een "downloads"-hook de PDF op
+// in plaats van hem op te slaan. Daarna wordt het bestand via het deelmenu van het toestel
+// aangeboden (Web Share API, met PDF als bijlage). Zonder die ondersteuning: downloaden + mailto.
+async function dgShare(name) {
+  const gen = (window.__dgOrig && window.__dgOrig[name]) || window[name];
+  if (typeof gen !== 'function') return;
+  let captured = null;
+  const prev = window.claude;
+  try {
+    window.claude = { use: async (n) => (n === 'downloads' ? { save: async (o) => { captured = o; } } : undefined) };
+    await gen();
+  } catch (e) {
+    console.error(e);
+  } finally {
+    try { if (prev === undefined) delete window.claude; else window.claude = prev; } catch (e) {}
+  }
+  if (!captured || !captured.data) return;
+
+  const fname = captured.filename || 'document.pdf';
+  const title = fname.replace(/\.pdf$/i, '').replace(/_/g, ' ');
+  const text = t('share-text');
+  const file = new File([captured.data], fname, { type: 'application/pdf' });
+
+  try {
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file], title: title, text: text });
+      try { clearAutoSave(); autoSavePaused = true; } catch (e) {}
+      return;
+    }
+  } catch (e) {
+    if (e && e.name === 'AbortError') return; // gebruiker sloot het deelmenu
+  }
+
+  // Terugval: PDF downloaden en het mailprogramma openen (bijlage voegt de gebruiker zelf toe)
+  const u = URL.createObjectURL(file);
+  const a = document.createElement('a');
+  a.href = u; a.download = fname;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(u), 5000);
+  try { clearAutoSave(); autoSavePaused = true; } catch (e) {}
+  setTimeout(() => showDoneToast('share-fallback', 5000), 400);
+  setTimeout(() => { location.href = 'mailto:?subject=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(text); }, 1200);
+}
+
+// Zet naast elke downloadknop een deelknop (voorkomt 20 losse HTML-wijzigingen)
+(function addShareButtons() {
+  document.querySelectorAll('button.btn-download[onclick]').forEach(b => {
+    const m = (b.getAttribute('onclick') || '').match(/^\s*(download\w*PDF)\(\)/);
+    if (!m) return;
+    const s = document.createElement('button');
+    s.className = 'btn btn-share';
+    s.setAttribute('data-i18n', 'btn-share');
+    s.setAttribute('onclick', "dgShare('" + m[1] + "')");
+    s.textContent = (T['btn-share'] && (T['btn-share'][lang] || T['btn-share'].en)) || '✉ Share / email PDF';
+    iconize(s);
+    b.parentNode.insertBefore(s, b);
+    b.parentNode.style.flexWrap = 'wrap';
+  });
+})();
 
 // ====== New document ======
 function startNewDocument() {
