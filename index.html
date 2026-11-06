@@ -1216,7 +1216,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 :root {
   --fill: #1A56DB; --warn-text: #92400E; --warn-box-bg: #fffbe6; --warn-box-border: #e6d27a;
   --a-bos:#0891B2; --a-poa:#2563EB; --a-rental:#EA580C; --a-eng:#0D9488; --a-loan:#CA8A04;
-  --a-empl:#7C3AED; --a-nda:#DB2777; --a-will:#64748B; --a-receipt:#059669; --a-invoice:#059669; --a-revoke:#DC2626; --a-travel:#0284C7; --a-resign:#65A30D; --a-debt:#4F46E5; --a-ref:#A21CAF;
+  --a-empl:#7C3AED; --a-nda:#DB2777; --a-will:#64748B; --a-receipt:#059669; --a-invoice:#059669; --a-revoke:#DC2626; --a-travel:#0284C7; --a-resign:#65A30D; --a-debt:#4F46E5; --a-ref:#A21CAF; --a-notice:#B45309;
 }
 .doc-card[onclick*="'bos'"]     { --acc: var(--a-bos); }
 .doc-card[onclick*="'poa'"]     { --acc: var(--a-poa); }
@@ -1233,6 +1233,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 .doc-card[onclick*="'resign'"]  { --acc: var(--a-resign); }
 .doc-card[onclick*="'debt'"]  { --acc: var(--a-debt); }
 .doc-card[onclick*="'ref'"]  { --acc: var(--a-ref); }
+.doc-card[onclick*="'notice'"]  { --acc: var(--a-notice); }
 .mobile-preview-btn, .fab, .detail-toggle button.active { background: var(--fill); }
 
 :root[data-theme="dark"] {
@@ -1245,7 +1246,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
   --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 6px 20px rgba(0,0,0,.28);
   --shadow-lg: 0 14px 40px rgba(0,0,0,.5);
   --a-bos:#22D3EE; --a-poa:#60A5FA; --a-rental:#FB923C; --a-eng:#2DD4BF; --a-loan:#FACC15;
-  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#34D399; --a-invoice:#34D399; --a-revoke:#F87171; --a-travel:#38BDF8; --a-resign:#A3E635; --a-debt:#818CF8; --a-ref:#E879F9;
+  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#34D399; --a-invoice:#34D399; --a-revoke:#F87171; --a-travel:#38BDF8; --a-resign:#A3E635; --a-debt:#818CF8; --a-ref:#E879F9; --a-notice:#FBBF24;
 }
 :root[data-theme="dark"] body {
   background:
@@ -1284,7 +1285,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
   --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 6px 20px rgba(0,0,0,.28);
   --shadow-lg: 0 14px 40px rgba(0,0,0,.5);
   --a-bos:#22D3EE; --a-poa:#60A5FA; --a-rental:#FB923C; --a-eng:#2DD4BF; --a-loan:#FACC15;
-  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#34D399; --a-invoice:#34D399; --a-revoke:#F87171; --a-travel:#38BDF8; --a-resign:#A3E635; --a-debt:#818CF8; --a-ref:#E879F9;
+  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#34D399; --a-invoice:#34D399; --a-revoke:#F87171; --a-travel:#38BDF8; --a-resign:#A3E635; --a-debt:#818CF8; --a-ref:#E879F9; --a-notice:#FBBF24;
 }
 :root:not([data-theme="light"]) body {
   background:
@@ -1478,6 +1479,11 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
               <p data-i18n="dt-debt-desc">Confirm that you owe someone money</p>
           </div>
           <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+        </div>
+        <div class="doc-card" onclick="selectDocType('notice')">
+            <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></div>
+            <h3 data-i18n="dt-notice-title">Notice of default</h3>
+            <p data-i18n="dt-notice-desc">Formally demand payment of an overdue amount</p>
         </div>
         <div class="doc-card" onclick="selectDocType('rental')">
             <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
@@ -2669,6 +2675,106 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
     <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
 
+  <!-- NOTICE OF DEFAULT STEPS -->
+  <div class="step" id="step-nt1">
+    <div class="step-card">
+      <h2 class="step-title" data-i18n="db2-title"></h2>
+      <p class="step-explain" data-i18n="nt1-explain"></p>
+      <div class="field"><label data-i18n="lbl-name"></label><input type="text" id="nt-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-nt-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-id"></label><input type="text" id="nt-id"></div>
+      <div class="field"><label data-i18n="lbl-address"></label><input type="text" id="nt-address" data-i18n-placeholder="ph-address"></div>
+      <div class="field"><label data-i18n="lbl-neighborhood"></label><input type="text" id="nt-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal"></label><input type="text" id="nt-postal"></div>
+      <div class="field"><label data-i18n="lbl-country"></label><input type="text" id="nt-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goNoticeStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateNoticeAndGo('nt1','nt2')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <div class="step" id="step-nt2">
+    <div class="step-card">
+      <h2 class="step-title" data-i18n="db1-title"></h2>
+      <p class="step-explain" data-i18n="nt2-explain"></p>
+      <div class="field"><label data-i18n="lbl-name"></label><input type="text" id="ntd-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-ntd-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-id"></label><input type="text" id="ntd-id"></div>
+      <div class="field"><label data-i18n="lbl-address"></label><input type="text" id="ntd-address" data-i18n-placeholder="ph-address"></div>
+      <div class="field"><label data-i18n="lbl-neighborhood"></label><input type="text" id="ntd-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal"></label><input type="text" id="ntd-postal"></div>
+      <div class="field"><label data-i18n="lbl-country"></label><input type="text" id="ntd-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goNoticeStep('nt1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateNoticeAndGo('nt2','nt3')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <div class="step" id="step-nt3">
+    <div class="step-card">
+      <h2 class="step-title" data-i18n="nt3-title"></h2>
+      <p class="step-explain" data-i18n="nt3-explain"></p>
+      <div class="field-row"><div class="field"><label data-i18n="lbl-amount"></label><input type="number" id="nt-amount" min="0" step="0.01"><div class="error-msg" id="err-nt-amount" data-i18n="err-required">This field is required</div></div><div class="field"><label data-i18n="lbl-currency"></label><select id="nt-currency"><option value="USD">USD — US Dollar</option>
+            <option value="EUR">EUR — Euro</option>
+            <option value="XCG">XCG — Caribbean Guilder (Cg)</option>
+            <option value="GBP">GBP — British Pound</option>
+            <option value="AWG">AWG — Aruban Florin</option>
+            <option value="XCD">XCD — East Caribbean Dollar</option>
+            <option value="DOP">DOP — Dominican Peso</option>
+            <option value="JMD">JMD — Jamaican Dollar</option>
+            <option value="TTD">TTD — Trinidad &amp; Tobago Dollar</option>
+            <option value="BBD">BBD — Barbadian Dollar</option>
+            <option value="GYD">GYD — Guyanese Dollar</option>
+            <option value="SRD">SRD — Surinamese Dollar</option>
+            <option value="HTG">HTG — Haitian Gourde</option>
+            <option value="CHF">CHF — Swiss Franc</option>
+            <option value="CAD">CAD — Canadian Dollar</option>
+            <option value="AUD">AUD — Australian Dollar</option>
+            <option value="MXN">MXN — Mexican Peso</option>
+            <option value="other">Other</option></select></div></div>
+      <div class="field"><label data-i18n="lbl-nt-ref"></label><input type="text" id="nt-ref" data-i18n-placeholder="ph-nt-ref"></div>
+      <div class="field"><label data-i18n="lbl-due-date"></label><input type="date" id="nt-due"></div>
+      <div class="field"><label data-i18n="lbl-nt-reminded"></label><input type="date" id="nt-reminded"></div>
+      <div class="field"><label data-i18n="lbl-nt-days"></label><select id="nt-days"><option value="7">7</option><option value="14" selected>14</option><option value="30">30</option></select></div>
+      <div class="field"><label data-i18n="lbl-nt-pay"></label><input type="text" id="nt-pay" data-i18n-placeholder="ph-nt-pay"></div>
+      <div class="field"><label data-i18n="lbl-nt-conseq"></label></div>
+      <div class="field"><label style="display:flex;gap:8px;align-items:center;font-weight:500;cursor:pointer;"><input type="checkbox" id="nt-int" checked style="width:16px;height:16px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-nt-int"></span></label></div>
+      <div class="field"><label style="display:flex;gap:8px;align-items:center;font-weight:500;cursor:pointer;"><input type="checkbox" id="nt-costs" checked style="width:16px;height:16px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-nt-costs"></span></label></div>
+      <div class="field"><label style="display:flex;gap:8px;align-items:center;font-weight:500;cursor:pointer;"><input type="checkbox" id="nt-legal" checked style="width:16px;height:16px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-nt-legal"></span></label></div>
+      <div class="field"><label data-i18n="lbl-place"></label><input type="text" id="nt-place" data-i18n-placeholder="ph-place"></div>
+      <div class="field"><label data-i18n="lbl-date"></label><input type="date" id="nt-date"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goNoticeStep('nt2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateNoticeAndGo('nt3','nt4')" data-i18n="btn-preview">Next</button></div>
+    </div>
+  </div>
+
+  <!-- NEW STEP 4: Preview & Download -->
+  <div class="step" id="step-nt4">
+    <div class="step-card" style="padding:20px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+        <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-back" onclick="goNoticeStep('nt1')" data-i18n="btn-edit">Edit</button>
+          <button class="btn btn-download" onclick="downloadNoticePDF()" data-i18n="btn-download">⬇ Download PDF</button>
+        </div>
+      </div>
+      <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <button class="btn-edit-doc" onclick="toggleEditMode('notice-preview')" id="edit-btn-notice-preview" data-i18n="btn-customize">✏️ Customize document</button>
+    </div>
+    <div class="edit-hint" id="edit-hint-notice-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
+    <div class="preview-box" id="notice-preview"></div>
+    <details class="doc-settings">
+      <summary data-i18n="lbl-doc-settings">Document settings</summary>
+      <div class="ds-body">
+        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="notice-header" data-i18n-placeholder="ph-header"></div>
+        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="notice-footer" data-i18n-placeholder="ph-footer"></div>
+        <div class="field"><label data-i18n="lbl-fontsize">Font size</label><select id="notice-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select></div>
+        <div class="field"><label data-i18n="lbl-fontfamily">Font</label><select id="notice-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select></div>
+        <div class="field" style="grid-column:1/-1;"><label data-i18n="lbl-watermark">Watermark</label><select id="notice-watermark"><option value="" data-i18n="wm-none">None</option><option value="draft" data-i18n="wm-draft">Draft</option><option value="copy" data-i18n="wm-copy">Copy</option></select></div>
+        <div class="field" style="grid-column:1/-1;"><label style="display:flex;gap:8px;align-items:flex-start;font-weight:500;cursor:pointer;"><input type="checkbox" id="notice-brand" checked style="width:16px;height:16px;margin-top:2px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-brand">Add “Created with documentgenerator.ai” at the bottom of the page</span></label><div style="font-size:12px;color:var(--text-light);margin:4px 0 0 24px;line-height:1.5;" data-i18n="brand-help">This tool is free and needs no account. If you leave this small line on, more people will find us, and that helps us keep it free. You can switch it off at any time.</div></div>
+      </div>
+    </details>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
+      <button class="btn btn-download" onclick="downloadNoticePDF()" data-i18n="btn-download">⬇ Download PDF</button>
+    </div>
+    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
+  </div>
+
   <!-- REFERENCE STEPS -->
   <div class="step" id="step-rf1">
     <div class="step-card">
@@ -3482,8 +3588,13 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
     <h2>Changelog — documentgenerator.ai</h2>
     <div class="log-entry">
       <h3>v4.4</h3>
-      <div class="log-date">5 november 2026</div>
+      <div class="log-date">6 november 2026</div>
       <ul>
+        <li>Nieuw document: ingebrekestelling (formele sommatie met laatste betaaltermijn, optioneel wettelijke rente, incassokosten en gerechtelijke procedure), in 18 talen, PDF en Word</li>
+        <li>Veiligheid: gebruikersinvoer wordt in alle previews als gewone tekst getoond</li>
+        <li>Voettekst ondersteunt {n} en {total} (paginanummer) in PDF en Word</li>
+        <li>Fix: datumnotatie (geen punt achter volledige maandnamen als "mei", Koreaanse datum klopt nu)</li>
+        <li>Fix: adres-voorbeeld valt in alle talen terug op de eigen taal</li>
         <li>18 talen: vertalingen verplaatst naar translations.js (en, nl, es, fr, de, pt, it, ru, zh, ja, ar, ko, tr, pl, hi, fa, he, sw)</li>
         <li>Rechts-naar-links (RTL) weergave voor Arabisch, Perzisch en Hebreeuws</li>
         <li>Split-screen live voorbeeld naast het formulier, plus voorbeeldvenster op mobiel</li>
@@ -4242,6 +4353,7 @@ function applyLang() {
   const pc = document.getElementById('privacy-content');
   if (pc) pc.innerHTML = PRIVACY[lang] || PRIVACY.en;
   buildCountryList();
+  try { syncNoticeDays(); } catch (e) {}
   try {
     document.documentElement.lang = lang;
     document.title = t('meta-title');
@@ -4421,10 +4533,13 @@ function fmtDate(ds) {
   };
   const m = (months[lang] || months.en);
   const day = d.getDate(), mon = m[d.getMonth()], yr = d.getFullYear();
-  if (lang === 'de') return `${day}. ${mon}. ${yr}`;
-  if (lang === 'es') return `${day} ${mon}. ${yr}`;
-  if (['zh','ja','ko'].includes(lang)) return `${yr}年${mon}${day}日`;
-  return `${day} ${mon}. ${yr}`;
+  // Punt alleen achter afkortingen; volledige maandnamen (mei, mai, مارس, मई, …) krijgen geen punt
+  const FULL = { en:[4], nl:[4], fr:[2,4,5,7], de:[4], es:[4], ru:[4], pl:[4], hi:[2,4,5], he:[2,4,5,6], sw:[4], ar:'all', fa:'all' };
+  const f = FULL[lang]; const dot = (f === 'all' || (f && f.includes(d.getMonth()))) ? '' : '.';
+  if (lang === 'de') return `${day}. ${mon}${dot} ${yr}`;
+  if (['zh','ja'].includes(lang)) return `${yr}年${mon}${day}日`;
+  if (lang === 'ko') return `${yr}년 ${mon} ${day}일`;
+  return `${day} ${mon}${dot} ${yr}`;
 }
 
 // ====== Preview ======
@@ -4768,7 +4883,7 @@ function applyLocale(locale) {
 
   // Set default country fields (all document types)
   if (locale.country) {
-    ['g1-country','g2-country','gov-law','bs-country','bb-country','rl-country','rt-country','ep-country','ec-country','nd-country','nr-country','em-country','em-emp-country','ll-country','lb-country','wt-country','rc-country','rc-from-country','iv-from-country','iv-to-country'].forEach(id => {
+    ['g1-country','g2-country','gov-law','bs-country','bb-country','rl-country','rt-country','ep-country','ec-country','nd-country','nr-country','em-country','em-emp-country','ll-country','lb-country','wt-country','rc-country','rc-from-country','iv-from-country','iv-to-country','nt-country','ntd-country'].forEach(id => {
       const el = document.getElementById(id);
       if (el && !el.value) el.value = locale.country;
     });
@@ -4903,6 +5018,7 @@ function selectDocType(type) {
   else if (type === 'resign') goResignStep('rs1');
   else if (type === 'debt') goDebtStep('db1');
   else if (type === 'ref') goRefStep('rf1');
+  else if (type === 'notice') goNoticeStep('nt1');
 }
 
 // ====== Rental navigation ======
@@ -5695,6 +5811,103 @@ function renderDebtPreview() {
   trackEdits('debt-preview', 'Debt acknowledgement');
 }
 function generateDebtHtml() { return buildDebtDocument(gatherDebtData()); }
+
+// ====== Notice of default (ingebrekestelling) ======
+const NOTICE_STEPS = ['nt1','nt2','nt3','nt4'];
+function syncNoticeDays() {
+  const s = document.getElementById('nt-days'); if (!s) return;
+  [...s.options].forEach(o => { o.textContent = t('nt-days-n').replace('{n}', o.value); });
+}
+function goNoticeStep(step) {
+  if (step === 0) { goStep(0); return; }
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  const idx = NOTICE_STEPS.indexOf(step);
+  document.getElementById('progress').style.width = ((idx+1) / NOTICE_STEPS.length * 100) + '%';
+  updateStepNav('dt-notice-title', idx+1, NOTICE_STEPS.length);
+  if (step === 'nt3') syncNoticeDays();
+  if (step === 'nt4') { renderNoticePreview(); checkEmptyFields(); }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function validateNoticeAndGo(from, to) {
+  const req = { 'nt1': ['nt-name'], 'nt2': ['ntd-name'], 'nt3': ['nt-amount'] };
+  let ok = true;
+  (req[from]||[]).forEach(id => { const el = document.getElementById(id); const err = document.getElementById('err-'+id); if (!el.value.trim()) { el.classList.add('field-error'); if(err){err.style.display='block';} ok=false; } else { el.classList.remove('field-error'); if(err) err.style.display='none'; } });
+  if (ok) goNoticeStep(to);
+}
+function gatherNoticeData() {
+  const p = pre => ({ name:$(pre+'-name'), id:$(pre+'-id'), address:$(pre+'-address'), neighborhood:$(pre+'-neighborhood'), postal:$(pre+'-postal'), country:$(pre+'-country') });
+  const chk = id => !!document.getElementById(id)?.checked;
+  return { creditor:p('nt'), debtor:p('ntd'), amount:parseFloat($('nt-amount')) || 0, currency:$('nt-currency') || 'USD', ref:$('nt-ref'), due:$('nt-due'),
+    reminded:$('nt-reminded'), days:parseInt($('nt-days')) || 14, pay:$('nt-pay'), int:chk('nt-int'), costs:chk('nt-costs'), legal:chk('nt-legal'),
+    place:$('nt-place'), date:$('nt-date') || fmtDateISO(0) };
+}
+function noticeTexts(d) {
+  const addr = p => [addrJoin(p), p.country].filter(Boolean).join(', ') || '___';
+  const idTxt = p => p.id ? ' (' + t('lbl-id') + ': ' + p.id + ')' : '';
+  const money = n => d.currency + ' ' + (n ? n.toLocaleString() : '___');
+  const base = new Date((d.date || fmtDateISO(0)) + 'T00:00:00'); base.setDate(base.getDate() + d.days);
+  const iso = base.getFullYear() + '-' + String(base.getMonth() + 1).padStart(2, '0') + '-' + String(base.getDate()).padStart(2, '0');
+  const fill = s => s.replace(/\{amount\}/g, money(d.amount)).replace(/\{ref\}/g, d.ref ? ' (' + d.ref + ')' : '').replace(/\{due\}/g, fmtDate(d.due))
+    .replace(/\{date\}/g, fmtDate(d.reminded)).replace(/\{deadline\}/g, fmtDate(iso)).replace(/\{days\}/g, d.days).replace(/\{pay\}/g, d.pay);
+  const paras = [fill(t('ntdoc-body'))];
+  if (d.due) paras.push(fill(t('ntdoc-due')));
+  if (d.reminded) paras.push(fill(t('ntdoc-reminded')));
+  paras.push(fill(t('ntdoc-summon')));
+  if (d.pay) paras.push(fill(t('ntdoc-pay')));
+  const bullets = [];
+  if (d.int) bullets.push(t('ntdoc-c-int'));
+  if (d.costs) bullets.push(t('ntdoc-c-costs'));
+  if (d.legal) bullets.push(t('ntdoc-c-legal'));
+  const lawRef = d.int ? getLateInterestRef(d.debtor.country || d.creditor.country) : '';
+  return { title: t('ntdoc-title'), from: t('ntdoc-from') + ' ' + (d.creditor.name || '___') + idTxt(d.creditor) + ', ' + addr(d.creditor),
+    to: t('ntdoc-to') + ' ' + (d.debtor.name || '___') + idTxt(d.debtor) + ', ' + addr(d.debtor), subject: fill(t('ntdoc-subject')), paras,
+    conseq: t(bullets.length ? 'ntdoc-conseq-list' : 'ntdoc-conseq'), bullets, note: lawRef ? t('doc-late-interest-ref').replace('{ref}', lawRef) : '',
+    closing: t('ntdoc-paid'), place: t('trdoc-place') + ' ' + (d.place ? d.place + ', ' : '') + fmtDate(d.date), sig: t('db2-title'), name: d.creditor.name || '___' };
+}
+function buildNoticeDocument(d) {
+  const x = noticeTexts(d);
+  const e = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return `
+    <h2>${e(x.title)}</h2>
+    <div class="sec"><p>${e(x.from)}</p><p>${e(x.to)}</p></div>
+    <div class="sec"><p><strong>${e(x.subject)}</strong></p></div>
+    <div class="sec">${x.paras.map(p => '<p>' + e(p) + '</p>').join('')}</div>
+    <div class="sec"><p>${e(x.conseq)}</p>${x.bullets.length ? '<ul>' + x.bullets.map(b => '<li>' + e(b) + '</li>').join('') + '</ul>' : ''}${x.note ? '<p style="font-size:11px;font-style:italic;">' + e(x.note) + '</p>' : ''}</div>
+    <div class="sec"><p>${e(x.closing)}</p></div>
+    <div class="sec"><p>${e(x.place)}</p></div>
+    <div class="sig-grid"><div><div class="sig-line">${e(x.sig)}<br>${e(x.name)}</div></div><div></div></div>`;
+}
+async function downloadNoticePDF() {
+  if (!window.jspdf) { alert('PDF library not loaded. Please disable your ad blocker for this site and reload.'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = patchPdfUnicode(new jsPDF({ unit:'mm', format:'a4' }));
+  const d = gatherNoticeData(); const x = noticeTexts(d);
+  const ds = getDocSettings('notice'); const mg = 25, pw = 160; let y = ds.header ? mg + 4 : mg;
+  const addTxt = (text, opts = {}) => { const sz = opts.size || ds.fontSize, st = opts.style || 'normal', al = opts.align || 'left'; doc.setFontSize(sz); doc.setFont(ds.fontFamily, st); const lines = doc.splitTextToSize(text, opts.w || pw); if (y + lines.length * sz * 0.4 > 278) { doc.addPage(); y = ds.header ? mg + 4 : mg; } doc.text(lines, al === 'center' ? 105 : (opts.x || mg), y, { align: al }); y += lines.length * sz * 0.42 + (opts.gap || 2); };
+  addTxt(x.title, { size: 18, style: 'bold', align: 'center', gap: 8 }); y += 3;
+  addTxt(x.from, { gap: 3 }); addTxt(x.to, { gap: 7 });
+  addTxt(x.subject, { style: 'bold', gap: 7 });
+  x.paras.forEach(p => addTxt(p, { gap: 5 }));
+  addTxt(x.conseq, { gap: 3 });
+  x.bullets.forEach(b => addTxt('•  ' + b, { x: mg + 4, w: pw - 4, gap: 2 }));
+  if (x.note) addTxt(x.note, { size: 9, style: 'italic', gap: 4 });
+  y += 3; addTxt(x.closing, { gap: 5 });
+  y += 3; addTxt(x.place, {}); y += 16;
+  if (y > 250) { doc.addPage(); y = mg + 20; }
+  doc.setDrawColor(50); doc.line(mg, y, mg + 65, y);
+  doc.setFontSize(9); doc.setFont(ds.fontFamily, 'normal');
+  doc.text(x.sig + ': ' + x.name, mg, y + 5, { maxWidth: 70 });
+  addHeaderFooter(doc, ds);
+  const blob = doc.output('blob'); const fn = 'Notice_of_Default' + (d.debtor.name ? '_' + d.debtor.name.replace(/\s+/g, '_') : '') + '.pdf';
+  try { const dl = await window.claude?.use?.('downloads'); if (dl) { await dl.save({ filename: fn, data: blob }); return; } } catch(e) {}
+  const u = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = u; a.download = fn; a.click(); URL.revokeObjectURL(u);
+}
+function renderNoticePreview() {
+  document.getElementById('notice-preview').innerHTML = buildNoticeDocument(gatherNoticeData());
+  trackEdits('notice-preview', 'Notice of default');
+}
+function generateNoticeHtml() { return buildNoticeDocument(gatherNoticeData()); }
 
 // ====== Employment reference ======
 const REF_STEPS = ['rf1','rf2','rf3','rf4'];
@@ -6859,7 +7072,7 @@ function extraSecAttr(detailed) {
 // ====== Auto-save ======
 let autoSavePaused = false;
 // Never persist ID/passport numbers, dates of birth, bank details or tax numbers
-const AUTOSAVE_SKIP = /(-id|-dob|-bank|-tax)$/;
+const AUTOSAVE_SKIP = /(-id|-dob|-bank|-tax|-pay)$/;
 function autoSave() {
   if (autoSavePaused) return;
   try {
@@ -6901,7 +7114,7 @@ setInterval(autoSave, 5000);
 
 // After a document is downloaded: remove the temporary copy and stop saving until the user edits again
 ['input','change'].forEach(ev => document.addEventListener(ev, () => { autoSavePaused = false; }, true));
-['downloadPDF','downloadRentalPDF','downloadBosPDF','downloadEngPDF','downloadLoanPDF','downloadEmplPDF','downloadNdaPDF','downloadWillPDF','downloadReceiptPDF','downloadInvoicePDF','downloadRevokePDF','downloadTravelPDF','downloadResignPDF','downloadDebtPDF','downloadRefPDF','downloadWord'].forEach(name => {
+['downloadPDF','downloadRentalPDF','downloadBosPDF','downloadEngPDF','downloadLoanPDF','downloadEmplPDF','downloadNdaPDF','downloadWillPDF','downloadReceiptPDF','downloadInvoicePDF','downloadRevokePDF','downloadTravelPDF','downloadResignPDF','downloadDebtPDF','downloadRefPDF','downloadNoticePDF','downloadWord'].forEach(name => {
   const orig = window[name];
   if (typeof orig !== 'function') return;
   window[name] = async function() {
@@ -7090,7 +7303,7 @@ function applyFileState(obj) {
     // afhankelijke weergave bijwerken (selecties/vinkjes die iets tonen of verbergen)
     document.querySelectorAll('select[id], input[type="checkbox"][id]').forEach(el => { try { el.dispatchEvent(new Event('change', { bubbles: true })); } catch (e) {} });
     if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
-    const types = ['poa','rental','bos','eng','loan','empl','nda','will','receipt','invoice','revoke','travel','resign','debt','ref'];
+    const types = ['poa','rental','bos','eng','loan','empl','nda','will','receipt','invoice','revoke','travel','resign','debt','ref','notice'];
     selectDocType(types.includes(obj.docType) ? obj.docType : 'poa');
     autoSavePaused = true;
     showDoneToast('file-opened');
@@ -7105,7 +7318,7 @@ function resetAllFields() {
     else if (el.tagName === 'SELECT') el.selectedIndex = 0;
     else if (!['file', 'button', 'submit', 'hidden'].includes(el.type)) el.value = '';
   });
-  document.querySelectorAll('input[id$="-brand"], #rs-thanks, #rs-handover, #rf-recommend').forEach(el => { el.checked = true; });
+  document.querySelectorAll('input[id$="-brand"], #rs-thanks, #rs-handover, #rf-recommend, #nt-int, #nt-costs, #nt-legal').forEach(el => { el.checked = true; });
   document.querySelectorAll('select[id$="-currency"]').forEach(el => { delete el.dataset.manual; });
   document.querySelectorAll('input[type="date"]').forEach(el => { delete el.dataset.quickMonths; delete el.dataset.quickDays; });
   // Dynamische lijsten leegmaken
@@ -7227,7 +7440,7 @@ function canonCountry(s) {
 
 
 // Valuta volgt het gekozen land, tenzij de gebruiker de valuta zelf heeft aangepast
-const CURRENCY_LINKS = { 'r-law':'r-currency', 'b-law':'b-currency', 'e-law':'e-currency', 'm-law':'em-currency', 'l-law':'l-currency', 'db-country':'db-currency', 'rc-from-country':'rc-currency', 'iv-from-country':'iv-currency' };
+const CURRENCY_LINKS = { 'r-law':'r-currency', 'b-law':'b-currency', 'e-law':'e-currency', 'm-law':'em-currency', 'l-law':'l-currency', 'db-country':'db-currency', 'nt-country':'nt-currency', 'rc-from-country':'rc-currency', 'iv-from-country':'iv-currency' };
 function initCurrencyLinks() {
   for (const [src, cur] of Object.entries(CURRENCY_LINKS)) {
     const s = document.getElementById(src), c = document.getElementById(cur);
@@ -8223,6 +8436,7 @@ function livePreview() {
     else if (currentDocType === 'resign') html = generateResignHtml();
     else if (currentDocType === 'debt') html = generateDebtHtml();
     else if (currentDocType === 'ref') html = generateRefHtml();
+    else if (currentDocType === 'notice') html = generateNoticeHtml();
   } catch(e) {
     html = '<div class="preview-placeholder">' + t('live-preview-hint') + '</div>';
   }
