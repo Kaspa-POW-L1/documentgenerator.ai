@@ -1357,6 +1357,10 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
 #contact-topic:focus { outline: none; border-color: var(--pri); background-color: var(--input-focus); }
 /* Bewaren als bestand */
 .open-file-row { text-align: center; margin: 14px 0 4px; }
+#next-modal .sn-reset { font: inherit; font-size: 14px; font-weight: 500; color: var(--text-mid); background: transparent; border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; cursor: pointer; }
+#next-modal .sn-reset:hover { border-color: var(--pri); color: var(--pri); }
+.open-file-row .sn-reset { font: inherit; font-size: 13px; font-weight: 500; color: var(--text-light); background: transparent; border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; cursor: pointer; }
+.open-file-row .sn-reset:hover { border-color: var(--pri); color: var(--pri); }
 #file-pw, #file-pw-open { padding: 12px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--input-bg); color: var(--text); font-family: inherit; font-size: 14px; }
 #file-pw:focus, #file-pw-open:focus { outline: none; border-color: var(--pri); background: var(--input-focus); }
 @media (max-width: 640px) { .step-nav { flex-wrap: wrap; row-gap: 8px; } }
@@ -3139,6 +3143,7 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
         <li>Fix: voorbeeldpaneel verscheen soms naast het keuzescherm (na terugkeren naar de startpagina)</li>
         <li>Automatisch bewaren nu per browsertabblad (weg zodra je het tabblad sluit, geen 24 uur meer); korte uitleg boven het formulier; browserwaarschuwing bij sluiten met niet-gedownloade invulling; privacybeleid aangepast in 18 talen</li>
         <li>Privacybeleid: zin over bewaren als bestand toegevoegd (18 talen)</li>
+        <li>Na het downloaden verschijnt een korte "Wat nu?"-tip per documenttype (ondertekenen, bewaren, legaliseren, verzenden) in alle 18 talen</li>
         <li>Footer: korte vermelding dat de documenten sjablonen zijn en geen juridisch advies (18 talen)</li>
         <li>Vindbaarheid: beschrijving, deelplaatje (Open Graph/Twitter), canonical-link, gestructureerde gegevens, titel en beschrijving per taal; robots.txt en sitemap.xml toegevoegd</li>
         <li>Bewaren als bestand: knop "Bewaar als bestand" in elk formulier en "Open bewaard bestand" op de startpagina; bevat alle invulvelden en keuzes (ook ID, geboortedatum, bankgegevens), optioneel met wachtwoord (AES-256 in de browser); er wordt niets geüpload. Ook: "Opnieuw beginnen" wist nu ook factuurregels, bijlagen, e-mailvelden en keuzes</li>
@@ -3406,6 +3411,19 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
       <button class="btn btn-next" style="width:100%;margin-bottom:16px;" onclick="openEncrypted()" data-i18n="file-open-go"></button>
     </div>
     <div id="file-err" role="alert" style="display:none;color:#dc2626;font-size:13.5px;margin:0 0 14px;"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="next-modal">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-head"><button class="modal-close" aria-label="Close" onclick="closeNextModal()">&times;</button></div>
+    <h2 data-i18n="next-title" style="margin-top:0;margin-bottom:2px;"></h2>
+    <div data-i18n="next-sub" style="font-size:14px;font-weight:600;color:var(--green);margin-bottom:10px;"></div>
+    <p id="next-text" style="margin:0 0 18px;line-height:1.6;"></p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;">
+      <button class="btn btn-next" onclick="closeNextModal()" data-i18n="next-close"></button>
+      <button type="button" class="sn-reset" style="margin:0;" onclick="closeNextModal();startNewDocument(true)" data-i18n="next-new"></button>
+    </div>
   </div>
 </div>
 
@@ -5973,10 +5991,19 @@ setInterval(autoSave, 5000);
     const r = await orig.apply(this, arguments);
     clearAutoSave();
     autoSavePaused = true;
+    setTimeout(showNextSteps, 700);
     return r;
   };
 });
 
+
+function showNextSteps() {
+  const key = 'next-' + currentDocType;
+  if (!T[key]) return;
+  document.getElementById('next-text').textContent = t(key);
+  document.getElementById('next-modal').classList.add('show');
+}
+function closeNextModal() { document.getElementById('next-modal').classList.remove('show'); }
 
 function dismissTabHint() {
   try { sessionStorage.setItem('dg-hint-off', '1'); } catch(e) {}
