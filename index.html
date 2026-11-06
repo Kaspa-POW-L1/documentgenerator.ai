@@ -1298,6 +1298,26 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* Samenhangende documenten: paren op de startpagina en blok "Hoort hierbij" */
+.doc-pair { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; position: relative; }
+.doc-pair.p-poa { --pair: var(--a-poa); }
+.doc-pair.p-inv { --pair: var(--a-invoice); }
+.doc-pair::before { content: ""; position: absolute; left: 12px; right: 12px; top: -5px; bottom: -5px; border-radius: 14px; background: color-mix(in srgb, var(--pair) 7%, transparent); border: 1px dashed color-mix(in srgb, var(--pair) 35%, transparent); z-index: 0; }
+.doc-pair .doc-card { --acc: var(--pair); position: relative; z-index: 1; }
+.pair-link { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2; width: 30px; height: 30px; border-radius: 50%; background: var(--card); border: 2px solid var(--pair); color: var(--pair); display: flex; align-items: center; justify-content: center; }
+.pair-link svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 500px) { .doc-pair { grid-template-columns: 1fr; gap: 18px; } .pair-link svg { transform: rotate(90deg); } }
+.related { margin-top: 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); padding: 14px 16px; text-align: start; }
+.related .rt { font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--text-light); margin-bottom: 8px; }
+.related .rrow { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.related .ric { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--pair) 14%, transparent); color: var(--pair); flex: none; }
+.related .ric svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.related .rtx { flex: 1; min-width: 180px; }
+.related .rtx b { display: block; font-size: 15px; }
+.related .rtx span { font-size: 13px; color: var(--text-mid); line-height: 1.5; }
+.related .btn { border: 2px solid var(--pair); color: var(--pair); background: transparent; font-weight: 600; }
+.related .rlink { display: inline-block; margin-top: 8px; background: none; border: none; padding: 4px 0; font: inherit; font-size: 13px; color: var(--text-mid); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -1335,20 +1355,36 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
       <h2 class="step-title" data-i18n="chooser-title">What document do you need?</h2>
 
       <div class="doc-grid">
+        <div class="doc-pair p-poa">
+          <div class="doc-card" onclick="selectDocType('poa')">
+            <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.5 22H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v9.5"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M13.4 15.6a1 1 0 1 0-3-3l-5 5a2 2 0 0 0-.5.9l-.8 2.8a.5.5 0 0 0 .6.6l2.9-.8a2 2 0 0 0 .8-.5z"/></svg></div>
+            <h3 data-i18n="dt-poa-title">Power of Attorney</h3>
+            <p data-i18n="dt-poa-desc">Let someone act on your behalf</p>
+          </div>
+          <div class="doc-card" onclick="selectDocType('revoke')">
+            <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m14.5 12.5-5 5"/><path d="m9.5 12.5 5 5"/></svg></div>
+            <h3 data-i18n="dt-revoke-title">Revoke a Power of Attorney</h3>
+            <p data-i18n="dt-revoke-desc">End a power of attorney you gave</p>
+          </div>
+          <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+        </div>
+        <div class="doc-pair p-inv">
+          <div class="doc-card" onclick="selectDocType('invoice')">
+            <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></div>
+            <h3 data-i18n="dt-invoice-title">Invoice</h3>
+            <p data-i18n="dt-invoice-desc">Bill for goods or services</p>
+          </div>
+          <div class="doc-card" onclick="selectDocType('receipt')">
+            <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg></div>
+            <h3 data-i18n="dt-receipt-title">Receipt</h3>
+            <p data-i18n="dt-receipt-desc">Confirm a payment received</p>
+          </div>
+          <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+        </div>
         <div class="doc-card" onclick="selectDocType('bos')">
           <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg></div>
           <h3 data-i18n="dt-bos-title">Bill of Sale</h3>
           <p data-i18n="dt-bos-desc">Sell or buy a vehicle, boat, or item</p>
-        </div>
-        <div class="doc-card" onclick="selectDocType('poa')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.5 22H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v9.5"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M13.4 15.6a1 1 0 1 0-3-3l-5 5a2 2 0 0 0-.5.9l-.8 2.8a.5.5 0 0 0 .6.6l2.9-.8a2 2 0 0 0 .8-.5z"/></svg></div>
-          <h3 data-i18n="dt-poa-title">Power of Attorney</h3>
-          <p data-i18n="dt-poa-desc">Let someone act on your behalf</p>
-        </div>
-        <div class="doc-card" onclick="selectDocType('revoke')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m14.5 12.5-5 5"/><path d="m9.5 12.5 5 5"/></svg></div>
-          <h3 data-i18n="dt-revoke-title">Revoke a Power of Attorney</h3>
-          <p data-i18n="dt-revoke-desc">End a power of attorney you gave</p>
         </div>
         <div class="doc-card" onclick="selectDocType('rental')">
           <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
@@ -1379,16 +1415,6 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
           <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg></div>
           <h3 data-i18n="dt-will-title">Draft Will</h3>
           <p data-i18n="dt-will-desc">Prepare your will for the notary</p>
-        </div>
-        <div class="doc-card" onclick="selectDocType('receipt')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg></div>
-          <h3 data-i18n="dt-receipt-title">Receipt</h3>
-          <p data-i18n="dt-receipt-desc">Confirm a payment received</p>
-        </div>
-        <div class="doc-card" onclick="selectDocType('invoice')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></div>
-          <h3 data-i18n="dt-invoice-title">Invoice</h3>
-          <p data-i18n="dt-invoice-desc">Bill for goods or services</p>
         </div>
       </div>
     </div>
@@ -1603,9 +1629,10 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
       </label>
       <button class="btn btn-download" onclick="downloadPDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
-    <div class="rv-offer" id="rv-offer" style="display:none;">
-      <div data-i18n="rv-offer-text">This power of attorney has no end date. You can already download the letter to revoke it: it is filled in with these details, and you only need to add the date later.</div>
-      <button class="btn btn-back" style="border-color:var(--pri);color:var(--pri);font-weight:600;" onclick="downloadRevokePDF(revokeFromPoa())" data-i18n="btn-rv-download">Download revocation letter</button>
+    <div class="related" id="rv-offer" style="--pair:var(--a-poa);display:none;">
+      <div class="rt" data-i18n="rel-title">Goes with this document</div>
+      <div class="rrow"><div class="ric"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></div><div class="rtx"><b data-i18n="dt-revoke-title">Revoke a Power of Attorney</b><span data-i18n="rv-offer-text">This power of attorney has no end date.</span></div><button class="btn" onclick="revokeFormFromPoa()" data-i18n="btn-rel-rv">Make letter</button></div>
+      <button class="rlink" onclick="downloadRevokePDF(revokeFromPoa())" data-i18n="btn-rv-download">Download revocation letter</button>
     </div>
     <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
@@ -2374,7 +2401,10 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
     <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
       <button class="btn btn-download" onclick="downloadReceiptPDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
-    <button class="btn-new-doc" onclick="invoiceFromReceipt()" data-i18n="btn-invoice-from-receipt" style="border-color:var(--pri);color:var(--pri);">📄 Create invoice for this payment</button>
+    <div class="related" style="--pair:var(--a-invoice);">
+      <div class="rt" data-i18n="rel-title">Goes with this document</div>
+      <div class="rrow"><div class="ric"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></div><div class="rtx"><b data-i18n="dt-invoice-title">Invoice</b><span data-i18n="rel-iv-text">Need to bill for this payment?</span></div><button class="btn" onclick="invoiceFromReceipt()" data-i18n="btn-rel-iv">Make invoice</button></div>
+    </div>
     <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
 
@@ -2479,7 +2509,10 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
       </label>
       <button class="btn btn-download" onclick="downloadInvoicePDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
-    <button class="btn-new-doc" onclick="receiptFromInvoice()" data-i18n="btn-receipt-from-invoice" style="border-color:var(--pri);color:var(--pri);">✅ Payment received? Create receipt</button>
+    <div class="related" style="--pair:var(--a-invoice);">
+      <div class="rt" data-i18n="rel-title">Goes with this document</div>
+      <div class="rrow"><div class="ric"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></div><div class="rtx"><b data-i18n="dt-receipt-title">Receipt</b><span data-i18n="rel-rc-text">Is the invoice paid?</span></div><button class="btn" onclick="receiptFromInvoice()" data-i18n="btn-rel-rc">Make receipt</button></div>
+    </div>
     <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
 
@@ -3033,6 +3066,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
         <li>Volmacht: bij elke categorie een optioneel invulveld (bank, belastingkantoor, ministerie, pand, zaak, bedrijf, verzekeraar, voertuig); ontbrekende tekst 'Verzekeringszaken' in het document aangevuld (18 talen), zichtbaar in voorbeeld en PDF</li>
         <li>Factuur: vervaldatum-snelkeuze +7/+14/+30 dagen na factuurdatum</li>
         <li>Einddatum-velden (volmacht, huur, arbeid, lening): snelkeuze +3/+6/+12 maanden vanaf de begindatum i.p.v. gisteren/vandaag/morgen</li>
+        <li>Samenhangende documenten: Volmacht+Intrekken en Factuur+Kwitantie als paar op de startpagina; blok "Hoort hierbij" aan het einde; vooraf invullen vraagt bevestiging als het andere formulier al is ingevuld; intrekkingsbrief ook als vooraf ingevuld formulier te openen</li>
         <li>Nieuw documenttype "Volmacht intrekken" (formulier, voorbeeld, PDF, 18 talen) en bij een volmacht zonder einddatum het aanbod om de intrekkingsbrief alvast te downloaden (ingevuld, alleen datum open)</li>
         <li>Footer: link naar privacybeleid groter en donkerder (beter leesbaar, ook in donkere modus)</li>
         <li>Privacybeleid-venster: korte samenvatting bovenaan, rustiger lettertype/lijsten, kruisje blijft in beeld en Sluiten-knop onderaan</li>
@@ -4737,59 +4771,62 @@ function renderReceiptPreview() {
 
 
 // ====== Receipt ↔ Invoice linking ======
+// Vult een ander formulier vooraf in; vraagt eerst om bevestiging als daar al iets anders staat
+function applyLinked(values, docTitleKey) {
+  const conflict = Object.entries(values).some(([id, v]) => {
+    const el = document.getElementById(id);
+    return el && el.tagName !== 'SELECT' && el.value.trim() && el.value.trim() !== String(v ?? '').trim();
+  });
+  if (conflict && !confirm(t('confirm-replace').replace('{doc}', t(docTitleKey)))) return false;
+  Object.entries(values).forEach(([id, v]) => { const el = document.getElementById(id); if (el) el.value = v ?? ''; });
+  return true;
+}
+
 function receiptFromInvoice() {
   const d = gatherInvoiceData();
-  // Receiver = invoice sender (they received the payment)
-  document.getElementById('rc-name').value = d.from.name;
-  document.getElementById('rc-address').value = d.from.address;
-  document.getElementById('rc-neighborhood').value = d.from.neighborhood;
-  document.getElementById('rc-postal').value = d.from.postal;
-  document.getElementById('rc-country').value = d.from.country;
-  // Payer = invoice recipient (they paid)
-  document.getElementById('rc-from-name').value = d.to.name;
-  document.getElementById('rc-from-address').value = d.to.address;
-  document.getElementById('rc-from-neighborhood').value = d.to.neighborhood;
-  document.getElementById('rc-from-postal').value = d.to.postal;
-  document.getElementById('rc-from-country').value = d.to.country;
-  // Payment details
-  document.getElementById('rc-amount').value = d.total;
-  document.getElementById('rc-currency').value = d.currency;
-  document.getElementById('rc-number').value = d.number ? 'R-' + d.number : '';
-  document.getElementById('rc-for').value = d.number ? t('lbl-invoice-number') + ' ' + d.number : '';
-  document.getElementById('rc-method').value = d.method;
   const today = new Date().toISOString().split('T')[0];
-  document.getElementById('rc-date').value = today;
+  const ok = applyLinked({
+    'rc-name': d.from.name, 'rc-address': d.from.address, 'rc-neighborhood': d.from.neighborhood, 'rc-postal': d.from.postal, 'rc-country': d.from.country,
+    'rc-from-name': d.to.name, 'rc-from-address': d.to.address, 'rc-from-neighborhood': d.to.neighborhood, 'rc-from-postal': d.to.postal, 'rc-from-country': d.to.country,
+    'rc-amount': d.total, 'rc-currency': d.currency, 'rc-number': d.number ? 'R-' + d.number : '',
+    'rc-for': d.number ? t('lbl-invoice-number') + ' ' + d.number : '', 'rc-method': d.method, 'rc-date': today,
+  }, 'dt-receipt-title');
+  if (!ok) return;
+  currentDocType = 'receipt';
   goReceiptStep('rc1');
 }
 
 function invoiceFromReceipt() {
   const d = gatherReceiptData();
-  // Sender = receipt receiver (they issue the invoice)
-  document.getElementById('iv-from-name').value = d.receiver.name;
-  document.getElementById('iv-from-address').value = d.receiver.address;
-  document.getElementById('iv-from-neighborhood').value = d.receiver.neighborhood;
-  document.getElementById('iv-from-postal').value = d.receiver.postal;
-  document.getElementById('iv-from-country').value = d.receiver.country;
-  // Recipient = receipt payer (they receive the invoice)
-  document.getElementById('iv-to-name').value = d.payer.name;
-  document.getElementById('iv-to-address').value = d.payer.address;
-  document.getElementById('iv-to-neighborhood').value = d.payer.neighborhood;
-  document.getElementById('iv-to-postal').value = d.payer.postal;
-  document.getElementById('iv-to-country').value = d.payer.country;
-  // Currency
-  document.getElementById('iv-currency').value = d.currency;
-  // Clear existing lines and add one with the receipt details
-  document.getElementById('invoice-lines').innerHTML = '';
+  const today = new Date().toISOString().split('T')[0];
+  const linesBox = document.getElementById('invoice-lines');
+  const oldDesc = [...linesBox.children].map(l => (l.querySelector('.iv-desc')?.value || '').trim()).filter(Boolean);
+  const linesConflict = oldDesc.length > 0 && !(oldDesc.length === 1 && oldDesc[0] === (d.forWhat || '').trim());
+  const ok = applyLinked({
+    'iv-from-name': d.receiver.name, 'iv-from-address': d.receiver.address, 'iv-from-neighborhood': d.receiver.neighborhood, 'iv-from-postal': d.receiver.postal, 'iv-from-country': d.receiver.country,
+    'iv-to-name': d.payer.name, 'iv-to-address': d.payer.address, 'iv-to-neighborhood': d.payer.neighborhood, 'iv-to-postal': d.payer.postal, 'iv-to-country': d.payer.country,
+    'iv-currency': d.currency, 'iv-number': d.number ? 'INV-' + d.number.replace('R-', '') : '', 'iv-date': today,
+  }, 'dt-invoice-title');
+  if (!ok) return;
+  linesBox.innerHTML = '';
   addInvoiceLine();
-  const line = document.getElementById('invoice-lines').firstChild;
+  const line = linesBox.firstChild;
   if (line) {
     line.querySelector('.iv-desc').value = d.forWhat || '';
     line.querySelector('.iv-price').value = d.amount || '';
   }
-  document.getElementById('iv-number').value = d.number ? 'INV-' + d.number.replace('R-','') : '';
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('iv-date').value = today;
+  currentDocType = 'invoice';
   goInvoiceStep('iv1');
+}
+
+// Intrekkingsbrief als formulier openen, vooraf ingevuld vanuit de volmacht (de volmacht zelf blijft ongewijzigd)
+function revokeFormFromPoa() {
+  const r = revokeFromPoa();
+  const p = (pre, x) => ({ [pre+'-name']: x.name, [pre+'-id']: x.id, [pre+'-address']: x.address, [pre+'-neighborhood']: x.neighborhood, [pre+'-postal']: x.postal, [pre+'-country']: x.country });
+  const ok = applyLinked({ ...p('rv', r.principal), ...p('rv-ag', r.agent), 'rv-poadate': r.poaDate, 'rv-date': '', 'rv-scope': r.scope, 'rv-notify': r.notify.join('\n') }, 'dt-revoke-title');
+  if (!ok) return;
+  currentDocType = 'revoke';
+  goRevokeStep('rv4');
 }
 
 // ====== Invoice ======
