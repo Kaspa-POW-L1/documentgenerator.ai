@@ -1321,6 +1321,9 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 .doc-pair { grid-column: 1 / -1; margin: 4px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; position: relative; }
 .doc-pair.p-poa { --pair: var(--a-poa); }
 .doc-pair.p-inv { --pair: var(--a-invoice); }
+.doc-pair.p-empl { --pair: var(--a-empl); }
+.doc-pair.p-biz { --pair: var(--a-eng); }
+.doc-pair.p-loan { --pair: var(--a-loan); }
 .doc-pair::before { content: ""; position: absolute; left: 12px; right: 12px; top: -5px; bottom: -5px; border-radius: 14px; background: color-mix(in srgb, var(--pair) 7%, transparent); border: 1px dashed color-mix(in srgb, var(--pair) 35%, transparent); z-index: 0; }
 .doc-pair .doc-card { --acc: var(--pair); position: relative; z-index: 1; }
 .pair-link { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2; width: 30px; height: 30px; border-radius: 50%; background: var(--card); border: 2px solid var(--pair); color: var(--pair); display: flex; align-items: center; justify-content: center; }
@@ -1361,6 +1364,8 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
 #contact-topic:focus { outline: none; border-color: var(--pri); background-color: var(--input-focus); }
 /* Bewaren als bestand */
 .open-file-row { text-align: center; margin: 14px 0 4px; }
+/* Word-knop naast de PDF-knop */
+.btn-word { white-space: nowrap; }
 #next-modal .sn-reset { font: inherit; font-size: 14px; font-weight: 500; color: var(--text-mid); background: transparent; border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; cursor: pointer; }
 #next-modal .sn-reset:hover { border-color: var(--pri); color: var(--pri); }
 .open-file-row .sn-reset { font: inherit; font-size: 13px; font-weight: 500; color: var(--text-light); background: transparent; border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; cursor: pointer; }
@@ -1411,84 +1416,93 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
       <div class="doc-grid">
         <div class="doc-pair p-poa">
           <div class="doc-card" onclick="selectDocType('poa')">
-            <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.5 22H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v9.5"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M13.4 15.6a1 1 0 1 0-3-3l-5 5a2 2 0 0 0-.5.9l-.8 2.8a.5.5 0 0 0 .6.6l2.9-.8a2 2 0 0 0 .8-.5z"/></svg></div>
-            <h3 data-i18n="dt-poa-title">Power of Attorney</h3>
-            <p data-i18n="dt-poa-desc">Let someone act on your behalf</p>
+              <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.5 22H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v9.5"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M13.4 15.6a1 1 0 1 0-3-3l-5 5a2 2 0 0 0-.5.9l-.8 2.8a.5.5 0 0 0 .6.6l2.9-.8a2 2 0 0 0 .8-.5z"/></svg></div>
+              <h3 data-i18n="dt-poa-title">Power of Attorney</h3>
+              <p data-i18n="dt-poa-desc">Let someone act on your behalf</p>
           </div>
           <div class="doc-card" onclick="selectDocType('revoke')">
-            <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m14.5 12.5-5 5"/><path d="m9.5 12.5 5 5"/></svg></div>
-            <h3 data-i18n="dt-revoke-title">Revoke a Power of Attorney</h3>
-            <p data-i18n="dt-revoke-desc">End a power of attorney you gave</p>
+              <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m14.5 12.5-5 5"/><path d="m9.5 12.5 5 5"/></svg></div>
+              <h3 data-i18n="dt-revoke-title">Revoke a Power of Attorney</h3>
+              <p data-i18n="dt-revoke-desc">End a power of attorney you gave</p>
           </div>
           <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
         </div>
         <div class="doc-pair p-inv">
           <div class="doc-card" onclick="selectDocType('invoice')">
-            <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></div>
-            <h3 data-i18n="dt-invoice-title">Invoice</h3>
-            <p data-i18n="dt-invoice-desc">Bill for goods or services</p>
+              <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></div>
+              <h3 data-i18n="dt-invoice-title">Invoice</h3>
+              <p data-i18n="dt-invoice-desc">Bill for goods or services</p>
           </div>
           <div class="doc-card" onclick="selectDocType('receipt')">
-            <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg></div>
-            <h3 data-i18n="dt-receipt-title">Receipt</h3>
-            <p data-i18n="dt-receipt-desc">Confirm a payment received</p>
+              <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg></div>
+              <h3 data-i18n="dt-receipt-title">Receipt</h3>
+              <p data-i18n="dt-receipt-desc">Confirm a payment received</p>
+          </div>
+          <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+        </div>
+        <div class="doc-pair p-empl">
+          <div class="doc-card" onclick="selectDocType('empl')">
+              <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg></div>
+              <h3 data-i18n="dt-employment-title">Employment Contract</h3>
+              <p data-i18n="dt-employment-desc">Hire an employee</p>
+          </div>
+          <div class="doc-card" onclick="selectDocType('resign')">
+              <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></div>
+              <h3 data-i18n="dt-resign-title">Resignation letter</h3>
+              <p data-i18n="dt-resign-desc">Give notice to your employer</p>
+          </div>
+          <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+        </div>
+        <div class="doc-pair p-biz">
+          <div class="doc-card" onclick="selectDocType('nda')">
+              <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+              <h3 data-i18n="dt-nda-title">Non-Disclosure Agreement</h3>
+              <p data-i18n="dt-nda-desc">Protect confidential information</p>
+          </div>
+          <div class="doc-card" onclick="selectDocType('eng')">
+              <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></div>
+              <h3 data-i18n="dt-eng-title">Engagement Letter</h3>
+              <p data-i18n="dt-eng-desc">Define a professional service agreement</p>
+          </div>
+          <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+        </div>
+        <div class="doc-pair p-loan">
+          <div class="doc-card" onclick="selectDocType('loan')">
+              <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg></div>
+              <h3 data-i18n="dt-loan-title">Loan Agreement</h3>
+              <p data-i18n="dt-loan-desc">Lend or borrow money</p>
+          </div>
+          <div class="doc-card" onclick="selectDocType('debt')">
+              <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg></div>
+              <h3 data-i18n="dt-debt-title">Debt acknowledgement</h3>
+              <p data-i18n="dt-debt-desc">Confirm that you owe someone money</p>
           </div>
           <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
         </div>
         <div class="doc-card" onclick="selectDocType('rental')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
-          <h3 data-i18n="dt-rental-title">Rental Agreement</h3>
-          <p data-i18n="dt-rental-desc">Lease a property or room</p>
-        </div>
-        <div class="doc-card" onclick="selectDocType('empl')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg></div>
-          <h3 data-i18n="dt-employment-title">Employment Contract</h3>
-          <p data-i18n="dt-employment-desc">Hire an employee</p>
+            <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+            <h3 data-i18n="dt-rental-title">Rental Agreement</h3>
+            <p data-i18n="dt-rental-desc">Lease a property or room</p>
         </div>
         <div class="doc-card" onclick="selectDocType('bos')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg></div>
-          <h3 data-i18n="dt-bos-title">Bill of Sale</h3>
-          <p data-i18n="dt-bos-desc">Sell or buy a vehicle, boat, or item</p>
-        </div>
-        <div class="doc-card" onclick="selectDocType('loan')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg></div>
-          <h3 data-i18n="dt-loan-title">Loan Agreement</h3>
-          <p data-i18n="dt-loan-desc">Lend or borrow money</p>
-        </div>
-        <div class="doc-card" onclick="selectDocType('nda')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          <h3 data-i18n="dt-nda-title">Non-Disclosure Agreement</h3>
-          <p data-i18n="dt-nda-desc">Protect confidential information</p>
+            <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg></div>
+            <h3 data-i18n="dt-bos-title">Bill of Sale</h3>
+            <p data-i18n="dt-bos-desc">Sell or buy a vehicle, boat, or item</p>
         </div>
         <div class="doc-card" onclick="selectDocType('will')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg></div>
-          <h3 data-i18n="dt-will-title">Draft Will</h3>
-          <p data-i18n="dt-will-desc">Prepare your will for the notary</p>
-        </div>
-        <div class="doc-card" onclick="selectDocType('eng')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></div>
-          <h3 data-i18n="dt-eng-title">Engagement Letter</h3>
-          <p data-i18n="dt-eng-desc">Define a professional service agreement</p>
+            <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg></div>
+            <h3 data-i18n="dt-will-title">Draft Will</h3>
+            <p data-i18n="dt-will-desc">Prepare your will for the notary</p>
         </div>
         <div class="doc-card" onclick="selectDocType('travel')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></div>
-          <h3 data-i18n="dt-travel-title">Travel consent for a child</h3>
-          <p data-i18n="dt-travel-desc">Permission for a child to travel abroad</p>
-        </div>
-        <div class="doc-card" onclick="selectDocType('resign')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></div>
-          <h3 data-i18n="dt-resign-title">Resignation letter</h3>
-          <p data-i18n="dt-resign-desc">Give notice to your employer</p>
-        </div>
-        <div class="doc-card" onclick="selectDocType('debt')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg></div>
-          <h3 data-i18n="dt-debt-title">Debt acknowledgement</h3>
-          <p data-i18n="dt-debt-desc">Confirm that you owe someone money</p>
+            <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></div>
+            <h3 data-i18n="dt-travel-title">Travel consent for a child</h3>
+            <p data-i18n="dt-travel-desc">Permission for a child to travel abroad</p>
         </div>
         <div class="doc-card" onclick="selectDocType('ref')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg></div>
-          <h3 data-i18n="dt-ref-title">Employment reference</h3>
-          <p data-i18n="dt-ref-desc">Write a reference for a (former) employee</p>
+            <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <h3 data-i18n="dt-ref-title">Employment reference</h3>
+            <p data-i18n="dt-ref-desc">Write a reference for a (former) employee</p>
         </div>
       </div>
       <div class="open-file-row"><button type="button" class="sn-reset" onclick="pickFile()" data-i18n="file-open-btn">Open saved file</button></div>
@@ -2655,161 +2669,6 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
     <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
 
-  <!-- TRAVEL STEPS -->
-  <div class="step" id="step-tr1">
-    <div class="step-card">
-      <h2 class="step-title" data-i18n="tr1-title"></h2>
-      <p class="step-explain" data-i18n="tr1-explain"></p>
-      <div class="field"><label data-i18n="lbl-name"></label><input type="text" id="tr-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-tr-name" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-id"></label><input type="text" id="tr-id"></div>
-      <div class="field"><label data-i18n="lbl-tr-rel"></label><select id="tr-rel"><option value="mother" data-i18n="tr-rel-mother">Mother</option><option value="father" data-i18n="tr-rel-father">Father</option><option value="guardian" data-i18n="tr-rel-guardian">Legal guardian</option></select></div>
-      <div class="field"><label data-i18n="lbl-address"></label><input type="text" id="tr-address" data-i18n-placeholder="ph-address"></div>
-      <div class="field"><label data-i18n="lbl-neighborhood"></label><input type="text" id="tr-neighborhood"></div>
-      <div class="field"><label data-i18n="lbl-postal"></label><input type="text" id="tr-postal"></div>
-      <div class="field"><label data-i18n="lbl-country"></label><input type="text" id="tr-country"></div>
-      <div class="field"><label data-i18n="lbl-phone"></label><input type="tel" id="tr-phone"></div>
-      <div class="field"><label data-i18n="lbl-email"></label><input type="email" id="tr-email"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goTravelStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateTravelAndGo('tr1','tr2')" data-i18n="btn-next">Next</button></div>
-    </div>
-  </div>
-
-  <div class="step" id="step-tr2">
-    <div class="step-card">
-      <h2 class="step-title" data-i18n="tr2-title"></h2>
-      <p class="step-explain" data-i18n="tr2-explain"></p>
-      <div class="field"><label data-i18n="lbl-name"></label><input type="text" id="tch-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-tch-name" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-dob"></label><input type="date" id="tch-dob"></div>
-      <div class="field"><label data-i18n="lbl-id"></label><input type="text" id="tch-id"></div>
-      <div class="field"><label data-i18n="lbl-tr-more"></label><textarea id="tch-more" rows="3" data-i18n-placeholder="ph-tr-more"></textarea></div>
-      <div class="nav"><button class="btn btn-back" onclick="goTravelStep('tr1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateTravelAndGo('tr2','tr3')" data-i18n="btn-next">Next</button></div>
-    </div>
-  </div>
-
-  <div class="step" id="step-tr3">
-    <div class="step-card">
-      <h2 class="step-title" data-i18n="tr3-title"></h2>
-      <p class="step-explain" data-i18n="tr3-explain"></p>
-      <div class="field"><label data-i18n="lbl-tr-comp"></label><input type="text" id="tk-name" data-i18n-placeholder="ph-name"></div>
-      <div class="field"><label data-i18n="lbl-id"></label><input type="text" id="tk-id"></div>
-      <div class="field"><label data-i18n="lbl-tr-comp-rel"></label><input type="text" id="tk-rel" data-i18n-placeholder="ph-tr-comp-rel"></div>
-      <div class="field"><label data-i18n="lbl-phone"></label><input type="tel" id="tk-phone"></div>
-      <div class="field"><label data-i18n="lbl-tr-dest"></label><input type="text" id="tr-dest"><div class="error-msg" id="err-tr-dest" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-tr-dep"></label><input type="date" id="tr-dep"></div>
-      <div class="field"><label data-i18n="lbl-tr-ret"></label><input type="date" id="tr-ret"></div>
-      <div class="field"><label data-i18n="lbl-tr-purpose"></label><input type="text" id="tr-purpose" data-i18n-placeholder="ph-tr-purpose"></div>
-      <div class="field"><label data-i18n="lbl-tr-other"></label><input type="text" id="tr-other" data-i18n-placeholder="ph-tr-other"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goTravelStep('tr2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goTravelStep('tr4')" data-i18n="btn-preview">Next</button></div>
-    </div>
-  </div>
-
-  <!-- NEW STEP 4: Preview & Download -->
-  <div class="step" id="step-tr4">
-    <div class="step-card" style="padding:20px 24px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
-        <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
-        <div style="display:flex;gap:8px;">
-          <button class="btn btn-back" onclick="goTravelStep('tr1')" data-i18n="btn-edit">Edit</button>
-          <button class="btn btn-download" onclick="downloadTravelPDF()" data-i18n="btn-download">⬇ Download PDF</button>
-        </div>
-      </div>
-      <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
-      <button class="btn-edit-doc" onclick="toggleEditMode('travel-preview')" id="edit-btn-travel-preview" data-i18n="btn-customize">✏️ Customize document</button>
-    </div>
-    <div class="edit-hint" id="edit-hint-travel-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
-    <div class="preview-box" id="travel-preview"></div>
-    <details class="doc-settings">
-      <summary data-i18n="lbl-doc-settings">Document settings</summary>
-      <div class="ds-body">
-        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="travel-header" data-i18n-placeholder="ph-header"></div>
-        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="travel-footer" data-i18n-placeholder="ph-footer"></div>
-        <div class="field"><label data-i18n="lbl-fontsize">Font size</label><select id="travel-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select></div>
-        <div class="field"><label data-i18n="lbl-fontfamily">Font</label><select id="travel-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select></div>
-        <div class="field" style="grid-column:1/-1;"><label data-i18n="lbl-watermark">Watermark</label><select id="travel-watermark"><option value="" data-i18n="wm-none">None</option><option value="draft" data-i18n="wm-draft">Draft</option><option value="copy" data-i18n="wm-copy">Copy</option></select></div>
-        <div class="field" style="grid-column:1/-1;"><label style="display:flex;gap:8px;align-items:flex-start;font-weight:500;cursor:pointer;"><input type="checkbox" id="travel-brand" checked style="width:16px;height:16px;margin-top:2px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-brand">Add “Created with documentgenerator.ai” at the bottom of the page</span></label><div style="font-size:12px;color:var(--text-light);margin:4px 0 0 24px;line-height:1.5;" data-i18n="brand-help">This tool is free and needs no account. If you leave this small line on, more people will find us, and that helps us keep it free. You can switch it off at any time.</div></div>
-      </div>
-    </details>
-    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
-      <button class="btn btn-download" onclick="downloadTravelPDF()" data-i18n="btn-download">⬇ Download PDF</button>
-    </div>
-    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
-  </div>
-
-  <!-- RESIGN STEPS -->
-  <div class="step" id="step-rs1">
-    <div class="step-card">
-      <h2 class="step-title" data-i18n="rs1-title"></h2>
-      <p class="step-explain" data-i18n="rs1-explain"></p>
-      <div class="field"><label data-i18n="lbl-name"></label><input type="text" id="rs-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-rs-name" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-jobtitle"></label><input type="text" id="rs-jobtitle"></div>
-      <div class="field"><label data-i18n="lbl-address"></label><input type="text" id="rs-address" data-i18n-placeholder="ph-address"></div>
-      <div class="field"><label data-i18n="lbl-neighborhood"></label><input type="text" id="rs-neighborhood"></div>
-      <div class="field"><label data-i18n="lbl-postal"></label><input type="text" id="rs-postal"></div>
-      <div class="field"><label data-i18n="lbl-country"></label><input type="text" id="rs-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goResignStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateResignAndGo('rs1','rs2')" data-i18n="btn-next">Next</button></div>
-    </div>
-  </div>
-
-  <div class="step" id="step-rs2">
-    <div class="step-card">
-      <h2 class="step-title" data-i18n="rs2-title"></h2>
-      <p class="step-explain" data-i18n="rs2-explain"></p>
-      <div class="field"><label data-i18n="lbl-company"></label><input type="text" id="re-company" data-i18n-placeholder="ph-company"><div class="error-msg" id="err-re-company" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-rs-contact"></label><input type="text" id="re-contact" data-i18n-placeholder="ph-rs-contact"></div>
-      <div class="field"><label data-i18n="lbl-address"></label><input type="text" id="re-address" data-i18n-placeholder="ph-address"></div>
-      <div class="field"><label data-i18n="lbl-country"></label><input type="text" id="re-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goResignStep('rs1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateResignAndGo('rs2','rs3')" data-i18n="btn-next">Next</button></div>
-    </div>
-  </div>
-
-  <div class="step" id="step-rs3">
-    <div class="step-card">
-      <h2 class="step-title" data-i18n="rs3-title"></h2>
-      <p class="step-explain" data-i18n="rs3-explain"></p>
-      <div class="field"><label data-i18n="lbl-rs-last"></label><input type="date" id="rs-last"><div class="error-msg" id="err-rs-last" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-date"></label><input type="date" id="rs-date"></div>
-      <div class="field"><label data-i18n="lbl-rs-reason"></label><textarea id="rs-reason" rows="2" data-i18n-placeholder="ph-rs-reason"></textarea></div>
-      <div class="field"><label style="display:flex;gap:8px;align-items:center;font-weight:500;cursor:pointer;"><input type="checkbox" id="rs-thanks" checked style="width:16px;height:16px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-rs-thanks"></span></label></div>
-      <div class="field"><label style="display:flex;gap:8px;align-items:center;font-weight:500;cursor:pointer;"><input type="checkbox" id="rs-handover" checked style="width:16px;height:16px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-rs-handover"></span></label></div>
-      <div class="nav"><button class="btn btn-back" onclick="goResignStep('rs2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goResignStep('rs4')" data-i18n="btn-preview">Next</button></div>
-    </div>
-  </div>
-
-  <!-- NEW STEP 4: Preview & Download -->
-  <div class="step" id="step-rs4">
-    <div class="step-card" style="padding:20px 24px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
-        <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
-        <div style="display:flex;gap:8px;">
-          <button class="btn btn-back" onclick="goResignStep('rs1')" data-i18n="btn-edit">Edit</button>
-          <button class="btn btn-download" onclick="downloadResignPDF()" data-i18n="btn-download">⬇ Download PDF</button>
-        </div>
-      </div>
-      <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
-      <button class="btn-edit-doc" onclick="toggleEditMode('resign-preview')" id="edit-btn-resign-preview" data-i18n="btn-customize">✏️ Customize document</button>
-    </div>
-    <div class="edit-hint" id="edit-hint-resign-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
-    <div class="preview-box" id="resign-preview"></div>
-    <details class="doc-settings">
-      <summary data-i18n="lbl-doc-settings">Document settings</summary>
-      <div class="ds-body">
-        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="resign-header" data-i18n-placeholder="ph-header"></div>
-        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="resign-footer" data-i18n-placeholder="ph-footer"></div>
-        <div class="field"><label data-i18n="lbl-fontsize">Font size</label><select id="resign-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select></div>
-        <div class="field"><label data-i18n="lbl-fontfamily">Font</label><select id="resign-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select></div>
-        <div class="field" style="grid-column:1/-1;"><label data-i18n="lbl-watermark">Watermark</label><select id="resign-watermark"><option value="" data-i18n="wm-none">None</option><option value="draft" data-i18n="wm-draft">Draft</option><option value="copy" data-i18n="wm-copy">Copy</option></select></div>
-        <div class="field" style="grid-column:1/-1;"><label style="display:flex;gap:8px;align-items:flex-start;font-weight:500;cursor:pointer;"><input type="checkbox" id="resign-brand" checked style="width:16px;height:16px;margin-top:2px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-brand">Add “Created with documentgenerator.ai” at the bottom of the page</span></label><div style="font-size:12px;color:var(--text-light);margin:4px 0 0 24px;line-height:1.5;" data-i18n="brand-help">This tool is free and needs no account. If you leave this small line on, more people will find us, and that helps us keep it free. You can switch it off at any time.</div></div>
-      </div>
-    </details>
-    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
-      <button class="btn btn-download" onclick="downloadResignPDF()" data-i18n="btn-download">⬇ Download PDF</button>
-    </div>
-    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
-  </div>
-
   <!-- REFERENCE STEPS -->
   <div class="step" id="step-rf1">
     <div class="step-card">
@@ -2879,161 +2738,6 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
     </details>
     <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
       <button class="btn btn-download" onclick="downloadRefPDF()" data-i18n="btn-download">⬇ Download PDF</button>
-    </div>
-    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
-  </div>
-
-  <!-- TRAVEL STEPS -->
-  <div class="step" id="step-tr1">
-    <div class="step-card">
-      <h2 class="step-title" data-i18n="tr1-title"></h2>
-      <p class="step-explain" data-i18n="tr1-explain"></p>
-      <div class="field"><label data-i18n="lbl-name"></label><input type="text" id="tr-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-tr-name" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-id"></label><input type="text" id="tr-id"></div>
-      <div class="field"><label data-i18n="lbl-tr-rel"></label><select id="tr-rel"><option value="mother" data-i18n="tr-rel-mother">Mother</option><option value="father" data-i18n="tr-rel-father">Father</option><option value="guardian" data-i18n="tr-rel-guardian">Legal guardian</option></select></div>
-      <div class="field"><label data-i18n="lbl-address"></label><input type="text" id="tr-address" data-i18n-placeholder="ph-address"></div>
-      <div class="field"><label data-i18n="lbl-neighborhood"></label><input type="text" id="tr-neighborhood"></div>
-      <div class="field"><label data-i18n="lbl-postal"></label><input type="text" id="tr-postal"></div>
-      <div class="field"><label data-i18n="lbl-country"></label><input type="text" id="tr-country"></div>
-      <div class="field"><label data-i18n="lbl-phone"></label><input type="tel" id="tr-phone"></div>
-      <div class="field"><label data-i18n="lbl-email"></label><input type="email" id="tr-email"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goTravelStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateTravelAndGo('tr1','tr2')" data-i18n="btn-next">Next</button></div>
-    </div>
-  </div>
-
-  <div class="step" id="step-tr2">
-    <div class="step-card">
-      <h2 class="step-title" data-i18n="tr2-title"></h2>
-      <p class="step-explain" data-i18n="tr2-explain"></p>
-      <div class="field"><label data-i18n="lbl-name"></label><input type="text" id="tch-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-tch-name" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-dob"></label><input type="date" id="tch-dob"></div>
-      <div class="field"><label data-i18n="lbl-id"></label><input type="text" id="tch-id"></div>
-      <div class="field"><label data-i18n="lbl-tr-more"></label><textarea id="tch-more" rows="3" data-i18n-placeholder="ph-tr-more"></textarea></div>
-      <div class="nav"><button class="btn btn-back" onclick="goTravelStep('tr1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateTravelAndGo('tr2','tr3')" data-i18n="btn-next">Next</button></div>
-    </div>
-  </div>
-
-  <div class="step" id="step-tr3">
-    <div class="step-card">
-      <h2 class="step-title" data-i18n="tr3-title"></h2>
-      <p class="step-explain" data-i18n="tr3-explain"></p>
-      <div class="field"><label data-i18n="lbl-tr-comp"></label><input type="text" id="tk-name" data-i18n-placeholder="ph-name"></div>
-      <div class="field"><label data-i18n="lbl-id"></label><input type="text" id="tk-id"></div>
-      <div class="field"><label data-i18n="lbl-tr-comp-rel"></label><input type="text" id="tk-rel" data-i18n-placeholder="ph-tr-comp-rel"></div>
-      <div class="field"><label data-i18n="lbl-phone"></label><input type="tel" id="tk-phone"></div>
-      <div class="field"><label data-i18n="lbl-tr-dest"></label><input type="text" id="tr-dest"><div class="error-msg" id="err-tr-dest" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-tr-dep"></label><input type="date" id="tr-dep"></div>
-      <div class="field"><label data-i18n="lbl-tr-ret"></label><input type="date" id="tr-ret"></div>
-      <div class="field"><label data-i18n="lbl-tr-purpose"></label><input type="text" id="tr-purpose" data-i18n-placeholder="ph-tr-purpose"></div>
-      <div class="field"><label data-i18n="lbl-tr-other"></label><input type="text" id="tr-other" data-i18n-placeholder="ph-tr-other"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goTravelStep('tr2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goTravelStep('tr4')" data-i18n="btn-preview">Next</button></div>
-    </div>
-  </div>
-
-  <!-- NEW STEP 4: Preview & Download -->
-  <div class="step" id="step-tr4">
-    <div class="step-card" style="padding:20px 24px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
-        <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
-        <div style="display:flex;gap:8px;">
-          <button class="btn btn-back" onclick="goTravelStep('tr1')" data-i18n="btn-edit">Edit</button>
-          <button class="btn btn-download" onclick="downloadTravelPDF()" data-i18n="btn-download">⬇ Download PDF</button>
-        </div>
-      </div>
-      <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
-      <button class="btn-edit-doc" onclick="toggleEditMode('travel-preview')" id="edit-btn-travel-preview" data-i18n="btn-customize">✏️ Customize document</button>
-    </div>
-    <div class="edit-hint" id="edit-hint-travel-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
-    <div class="preview-box" id="travel-preview"></div>
-    <details class="doc-settings">
-      <summary data-i18n="lbl-doc-settings">Document settings</summary>
-      <div class="ds-body">
-        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="travel-header" data-i18n-placeholder="ph-header"></div>
-        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="travel-footer" data-i18n-placeholder="ph-footer"></div>
-        <div class="field"><label data-i18n="lbl-fontsize">Font size</label><select id="travel-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select></div>
-        <div class="field"><label data-i18n="lbl-fontfamily">Font</label><select id="travel-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select></div>
-        <div class="field" style="grid-column:1/-1;"><label data-i18n="lbl-watermark">Watermark</label><select id="travel-watermark"><option value="" data-i18n="wm-none">None</option><option value="draft" data-i18n="wm-draft">Draft</option><option value="copy" data-i18n="wm-copy">Copy</option></select></div>
-        <div class="field" style="grid-column:1/-1;"><label style="display:flex;gap:8px;align-items:flex-start;font-weight:500;cursor:pointer;"><input type="checkbox" id="travel-brand" checked style="width:16px;height:16px;margin-top:2px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-brand">Add “Created with documentgenerator.ai” at the bottom of the page</span></label><div style="font-size:12px;color:var(--text-light);margin:4px 0 0 24px;line-height:1.5;" data-i18n="brand-help">This tool is free and needs no account. If you leave this small line on, more people will find us, and that helps us keep it free. You can switch it off at any time.</div></div>
-      </div>
-    </details>
-    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
-      <button class="btn btn-download" onclick="downloadTravelPDF()" data-i18n="btn-download">⬇ Download PDF</button>
-    </div>
-    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
-  </div>
-
-  <!-- RESIGN STEPS -->
-  <div class="step" id="step-rs1">
-    <div class="step-card">
-      <h2 class="step-title" data-i18n="rs1-title"></h2>
-      <p class="step-explain" data-i18n="rs1-explain"></p>
-      <div class="field"><label data-i18n="lbl-name"></label><input type="text" id="rs-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-rs-name" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-jobtitle"></label><input type="text" id="rs-jobtitle"></div>
-      <div class="field"><label data-i18n="lbl-address"></label><input type="text" id="rs-address" data-i18n-placeholder="ph-address"></div>
-      <div class="field"><label data-i18n="lbl-neighborhood"></label><input type="text" id="rs-neighborhood"></div>
-      <div class="field"><label data-i18n="lbl-postal"></label><input type="text" id="rs-postal"></div>
-      <div class="field"><label data-i18n="lbl-country"></label><input type="text" id="rs-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goResignStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateResignAndGo('rs1','rs2')" data-i18n="btn-next">Next</button></div>
-    </div>
-  </div>
-
-  <div class="step" id="step-rs2">
-    <div class="step-card">
-      <h2 class="step-title" data-i18n="rs2-title"></h2>
-      <p class="step-explain" data-i18n="rs2-explain"></p>
-      <div class="field"><label data-i18n="lbl-company"></label><input type="text" id="re-company" data-i18n-placeholder="ph-company"><div class="error-msg" id="err-re-company" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-rs-contact"></label><input type="text" id="re-contact" data-i18n-placeholder="ph-rs-contact"></div>
-      <div class="field"><label data-i18n="lbl-address"></label><input type="text" id="re-address" data-i18n-placeholder="ph-address"></div>
-      <div class="field"><label data-i18n="lbl-country"></label><input type="text" id="re-country"></div>
-      <div class="nav"><button class="btn btn-back" onclick="goResignStep('rs1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateResignAndGo('rs2','rs3')" data-i18n="btn-next">Next</button></div>
-    </div>
-  </div>
-
-  <div class="step" id="step-rs3">
-    <div class="step-card">
-      <h2 class="step-title" data-i18n="rs3-title"></h2>
-      <p class="step-explain" data-i18n="rs3-explain"></p>
-      <div class="field"><label data-i18n="lbl-rs-last"></label><input type="date" id="rs-last"><div class="error-msg" id="err-rs-last" data-i18n="err-required">This field is required</div></div>
-      <div class="field"><label data-i18n="lbl-date"></label><input type="date" id="rs-date"></div>
-      <div class="field"><label data-i18n="lbl-rs-reason"></label><textarea id="rs-reason" rows="2" data-i18n-placeholder="ph-rs-reason"></textarea></div>
-      <div class="field"><label style="display:flex;gap:8px;align-items:center;font-weight:500;cursor:pointer;"><input type="checkbox" id="rs-thanks" checked style="width:16px;height:16px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-rs-thanks"></span></label></div>
-      <div class="field"><label style="display:flex;gap:8px;align-items:center;font-weight:500;cursor:pointer;"><input type="checkbox" id="rs-handover" checked style="width:16px;height:16px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-rs-handover"></span></label></div>
-      <div class="nav"><button class="btn btn-back" onclick="goResignStep('rs2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goResignStep('rs4')" data-i18n="btn-preview">Next</button></div>
-    </div>
-  </div>
-
-  <!-- NEW STEP 4: Preview & Download -->
-  <div class="step" id="step-rs4">
-    <div class="step-card" style="padding:20px 24px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
-        <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
-        <div style="display:flex;gap:8px;">
-          <button class="btn btn-back" onclick="goResignStep('rs1')" data-i18n="btn-edit">Edit</button>
-          <button class="btn btn-download" onclick="downloadResignPDF()" data-i18n="btn-download">⬇ Download PDF</button>
-        </div>
-      </div>
-      <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
-      <button class="btn-edit-doc" onclick="toggleEditMode('resign-preview')" id="edit-btn-resign-preview" data-i18n="btn-customize">✏️ Customize document</button>
-    </div>
-    <div class="edit-hint" id="edit-hint-resign-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
-    <div class="preview-box" id="resign-preview"></div>
-    <details class="doc-settings">
-      <summary data-i18n="lbl-doc-settings">Document settings</summary>
-      <div class="ds-body">
-        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="resign-header" data-i18n-placeholder="ph-header"></div>
-        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="resign-footer" data-i18n-placeholder="ph-footer"></div>
-        <div class="field"><label data-i18n="lbl-fontsize">Font size</label><select id="resign-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select></div>
-        <div class="field"><label data-i18n="lbl-fontfamily">Font</label><select id="resign-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select></div>
-        <div class="field" style="grid-column:1/-1;"><label data-i18n="lbl-watermark">Watermark</label><select id="resign-watermark"><option value="" data-i18n="wm-none">None</option><option value="draft" data-i18n="wm-draft">Draft</option><option value="copy" data-i18n="wm-copy">Copy</option></select></div>
-        <div class="field" style="grid-column:1/-1;"><label style="display:flex;gap:8px;align-items:flex-start;font-weight:500;cursor:pointer;"><input type="checkbox" id="resign-brand" checked style="width:16px;height:16px;margin-top:2px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-brand">Add “Created with documentgenerator.ai” at the bottom of the page</span></label><div style="font-size:12px;color:var(--text-light);margin:4px 0 0 24px;line-height:1.5;" data-i18n="brand-help">This tool is free and needs no account. If you leave this small line on, more people will find us, and that helps us keep it free. You can switch it off at any time.</div></div>
-      </div>
-    </details>
-    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
-      <button class="btn btn-download" onclick="downloadResignPDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
     <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
@@ -3800,6 +3504,7 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
         <li>Fix: voorbeeldpaneel verscheen soms naast het keuzescherm (na terugkeren naar de startpagina)</li>
         <li>Automatisch bewaren nu per browsertabblad (weg zodra je het tabblad sluit, geen 24 uur meer); korte uitleg boven het formulier; browserwaarschuwing bij sluiten met niet-gedownloade invulling; privacybeleid aangepast in 18 talen</li>
         <li>Privacybeleid: zin over bewaren als bestand toegevoegd (18 talen)</li>
+        <li>Alle documenten kunnen nu ook als Word-bestand (.docx) worden gedownload, inclusief koptekst, voettekst, paginanummers en watermerk</li>
         <li>Twee extra documenten: schuldbekentenis en werkgeversreferentie (18 talen)</li>
         <li>Twee nieuwe documenten: toestemmingsbrief voor reizen met een kind en ontslagbrief (18 talen)</li>
         <li>Na het downloaden verschijnt een korte "Wat nu?"-tip per documenttype (ondertekenen, bewaren, legaliseren, verzenden) in alle 18 talen</li>
@@ -6069,6 +5774,233 @@ function renderRefPreview() {
 }
 function generateRefHtml() { return buildRefDocument(gatherRefData()); }
 
+
+// ====== Word-export (.docx) ======
+// Zet het voorbeeld van elk documenttype om naar een Word-bestand. De bibliotheek wordt pas geladen bij de eerste keer gebruik.
+const DOCX_URLS = ['https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js', 'https://unpkg.com/docx@8.5.0/build/index.umd.js'];
+function loadDocxLib() {
+  if (window.docx) return Promise.resolve(window.docx);
+  return new Promise((resolve, reject) => {
+    let i = 0;
+    const next = () => {
+      if (i >= DOCX_URLS.length) return reject(new Error('docx'));
+      const s = document.createElement('script');
+      s.src = DOCX_URLS[i++];
+      s.onload = () => (window.docx ? resolve(window.docx) : next());
+      s.onerror = () => { s.remove(); next(); };
+      document.head.appendChild(s);
+    };
+    next();
+  });
+}
+function injectWordButtons() {
+  document.querySelectorAll('.step').forEach(step => {
+    if (!step.querySelector('.preview-box')) return;
+    const btns = [...step.querySelectorAll('.btn-download')].filter(b => /^download\w*PDF\(\)$/.test(b.getAttribute('onclick') || ''));
+    const last = btns[btns.length - 1];
+    if (!last || last.parentNode.querySelector('.btn-word')) return;
+    const w = document.createElement('button');
+    w.type = 'button'; w.className = 'btn btn-back btn-word'; w.setAttribute('onclick', 'downloadWord()'); w.setAttribute('data-i18n', 'btn-word');
+    w.textContent = t('btn-word');
+    last.after(w);
+  });
+}
+async function downloadWord() {
+  const box = document.querySelector('.step.active .preview-box');
+  if (!box) return;
+  let D;
+  try { D = await loadDocxLib(); } catch (e) { alert(t('word-err')); return; }
+  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType, BorderStyle, Header, Footer, PageNumber, ExternalHyperlink, ImageRun, HorizontalPositionRelativeFrom, VerticalPositionRelativeFrom, TextWrappingType, HorizontalPositionAlign, VerticalPositionAlign, LineRuleType, VerticalAlign } = D;
+  const prefix = box.id === 'preview' ? 'poa' : box.id.replace(/-preview$/, '');
+  const ds = getDocSettings(prefix);
+  const rtl = ['ar', 'fa', 'he'].includes(lang);
+  const F = ds.fontFamily === 'times' ? 'Times New Roman' : ds.fontFamily === 'courier' ? 'Courier New' : 'Arial';
+  const east = { zh: 'Microsoft YaHei', ja: 'Yu Gothic', ko: 'Malgun Gothic' }[lang] || F;
+  const font = { ascii: F, hAnsi: F, cs: lang === 'hi' ? 'Mangal' : F, eastAsia: east };
+  const base = ds.fontSize * 2;
+  const PAGE_W = 9072; // A4 minus 25 mm margins, in twips
+  const RTLCH = /[֐-ࣿיִ-﷿ﹰ-﻿]/;
+  const NONE = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
+  const noBorders = { top: NONE, bottom: NONE, left: NONE, right: NONE, insideHorizontal: NONE, insideVertical: NONE };
+  const GREY = { style: BorderStyle.SINGLE, size: 4, color: 'BBBBBB' };
+
+  // --- inline: stukjes tekst met opmaak
+  const styleOf = (el, o) => {
+    const st = el.style || {}, n = { ...o };
+    if (/^(bold|[6-9]00)$/.test(st.fontWeight)) n.bold = true;
+    if (st.fontStyle === 'italic') n.italics = true;
+    if (st.fontSize && /px$/.test(st.fontSize)) n.size = Math.max(14, Math.round((ds.fontSize + (parseFloat(st.fontSize) - 14) * 0.5) * 2));
+    return n;
+  };
+  const pieces = (node, o) => {
+    const out = [];
+    node.childNodes.forEach(c => {
+      if (c.nodeType === 3) { const tx = c.textContent.replace(/\s+/g, ' '); if (tx) out.push({ t: tx, o }); }
+      else if (c.nodeType === 1) {
+        const tg = c.tagName;
+        if (tg === 'BR') out.push({ br: true });
+        else if (tg === 'STRONG' || tg === 'B') out.push(...pieces(c, { ...styleOf(c, o), bold: true }));
+        else if (tg === 'I' || tg === 'EM') out.push(...pieces(c, { ...styleOf(c, o), italics: true }));
+        else out.push(...pieces(c, styleOf(c, o)));
+      }
+    });
+    return out;
+  };
+  const trimPieces = arr => {
+    const a = arr.map(p => ({ ...p }));
+    a.forEach((p, i) => {
+      if (p.br) return;
+      if (i === 0 || a[i - 1].br) p.t = p.t.replace(/^\s+/, '');
+      if (i === a.length - 1 || (a[i + 1] && a[i + 1].br)) p.t = p.t.replace(/\s+$/, '');
+    });
+    return a.filter(p => p.br || p.t);
+  };
+  const mkRuns = arr => trimPieces(arr).map(p => p.br ? new TextRun({ break: 1 }) : new TextRun({ text: p.t, font, size: p.o.size || base, bold: p.o.bold, italics: p.o.italics, color: p.o.color, rightToLeft: RTLCH.test(p.t) ? true : undefined }));
+  const hasText = arr => trimPieces(arr).some(p => p.br || p.t);
+
+  // --- blokken: eerst als beschrijving verzamelen, zodat de afstand na een sectie nog kan worden aangepast
+  const alignOf = (el, def) => {
+    const a = el.style && el.style.textAlign;
+    if (a === 'center') return AlignmentType.CENTER;
+    if (a === 'right' && !rtl) return AlignmentType.RIGHT;
+    return def;
+  };
+  const px2tw = v => Math.round((parseFloat(v) || 0) * 15);
+  const mkPara = d => new Paragraph({
+    children: mkRuns(d.pcs), alignment: d.align, bidirectional: rtl || undefined, keepNext: d.keepNext,
+    spacing: { before: d.before || 0, after: d.after == null ? 100 : d.after, line: 276 },
+    border: d.border, bullet: d.bullet, indent: d.indent,
+  });
+  const cellOf = (ds_, w, extra = {}) => new TableCell({ children: ds_.length ? ds_ : [new Paragraph({ children: [] })], width: w ? { size: w, type: WidthType.DXA } : undefined, borders: { top: NONE, bottom: NONE, left: NONE, right: NONE }, ...extra });
+  const build = list => list.map(d => d.raw ? d.raw : mkPara(d));
+  const BLOCK = new Set(['DIV', 'P', 'UL', 'OL', 'TABLE', 'H1', 'H2', 'H3', 'H4']);
+  const visible = el => !(el.classList && el.classList.contains('greyed')) && getComputedStyle(el).display !== 'none';
+
+  function tableOf(tbl) {
+    const rows = [...tbl.querySelectorAll('tr')].filter(r => r.children.length);
+    if (!rows.length) return null;
+    const n = Math.max(...rows.map(r => r.children.length));
+    const wts = Array.from({ length: n }, (_, i) => Math.min(40, Math.max(4, ...rows.map(r => ((r.children[i] && r.children[i].textContent) || '').trim().length))));
+    const sum = wts.reduce((a, b) => a + b, 0);
+    const cw = wts.map(w => Math.round(PAGE_W * w / sum));
+    return new Table({
+      width: { size: PAGE_W, type: WidthType.DXA }, columnWidths: cw, visuallyRightToLeft: rtl || undefined,
+      borders: { ...noBorders, insideHorizontal: GREY, bottom: GREY },
+      rows: rows.map(r => new TableRow({ tableHeader: r.parentNode.tagName === 'THEAD', children: [...r.children].map((c, i) => new TableCell({
+        width: { size: cw[i], type: WidthType.DXA }, verticalAlign: VerticalAlign.CENTER,
+        margins: { top: 60, bottom: 60, left: 80, right: 80 },
+        children: [new Paragraph({ children: mkRuns(pieces(c, { bold: c.tagName === 'TH' })), alignment: alignOf(c), bidirectional: rtl || undefined, spacing: { after: 0 } })],
+      })) })),
+    });
+  }
+  function flexTableOf(el) {
+    const kids = [...el.children].filter(visible);
+    if (!kids.length) return null;
+    const w = Math.floor(PAGE_W / kids.length);
+    return new Table({
+      width: { size: PAGE_W, type: WidthType.DXA }, columnWidths: kids.map(() => w), borders: noBorders, visuallyRightToLeft: rtl || undefined,
+      rows: [new TableRow({ children: kids.map(k => cellOf(build(blocks(k, { align: alignOf(k), run: styleOf(k, {}) })), w)) })],
+    });
+  }
+  function sigTableOf(el) {
+    const sigs = [...el.querySelectorAll('.sig-line')];
+    if (!sigs.length) return null;
+    const total = sigs.length === 1 ? Math.round(PAGE_W / 2) : PAGE_W, w = Math.floor(total / sigs.length);
+    return new Table({
+      width: { size: total, type: WidthType.DXA }, columnWidths: sigs.map(() => w), borders: noBorders, visuallyRightToLeft: rtl || undefined,
+      rows: [new TableRow({ cantSplit: true, children: sigs.map(s => new TableCell({
+        width: { size: w, type: WidthType.DXA }, borders: { top: NONE, bottom: NONE, left: NONE, right: NONE }, margins: { left: 120, right: 240 },
+        children: [
+          new Paragraph({ children: [], spacing: { before: 520, after: 0 } }),
+          new Paragraph({ children: mkRuns(pieces(s, { size: base - 2 })), bidirectional: rtl || undefined, border: { top: { style: BorderStyle.SINGLE, size: 6, color: '333333', space: 4 } }, spacing: { after: 0 } }),
+        ],
+      })) })],
+    });
+  }
+
+  function blocks(el, ctx = {}) {
+    const out = []; let buf = [];
+    const run0 = ctx.run || {};
+    const flush = () => { if (hasText(buf)) out.push({ pcs: buf, align: ctx.align }); buf = []; };
+    el.childNodes.forEach(c => {
+      if (c.nodeType === 3 || (c.nodeType === 1 && !BLOCK.has(c.tagName))) {
+        if (c.nodeType === 3) { const tx = c.textContent.replace(/\s+/g, ' '); if (tx) buf.push({ t: tx, o: run0 }); }
+        else if (c.tagName === 'BR') buf.push({ br: true });
+        else buf.push(...pieces({ childNodes: [c] }, run0));
+        return;
+      }
+      if (c.nodeType !== 1 || !visible(c)) return;
+      flush();
+      const cl = c.classList;
+      if (c.tagName === 'H2' || c.tagName === 'H1') out.push({ pcs: pieces(c, { bold: true, size: 36 }), align: AlignmentType.CENTER, before: 0, after: 240, keepNext: true });
+      else if (cl.contains('sec-title')) out.push({ pcs: pieces(c, { bold: true, size: base + 2 }), align: alignOf(c, ctx.align), before: 160, after: 60, keepNext: true });
+      else if (c.tagName === 'P') out.push({ pcs: pieces(c, styleOf(c, run0)), align: alignOf(c, ctx.align), before: px2tw(c.style.marginTop), after: c.style.marginBottom ? px2tw(c.style.marginBottom) : 100 });
+      else if (c.tagName === 'UL' || c.tagName === 'OL') {
+        [...c.children].filter(li => li.tagName === 'LI').forEach((li, i) => out.push({ pcs: c.tagName === 'OL' ? [{ t: (i + 1) + '. ', o: run0 }, ...pieces(li, run0)] : pieces(li, run0), bullet: c.tagName === 'UL' ? { level: 0 } : undefined, indent: c.tagName === 'OL' ? { left: 360 } : undefined, after: 60 }));
+      }
+      else if (c.tagName === 'TABLE') { const tb = tableOf(c); if (tb) { out.push({ raw: tb }); out.push({ raw: new Paragraph({ children: [], spacing: { after: 0, line: 120, lineRule: LineRuleType.EXACT } }) }); } }
+      else if (cl.contains('sig-grid')) { const tb = sigTableOf(c); if (tb) { out.push({ raw: new Paragraph({ children: [], spacing: { after: 0 } }) }); out.push({ raw: tb }); } }
+      else if (c.style.display === 'flex') { const tb = flexTableOf(c); if (tb) { out.push({ raw: tb }); out.push({ raw: new Paragraph({ children: [], spacing: { after: 0, line: 120, lineRule: LineRuleType.EXACT } }) }); } }
+      else {
+        const inner = blocks(c, { align: alignOf(c, ctx.align), run: styleOf(c, run0) });
+        if (cl.contains('sec')) { for (let i = inner.length - 1; i >= 0; i--) { if (!inner[i].raw) { inner[i].after = Math.max(inner[i].after == null ? 100 : inner[i].after, 220); break; } } }
+        out.push(...inner);
+      }
+    });
+    flush();
+    return out;
+  }
+
+  const children = build(blocks(box));
+  const attach = getAttachments(prefix);
+  if (attach.length) {
+    children.push(new Paragraph({ children: [new TextRun({ text: t('doc-attach-h'), font, size: base + 4, bold: true })], bidirectional: rtl || undefined, spacing: { before: 300, after: 80 } }));
+    attach.forEach((n, i) => children.push(new Paragraph({ children: [new TextRun({ text: (i + 1) + '. ' + n, font, size: base, rightToLeft: RTLCH.test(n) ? true : undefined })], bidirectional: rtl || undefined, spacing: { after: 40 } })));
+  }
+
+  // --- koptekst (tekst + watermerk) en voettekst (tekst, paginanummers, vermelding)
+  const grey = (text, sz, extra = {}) => new TextRun({ text, font, size: sz, color: '646464', rightToLeft: RTLCH.test(text) ? true : undefined, ...extra });
+  const hdrKids = [];
+  if (ds.header) hdrKids.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [grey(ds.header, 16, { bold: true })], border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: 'C8C8C8', space: 4 } } }));
+  if (ds.watermark) {
+    try {
+      const png = makeWatermark(t('wm-' + ds.watermark).toLocaleUpperCase(lang));
+      if (png) {
+        const bin = atob(png.split(',')[1]); const data = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) data[i] = bin.charCodeAt(i);
+        hdrKids.push(new Paragraph({ children: [new ImageRun({ type: 'png', data, transformation: { width: 700, height: 700 }, floating: {
+          horizontalPosition: { relative: HorizontalPositionRelativeFrom.PAGE, align: HorizontalPositionAlign.CENTER },
+          verticalPosition: { relative: VerticalPositionRelativeFrom.PAGE, align: VerticalPositionAlign.CENTER },
+          behindDocument: true, wrap: { type: TextWrappingType.NONE } } })] }));
+      }
+    } catch (e) {}
+  }
+  const ftKids = [];
+  if (ds.footer) ftKids.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [grey(ds.footer, 16)], border: { top: { style: BorderStyle.SINGLE, size: 4, color: 'C8C8C8', space: 4 } } }));
+  const pn = document.getElementById(prefix + '-page-numbers');
+  if (pn && pn.checked) ftKids.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ children: [PageNumber.CURRENT], font, size: 18, color: '787878' }), grey(' ' + t('page-of') + ' ', 18), new TextRun({ children: [PageNumber.TOTAL_PAGES], font, size: 18, color: '787878' })] }));
+  if (ds.brand) ftKids.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [new ExternalHyperlink({ link: 'https://documentgenerator.ai', children: [new TextRun({ text: t('brand-line'), font, size: 14, color: '969696' })] })] }));
+
+  const lg = { value: 'en-US', eastAsia: { zh: 'zh-CN', ja: 'ja-JP', ko: 'ko-KR' }[lang], bidirectional: { ar: 'ar-SA', fa: 'fa-IR', he: 'he-IL' }[lang] };
+  const title = (box.querySelector('h2') || {}).textContent || prefix;
+  const doc = new Document({
+    creator: 'documentgenerator.ai', title,
+    styles: { default: { document: { run: { font, size: base, language: lg } } } },
+    sections: [{
+      properties: { page: { size: { width: 11906, height: 16838 }, margin: { top: 1417, right: 1417, bottom: 1417, left: 1417, header: 567, footer: 567 } } },
+      headers: hdrKids.length ? { default: new Header({ children: hdrKids }) } : undefined,
+      footers: ftKids.length ? { default: new Footer({ children: ftKids }) } : undefined,
+      children,
+    }],
+  });
+  const blob = await Packer.toBlob(doc);
+  const fn = (title.trim().replace(/[^\p{L}\p{N}]+/gu, '_').replace(/^_+|_+$/g, '') || 'document') + '.docx';
+  const u = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = u; a.download = fn; a.click();
+  setTimeout(() => URL.revokeObjectURL(u), 2000);
+  showDoneToast('toast-word');
+}
+document.addEventListener('DOMContentLoaded', injectWordButtons);
+if (document.readyState !== 'loading') injectWordButtons();
+
 // ====== Receipt ======
 const RECEIPT_STEPS = ['rc1','rc2','rc3','rc4'];
 function goReceiptStep(step) {
@@ -6967,7 +6899,7 @@ setInterval(autoSave, 5000);
 
 // After a document is downloaded: remove the temporary copy and stop saving until the user edits again
 ['input','change'].forEach(ev => document.addEventListener(ev, () => { autoSavePaused = false; }, true));
-['downloadPDF','downloadRentalPDF','downloadBosPDF','downloadEngPDF','downloadLoanPDF','downloadEmplPDF','downloadNdaPDF','downloadWillPDF','downloadReceiptPDF','downloadInvoicePDF','downloadRevokePDF','downloadTravelPDF','downloadResignPDF','downloadDebtPDF','downloadRefPDF'].forEach(name => {
+['downloadPDF','downloadRentalPDF','downloadBosPDF','downloadEngPDF','downloadLoanPDF','downloadEmplPDF','downloadNdaPDF','downloadWillPDF','downloadReceiptPDF','downloadInvoicePDF','downloadRevokePDF','downloadTravelPDF','downloadResignPDF','downloadDebtPDF','downloadRefPDF','downloadWord'].forEach(name => {
   const orig = window[name];
   if (typeof orig !== 'function') return;
   window[name] = async function() {
