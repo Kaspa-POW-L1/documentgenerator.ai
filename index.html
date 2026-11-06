@@ -1341,6 +1341,11 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
 .sn-hint button { font: inherit; font-size: 18px; line-height: 1; background: none; border: none; color: var(--text-light); cursor: pointer; padding: 0 4px; }
 #contact-topic { width: 100%; padding: 12px; border: 1.5px solid var(--border); border-radius: 8px; background-color: var(--input-bg); background-image: none; color: var(--text); font-family: inherit; font-size: 14px; }
 #contact-topic:focus { outline: none; border-color: var(--pri); background-color: var(--input-focus); }
+/* Bewaren als bestand */
+.open-file-row { text-align: center; margin: 14px 0 4px; }
+#file-pw, #file-pw-open { padding: 12px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--input-bg); color: var(--text); font-family: inherit; font-size: 14px; }
+#file-pw:focus, #file-pw-open:focus { outline: none; border-color: var(--pri); background: var(--input-focus); }
+@media (max-width: 640px) { .step-nav { flex-wrap: wrap; row-gap: 8px; } }
 </style>
 </head>
 <body>
@@ -1359,6 +1364,7 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
   <span class="sn-doc" id="sn-doc"></span>
   <div class="sn-dots" id="sn-dots"></div>
   <span class="sn-progress" id="sn-progress"></span>
+  <button type="button" class="sn-reset" onclick="openFileModal('save')" data-i18n="file-save-btn">Save as file</button>
   <button type="button" class="sn-reset" onclick="startNewDocument()" data-i18n="btn-restart">Start over</button>
 </div>
 <div class="sn-hint" id="sn-hint" style="display:none;"><span data-i18n="tab-hint">Your input stays saved while this tab is open. Close the tab and everything is erased.</span><button type="button" aria-label="Close" onclick="dismissTabHint()">&times;</button></div>
@@ -1443,6 +1449,7 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
           <p data-i18n="dt-eng-desc">Define a professional service agreement</p>
         </div>
       </div>
+      <div class="open-file-row"><button type="button" class="sn-reset" onclick="pickFile()" data-i18n="file-open-btn">Open saved file</button></div>
     </div>
   </div>
 
@@ -3117,6 +3124,8 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
         <li>PDF: regel "Gemaakt met documentgenerator.ai" onderaan (aan by default, met uitleg, uit te zetten in Documentinstellingen) en optioneel watermerk Concept/Kopie (18 talen)</li>
         <li>Fix: voorbeeldpaneel verscheen soms naast het keuzescherm (na terugkeren naar de startpagina)</li>
         <li>Automatisch bewaren nu per browsertabblad (weg zodra je het tabblad sluit, geen 24 uur meer); korte uitleg boven het formulier; browserwaarschuwing bij sluiten met niet-gedownloade invulling; privacybeleid aangepast in 18 talen</li>
+        <li>Privacybeleid: zin over bewaren als bestand toegevoegd (18 talen)</li>
+        <li>Bewaren als bestand: knop "Bewaar als bestand" in elk formulier en "Open bewaard bestand" op de startpagina; bevat alle invulvelden en keuzes (ook ID, geboortedatum, bankgegevens), optioneel met wachtwoord (AES-256 in de browser); er wordt niets geüpload. Ook: "Opnieuw beginnen" wist nu ook factuurregels, bijlagen, e-mailvelden en keuzes</li>
         <li>Contactvenster: één formulier met onderwerpkeuze (document voorstellen, fout melden, feedback, adverteren/samenwerken, anders); het onderwerp staat tussen haakjes in de mail; bij adverteren een hint om e-mail/telefoon te vermelden + e-mailadres; footerlink "Adverteren of samenwerken" opent het formulier direct met Adverteren gekozen</li>
         <li>Einddatum (3/6/12 maanden) en vervaldatum (7/14/30 dagen) bewegen automatisch mee als je daarna de begindatum of factuurdatum wijzigt; zelf aanpassen stopt het meebewegen</li>
         <li>Opnieuw beginnen: melding op de startpagina als eerdere invulling is hersteld + knop "Opnieuw beginnen" in de voortgangsbalk van elk formulier (met bevestiging)</li>
@@ -3360,6 +3369,29 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
   </div>
 </div>
 
+<!-- Save / open file modal -->
+<input type="file" id="file-input" accept=".dgdoc,.json,application/json" style="display:none" onchange="onFileChosen(this)">
+<div class="modal-overlay" id="file-modal">
+  <div class="modal" style="max-width:460px;">
+    <div class="modal-head"><button class="modal-close" aria-label="Close" onclick="closeFileModal()">&times;</button></div>
+    <h2 id="file-title" style="margin-top:0;"></h2>
+    <div id="file-save-body">
+      <p data-i18n="file-save-text" style="margin:8px 0 10px;line-height:1.55;"></p>
+      <p data-i18n="file-save-warn" style="margin:0 0 14px;line-height:1.55;font-size:13.5px;color:var(--text-mid);"></p>
+      <label for="file-pw" data-i18n="file-pw-label" style="display:block;font-size:14px;margin-bottom:6px;"></label>
+      <input type="password" id="file-pw" autocomplete="new-password" onkeydown="if(event.key==='Enter')saveToFile()" style="width:100%;">
+      <div data-i18n="file-pw-note" style="font-size:12.5px;color:var(--text-light);margin:6px 0 14px;"></div>
+      <button class="btn btn-next" style="width:100%;margin-bottom:16px;" onclick="saveToFile()" data-i18n="file-save-go"></button>
+    </div>
+    <div id="file-open-body" style="display:none;">
+      <p data-i18n="file-open-pw-text" style="margin:8px 0 12px;line-height:1.55;"></p>
+      <input type="password" id="file-pw-open" autocomplete="off" onkeydown="if(event.key==='Enter')openEncrypted()" style="width:100%;margin-bottom:14px;">
+      <button class="btn btn-next" style="width:100%;margin-bottom:16px;" onclick="openEncrypted()" data-i18n="file-open-go"></button>
+    </div>
+    <div id="file-err" role="alert" style="display:none;color:#dc2626;font-size:13.5px;margin:0 0 14px;"></div>
+  </div>
+</div>
+
 <!-- Privacy Policy Modal -->
 <div class="modal-overlay" id="privacy-modal">
   <div class="modal" style="max-width:620px;">
@@ -3377,7 +3409,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>In short:</strong> Your documents are created in your browser and are never sent to us. We only measure anonymously which templates are used. We do not sell data.</div>
 <p><strong>documentgenerator.ai</strong> is a free document generation tool. This policy explains what data we collect and how we use it.</p>
 <h3 style="margin-top:16px;">1. Documents you create</h3>
-<p>All documents are generated <strong>entirely in your browser</strong>. No personal data — names, addresses, ID numbers, or document content — is sent to our servers or stored anywhere. Nothing you enter leaves your browser.</p>
+<p>All documents are generated <strong>entirely in your browser</strong>. No personal data — names, addresses, ID numbers, or document content — is sent to our servers or stored anywhere. Nothing you enter leaves your browser. If you choose to save your document as a file, that file is created on your own device and is never sent to us.</p>
 <h3 style="margin-top:16px;">2. Anonymous usage data</h3>
 <p>When you download a document, we may collect anonymous, non-personal data to improve our templates:</p>
 <ul><li>Document type (e.g. Power of Attorney)</li><li>Language selected</li><li>Your timezone / region (not your IP address or exact location)</li><li>Which sections of the document you customized (section names only, never the content), whether a section was shortened, expanded or removed, and by roughly how many characters its length changed</li></ul>
@@ -3396,7 +3428,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>Kort samengevat:</strong> Je documenten worden in je browser gemaakt en nooit naar ons gestuurd. We meten alleen anoniem welke sjablonen gebruikt worden. We verkopen geen gegevens.</div>
 <p><strong>documentgenerator.ai</strong> is een gratis tool voor het genereren van documenten. Dit beleid legt uit welke gegevens we verzamelen en hoe we die gebruiken.</p>
 <h3 style="margin-top:16px;">1. Documenten die je maakt</h3>
-<p>Alle documenten worden <strong>volledig in je browser</strong> gegenereerd. Geen persoonlijke gegevens — namen, adressen, ID-nummers of documentinhoud — worden naar onze servers gestuurd of ergens opgeslagen. Niets wat je invult verlaat je browser.</p>
+<p>Alle documenten worden <strong>volledig in je browser</strong> gegenereerd. Geen persoonlijke gegevens — namen, adressen, ID-nummers of documentinhoud — worden naar onze servers gestuurd of ergens opgeslagen. Niets wat je invult verlaat je browser. Als je ervoor kiest je document als bestand te bewaren, wordt dat bestand op je eigen apparaat gemaakt en nooit naar ons gestuurd.</p>
 <h3 style="margin-top:16px;">2. Anonieme gebruiksgegevens</h3>
 <p>Bij het downloaden van een document verzamelen we mogelijk anonieme, niet-persoonlijke gegevens om onze templates te verbeteren:</p>
 <ul><li>Documenttype (bijv. Volmacht)</li><li>Geselecteerde taal</li><li>Je tijdzone / regio (niet je IP-adres of exacte locatie)</li><li>Welke secties van het document je hebt aangepast (alleen sectienamen, nooit de inhoud), of een sectie is ingekort, uitgebreid of verwijderd, en ongeveer met hoeveel tekens de lengte veranderde</li></ul>
@@ -3415,7 +3447,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>En resumen:</strong> Tus documentos se crean en tu navegador y nunca se nos envían. Solo medimos de forma anónima qué plantillas se usan. No vendemos datos.</div>
 <p><strong>documentgenerator.ai</strong> es una herramienta gratuita para generar documentos. Esta política explica qué datos recopilamos y cómo los usamos.</p>
 <h3 style="margin-top:16px;">1. Documentos que creas</h3>
-<p>Todos los documentos se generan <strong>completamente en tu navegador</strong>. No se envían datos personales — nombres, direcciones, números de identificación o contenido — a nuestros servidores. Nada de lo que ingresas sale de tu navegador.</p>
+<p>Todos los documentos se generan <strong>completamente en tu navegador</strong>. No se envían datos personales — nombres, direcciones, números de identificación o contenido — a nuestros servidores. Nada de lo que ingresas sale de tu navegador. Si decides guardar tu documento como archivo, ese archivo se crea en tu propio dispositivo y nunca se nos envía.</p>
 <h3 style="margin-top:16px;">2. Datos de uso anónimos</h3>
 <p>Al descargar un documento, podemos recopilar datos anónimos para mejorar nuestras plantillas:</p>
 <ul><li>Tipo de documento</li><li>Idioma seleccionado</li><li>Tu zona horaria / región</li><li>Qué secciones personalizaste (solo nombres, nunca contenido), si una sección se acortó, amplió o eliminó, y aproximadamente en cuántos caracteres cambió su longitud</li></ul>
@@ -3434,7 +3466,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>En bref:</strong> Vos documents sont créés dans votre navigateur et ne nous sont jamais envoyés. Nous mesurons seulement, de façon anonyme, les modèles utilisés. Nous ne vendons aucune donnée.</div>
 <p><strong>documentgenerator.ai</strong> est un outil gratuit de génération de documents. Cette politique explique les données que nous collectons et comment nous les utilisons.</p>
 <h3 style="margin-top:16px;">1. Documents créés</h3>
-<p>Tous les documents sont générés <strong>entièrement dans votre navigateur</strong>. Aucune donnée personnelle n'est envoyée à nos serveurs. Rien de ce que vous saisissez ne quitte votre navigateur.</p>
+<p>Tous les documents sont générés <strong>entièrement dans votre navigateur</strong>. Aucune donnée personnelle n'est envoyée à nos serveurs. Rien de ce que vous saisissez ne quitte votre navigateur. Si vous choisissez d’enregistrer votre document dans un fichier, ce fichier est créé sur votre propre appareil et ne nous est jamais envoyé.</p>
 <h3 style="margin-top:16px;">2. Données anonymes</h3>
 <p>Lors du téléchargement, nous pouvons collecter des données anonymes :</p>
 <ul><li>Type de document</li><li>Langue sélectionnée</li><li>Fuseau horaire / région</li><li>Sections personnalisées (noms uniquement), si une section a été raccourcie, allongée ou supprimée, et de combien de caractères environ sa longueur a changé</li></ul>
@@ -3453,7 +3485,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>Kurz gesagt:</strong> Ihre Dokumente werden in Ihrem Browser erstellt und nie an uns gesendet. Wir messen nur anonym, welche Vorlagen genutzt werden. Wir verkaufen keine Daten.</div>
 <p><strong>documentgenerator.ai</strong> ist ein kostenloses Tool zur Dokumentenerstellung. Diese Erklärung beschreibt, welche Daten wir erheben und wie wir sie verwenden.</p>
 <h3 style="margin-top:16px;">1. Erstellte Dokumente</h3>
-<p>Alle Dokumente werden <strong>vollständig in Ihrem Browser</strong> erstellt. Keine persönlichen Daten werden an unsere Server gesendet. Nichts, was Sie eingeben, verlässt Ihren Browser.</p>
+<p>Alle Dokumente werden <strong>vollständig in Ihrem Browser</strong> erstellt. Keine persönlichen Daten werden an unsere Server gesendet. Nichts, was Sie eingeben, verlässt Ihren Browser. Wenn Sie Ihr Dokument als Datei speichern, wird diese Datei auf Ihrem eigenen Gerät erstellt und nie an uns gesendet.</p>
 <h3 style="margin-top:16px;">2. Anonyme Nutzungsdaten</h3>
 <p>Beim Download können wir anonyme Daten erfassen:</p>
 <ul><li>Dokumenttyp</li><li>Gewählte Sprache</li><li>Zeitzone / Region</li><li>Angepasste Abschnitte (nur Namen), ob ein Abschnitt gekürzt, erweitert oder entfernt wurde und um wie viele Zeichen sich seine Länge ungefähr änderte</li></ul>
@@ -3472,7 +3504,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>Em resumo:</strong> Os seus documentos são criados no seu navegador e nunca nos são enviados. Medimos apenas, de forma anónima, que modelos são utilizados. Não vendemos dados.</div>
 <p>O <strong>documentgenerator.ai</strong> é uma ferramenta gratuita de geração de documentos. Esta política explica que dados recolhemos e como os utilizamos.</p>
 <h3 style="margin-top:16px;">1. Documentos que cria</h3>
-<p>Todos os documentos são gerados <strong>inteiramente no seu navegador</strong>. Nenhum dado pessoal — nomes, moradas, números de identificação ou conteúdo do documento — é enviado para os nossos servidores ou guardado em qualquer lugar. Nada do que introduz sai do seu navegador.</p>
+<p>Todos os documentos são gerados <strong>inteiramente no seu navegador</strong>. Nenhum dado pessoal — nomes, moradas, números de identificação ou conteúdo do documento — é enviado para os nossos servidores ou guardado em qualquer lugar. Nada do que introduz sai do seu navegador. Se optar por guardar o seu documento como ficheiro, esse ficheiro é criado no seu próprio dispositivo e nunca nos é enviado.</p>
 <h3 style="margin-top:16px;">2. Dados de utilização anónimos</h3>
 <p>Ao descarregar um documento, podemos recolher dados anónimos e não pessoais para melhorar os nossos modelos:</p>
 <ul><li>Tipo de documento (por ex. Procuração)</li><li>Idioma selecionado</li><li>O seu fuso horário / região (não o seu endereço IP nem a localização exata)</li><li>Que secções do documento personalizou (apenas os nomes das secções, nunca o conteúdo), se uma secção foi encurtada, alargada ou removida e, aproximadamente, em quantos carateres o seu tamanho mudou</li></ul>
@@ -3491,7 +3523,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>In breve:</strong> I tuoi documenti vengono creati nel tuo browser e non ci vengono mai inviati. Misuriamo solo in forma anonima quali modelli vengono usati. Non vendiamo dati.</div>
 <p><strong>documentgenerator.ai</strong> è uno strumento gratuito per generare documenti. Questa informativa spiega quali dati raccogliamo e come li usiamo.</p>
 <h3 style="margin-top:16px;">1. Documenti che crei</h3>
-<p>Tutti i documenti vengono generati <strong>interamente nel tuo browser</strong>. Nessun dato personale — nomi, indirizzi, numeri di documento o contenuto del documento — viene inviato ai nostri server o salvato altrove. Nulla di ciò che inserisci lascia il tuo browser.</p>
+<p>Tutti i documenti vengono generati <strong>interamente nel tuo browser</strong>. Nessun dato personale — nomi, indirizzi, numeri di documento o contenuto del documento — viene inviato ai nostri server o salvato altrove. Nulla di ciò che inserisci lascia il tuo browser. Se scegli di salvare il tuo documento come file, quel file viene creato sul tuo dispositivo e non ci viene mai inviato.</p>
 <h3 style="margin-top:16px;">2. Dati di utilizzo anonimi</h3>
 <p>Quando scarichi un documento, possiamo raccogliere dati anonimi e non personali per migliorare i nostri modelli:</p>
 <ul><li>Tipo di documento (ad es. Procura)</li><li>Lingua selezionata</li><li>Il tuo fuso orario / la tua regione (non il tuo indirizzo IP né la posizione esatta)</li><li>Quali sezioni del documento hai personalizzato (solo i nomi delle sezioni, mai il contenuto), se una sezione è stata accorciata, ampliata o rimossa e di circa quanti caratteri è cambiata la sua lunghezza</li></ul>
@@ -3510,7 +3542,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>Коротко:</strong> Ваши документы создаются в вашем браузере и никогда не отправляются нам. Мы лишь анонимно измеряем, какие шаблоны используются. Мы не продаём данные.</div>
 <p><strong>documentgenerator.ai</strong> — бесплатный инструмент для создания документов. В этой политике объясняется, какие данные мы собираем и как их используем.</p>
 <h3 style="margin-top:16px;">1. Документы, которые вы создаёте</h3>
-<p>Все документы создаются <strong>полностью в вашем браузере</strong>. Никакие персональные данные — имена, адреса, номера документов или содержание документа — не отправляются на наши серверы и нигде не сохраняются. Ничто из введённого вами не покидает ваш браузер.</p>
+<p>Все документы создаются <strong>полностью в вашем браузере</strong>. Никакие персональные данные — имена, адреса, номера документов или содержание документа — не отправляются на наши серверы и нигде не сохраняются. Ничто из введённого вами не покидает ваш браузер. Если вы решите сохранить документ в файл, этот файл создаётся на вашем устройстве и никогда не отправляется нам.</p>
 <h3 style="margin-top:16px;">2. Анонимные данные об использовании</h3>
 <p>При скачивании документа мы можем собирать анонимные неличные данные для улучшения наших шаблонов:</p>
 <ul><li>Тип документа (например, доверенность)</li><li>Выбранный язык</li><li>Ваш часовой пояс / регион (не ваш IP-адрес и не точное местоположение)</li><li>Какие разделы документа вы изменили (только названия разделов, никогда не содержание), был ли раздел сокращён, расширен или удалён и примерно на сколько символов изменилась его длина</li></ul>
@@ -3529,7 +3561,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>简而言之：</strong> 您的文件在您的浏览器中生成，绝不会发送给我们。我们只会匿名统计哪些模板被使用。我们不出售数据。</div>
 <p><strong>documentgenerator.ai</strong> 是一款免费的文件生成工具。本政策说明我们收集哪些数据以及如何使用。</p>
 <h3 style="margin-top:16px;">1. 您创建的文件</h3>
-<p>所有文件均<strong>完全在您的浏览器中</strong>生成。任何个人数据——姓名、地址、证件号码或文件内容——都不会发送到我们的服务器，也不会被存储在任何地方。您输入的任何内容都不会离开您的浏览器。</p>
+<p>所有文件均<strong>完全在您的浏览器中</strong>生成。任何个人数据——姓名、地址、证件号码或文件内容——都不会发送到我们的服务器，也不会被存储在任何地方。您输入的任何内容都不会离开您的浏览器。 如果您选择将文件保存为文档文件，该文件将在您自己的设备上生成，绝不会发送给我们。</p>
 <h3 style="margin-top:16px;">2. 匿名使用数据</h3>
 <p>下载文件时，我们可能会收集匿名的非个人数据，用于改进我们的模板：</p>
 <ul><li>文件类型（例如授权委托书）</li><li>所选语言</li><li>您的时区/地区（不是您的 IP 地址或确切位置）</li><li>您自定义了文件的哪些部分（仅限部分名称，绝不包括内容）、某部分是被缩短、扩充还是删除，以及其长度大约变化了多少字符</li></ul>
@@ -3548,7 +3580,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>要点：</strong> 書類はお使いのブラウザ内で作成され、当方に送信されることはありません。どのテンプレートが使われているかを匿名で計測するのみです。データの販売は一切行いません。</div>
 <p><strong>documentgenerator.ai</strong> は無料の書類作成ツールです。本ポリシーでは、収集するデータとその利用方法について説明します。</p>
 <h3 style="margin-top:16px;">1. 作成する書類について</h3>
-<p>すべての書類は<strong>完全にお使いのブラウザ内</strong>で生成されます。氏名、住所、身分証明書番号、書類の内容などの個人データは、当方のサーバーに送信されることも、どこかに保存されることもありません。入力した内容がブラウザの外に出ることはありません。</p>
+<p>すべての書類は<strong>完全にお使いのブラウザ内</strong>で生成されます。氏名、住所、身分証明書番号、書類の内容などの個人データは、当方のサーバーに送信されることも、どこかに保存されることもありません。入力した内容がブラウザの外に出ることはありません。 書類をファイルとして保存する場合、そのファイルはお使いのデバイス上で作成され、当方に送信されることはありません。</p>
 <h3 style="margin-top:16px;">2. 匿名の利用データ</h3>
 <p>書類をダウンロードする際、テンプレート改善のために匿名かつ個人を特定しないデータを収集する場合があります。</p>
 <ul><li>書類の種類（例：委任状）</li><li>選択された言語</li><li>タイムゾーン／地域（IPアドレスや正確な位置情報ではありません）</li><li>カスタマイズした書類のセクション（セクション名のみで、内容は含みません）、セクションが短縮・拡張・削除されたか、および長さがおよそ何文字変化したか</li></ul>
@@ -3567,7 +3599,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>باختصار:</strong> يتم إنشاء مستنداتك في متصفحك ولا تُرسل إلينا أبدًا. نقيس فقط وبشكل مجهول القوالب المستخدمة. نحن لا نبيع البيانات.</div>
 <p><strong>documentgenerator.ai</strong> أداة مجانية لإنشاء المستندات. توضح هذه السياسة البيانات التي نجمعها وكيف نستخدمها.</p>
 <h3 style="margin-top:16px;">1. المستندات التي تنشئها</h3>
-<p>يتم إنشاء جميع المستندات <strong>بالكامل داخل متصفحك</strong>. لا تُرسل أي بيانات شخصية — كالأسماء أو العناوين أو أرقام الهوية أو محتوى المستند — إلى خوادمنا ولا تُخزَّن في أي مكان. لا شيء مما تدخله يغادر متصفحك.</p>
+<p>يتم إنشاء جميع المستندات <strong>بالكامل داخل متصفحك</strong>. لا تُرسل أي بيانات شخصية — كالأسماء أو العناوين أو أرقام الهوية أو محتوى المستند — إلى خوادمنا ولا تُخزَّن في أي مكان. لا شيء مما تدخله يغادر متصفحك. إذا اخترت حفظ مستندك كملف، فيُنشأ هذا الملف على جهازك ولا يُرسل إلينا أبدًا.</p>
 <h3 style="margin-top:16px;">2. بيانات الاستخدام المجهولة</h3>
 <p>عند تنزيل مستند، قد نجمع بيانات مجهولة وغير شخصية لتحسين قوالبنا:</p>
 <ul><li>نوع المستند (مثل التوكيل)</li><li>اللغة المحددة</li><li>منطقتك الزمنية / منطقتك (وليس عنوان IP الخاص بك أو موقعك الدقيق)</li><li>الأقسام التي خصصتها في المستند (أسماء الأقسام فقط وليس المحتوى أبدًا)، وهل تم تقصير القسم أو توسيعه أو حذفه، وبكم حرفًا تقريبًا تغيّر طوله</li></ul>
@@ -3586,7 +3618,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>요약:</strong> 문서는 사용자의 브라우저에서 생성되며 저희에게 전송되지 않습니다. 저희는 어떤 템플릿이 사용되는지만 익명으로 측정합니다. 데이터를 판매하지 않습니다.</div>
 <p><strong>documentgenerator.ai</strong>는 무료 문서 생성 도구입니다. 이 방침은 저희가 어떤 데이터를 수집하고 어떻게 사용하는지 설명합니다.</p>
 <h3 style="margin-top:16px;">1. 사용자가 만드는 문서</h3>
-<p>모든 문서는 <strong>전적으로 사용자의 브라우저 안에서</strong> 생성됩니다. 이름, 주소, 신분증 번호, 문서 내용 등 어떠한 개인 데이터도 저희 서버로 전송되거나 어디에도 저장되지 않습니다. 입력하신 내용은 브라우저 밖으로 나가지 않습니다.</p>
+<p>모든 문서는 <strong>전적으로 사용자의 브라우저 안에서</strong> 생성됩니다. 이름, 주소, 신분증 번호, 문서 내용 등 어떠한 개인 데이터도 저희 서버로 전송되거나 어디에도 저장되지 않습니다. 입력하신 내용은 브라우저 밖으로 나가지 않습니다. 문서를 파일로 저장하기로 선택하면 해당 파일은 사용자의 기기에서 만들어지며 저희에게 전송되지 않습니다.</p>
 <h3 style="margin-top:16px;">2. 익명 이용 데이터</h3>
 <p>문서를 다운로드할 때 템플릿을 개선하기 위해 익명의 비개인 데이터를 수집할 수 있습니다.</p>
 <ul><li>문서 유형(예: 위임장)</li><li>선택한 언어</li><li>시간대/지역(IP 주소나 정확한 위치는 아님)</li><li>사용자가 수정한 문서의 섹션(섹션 이름만 해당하며 내용은 절대 포함되지 않음), 섹션이 줄었는지·늘었는지·삭제되었는지, 그리고 길이가 대략 몇 글자 변했는지</li></ul>
@@ -3605,7 +3637,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>Özetle:</strong> Belgeleriniz tarayıcınızda oluşturulur ve bize asla gönderilmez. Yalnızca hangi şablonların kullanıldığını anonim olarak ölçeriz. Veri satmayız.</div>
 <p><strong>documentgenerator.ai</strong> ücretsiz bir belge oluşturma aracıdır. Bu politika hangi verileri topladığımızı ve nasıl kullandığımızı açıklar.</p>
 <h3 style="margin-top:16px;">1. Oluşturduğunuz belgeler</h3>
-<p>Tüm belgeler <strong>tamamen tarayıcınızda</strong> oluşturulur. İsimler, adresler, kimlik numaraları veya belge içeriği gibi hiçbir kişisel veri sunucularımıza gönderilmez veya herhangi bir yerde saklanmaz. Girdiğiniz hiçbir şey tarayıcınızdan çıkmaz.</p>
+<p>Tüm belgeler <strong>tamamen tarayıcınızda</strong> oluşturulur. İsimler, adresler, kimlik numaraları veya belge içeriği gibi hiçbir kişisel veri sunucularımıza gönderilmez veya herhangi bir yerde saklanmaz. Girdiğiniz hiçbir şey tarayıcınızdan çıkmaz. Belgenizi dosya olarak kaydetmeyi seçerseniz, bu dosya kendi cihazınızda oluşturulur ve bize asla gönderilmez.</p>
 <h3 style="margin-top:16px;">2. Anonim kullanım verileri</h3>
 <p>Bir belgeyi indirdiğinizde, şablonlarımızı iyileştirmek için anonim ve kişisel olmayan veriler toplayabiliriz:</p>
 <ul><li>Belge türü (ör. Vekâletname)</li><li>Seçilen dil</li><li>Saat diliminiz / bölgeniz (IP adresiniz veya tam konumunuz değil)</li><li>Belgenin hangi bölümlerini özelleştirdiğiniz (yalnızca bölüm adları, asla içerik değil), bir bölümün kısaltılıp kısaltılmadığı, genişletilip genişletilmediği veya kaldırılıp kaldırılmadığı ve uzunluğunun yaklaşık kaç karakter değiştiği</li></ul>
@@ -3624,7 +3656,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>W skrócie:</strong> Twoje dokumenty powstają w Twojej przeglądarce i nigdy nie są do nas wysyłane. Mierzymy jedynie anonimowo, które szablony są używane. Nie sprzedajemy danych.</div>
 <p><strong>documentgenerator.ai</strong> to bezpłatne narzędzie do tworzenia dokumentów. Ta polityka wyjaśnia, jakie dane zbieramy i jak z nich korzystamy.</p>
 <h3 style="margin-top:16px;">1. Dokumenty, które tworzysz</h3>
-<p>Wszystkie dokumenty są generowane <strong>w całości w Twojej przeglądarce</strong>. Żadne dane osobowe — imiona i nazwiska, adresy, numery dokumentów tożsamości ani treść dokumentu — nie są wysyłane na nasze serwery ani nigdzie przechowywane. Nic, co wpiszesz, nie opuszcza Twojej przeglądarki.</p>
+<p>Wszystkie dokumenty są generowane <strong>w całości w Twojej przeglądarce</strong>. Żadne dane osobowe — imiona i nazwiska, adresy, numery dokumentów tożsamości ani treść dokumentu — nie są wysyłane na nasze serwery ani nigdzie przechowywane. Nic, co wpiszesz, nie opuszcza Twojej przeglądarki. Jeśli zdecydujesz się zapisać dokument jako plik, plik ten powstaje na Twoim urządzeniu i nigdy nie jest do nas wysyłany.</p>
 <h3 style="margin-top:16px;">2. Anonimowe dane o użytkowaniu</h3>
 <p>Po pobraniu dokumentu możemy zbierać anonimowe, nieosobowe dane w celu ulepszania naszych szablonów:</p>
 <ul><li>Typ dokumentu (np. pełnomocnictwo)</li><li>Wybrany język</li><li>Twoja strefa czasowa / region (nie adres IP ani dokładna lokalizacja)</li><li>Które sekcje dokumentu zmodyfikowano (wyłącznie nazwy sekcji, nigdy treść), czy sekcję skrócono, rozszerzono lub usunięto oraz mniej więcej o ile znaków zmieniła się jej długość</li></ul>
@@ -3643,7 +3675,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>संक्षेप में:</strong> आपके दस्तावेज़ आपके ब्राउज़र में बनते हैं और हमें कभी नहीं भेजे जाते। हम केवल गुमनाम रूप से मापते हैं कि कौन से टेम्पलेट उपयोग होते हैं। हम डेटा नहीं बेचते।</div>
 <p><strong>documentgenerator.ai</strong> एक मुफ़्त दस्तावेज़ निर्माण टूल है। यह नीति बताती है कि हम कौन सा डेटा एकत्र करते हैं और उसका उपयोग कैसे करते हैं।</p>
 <h3 style="margin-top:16px;">1. आपके द्वारा बनाए गए दस्तावेज़</h3>
-<p>सभी दस्तावेज़ <strong>पूरी तरह आपके ब्राउज़र में</strong> बनते हैं। कोई भी व्यक्तिगत डेटा — नाम, पते, पहचान संख्या या दस्तावेज़ की सामग्री — हमारे सर्वर पर नहीं भेजा जाता और न ही कहीं संग्रहीत होता है। आप जो कुछ भी दर्ज करते हैं वह आपके ब्राउज़र से बाहर नहीं जाता।</p>
+<p>सभी दस्तावेज़ <strong>पूरी तरह आपके ब्राउज़र में</strong> बनते हैं। कोई भी व्यक्तिगत डेटा — नाम, पते, पहचान संख्या या दस्तावेज़ की सामग्री — हमारे सर्वर पर नहीं भेजा जाता और न ही कहीं संग्रहीत होता है। आप जो कुछ भी दर्ज करते हैं वह आपके ब्राउज़र से बाहर नहीं जाता। यदि आप अपना दस्तावेज़ फ़ाइल के रूप में सहेजना चुनते हैं, तो वह फ़ाइल आपके अपने डिवाइस पर बनती है और हमें कभी नहीं भेजी जाती।</p>
 <h3 style="margin-top:16px;">2. गुमनाम उपयोग डेटा</h3>
 <p>दस्तावेज़ डाउनलोड करते समय, हम अपने टेम्पलेट बेहतर बनाने के लिए गुमनाम, गैर-व्यक्तिगत डेटा एकत्र कर सकते हैं:</p>
 <ul><li>दस्तावेज़ का प्रकार (जैसे मुख्तारनामा)</li><li>चुनी गई भाषा</li><li>आपका समय क्षेत्र / क्षेत्र (आपका IP पता या सटीक स्थान नहीं)</li><li>आपने दस्तावेज़ के किन अनुभागों को अनुकूलित किया (केवल अनुभागों के नाम, सामग्री कभी नहीं), कोई अनुभाग छोटा, बड़ा या हटाया गया या नहीं, और उसकी लंबाई लगभग कितने अक्षरों से बदली</li></ul>
@@ -3662,7 +3694,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>خلاصه:</strong> اسناد شما در مرورگرتان ساخته می‌شوند و هرگز برای ما ارسال نمی‌شوند. ما فقط به‌صورت ناشناس می‌سنجیم کدام قالب‌ها استفاده می‌شوند. ما داده‌ای نمی‌فروشیم.</div>
 <p><strong>documentgenerator.ai</strong> ابزاری رایگان برای تولید سند است. این سیاست توضیح می‌دهد چه داده‌هایی جمع‌آوری می‌کنیم و چگونه از آن‌ها استفاده می‌کنیم.</p>
 <h3 style="margin-top:16px;">۱. اسنادی که می‌سازید</h3>
-<p>همه اسناد <strong>کاملاً در مرورگر شما</strong> تولید می‌شوند. هیچ داده شخصی — نام، نشانی، شماره شناسایی یا محتوای سند — به سرورهای ما ارسال یا در جایی ذخیره نمی‌شود. هیچ‌یک از آنچه وارد می‌کنید مرورگرتان را ترک نمی‌کند.</p>
+<p>همه اسناد <strong>کاملاً در مرورگر شما</strong> تولید می‌شوند. هیچ داده شخصی — نام، نشانی، شماره شناسایی یا محتوای سند — به سرورهای ما ارسال یا در جایی ذخیره نمی‌شود. هیچ‌یک از آنچه وارد می‌کنید مرورگرتان را ترک نمی‌کند. اگر سند خود را به‌صورت فایل ذخیره کنید، آن فایل روی دستگاه خودتان ساخته می‌شود و هرگز برای ما ارسال نمی‌شود.</p>
 <h3 style="margin-top:16px;">۲. داده‌های ناشناس استفاده</h3>
 <p>هنگام دانلود سند، ممکن است برای بهبود قالب‌هایمان داده‌های ناشناس و غیرشخصی جمع‌آوری کنیم:</p>
 <ul><li>نوع سند (مثلاً وکالت‌نامه)</li><li>زبان انتخاب‌شده</li><li>منطقه زمانی / منطقه شما (نه نشانی IP یا موقعیت دقیق شما)</li><li>کدام بخش‌های سند را سفارشی کرده‌اید (فقط نام بخش‌ها، هرگز محتوا)، اینکه بخشی کوتاه، بلند یا حذف شده و طول آن تقریباً چند نویسه تغییر کرده است</li></ul>
@@ -3681,7 +3713,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>בקצרה:</strong> המסמכים שלך נוצרים בדפדפן שלך ולעולם אינם נשלחים אלינו. אנחנו מודדים רק באופן אנונימי באילו תבניות משתמשים. אנחנו לא מוכרים נתונים.</div>
 <p><strong>documentgenerator.ai</strong> הוא כלי חינמי ליצירת מסמכים. מדיניות זו מסבירה אילו נתונים אנו אוספים וכיצד אנו משתמשים בהם.</p>
 <h3 style="margin-top:16px;">1. מסמכים שאתם יוצרים</h3>
-<p>כל המסמכים נוצרים <strong>כולו בדפדפן שלכם</strong>. שום מידע אישי — שמות, כתובות, מספרי זיהוי או תוכן המסמך — אינו נשלח לשרתים שלנו או נשמר בשום מקום. דבר ממה שאתם מזינים אינו עוזב את הדפדפן.</p>
+<p>כל המסמכים נוצרים <strong>כולו בדפדפן שלכם</strong>. שום מידע אישי — שמות, כתובות, מספרי זיהוי או תוכן המסמך — אינו נשלח לשרתים שלנו או נשמר בשום מקום. דבר ממה שאתם מזינים אינו עוזב את הדפדפן. אם תבחרו לשמור את המסמך כקובץ, הקובץ נוצר במכשיר שלכם ולעולם אינו נשלח אלינו.</p>
 <h3 style="margin-top:16px;">2. נתוני שימוש אנונימיים</h3>
 <p>בעת הורדת מסמך, ייתכן שנאסוף נתונים אנונימיים ולא אישיים לשיפור התבניות שלנו:</p>
 <ul><li>סוג המסמך (למשל ייפוי כוח)</li><li>השפה שנבחרה</li><li>אזור הזמן / האזור שלכם (לא כתובת ה-IP או המיקום המדויק)</li><li>אילו חלקים במסמך התאמתם (שמות החלקים בלבד, לעולם לא התוכן), האם חלק קוצר, הורחב או הוסר, ובכמה תווים בערך השתנה אורכו</li></ul>
@@ -3700,7 +3732,7 @@ const PRIVACY = {
 <div class="privacy-summary"><strong>Kwa ufupi:</strong> Hati zako huundwa kwenye kivinjari chako na hazitumwi kwetu kamwe. Tunapima tu kwa njia isiyojulikana ni violezo gani vinatumika. Hatuuzi data.</div>
 <p><strong>documentgenerator.ai</strong> ni zana ya bure ya kutengeneza hati. Sera hii inaeleza ni data gani tunakusanya na jinsi tunavyoitumia.</p>
 <h3 style="margin-top:16px;">1. Hati unazotengeneza</h3>
-<p>Hati zote hutengenezwa <strong>kikamilifu kwenye kivinjari chako</strong>. Hakuna data ya kibinafsi — majina, anwani, nambari za kitambulisho au yaliyomo kwenye hati — inayotumwa kwa seva zetu au kuhifadhiwa popote. Hakuna unachoingiza kinachoondoka kwenye kivinjari chako.</p>
+<p>Hati zote hutengenezwa <strong>kikamilifu kwenye kivinjari chako</strong>. Hakuna data ya kibinafsi — majina, anwani, nambari za kitambulisho au yaliyomo kwenye hati — inayotumwa kwa seva zetu au kuhifadhiwa popote. Hakuna unachoingiza kinachoondoka kwenye kivinjari chako. Ukichagua kuhifadhi hati yako kama faili, faili hiyo hutengenezwa kwenye kifaa chako mwenyewe na haitumwi kwetu kamwe.</p>
 <h3 style="margin-top:16px;">2. Data isiyojulikana ya matumizi</h3>
 <p>Unapopakua hati, tunaweza kukusanya data isiyojulikana na isiyo ya kibinafsi ili kuboresha violezo vyetu:</p>
 <ul><li>Aina ya hati (k.m. Hati ya Uwakilishi)</li><li>Lugha iliyochaguliwa</li><li>Saa za eneo / kanda yako (si anwani yako ya IP wala eneo kamili)</li><li>Ni sehemu zipi za hati ulizobadilisha (majina ya sehemu pekee, kamwe si yaliyomo), kama sehemu ilifupishwa, ilirefushwa au iliondolewa, na urefu wake ulibadilika kwa takriban herufi ngapi</li></ul>
@@ -4216,7 +4248,7 @@ async function downloadPDF() {
 }
 
 // ====== Bevestiging na PDF-download ======
-function showDoneToast() {
+function showDoneToast(key) {
   try {
     let el = document.getElementById('dg-toast');
     if (!el) {
@@ -4224,7 +4256,7 @@ function showDoneToast() {
       el.id = 'dg-toast'; el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite');
       document.body.appendChild(el);
     }
-    el.innerHTML = '<span class="toast-check">✓</span> ' + t('toast-downloaded');
+    el.innerHTML = '<span class="toast-check">✓</span> ' + t(typeof key === 'string' ? key : 'toast-downloaded');
     el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
     clearTimeout(showDoneToast._t);
     showDoneToast._t = setTimeout(() => el.classList.remove('show'), 3200);
@@ -5933,22 +5965,198 @@ window.addEventListener('beforeunload', e => {
   if (filled) { e.preventDefault(); e.returnValue = ''; }
 });
 
+
+// ====== Bewaren als bestand / openen ======
+const FILE_VERSION = 1;
+function hasUserData() {
+  return [...document.querySelectorAll('input[type="text"][id], textarea[id]')].some(el => /-(name|address|company|rep|role|email|phone|for|number|purpose|make|model|vin|plate|jobtitle)$/.test(el.id) && el.value.trim());
+}
+function collectFileState() {
+  const fields = {};
+  document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
+    if (['file', 'button', 'submit', 'hidden', 'password'].includes(el.type) || el.id.startsWith('file-')) return;
+    if (el.type === 'checkbox') fields[el.id] = !!el.checked;
+    else if (el.tagName === 'SELECT') fields[el.id] = el.value;
+    else if (el.value) fields[el.id] = el.value;
+  });
+  const attach = {};
+  document.querySelectorAll('[id$="-attach-list"]').forEach(list => {
+    const v = [...list.querySelectorAll('.attach-input')].map(i => i.value).filter(Boolean);
+    if (v.length) attach[list.id.replace(/-attach-list$/, '')] = v;
+  });
+  return {
+    app: 'documentgenerator.ai', v: FILE_VERSION, saved: new Date().toISOString(),
+    docType: currentDocType, lang,
+    state: { poaType, durationType, scopes: [...selectedScopes], rentalPropertyType, rentalFurnished, rentalDurationType, docDetail: { ...docDetail } },
+    fields,
+    lists: {
+      beneficiaries: [...document.querySelectorAll('#will-beneficiaries > div')].map(d => ({ name: d.querySelector('.ben-name')?.value || '', rel: d.querySelector('.ben-rel')?.value || '', share: d.querySelector('.ben-share')?.value || '' })),
+      invoiceLines: [...document.querySelectorAll('#invoice-lines > div')].map(d => ({ desc: d.querySelector('.iv-desc')?.value || '', qty: d.querySelector('.iv-qty')?.value || '', price: d.querySelector('.iv-price')?.value || '' })),
+      attach
+    }
+  };
+}
+function b64(bytes) { let s = ''; for (let i = 0; i < bytes.length; i += 8192) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 8192)); return btoa(s); }
+function unb64(s) { const b = atob(s), a = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
+async function fileKey(pw, salt) {
+  const km = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 250000, hash: 'SHA-256' }, km, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+}
+async function encryptState(obj, pw) {
+  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  const key = await fileKey(pw, salt);
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, new TextEncoder().encode(JSON.stringify(obj))));
+  return { app: 'documentgenerator.ai', v: FILE_VERSION, encrypted: true, salt: b64(salt), iv: b64(iv), data: b64(ct) };
+}
+async function decryptState(file, pw) {
+  const key = await fileKey(pw, unb64(file.salt));
+  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(file.iv) }, key, unb64(file.data));
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+
+let _pendingFile = null;
+function openFileModal(mode, errKey) {
+  const m = document.getElementById('file-modal');
+  const save = mode === 'save';
+  document.getElementById('file-save-body').style.display = save ? 'block' : 'none';
+  document.getElementById('file-open-body').style.display = save ? 'none' : 'block';
+  document.getElementById('file-title').setAttribute('data-i18n', save ? 'file-save-title' : 'file-open-btn');
+  document.getElementById('file-title').textContent = t(save ? 'file-save-title' : 'file-open-btn');
+  document.getElementById('file-pw').value = ''; document.getElementById('file-pw-open').value = '';
+  const err = document.getElementById('file-err'); err.textContent = errKey ? t(errKey) : ''; err.style.display = errKey ? 'block' : 'none';
+  m.classList.add('show');
+  setTimeout(() => { try { document.getElementById(save ? 'file-pw' : 'file-pw-open').focus(); } catch (e) {} }, 50);
+}
+function closeFileModal() { document.getElementById('file-modal').classList.remove('show'); _pendingFile = null; }
+
+async function saveToFile() {
+  const pw = document.getElementById('file-pw').value;
+  let out = collectFileState();
+  try { if (pw) out = await encryptState(out, pw); } catch (e) { document.getElementById('file-err').textContent = t('file-err-bad'); document.getElementById('file-err').style.display = 'block'; return; }
+  const blob = new Blob([JSON.stringify(out)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'documentgenerator-' + (currentDocType || 'document') + '-' + new Date().toISOString().slice(0, 10) + '.dgdoc';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  closeFileModal();
+  autoSavePaused = true; // zojuist bewaard: geen sluitwaarschuwing tot de gebruiker verder typt
+  showDoneToast('file-saved');
+}
+
+function pickFile() { document.getElementById('file-input').click(); }
+
+async function onFileChosen(input) {
+  const f = input.files && input.files[0];
+  input.value = '';
+  if (!f) return;
+  let obj;
+  try { obj = JSON.parse(await f.text()); } catch (e) { return openFileModal('open', 'file-err-bad'); }
+  if (!obj || obj.app !== 'documentgenerator.ai' || typeof obj.v !== 'number') return openFileModal('open', 'file-err-bad');
+  if (obj.v > FILE_VERSION) return openFileModal('open', 'file-err-new');
+  if (obj.encrypted) { _pendingFile = obj; return openFileModal('pass'); }
+  applyFileState(obj);
+}
+
+async function openEncrypted() {
+  const pw = document.getElementById('file-pw-open').value;
+  const err = document.getElementById('file-err');
+  if (!_pendingFile || !pw) return;
+  let obj;
+  try { obj = await decryptState(_pendingFile, pw); } catch (e) { err.textContent = t('file-err-pw'); err.style.display = 'block'; return; }
+  closeFileModal();
+  applyFileState(obj);
+}
+
+// Bestanden kunnen van anderen komen: haakjes weghalen zodat er nooit opmaak of script in de voorbeeldweergave terechtkomt
+const cleanIn = v => String(v == null ? '' : v).replace(/[<>]/g, '');
+
+function applyFileState(obj) {
+  if (!obj || obj.app !== 'documentgenerator.ai' || typeof obj.fields !== 'object' || !obj.fields) return openFileModal('open', 'file-err-bad');
+  if (hasUserData() && !confirm(t('file-confirm-open'))) return;
+  try {
+    const rb = document.getElementById('restore-banner'); if (rb) rb.style.display = 'none';
+    clearAutoSave();
+    resetAllFields();
+    if (typeof obj.lang === 'string' && /^(en|nl|es|fr|de|pt|it|ru|zh|ja|ar|ko|tr|pl|hi|fa|he|sw)$/.test(obj.lang) && obj.lang !== lang) setLang(obj.lang);
+    // keuzes
+    const st = obj.state || {};
+    if (st.poaType) setPoaType(st.poaType === 'specific' ? 'specific' : 'general');
+    if (st.durationType) setDuration(st.durationType === 'fixed' ? 'fixed' : 'indefinite');
+    if (Array.isArray(st.scopes)) { selectedScopes.clear(); st.scopes.forEach(s => { if (SCOPES.some(x => x.id === s)) selectedScopes.add(s); }); buildScopeGrid(); syncScopeDetails(); }
+    if (PROP_TYPES.some(p => p.id === st.rentalPropertyType)) { rentalPropertyType = st.rentalPropertyType; buildPropTypeGrid(); }
+    setFurnished(!!st.rentalFurnished);
+    setRentalDuration(st.rentalDurationType === 'indefinite' ? 'indefinite' : 'fixed');
+    if (st.docDetail && typeof st.docDetail === 'object') Object.keys(docDetail).forEach(k => {
+      const lvl = st.docDetail[k] === 'detailed' ? 'detailed' : 'basic';
+      docDetail[k] = lvl;
+      const b = document.getElementById(k + '-basic-btn'), d = document.getElementById(k + '-detailed-btn');
+      if (b) b.classList.toggle('active', lvl === 'basic'); if (d) d.classList.toggle('active', lvl === 'detailed');
+    });
+    // velden: alleen bekende ids
+    Object.entries(obj.fields).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (!el || !['INPUT', 'SELECT', 'TEXTAREA'].includes(el.tagName) || ['file', 'button', 'submit', 'hidden', 'password'].includes(el.type)) return;
+      if (el.type === 'checkbox') el.checked = val === true;
+      else if (typeof val === 'string' || typeof val === 'number') {
+        if (el.tagName === 'SELECT') { if ([...el.options].some(o => o.value === String(val))) el.value = String(val); }
+        else el.value = cleanIn(val).slice(0, 5000);
+      }
+      if (el.tagName === 'SELECT' && /-currency$/.test(id)) el.dataset.manual = '1';
+    });
+    // lijsten
+    const L = obj.lists || {};
+    (Array.isArray(L.beneficiaries) ? L.beneficiaries : []).slice(0, 50).forEach(b => {
+      addBeneficiary(''); const d = document.getElementById('will-beneficiaries').lastElementChild;
+      d.querySelector('.ben-name').value = cleanIn(b.name); d.querySelector('.ben-rel').value = cleanIn(b.rel); d.querySelector('.ben-share').value = cleanIn(b.share);
+    });
+    renumberBeneficiaries();
+    (Array.isArray(L.invoiceLines) ? L.invoiceLines : []).slice(0, 100).forEach(l => {
+      addInvoiceLine(); const d = document.getElementById('invoice-lines').lastElementChild;
+      d.querySelector('.iv-desc').value = cleanIn(l.desc); d.querySelector('.iv-qty').value = cleanIn(l.qty || '1'); d.querySelector('.iv-price').value = cleanIn(l.price);
+    });
+    Object.entries(L.attach && typeof L.attach === 'object' ? L.attach : {}).forEach(([doc, names]) => {
+      if (!document.getElementById(doc + '-attach-list') || !Array.isArray(names)) return;
+      names.slice(0, 50).forEach(n => { addAttachment(doc); const rows = document.getElementById(doc + '-attach-list').children; rows[rows.length - 1].querySelector('.attach-input').value = cleanIn(n); });
+    });
+    // afhankelijke weergave bijwerken (selecties/vinkjes die iets tonen of verbergen)
+    document.querySelectorAll('select[id], input[type="checkbox"][id]').forEach(el => { try { el.dispatchEvent(new Event('change', { bubbles: true })); } catch (e) {} });
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    const types = ['poa','rental','bos','eng','loan','empl','nda','will','receipt','invoice','revoke'];
+    selectDocType(types.includes(obj.docType) ? obj.docType : 'poa');
+    autoSavePaused = true;
+    showDoneToast('file-opened');
+  } catch (e) { console.error(e); openFileModal('open', 'file-err-bad'); }
+}
+
 // ====== New document ======
+// Alles terugzetten naar een schone start (velden, lijsten en keuzes); zonder navigatie
+function resetAllFields() {
+  document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
+    if (el.type === 'checkbox') el.checked = false;
+    else if (el.tagName === 'SELECT') el.selectedIndex = 0;
+    else if (!['file', 'button', 'submit', 'hidden'].includes(el.type)) el.value = '';
+  });
+  document.querySelectorAll('input[id$="-brand"]').forEach(el => { el.checked = true; });
+  document.querySelectorAll('select[id$="-currency"]').forEach(el => { delete el.dataset.manual; });
+  document.querySelectorAll('input[type="date"]').forEach(el => { delete el.dataset.quickMonths; delete el.dataset.quickDays; });
+  // Dynamische lijsten leegmaken
+  ['will-beneficiaries', 'invoice-lines'].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = ''; });
+  document.querySelectorAll('[id$="-attach-list"]').forEach(el => { el.innerHTML = ''; });
+  // Keuzes terug naar de standaardwaarden
+  selectedScopes.clear(); buildScopeGrid(); syncScopeDetails();
+  setPoaType('general'); setDuration('indefinite');
+  rentalPropertyType = 'apartment'; buildPropTypeGrid(); setFurnished(false); setRentalDuration('fixed');
+  Object.keys(docDetail).forEach(k => { docDetail[k] = 'basic'; const b = document.getElementById(k + '-basic-btn'), d = document.getElementById(k + '-detailed-btn'); if (b) b.classList.add('active'); if (d) d.classList.remove('active'); });
+  const today = new Date().toISOString().split('T')[0];
+  ['doc-date','date-start','r-doc-date','r-date-start'].forEach(id => { const el = document.getElementById(id); if (el) el.value = today; });
+}
+
 function startNewDocument(skipConfirm) {
   if (skipConfirm !== true && !confirm(t('confirm-new'))) return;
   const rb = document.getElementById('restore-banner'); if (rb) rb.style.display = 'none';
   clearAutoSave();
-  document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
-    if (el.type === 'checkbox') el.checked = false;
-    else if (el.type === 'date' || el.type === 'number' || el.type === 'text') el.value = '';
-    else if (el.tagName === 'SELECT') el.selectedIndex = 0;
-  });
-  document.querySelectorAll('input[id$="-brand"]').forEach(el => { el.checked = true; });
-  document.querySelectorAll('select[id$="-currency"]').forEach(el => { delete el.dataset.manual; });
-  // Clear dynamic beneficiaries
-  const benList = document.getElementById('will-beneficiaries');
-  if (benList) benList.innerHTML = '';
-  { const today = new Date().toISOString().split('T')[0]; ['doc-date','date-start','r-doc-date','r-date-start'].forEach(id => { const el = document.getElementById(id); if (el) el.value = today; }); }
+  resetAllFields();
   goStep(0);
   // Re-apply locale defaults
   try { const tz = Intl.DateTimeFormat().resolvedOptions().timeZone; const loc = LOCALE_MAP[tz]; if(loc) applyLocale(loc); } catch(e){}
