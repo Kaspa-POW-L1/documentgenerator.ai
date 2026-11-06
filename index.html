@@ -4763,7 +4763,8 @@ function detectLocale() {
 
 function applyLocale(locale) {
   // Update address placeholders for all languages
-  T['ph-address'] = locale.addr;
+  if (!applyLocale._base) applyLocale._base = Object.assign({}, T['ph-address']);
+  T['ph-address'] = Object.assign({}, applyLocale._base, locale.addr);
 
   // Set default country fields (all document types)
   if (locale.country) {
