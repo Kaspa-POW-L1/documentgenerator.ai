@@ -3100,6 +3100,7 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
         <li>Einddatum-velden (volmacht, huur, arbeid, lening): snelkeuze +3/+6/+12 maanden vanaf de begindatum i.p.v. gisteren/vandaag/morgen</li>
         <li>PDF: regel "Gemaakt met documentgenerator.ai" onderaan (aan by default, met uitleg, uit te zetten in Documentinstellingen) en optioneel watermerk Concept/Kopie (18 talen)</li>
         <li>Fix: voorbeeldpaneel verscheen soms naast het keuzescherm (na terugkeren naar de startpagina)</li>
+        <li>Valuta volgt automatisch het gekozen land (aanpassen blijft mogelijk; een handmatige keuze wordt niet meer overschreven)</li>
         <li>Landvelden: suggestielijst met alle landen in de gekozen taal (via de browser, geen vertalingen nodig); eigen land van de bezoeker bovenaan; vrije invoer blijft mogelijk</li>
         <li>Privacybeleid nu in alle 18 talen vertaald</li>
         <li>Startpagina: kop "Welk document heb je nodig?" visueel verborgen (blijft voor schermlezers)</li>
@@ -5915,6 +5916,7 @@ function startNewDocument() {
     else if (el.tagName === 'SELECT') el.selectedIndex = 0;
   });
   document.querySelectorAll('input[id$="-brand"]').forEach(el => { el.checked = true; });
+  document.querySelectorAll('select[id$="-currency"]').forEach(el => { delete el.dataset.manual; });
   // Clear dynamic beneficiaries
   const benList = document.getElementById('will-beneficiaries');
   if (benList) benList.innerHTML = '';
@@ -5934,6 +5936,33 @@ function autoFillLaw(placeId, lawId) {
   }
 }
 
+
+function currencyForCountry(country) {
+  const c = canonCountry(country);
+  const eurCountries = ['nederland','deutschland','france','españa','italy','belgium','portugal','ireland','austria','luxembourg','österreich'];
+  const angCountries = ['sint maarten','curaçao','curacao'];
+  const gbpCountries = ['united kingdom'];
+  const awgCountries = ['aruba'];
+  const xcdCountries = ['dominica','grenada','saint lucia','saint kitts','saint vincent','antigua'];
+  let defCur = 'USD';
+  if (eurCountries.some(e=>c.includes(e))) defCur = 'EUR';
+  else if (angCountries.some(e=>c.includes(e))) defCur = 'XCG';
+  else if (awgCountries.some(e=>c.includes(e))) defCur = 'AWG';
+  else if (gbpCountries.some(e=>c.includes(e))) defCur = 'GBP';
+  else if (xcdCountries.some(e=>c.includes(e))) defCur = 'XCD';
+  else if (c.includes('guyana')) defCur = 'GYD';
+  else if (c.includes('suriname')) defCur = 'SRD';
+  else if (c.includes('trinidad')) defCur = 'TTD';
+  else if (c.includes('barbados')) defCur = 'BBD';
+  else if (c.includes('jamaica')) defCur = 'JMD';
+  else if (c.includes('dominicana') || c.includes('dominican')) defCur = 'DOP';
+  else if (c.includes('haiti') || c.includes('haïti')) defCur = 'HTG';
+  else if (c.includes('schweiz') || c.includes('suisse')) defCur = 'CHF';
+  else if (c.includes('canada')) defCur = 'CAD';
+  else if (c.includes('australia')) defCur = 'AUD';
+  else if (c.includes('méxico') || c.includes('mexico')) defCur = 'MXN';
+  return defCur;
+}
 
 // ====== Landenlijst (suggesties in alle landvelden, namen via Intl.DisplayNames) ======
 const COUNTRY_CODES = 'AF AX AL DZ AS AD AO AI AQ AG AR AM AW AU AT AZ BS BH BD BB BY BE BZ BJ BM BT BO BQ BA BW BV BR IO BN BG BF BI CV KH CM CA KY CF TD CL CN CX CC CO KM CG CD CK CR CI HR CU CW CY CZ DK DJ DM DO EC EG SV GQ ER EE SZ ET FK FO FJ FI FR GF PF TF GA GM GE DE GH GI GR GL GD GP GU GT GG GN GW GY HT HM VA HN HK HU IS IN ID IR IQ IE IM IL IT JM JP JE JO KZ KE KI KP KR KW KG LA LV LB LS LR LY LI LT LU MO MG MW MY MV ML MT MH MQ MR MU YT MX FM MD MC MN ME MS MA MZ MM NA NR NP NL NC NZ NI NE NG NU NF MK MP NO OM PK PW PS PA PG PY PE PH PN PL PT PR QA RE RO RU RW BL SH KN LC MF PM VC WS SM ST SA SN RS SC SL SG SX SK SI SB SO ZA GS SS ES LK SD SR SJ SE CH SY TW TJ TZ TH TL TG TK TO TT TN TR TM TC TV UG UA AE GB US UM UY UZ VU VE VN VG VI WF EH YE ZM ZW'.split(' ');
@@ -5976,6 +6005,22 @@ function canonCountry(s) {
     if (code) return v + ' ' + ['en','nl','de','fr','es'].map(lg => countryName(code, lg).toLowerCase()).join(' ');
   } catch (e) {}
   return v;
+}
+
+
+// Valuta volgt het gekozen land, tenzij de gebruiker de valuta zelf heeft aangepast
+const CURRENCY_LINKS = { 'r-law':'r-currency', 'b-law':'b-currency', 'e-law':'e-currency', 'm-law':'em-currency', 'l-law':'l-currency', 'rc-from-country':'rc-currency', 'iv-from-country':'iv-currency' };
+function initCurrencyLinks() {
+  for (const [src, cur] of Object.entries(CURRENCY_LINKS)) {
+    const s = document.getElementById(src), c = document.getElementById(cur);
+    if (!s || !c) continue;
+    c.addEventListener('change', () => { c.dataset.manual = '1'; });
+    s.addEventListener('change', () => {
+      if (c.dataset.manual) return;
+      const v = currencyForCountry(s.value);
+      if ([...c.options].some(o => o.value === v)) c.value = v;
+    });
+  }
 }
 
 // ====== Last Will & Testament ======
@@ -6802,29 +6847,7 @@ if (location.search.includes('admin')) {
     document.getElementById('r-place').value = locale.city;
   }
   // Set currency based on country
-  const eurCountries = ['nederland','deutschland','france','españa','italy','belgium','portugal','ireland','austria','luxembourg','österreich'];
-  const angCountries = ['sint maarten','curaçao','curacao'];
-  const gbpCountries = ['united kingdom'];
-  const c = (locale.country||'').toLowerCase();
-  const awgCountries = ['aruba'];
-  const xcdCountries = ['dominica','grenada','saint lucia','saint kitts','saint vincent','antigua'];
-  let defCur = 'USD';
-  if (eurCountries.some(e=>c.includes(e))) defCur = 'EUR';
-  else if (angCountries.some(e=>c.includes(e))) defCur = 'XCG';
-  else if (awgCountries.some(e=>c.includes(e))) defCur = 'AWG';
-  else if (gbpCountries.some(e=>c.includes(e))) defCur = 'GBP';
-  else if (xcdCountries.some(e=>c.includes(e))) defCur = 'XCD';
-  else if (c.includes('guyana')) defCur = 'GYD';
-  else if (c.includes('suriname')) defCur = 'SRD';
-  else if (c.includes('trinidad')) defCur = 'TTD';
-  else if (c.includes('barbados')) defCur = 'BBD';
-  else if (c.includes('jamaica')) defCur = 'JMD';
-  else if (c.includes('dominicana') || c.includes('dominican')) defCur = 'DOP';
-  else if (c.includes('haiti') || c.includes('haïti')) defCur = 'HTG';
-  else if (c.includes('schweiz') || c.includes('suisse')) defCur = 'CHF';
-  else if (c.includes('canada')) defCur = 'CAD';
-  else if (c.includes('australia')) defCur = 'AUD';
-  else if (c.includes('méxico') || c.includes('mexico')) defCur = 'MXN';
+  const defCur = currencyForCountry(locale.country);
   ['r-currency','b-currency','e-currency','em-currency','l-currency','rc-currency','iv-currency'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = defCur;
@@ -6852,6 +6875,7 @@ if (location.search.includes('admin')) {
   buildScopeGrid();
   initDateQuickPicks();
   initCountryInputs();
+  initCurrencyLinks();
   autoRestore();
 })();
 
@@ -6897,7 +6921,7 @@ function livePreview() {
     box.innerHTML = html;
     if (mbox) mbox.innerHTML = html;
   }
-}a
+}
 
 // Generate HTML functions - these call the gather + render logic
 // We need to extract the HTML generation from the existing render functions
