@@ -1,4 +1,4 @@
-8<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1326,6 +1326,8 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 .doc-card p { margin: 0; align-self: start; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 #step-0 .doc-grid { margin-top: 4px; }
+/* Op het keuzescherm nooit een voorbeeldpaneel tonen (ook niet als er nog een oud voorbeeld klaarstaat) */
+body:has(#step-0.active) .live-preview-panel { display: none !important; }
 </style>
 </head>
 <body>
@@ -3097,6 +3099,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
         <li>Factuur: vervaldatum-snelkeuze +7/+14/+30 dagen na factuurdatum</li>
         <li>Einddatum-velden (volmacht, huur, arbeid, lening): snelkeuze +3/+6/+12 maanden vanaf de begindatum i.p.v. gisteren/vandaag/morgen</li>
         <li>PDF: regel "Gemaakt met documentgenerator.ai" onderaan (aan by default, met uitleg, uit te zetten in Documentinstellingen) en optioneel watermerk Concept/Kopie (18 talen)</li>
+        <li>Fix: voorbeeldpaneel verscheen soms naast het keuzescherm (na terugkeren naar de startpagina)</li>
         <li>Privacybeleid nu in alle 18 talen vertaald</li>
         <li>Startpagina: kop "Welk document heb je nodig?" visueel verborgen (blijft voor schermlezers)</li>
         <li>Startpagina: compacte tegels (icoon links, tekst rechts) en smallere pagina (1000 px)</li>
