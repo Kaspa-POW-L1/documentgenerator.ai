@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>documentgenerator.ai</title>
-<meta name="description" content="Free online document generator: create a power of attorney, rental agreement, bill of sale, loan agreement, NDA, invoice and more as a print-ready PDF. No account, 18 languages, and what you type stays in your browser.">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
 <script>
 if (!window.jspdf) {
@@ -857,10 +856,12 @@ input[type=number] { -moz-appearance: textfield; }
 #privacy-content p { margin: 0 0 10px; }
 #privacy-content ul { padding-inline-start: 20px; margin: 0 0 12px; font-size: inherit; }
 #privacy-content li { margin-bottom: 4px; }
-.privacy-summary { background: rgba(37,99,235,.08); border-inline-start: 3px solid #2563eb; border-radius: 8px; padding: 12px 14px; margin: 0 0 8px; font-size: 15px; line-height: 1.55; }
+.privacy-summary, .rv-offer { background: rgba(37,99,235,.08); border-inline-start: 3px solid #2563eb; border-radius: 8px; padding: 12px 14px; margin: 0 0 8px; font-size: 15px; line-height: 1.55; }
+.rv-offer { margin-top: 18px; text-align: start; font-size: 14px; line-height: 1.55; }
+.rv-offer .btn { margin-top: 10px; }
 #privacy-modal .modal { padding-top: 0; padding-bottom: 0; }
-:root[data-theme="dark"] .privacy-summary { background: rgba(96,165,250,.14); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .privacy-summary { background: rgba(96,165,250,.14); } }
+:root[data-theme="dark"] .privacy-summary, :root[data-theme="dark"] .rv-offer { background: rgba(96,165,250,.14); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .privacy-summary, :root:not([data-theme="light"]) .rv-offer { background: rgba(96,165,250,.14); } }
 #privacy-modal .modal-head { position: sticky; top: 0; z-index: 2; background: var(--card); display: flex; justify-content: flex-end; padding: 10px 0 2px; margin: 0 -4px; }
 #privacy-modal .modal-close { float: none; font-size: 26px; line-height: 1; padding: 4px 10px; border-radius: 8px; }
 #privacy-modal .modal-close:hover { background: var(--fill, rgba(0,0,0,.06)); }
@@ -1144,8 +1145,6 @@ input[type=number] { -moz-appearance: textfield; }
 .btn-next:hover, .btn-start:hover { background: var(--grad); filter: brightness(1.08); }
 .btn-download { background: var(--grad-green); box-shadow: 0 4px 14px rgba(5,150,105,.3); }
 .btn-download:hover { opacity: 1; filter: brightness(1.06); }
-.btn-share { background: transparent; color: var(--pri); border: 2px solid var(--pri); box-shadow: none; padding: 12px 22px; font-size: 16px; }
-.btn-share:hover { background: var(--pri); color: #fff; }
 .btn { transition: transform .15s ease, filter .15s ease, box-shadow .15s ease, background .15s ease; }
 .btn:hover { transform: translateY(-1px); }
 .btn:active { transform: translateY(0) scale(.98); }
@@ -1203,7 +1202,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 :root {
   --fill: #1A56DB; --warn-text: #92400E; --warn-box-bg: #fffbe6; --warn-box-border: #e6d27a;
   --a-bos:#059669; --a-poa:#2563EB; --a-rental:#EA580C; --a-eng:#0D9488; --a-loan:#D97706;
-  --a-empl:#7C3AED; --a-nda:#DB2777; --a-will:#64748B; --a-receipt:#0891B2; --a-invoice:#4F46E5;
+  --a-empl:#7C3AED; --a-nda:#DB2777; --a-will:#64748B; --a-receipt:#0891B2; --a-invoice:#4F46E5; --a-revoke:#DC2626;
 }
 .doc-card[onclick*="'bos'"]     { --acc: var(--a-bos); }
 .doc-card[onclick*="'poa'"]     { --acc: var(--a-poa); }
@@ -1215,6 +1214,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 .doc-card[onclick*="'will'"]    { --acc: var(--a-will); }
 .doc-card[onclick*="'receipt'"] { --acc: var(--a-receipt); }
 .doc-card[onclick*="'invoice'"] { --acc: var(--a-invoice); }
+.doc-card[onclick*="'revoke'"]  { --acc: var(--a-revoke); }
 .mobile-preview-btn, .fab, .detail-toggle button.active { background: var(--fill); }
 
 :root[data-theme="dark"] {
@@ -1227,7 +1227,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
   --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 6px 20px rgba(0,0,0,.28);
   --shadow-lg: 0 14px 40px rgba(0,0,0,.5);
   --a-bos:#34D399; --a-poa:#60A5FA; --a-rental:#FB923C; --a-eng:#2DD4BF; --a-loan:#FBBF24;
-  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#22D3EE; --a-invoice:#818CF8;
+  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#22D3EE; --a-invoice:#818CF8; --a-revoke:#F87171;
 }
 :root[data-theme="dark"] body {
   background:
@@ -1266,7 +1266,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
   --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 6px 20px rgba(0,0,0,.28);
   --shadow-lg: 0 14px 40px rgba(0,0,0,.5);
   --a-bos:#34D399; --a-poa:#60A5FA; --a-rental:#FB923C; --a-eng:#2DD4BF; --a-loan:#FBBF24;
-  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#22D3EE; --a-invoice:#818CF8;
+  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#22D3EE; --a-invoice:#818CF8; --a-revoke:#F87171;
 }
 :root:not([data-theme="light"]) body {
   background:
@@ -1298,30 +1298,6 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
-
-/* Uitleg per document (startpagina) */
-.guides { margin-top: 28px; }
-.guides h2 { font-size: 20px; margin: 0 0 12px; }
-.guides-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
-.guides article { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
-.guides article h3 { font-size: 15px; margin: 0 0 6px; }
-.guides article p { font-size: 13.5px; line-height: 1.55; color: var(--text-mid); margin: 0; }
-.guides-note { font-size: 12px; color: var(--text-light); margin-top: 10px; }
-
-/* Over ons & contact */
-#about-content { font-size: 15px; line-height: 1.65; }
-#about-content h2 { margin-top: 0; }
-#about-content h3 { font-size: 16px; margin: 22px 0 6px; }
-#about-content p { margin: 0 0 10px; }
-#about-modal .modal-foot { position: sticky; bottom: 0; background: var(--card); padding: 12px 0 14px; margin-top: 8px; border-top: 1px solid var(--border); text-align: center; }
-#about-modal .modal-foot button { background: var(--grad, #2563eb); color: #fff; border: none; border-radius: 10px; padding: 10px 28px; font: inherit; font-weight: 600; cursor: pointer; }
-
-/* Toestemmingsbanner (alleen zichtbaar als DG_ADS_ENABLED aan staat) */
-#consent-banner { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 1100; display: none; gap: 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; background: var(--card); color: var(--text, inherit); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 12px 40px rgba(0,0,0,.25); padding: 14px 16px; max-width: 760px; margin: 0 auto; }
-#consent-banner.show { display: flex; }
-#consent-banner p { margin: 0; font-size: 14px; line-height: 1.5; flex: 1 1 320px; }
-#consent-banner a { color: var(--pri); }
-.consent-btns { display: flex; gap: 8px; }
 </style>
 </head>
 <body>
@@ -1369,6 +1345,11 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
           <h3 data-i18n="dt-poa-title">Power of Attorney</h3>
           <p data-i18n="dt-poa-desc">Let someone act on your behalf</p>
         </div>
+        <div class="doc-card" onclick="selectDocType('revoke')">
+          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m14.5 12.5-5 5"/><path d="m9.5 12.5 5 5"/></svg></div>
+          <h3 data-i18n="dt-revoke-title">Revoke a Power of Attorney</h3>
+          <p data-i18n="dt-revoke-desc">End a power of attorney you gave</p>
+        </div>
         <div class="doc-card" onclick="selectDocType('rental')">
           <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
           <h3 data-i18n="dt-rental-title">Rental Agreement</h3>
@@ -1411,23 +1392,6 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
         </div>
       </div>
     </div>
-
-    <section class="guides">
-      <h2 data-i18n="guides-title">About the documents</h2>
-      <div class="guides-grid">
-        <article><h3 data-i18n="dt-bos-title">Bill of Sale</h3><p data-i18n="guide-bos">A bill of sale records that an item, such as a car, boat or piece of equipment, has been sold: by whom, to whom, for what price and on which date. It protects both seller and buyer and is often needed to register the change of ownership. Include a description that identifies the item, such as a chassis or serial number.</p></article>
-        <article><h3 data-i18n="dt-poa-title">Power of Attorney</h3><p data-i18n="guide-poa">A power of attorney lets someone else (the agent) act on your behalf, for example to sign papers, handle a bank matter or collect a package. You decide whether it is general or limited to specific tasks, and how long it stays valid. Choose someone you trust fully and keep the original safe.</p></article>
-        <article><h3 data-i18n="dt-rental-title">Rental Agreement</h3><p data-i18n="guide-rental">A rental agreement sets out the rent, deposit, duration and rules for a property or room, so landlord and tenant know what to expect. Local law often limits things like the maximum deposit and the notice period, so read the legal notes shown for the countries we cover.</p></article>
-        <article><h3 data-i18n="dt-eng-title">Engagement Letter</h3><p data-i18n="guide-eng">An engagement letter confirms what a professional or freelancer will do for a client, what it costs and how payment works. Agreeing on scope, fees and duration in writing prevents misunderstandings later.</p></article>
-        <article><h3 data-i18n="dt-loan-title">Loan Agreement</h3><p data-i18n="guide-loan">A loan agreement documents the amount lent, whether interest applies and how it is repaid, in instalments or in one sum. Writing it down protects both lender and borrower, also between friends and family.</p></article>
-        <article><h3 data-i18n="dt-employment-title">Employment Contract</h3><p data-i18n="guide-employment">An employment contract records the job, pay, working hours, holidays, probation period and notice terms. Mandatory employment rules differ per country and apply even if the contract says otherwise, so treat the template as a starting point.</p></article>
-        <article><h3 data-i18n="dt-nda-title">Non-Disclosure Agreement</h3><p data-i18n="guide-nda">A non-disclosure agreement (NDA) obliges one or both parties to keep shared information confidential, for example before discussing a business idea or sharing financial data. You set the purpose, the duration and what may still be disclosed.</p></article>
-        <article><h3 data-i18n="dt-will-title">Draft Will</h3><p data-i18n="guide-will">A draft will lets you put your wishes on paper: who inherits what and who carries out your will. It is a draft to take to a notary, not a legally valid will by itself, because most countries require formalities such as witnesses or a notarial deed.</p></article>
-        <article><h3 data-i18n="dt-receipt-title">Receipt</h3><p data-i18n="guide-receipt">A receipt confirms that a payment has been received: who paid, who received it, the amount, the date and what it was for. It is useful as proof for both sides, for example for a cash payment or a deposit.</p></article>
-        <article><h3 data-i18n="dt-invoice-title">Invoice</h3><p data-i18n="guide-invoice">An invoice asks a customer to pay for goods or services and states the amounts, the due date and your payment details. The template includes a late-payment clause with a statutory-interest reference for many countries. Check any local tax requirements, such as VAT numbers.</p></article>
-      </div>
-      <p class="guides-note" data-i18n="guides-note">These explanations are general information, not legal advice.</p>
-    </section>
   </div>
 
   <!-- STEP 1: Who gives the POA? -->
@@ -1521,6 +1485,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
       <div id="scope-choices" style="display:none; margin-top:16px;">
         <p style="font-size:14px; font-weight:500; margin-bottom:10px;" data-i18n="lbl-pick-scope">Pick what applies:</p>
         <div class="choice-grid" id="scope-grid"></div>
+        <div id="scope-details"></div>
         <div class="optional-extra">
           <div class="field" style="margin-bottom:0;">
             <label data-i18n="lbl-extra">Anything else? <span style="font-weight:400;color:var(--text-light)">(optional)</span></label>
@@ -1637,6 +1602,10 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
         <span data-i18n="lbl-page-numbers">Number pages</span>
       </label>
       <button class="btn btn-download" onclick="downloadPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+    </div>
+    <div class="rv-offer" id="rv-offer" style="display:none;">
+      <div data-i18n="rv-offer-text">This power of attorney has no end date. You can already download the letter to revoke it: it is filled in with these details, and you only need to add the date later.</div>
+      <button class="btn btn-back" style="border-color:var(--pri);color:var(--pri);font-weight:600;" onclick="downloadRevokePDF(revokeFromPoa())" data-i18n="btn-rv-download">Download revocation letter</button>
     </div>
     <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
@@ -2245,6 +2214,81 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
         <span data-i18n="lbl-page-numbers">Number pages</span>
       </label>
       <button class="btn btn-download" onclick="downloadEngPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+    </div>
+    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
+  </div>
+
+  <!-- REVOKE STEP 1: Principal -->
+  <div class="step" id="step-rv1">
+    <div class="step-card">
+      <h2 class="step-title" data-i18n="rv1-title">The principal</h2>
+      <p class="step-explain" data-i18n="rv1-explain">You: the person who granted the power of attorney.</p>
+      <div class="field"><label data-i18n="lbl-name">Full name</label><input type="text" id="rv-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-rv-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="rv-id"></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="rv-address" data-i18n-placeholder="ph-address"></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="rv-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="rv-postal"></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="rv-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goRevokeStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateRevokeAndGo('rv1','rv2')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- REVOKE STEP 2: Attorney -->
+  <div class="step" id="step-rv2">
+    <div class="step-card">
+      <h2 class="step-title" data-i18n="rv2-title">The attorney</h2>
+      <p class="step-explain" data-i18n="rv2-explain">The person whose authority you are withdrawing.</p>
+      <div class="field"><label data-i18n="lbl-name">Full name</label><input type="text" id="rv-ag-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-rv-ag-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-id">ID or passport number</label><input type="text" id="rv-ag-id"></div>
+      <div class="field"><label data-i18n="lbl-address">Address</label><input type="text" id="rv-ag-address" data-i18n-placeholder="ph-address"></div>
+      <div class="field"><label data-i18n="lbl-neighborhood">Neighborhood (optional)</label><input type="text" id="rv-ag-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal">Postal code (optional)</label><input type="text" id="rv-ag-postal"></div>
+      <div class="field"><label data-i18n="lbl-country">Country</label><input type="text" id="rv-ag-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goRevokeStep('rv1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateRevokeAndGo('rv2','rv3')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- REVOKE STEP 3: Details -->
+  <div class="step" id="step-rv3">
+    <div class="step-card">
+      <h2 class="step-title" data-i18n="rv3-title">Details of the revocation</h2>
+      <p class="step-explain" data-i18n="rv3-explain">Which power of attorney is it, and from when does it end?</p>
+      <div class="field"><label data-i18n="lbl-rv-poadate">Date of the original power of attorney (optional)</label><input type="date" id="rv-poadate"></div>
+      <div class="field"><label data-i18n="lbl-rv-date">Revocation takes effect on (leave empty to fill in by hand later)</label><input type="date" id="rv-date"></div>
+      <div class="field"><label data-i18n="lbl-rv-scope">What did it cover? (optional)</label><textarea id="rv-scope" rows="2" data-i18n-placeholder="ph-rv-scope"></textarea></div>
+      <div class="field"><label data-i18n="lbl-rv-notify">Who should be informed? (optional)</label><textarea id="rv-notify" rows="2" data-i18n-placeholder="ph-rv-notify"></textarea></div>
+      <div class="nav"><button class="btn btn-back" onclick="goRevokeStep('rv2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goRevokeStep('rv4')" data-i18n="btn-preview">Check the document</button></div>
+    </div>
+  </div>
+
+  <!-- REVOKE STEP 4: Preview & Download -->
+  <div class="step" id="step-rv4">
+    <div class="step-card" style="padding:20px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+        <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-back" onclick="goRevokeStep('rv1')" data-i18n="btn-edit">Edit</button>
+          <button class="btn btn-download" onclick="downloadRevokePDF()" data-i18n="btn-download">⬇ Download PDF</button>
+        </div>
+      </div>
+      <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <button class="btn-edit-doc" onclick="toggleEditMode('revoke-preview')" id="edit-btn-revoke-preview" data-i18n="btn-customize">✏️ Customize document</button>
+    </div>
+    <div class="edit-hint" id="edit-hint-revoke-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
+    <div class="preview-box" id="revoke-preview"></div>
+    <details class="doc-settings">
+      <summary data-i18n="lbl-doc-settings">Document settings</summary>
+      <div class="ds-body">
+        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="revoke-header" data-i18n-placeholder="ph-header"></div>
+        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="revoke-footer" data-i18n-placeholder="ph-footer"></div>
+        <div class="field"><label data-i18n="lbl-fontsize">Font size</label><select id="revoke-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select></div>
+        <div class="field"><label data-i18n="lbl-fontfamily">Font</label><select id="revoke-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select></div>
+      </div>
+    </details>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
+      <button class="btn btn-download" onclick="downloadRevokePDF()" data-i18n="btn-download">⬇ Download PDF</button>
     </div>
     <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
@@ -2973,8 +3017,6 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
       <h3>v4.4</h3>
       <div class="log-date">5 november 2026</div>
       <ul>
-        <li>Nieuw: uitleg per documenttype op de startpagina, "Over ons &amp; contact" in de voettekst, meta description, en een toestemmingsbanner voor advertenties die uit staat tot DG_ADS_ENABLED op true gaat (met extra privacyparagraaf). De nieuwe teksten zijn vertaald naar alle 18 talen</li>
-        <li>Nieuw: knop "PDF delen / mailen" naast elke downloadknop (alle 10 documenten, 18 talen). Opent het deelmenu van het toestel met de PDF als bijlage (Web Share); zonder die ondersteuning wordt de PDF gedownload en opent het mailprogramma</li>
         <li>18 talen: vertalingen verplaatst naar translations.js (en, nl, es, fr, de, pt, it, ru, zh, ja, ar, ko, tr, pl, hi, fa, he, sw)</li>
         <li>Rechts-naar-links (RTL) weergave voor Arabisch, Perzisch en Hebreeuws</li>
         <li>Split-screen live voorbeeld naast het formulier, plus voorbeeldvenster op mobiel</li>
@@ -2988,6 +3030,11 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
         <li>Nieuw ontwerp startpagina: hero met vier vertrouwenspunten (gratis, blijft in browser, klaar om te printen, 18 talen), kleur per documenttype, vloeiende animaties (respecteert "minder beweging"), bevestiging na PDF-download compacte tegels op mobiel en het uitlegblok "Vul in / Controleer / Download" onderaan verwijderd (stond dubbel met de hero)</li>
         <li>Emoji vervangen door eigen SVG-iconen (tegels, knoppen, thema- en chatknop), zodat er nergens lege vierkantjes kunnen verschijnen</li>
         <li>Donkere modus vernieuwd: diepere kleuren met lichte gloed, betere leesbaarheid (waarschuwingen, knoppen, tekst), eigen tegelkleuren en het voorbeeld als wit papier, zoals de PDF eruitziet</li>
+        <li>Volmacht: bij elke categorie een optioneel invulveld (bank, belastingkantoor, ministerie, pand, zaak, bedrijf, verzekeraar, voertuig); ontbrekende tekst 'Verzekeringszaken' in het document aangevuld (18 talen), zichtbaar in voorbeeld en PDF</li>
+        <li>Factuur: vervaldatum-snelkeuze +7/+14/+30 dagen na factuurdatum</li>
+        <li>Einddatum-velden (volmacht, huur, arbeid, lening): snelkeuze +3/+6/+12 maanden vanaf de begindatum i.p.v. gisteren/vandaag/morgen</li>
+        <li>Nieuw documenttype "Volmacht intrekken" (formulier, voorbeeld, PDF, 18 talen) en bij een volmacht zonder einddatum het aanbod om de intrekkingsbrief alvast te downloaden (ingevuld, alleen datum open)</li>
+        <li>Footer: link naar privacybeleid groter en donkerder (beter leesbaar, ook in donkere modus)</li>
         <li>Privacybeleid-venster: korte samenvatting bovenaan, rustiger lettertype/lijsten, kruisje blijft in beeld en Sluiten-knop onderaan</li>
         <li>Modals (privacybeleid, changelog) sluiten ook met Esc en klik naast het venster</li>
         <li>Privacybeleid bijgewerkt (bewerkregistratie via Formspree, wanneer de lokale kopie verdwijnt, belastingnummers worden niet bewaard); Google Fonts vervangen door zelf gehost lettertype (map Fonts/)</li>
@@ -3182,13 +3229,10 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 </div>
 
 <!-- Floating contact/suggest button -->
-<div style="text-align:center;padding:16px 0 8px;font-size:11px;color:var(--text-light);">
+<div style="text-align:center;padding:20px 0 12px;font-size:13px;color:var(--text-light);">
   <span id="last-updated-text"></span>
   <span style="margin:0 6px;">·</span>
-  <a href="#" onclick="event.preventDefault();document.getElementById('privacy-modal').classList.add('show');" style="color:var(--text-light);text-decoration:underline;cursor:pointer;" data-i18n="privacy-link">Privacy Policy</a>
-  <span style="margin:0 6px;">·</span>
-  <a href="#" onclick="event.preventDefault();openAbout();" style="color:var(--text-light);text-decoration:underline;cursor:pointer;" data-i18n="about-link">About &amp; contact</a>
-  <span id="cookie-settings-wrap" style="display:none;"><span style="margin:0 6px;">·</span><a href="#" onclick="event.preventDefault();dgShowConsent();" style="color:var(--text-light);text-decoration:underline;cursor:pointer;" data-i18n="cookie-settings">Cookie settings</a></span>
+  <a href="#" onclick="event.preventDefault();document.getElementById('privacy-modal').classList.add('show');" style="color:var(--text-mid);font-weight:500;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px 4px;" data-i18n="privacy-link">Privacy Policy</a>
 </div>
 <button class="fab" onclick="toggleContact()" title="Contact & suggestions"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></button>
 
@@ -3239,24 +3283,8 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
   </div>
 </div>
 
-<!-- Over ons & contact -->
-<div class="modal-overlay" id="about-modal">
-  <div class="modal" style="max-width:560px;">
-    <div class="modal-head"><button class="modal-close" aria-label="Close" onclick="closeAbout()">&times;</button></div>
-    <div id="about-content"></div>
-    <div class="modal-foot"><button data-i18n="btn-close" onclick="closeAbout()">Close</button></div>
-  </div>
-</div>
-
-<script src="translations.js?v=20261105c"></script>
+<script src="translations.js"></script>
 <script>
-// ====== Instellingen ======
-// Zet DG_ADS_ENABLED pas op true als er een advertentienetwerk is aangesloten en dgLoadAds() het script laadt.
-// Dan verschijnt de toestemmingsbanner, de link "Cookie-instellingen" en de extra privacyparagraaf.
-const DG_ADS_ENABLED = false;
-// Contactadres dat in "Over ons & contact" getoond wordt, bv. 'contact@documentgenerator.ai'. Leeg = alleen het berichtenformulier.
-const DG_CONTACT_EMAIL = 'contact@documentgenerator.ai';
-
 const PRIVACY = {
   en: `<h2>Privacy Policy</h2>
 <p style="font-size:12px;color:var(--text-light);margin-bottom:16px;">Effective: November 5, 2026</p>
@@ -3383,6 +3411,7 @@ ICON_SVG['banknote'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><
 ICON_SVG['user-check'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg>';
 ICON_SVG['lock'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
 ICON_SVG['scroll'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>';
+ICON_SVG['file-x'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m14.5 12.5-5 5"/><path d="m9.5 12.5 5 5"/></svg>';
 ICON_SVG['receipt'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg>';
 ICON_SVG['file-text'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>';
 ICON_SVG['check'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
@@ -3398,12 +3427,11 @@ ICON_SVG['clipboard'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
 ICON_SVG['alert'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.7 18-8-14a2 2 0 0 0-3.5 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>';
 ICON_SVG['check-circle'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="m9 11 3 3L22 4"/></svg>';
 ICON_SVG['scale'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m16 16 3-8 3 8c-.9.7-1.9 1-3 1s-2.1-.3-3-1Z"/><path d="m2 16 3-8 3 8c-.9.7-1.9 1-3 1s-2.1-.3-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>';
-ICON_SVG['mail'] = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>';
-const EMOJI_TO_ICON = { '✉': 'mail', '⬇': 'download', '✏': 'pencil', '📎': 'paperclip', '📄': 'file', '📋': 'clipboard', '⚠': 'alert', '✅': 'check-circle', '⚖': 'scale' };
+const EMOJI_TO_ICON = { '⬇': 'download', '✏': 'pencil', '📎': 'paperclip', '📄': 'file', '📋': 'clipboard', '⚠': 'alert', '✅': 'check-circle', '⚖': 'scale' };
 // Vervangt een emoji aan het begin van een tekstelement door het bijbehorende SVG-icoon
 function iconize(el) {
   if (!el || el.children.length) return;
-  const m = (el.textContent || '').match(/^\s*([\u2B07\u270F\u2709\u{1F4CE}\u{1F4C4}\u{1F4CB}\u26A0\u2705\u2696])\uFE0F?\s*/u);
+  const m = (el.textContent || '').match(/^\s*([\u2B07\u270F\u{1F4CE}\u{1F4C4}\u{1F4CB}\u26A0\u2705\u2696])\uFE0F?\s*/u);
   if (!m) return;
   const name = EMOJI_TO_ICON[m[1]] || EMOJI_TO_ICON[m[1].replace(/\uFE0F/g, '')];
   if (!name) return;
@@ -3432,6 +3460,7 @@ function applyLang() {
   const langSelEl = document.getElementById('lang-select');
   if (langSelEl) { langSelEl.setAttribute('aria-label', t('lang-label')); langSelEl.title = t('lang-label'); }
   buildScopeGrid();
+  buildScopeDetails();
   if (currentStep === 5) renderPreview();
   // Re-render live preview and step nav in new language
   setTimeout(livePreview, 50);
@@ -3439,15 +3468,15 @@ function applyLang() {
   const luEl = document.getElementById('last-updated-text');
   if (luEl) {
     try {
-      const d = new Date('2026-11-05');
+      const d = new Date('2026-11-06');
       const locales = { en:'en-US', nl:'nl-NL', es:'es-ES', fr:'fr-FR', de:'de-DE', pt:'pt-BR', it:'it-IT', ru:'ru-RU', zh:'zh-CN', ja:'ja-JP', ar:'ar-SA', ko:'ko-KR', tr:'tr-TR', pl:'pl-PL', hi:'hi-IN', fa:'fa-IR', he:'he-IL', sw:'sw-KE' };
       const fmt = d.toLocaleDateString(locales[lang]||'en-US', { year:'numeric', month:'short', day:'numeric', timeZone:'UTC' });
       luEl.textContent = `${t('last-updated-prefix')} ${fmt}`;
-    } catch(e) { luEl.textContent = t('last-updated-prefix') + ' Nov 5, 2026'; }
+    } catch(e) { luEl.textContent = t('last-updated-prefix') + ' Nov 6, 2026'; }
   }
   // Update privacy policy content
   const pc = document.getElementById('privacy-content');
-  if (pc) pc.innerHTML = (PRIVACY[lang] || PRIVACY.en) + (DG_ADS_ENABLED ? t('privacy-ads-html') : '');
+  if (pc) pc.innerHTML = PRIVACY[lang] || PRIVACY.en;
 }
 
 const SCOPES = [
@@ -3477,6 +3506,44 @@ function toggleScope(id) {
   if (selectedScopes.has(id)) selectedScopes.delete(id);
   else selectedScopes.add(id);
   buildScopeGrid();
+  syncScopeDetails();
+}
+
+const SCOPE_DETAILS = {
+  banking: ['scope-banks', 'bank'], tax: ['scope-taxes', 'tax'], government: ['scope-govs', 'gov'],
+  realestate: ['scope-props', 'prop'], legal: ['scope-legals', 'legal'], business: ['scope-biz', 'biz'],
+  insurance: ['scope-ins', 'ins'], vehicle: ['scope-veh', 'veh']
+};
+
+function buildScopeDetails() {
+  const box = document.getElementById('scope-details');
+  if (!box) return;
+  SCOPES.forEach(s => {
+    const [id, k] = SCOPE_DETAILS[s.id];
+    let wrap = document.getElementById('sd-' + id);
+    if (!wrap) {
+      wrap = document.createElement('div');
+      wrap.id = 'sd-' + id; wrap.className = 'optional-extra'; wrap.style.display = 'none';
+      wrap.innerHTML = '<div class="field" style="margin-bottom:0;"><label></label><input type="text" id="' + id + '"></div>';
+      box.appendChild(wrap);
+    }
+    wrap.querySelector('label').textContent = t('lbl-scope-' + k);
+    wrap.querySelector('input').placeholder = t('ph-scope-' + k);
+  });
+  syncScopeDetails();
+}
+
+function scopeDetail(d, s, html) {
+  const v = (d.details && d.details[s]) || '';
+  if (!v) return '';
+  return ' — ' + (html ? v.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : v);
+}
+
+function syncScopeDetails() {
+  Object.keys(SCOPE_DETAILS).forEach(s => {
+    const w = document.getElementById('sd-' + SCOPE_DETAILS[s][0]);
+    if (w) w.style.display = selectedScopes.has(s) ? 'block' : 'none';
+  });
 }
 
 function setPoaType(type) {
@@ -3499,7 +3566,7 @@ function goStep(n) {
   document.getElementById('progress').style.width = (n / totalSteps * 100) + '%';
   if (n === 0) updateStepNav(null);
   else updateStepNav('dt-poa-title', n, totalSteps);
-  if (n === 5) { renderPreview(); checkEmptyFields(); }
+  if (n === 5) { renderPreview(); checkEmptyFields(); const ro = document.getElementById('rv-offer'); if (ro) ro.style.display = (durationType === 'indefinite') ? 'block' : 'none'; }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -3546,6 +3613,7 @@ function gatherData() {
     poaType,
     scopes: [...selectedScopes],
     extra: document.getElementById('scope-extra').value.trim(),
+    details: Object.fromEntries(Object.entries(SCOPE_DETAILS).map(([s, [id]]) => [s, (document.getElementById(id)?.value || '').trim()])),
     durationType,
     dateStart: document.getElementById('date-start').value,
     dateEnd: document.getElementById('date-end').value,
@@ -3597,7 +3665,7 @@ function buildPOADocument(d) {
     scopeHtml = `<p>${t('doc-general-scope')}</p>`;
   } else {
     scopeHtml = `<p>${t('doc-specific-scope')}</p><ul>`;
-    d.scopes.forEach(s => { scopeHtml += `<li>${t('dscope-'+s)}</li>`; });
+    d.scopes.forEach(s => { scopeHtml += `<li>${t('dscope-'+s)}${scopeDetail(d,s,true)}</li>`; });
     scopeHtml += '</ul>';
     if (d.extra) scopeHtml += `<p><em>${t('doc-additional')}:</em> ${d.extra}</p>`;
   }
@@ -3749,7 +3817,7 @@ async function downloadPDF() {
     addTxt(t('doc-general-scope'), {});
   } else {
     addTxt(t('doc-specific-scope'), {});
-    d.scopes.forEach(s => addTxt(`  •  ${t('dscope-'+s)}`, {}));
+    d.scopes.forEach(s => addTxt(`  •  ${t('dscope-'+s)}${scopeDetail(d,s,false)}`, {}));
     if (d.extra) addTxt(`${t('doc-additional')}: ${d.extra}`, {});
   }
   y += 3;
@@ -3814,7 +3882,7 @@ async function downloadPDF() {
 }
 
 // ====== Bevestiging na PDF-download ======
-function showDoneToast(key, ms) {
+function showDoneToast() {
   try {
     let el = document.getElementById('dg-toast');
     if (!el) {
@@ -3822,10 +3890,10 @@ function showDoneToast(key, ms) {
       el.id = 'dg-toast'; el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite');
       document.body.appendChild(el);
     }
-    el.innerHTML = '<span class="toast-check">✓</span> ' + t(typeof key === 'string' ? key : 'toast-downloaded');
+    el.innerHTML = '<span class="toast-check">✓</span> ' + t('toast-downloaded');
     el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
     clearTimeout(showDoneToast._t);
-    showDoneToast._t = setTimeout(() => el.classList.remove('show'), typeof ms === 'number' ? ms : 3200);
+    showDoneToast._t = setTimeout(() => el.classList.remove('show'), 3200);
   } catch(e) {}
 }
 (function () {
@@ -4057,6 +4125,7 @@ function selectDocType(type) {
   else if (type === 'empl') goEmplStep('m1');
   else if (type === 'loan') goLoanStep('l1');
   else if (type === 'will') goWillStep('w1');
+  else if (type === 'revoke') goRevokeStep('rv1');
 }
 
 // ====== Rental navigation ======
@@ -4524,6 +4593,90 @@ function renderEngPreview() {
   trackEdits('eng-preview', 'Eng');
 }
 
+
+
+// ====== Revoke a Power of Attorney ======
+const REVOKE_STEPS = ['rv1','rv2','rv3','rv4'];
+function goRevokeStep(step) {
+  if (step === 0) { goStep(0); return; }
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  const idx = REVOKE_STEPS.indexOf(step);
+  document.getElementById('progress').style.width = ((idx+1) / REVOKE_STEPS.length * 100) + '%';
+  updateStepNav('dt-revoke-title', idx+1, REVOKE_STEPS.length);
+  if (step === 'rv4') { renderRevokePreview(); checkEmptyFields(); }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function validateRevokeAndGo(from, to) {
+  const req = { 'rv1': ['rv-name'], 'rv2': ['rv-ag-name'] };
+  let ok = true;
+  (req[from]||[]).forEach(id => { const el = document.getElementById(id); const err = document.getElementById('err-'+id); if (!el.value.trim()) { el.classList.add('field-error'); if(err){err.style.display='block';} ok=false; } else { el.classList.remove('field-error'); if(err) err.style.display='none'; } });
+  if (ok) goRevokeStep(to);
+}
+function gatherRevokeData() {
+  const p = pre => ({ name:$(pre+'-name'), id:$(pre+'-id'), address:$(pre+'-address'), neighborhood:$(pre+'-neighborhood'), postal:$(pre+'-postal'), country:$(pre+'-country') });
+  return { principal:p('rv'), agent:p('rv-ag'), poaDate:$('rv-poadate'), date:$('rv-date'), scope:$('rv-scope'), notify:$('rv-notify').split(/[\n;]+/).map(s => s.trim()).filter(Boolean) };
+}
+// Brief vooraf invullen vanuit een volmacht (zonder einddatum): alleen de intrekkingsdatum blijft leeg
+function revokeFromPoa() {
+  const d = gatherData();
+  const scope = d.poaType === 'specific' ? d.scopes.map(s => t('dscope-' + s) + scopeDetail(d, s, false)).join('; ') : '';
+  const notify = Object.values(d.details || {}).filter(Boolean);
+  return { principal:d.g1, agent:d.g2, poaDate:d.docDate, date:'', scope, notify };
+}
+function revokeTexts(d) {
+  const addr = p => [addrJoin(p), p.country].filter(Boolean).join(', ') || '___';
+  const idTxt = p => p.id ? ' (' + t('lbl-id') + ': ' + p.id + ')' : '';
+  const agent = d.agent.name || '___';
+  const fill = s => s.replace(/\{principal\}/g, d.principal.name || '___').replace(/\{pid\}/g, idTxt(d.principal)).replace(/\{paddr\}/g, addr(d.principal))
+    .replace(/\{agent\}/g, agent).replace(/\{aid\}/g, idTxt(d.agent)).replace(/\{aaddr\}/g, addr(d.agent))
+    .replace(/\{date\}/g, fmtDate(d.date)).replace(/\{poadate\}/g, fmtDate(d.poaDate)).replace(/\{scope\}/g, d.scope || '');
+  return {
+    title: t('rvdoc-title'), body: fill(t('rvdoc-body')), scope: d.scope ? fill(t('rvdoc-scope')) : '',
+    effect: fill(t('rvdoc-effect')), ret: fill(t('rvdoc-return')),
+    notifyHead: d.notify.length ? t('rvdoc-notify') : '', notify: d.notify,
+  };
+}
+function buildRevokeDocument(d) {
+  const x = revokeTexts(d);
+  const e = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return `
+    <h2>${e(x.title)}</h2>
+    <div class="sec"><p>${e(x.body)}</p>${x.scope ? '<p>' + e(x.scope) + '</p>' : ''}<p>${e(x.effect)}</p><p>${e(x.ret)}</p></div>
+    ${x.notify.length ? '<div class="sec"><p>' + e(x.notifyHead) + '</p><ul>' + x.notify.map(n => '<li>' + e(n) + '</li>').join('') + '</ul></div>' : ''}
+    <div class="sec"><p>${e(t('rvdoc-place'))} _______________________</p></div>
+    <div class="sig-grid"><div><div class="sig-line">${e(t('rv1-title'))}<br>${e(d.principal.name || '___')}</div></div><div><div class="sig-line">${e(t('rvdoc-ack'))}<br>${e(d.agent.name || '___')}</div></div></div>`;
+}
+async function downloadRevokePDF(dataOverride) {
+  if (!window.jspdf) { alert('PDF library not loaded. Please disable your ad blocker for this site and reload.'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = patchPdfUnicode(new jsPDF({ unit:'mm', format:'a4' }));
+  const d = (dataOverride && dataOverride.principal) ? dataOverride : gatherRevokeData();
+  const x = revokeTexts(d);
+  const ds = getDocSettings('revoke'); const mg = 25, pw = 160; let y = ds.header ? mg + 4 : mg;
+  const addTxt = (text, opts = {}) => { const sz = opts.size || ds.fontSize, st = opts.style || 'normal', al = opts.align || 'left'; doc.setFontSize(sz); doc.setFont(ds.fontFamily, st); const lines = doc.splitTextToSize(text, opts.w || pw); if (y + lines.length * sz * 0.4 > 278) { doc.addPage(); y = ds.header ? mg + 4 : mg; } doc.text(lines, al === 'center' ? 105 : mg, y, { align: al }); y += lines.length * sz * 0.42 + (opts.gap || 2); };
+  addTxt(x.title, { size: 18, style: 'bold', align: 'center', gap: 8 }); y += 3;
+  addTxt(x.body, { gap: 4 });
+  if (x.scope) addTxt(x.scope, { gap: 4 });
+  addTxt(x.effect, { gap: 4 });
+  addTxt(x.ret, { gap: 4 });
+  if (x.notify.length) { y += 2; addTxt(x.notifyHead, { gap: 3 }); x.notify.forEach(n => addTxt('  •  ' + n, {})); }
+  y += 8; addTxt(t('rvdoc-place') + ' _______________________', {}); y += 14;
+  if (y > 240) { doc.addPage(); y = mg + 20; }
+  doc.setDrawColor(50); doc.line(mg, y, mg + 65, y); doc.line(mg + 85, y, mg + 150, y);
+  doc.setFontSize(9); doc.setFont(ds.fontFamily, 'normal');
+  doc.text(t('rv1-title') + ': ' + (d.principal.name || '___'), mg, y + 5, { maxWidth: 70 });
+  doc.text(t('rvdoc-ack') + ': ' + (d.agent.name || '___'), mg + 85, y + 5, { maxWidth: 70 });
+  addHeaderFooter(doc, ds);
+  const blob = doc.output('blob'); const fn = 'Revocation_of_Power_of_Attorney.pdf';
+  try { const dl = await window.claude?.use?.('downloads'); if (dl) { await dl.save({ filename: fn, data: blob }); return; } } catch(e) {}
+  const u = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = u; a.download = fn; a.click(); URL.revokeObjectURL(u);
+}
+function renderRevokePreview() {
+  document.getElementById('revoke-preview').innerHTML = buildRevokeDocument(gatherRevokeData());
+  trackEdits('revoke-preview', 'Revoke Power of Attorney');
+}
+function generateRevokeHtml() { return buildRevokeDocument(gatherRevokeData()); }
 
 // ====== Receipt ======
 const RECEIPT_STEPS = ['rc1','rc2','rc3','rc4'];
@@ -5421,7 +5574,6 @@ setInterval(autoSave, 5000);
 ['downloadPDF','downloadRentalPDF','downloadBosPDF','downloadEngPDF','downloadLoanPDF','downloadEmplPDF','downloadNdaPDF','downloadWillPDF','downloadReceiptPDF','downloadInvoicePDF'].forEach(name => {
   const orig = window[name];
   if (typeof orig !== 'function') return;
-  (window.__dgOrig = window.__dgOrig || {})[name] = orig;
   window[name] = async function() {
     const r = await orig.apply(this, arguments);
     clearAutoSave();
@@ -5429,120 +5581,6 @@ setInterval(autoSave, 5000);
     return r;
   };
 });
-
-// ====== PDF delen / e-mailen ======
-// Hergebruikt de bestaande downloadfuncties: tijdelijk vangt een "downloads"-hook de PDF op
-// in plaats van hem op te slaan. Daarna wordt het bestand via het deelmenu van het toestel
-// aangeboden (Web Share API, met PDF als bijlage). Zonder die ondersteuning: downloaden + mailto.
-async function dgShare(name) {
-  const gen = (window.__dgOrig && window.__dgOrig[name]) || window[name];
-  if (typeof gen !== 'function') return;
-  let captured = null;
-  const prev = window.claude;
-  try {
-    window.claude = { use: async (n) => (n === 'downloads' ? { save: async (o) => { captured = o; } } : undefined) };
-    await gen();
-  } catch (e) {
-    console.error(e);
-  } finally {
-    try { if (prev === undefined) delete window.claude; else window.claude = prev; } catch (e) {}
-  }
-  if (!captured || !captured.data) return;
-
-  const fname = captured.filename || 'document.pdf';
-  const title = fname.replace(/\.pdf$/i, '').replace(/_/g, ' ');
-  const text = t('share-text');
-  const file = new File([captured.data], fname, { type: 'application/pdf' });
-
-  try {
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share({ files: [file], title: title, text: text });
-      try { clearAutoSave(); autoSavePaused = true; } catch (e) {}
-      return;
-    }
-  } catch (e) {
-    if (e && e.name === 'AbortError') return; // gebruiker sloot het deelmenu
-  }
-
-  // Terugval: PDF downloaden en het mailprogramma openen (bijlage voegt de gebruiker zelf toe)
-  const u = URL.createObjectURL(file);
-  const a = document.createElement('a');
-  a.href = u; a.download = fname;
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(u), 5000);
-  try { clearAutoSave(); autoSavePaused = true; } catch (e) {}
-  setTimeout(() => showDoneToast('share-fallback', 5000), 400);
-  setTimeout(() => { location.href = 'mailto:?subject=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(text); }, 1200);
-}
-
-// Zet naast elke downloadknop een deelknop (voorkomt 20 losse HTML-wijzigingen)
-(function addShareButtons() {
-  document.querySelectorAll('button.btn-download[onclick]').forEach(b => {
-    const m = (b.getAttribute('onclick') || '').match(/^\s*(download\w*PDF)\(\)/);
-    if (!m) return;
-    const s = document.createElement('button');
-    s.className = 'btn btn-share';
-    s.setAttribute('data-i18n', 'btn-share');
-    s.setAttribute('onclick', "dgShare('" + m[1] + "')");
-    s.textContent = (T['btn-share'] && (T['btn-share'][lang] || T['btn-share'].en)) || '✉ Share / email PDF';
-    iconize(s);
-    b.parentNode.insertBefore(s, b);
-    b.parentNode.style.flexWrap = 'wrap';
-  });
-})();
-
-// ====== Over ons & contact ======
-function openAbout() {
-  const mail = DG_CONTACT_EMAIL
-    ? '<p><a href="mailto:' + DG_CONTACT_EMAIL + '" style="color:var(--pri);">' + DG_CONTACT_EMAIL + '</a></p>'
-    : '';
-  document.getElementById('about-content').innerHTML =
-    '<h2>' + t('about-title') + '</h2>' +
-    '<p>' + t('about-body') + '</p>' +
-    '<p>' + t('about-disclaimer') + '</p>' +
-    '<h3>' + t('about-contact') + '</h3>' +
-    '<p>' + t('about-contact-text') + '</p>' + mail +
-    '<p><button class="btn btn-next" onclick="closeAbout();toggleContact();">' + t('about-contact-btn') + '</button></p>';
-  document.getElementById('about-modal').classList.add('show');
-}
-function closeAbout() { document.getElementById('about-modal').classList.remove('show'); }
-
-// ====== Toestemming voor advertenties (slapend zolang DG_ADS_ENABLED false is) ======
-function dgConsent() { try { return localStorage.getItem('dg_consent'); } catch (e) { return null; } }
-function dgLoadAds() {
-  // Hier komt later het script van het advertentienetwerk (bijv. AdSense). Wordt alleen aangeroepen na toestemming.
-}
-function dgSetConsent(v) {
-  const prev = dgConsent();
-  try { localStorage.setItem('dg_consent', v); } catch (e) {}
-  const b = document.getElementById('consent-banner');
-  if (b) b.classList.remove('show');
-  if (v === 'all') dgLoadAds();
-  else if (prev === 'all') location.reload(); // al geladen advertentiescripts verdwijnen pas na herladen
-}
-function dgShowConsent() {
-  let b = document.getElementById('consent-banner');
-  if (!b) {
-    b = document.createElement('div');
-    b.id = 'consent-banner';
-    b.setAttribute('role', 'dialog');
-    b.innerHTML =
-      '<p><span data-i18n="consent-text"></span> <a href="#" data-i18n="privacy-link" onclick="event.preventDefault();document.getElementById(\'privacy-modal\').classList.add(\'show\');"></a></p>' +
-      '<div class="consent-btns"><button class="btn btn-back" data-i18n="consent-reject" onclick="dgSetConsent(\'no\')"></button>' +
-      '<button class="btn btn-next" data-i18n="consent-accept" onclick="dgSetConsent(\'all\')"></button></div>';
-    document.body.appendChild(b);
-    applyLang();
-  }
-  b.classList.add('show');
-}
-(function initConsent() {
-  if (!DG_ADS_ENABLED) return;
-  const w = document.getElementById('cookie-settings-wrap');
-  if (w) w.style.display = '';
-  const c = dgConsent();
-  if (c === 'all') dgLoadAds();
-  else if (c === null) dgShowConsent();
-})();
 
 // ====== New document ======
 function startNewDocument() {
@@ -5818,12 +5856,50 @@ function setQuickDate(btn, offset) {
   input.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
+function setQuickEnd(btn, months) {
+  const input = btn.closest('.date-quick').parentElement.querySelector('input[type="date"]');
+  if (!input) return;
+  const start = document.getElementById(input.id.replace(/end$/, 'start'));
+  const base = (start && start.value) ? new Date(start.value + 'T12:00:00') : new Date();
+  const day = base.getDate();
+  base.setDate(1); base.setMonth(base.getMonth() + months);
+  base.setDate(Math.min(day, new Date(base.getFullYear(), base.getMonth() + 1, 0).getDate()));
+  base.setDate(base.getDate() - 1); // bijv. 3 maanden vanaf 1 jan loopt t/m 31 mrt
+  const p = n => String(n).padStart(2, '0');
+  input.value = base.getFullYear() + '-' + p(base.getMonth() + 1) + '-' + p(base.getDate());
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+  input.dispatchEvent(new Event('change', { bubbles: true }));
+}
+
+function setQuickDue(btn, days) {
+  const input = btn.closest('.date-quick').parentElement.querySelector('input[type="date"]');
+  const inv = document.getElementById('iv-date');
+  const base = (inv && inv.value) ? new Date(inv.value + 'T12:00:00') : new Date();
+  base.setDate(base.getDate() + days);
+  const p = n => String(n).padStart(2, '0');
+  input.value = base.getFullYear() + '-' + p(base.getMonth() + 1) + '-' + p(base.getDate());
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+  input.dispatchEvent(new Event('change', { bubbles: true }));
+}
+
 function initDateQuickPicks() {
   document.querySelectorAll('input[type="date"]').forEach(input => {
     if (input.id && input.id.includes('dob')) return;
     if (input.parentElement.querySelector('.date-quick')) return;
     const div = document.createElement('div');
     div.className = 'date-quick';
+    if (input.id === 'iv-due') {
+      // Vervaldatum: dagen na de factuurdatum (of vandaag)
+      div.innerHTML = [7, 14, 30].map(d => `<button type="button" onclick="setQuickDue(this,${d})" data-i18n="dq-due-${d}">${t('dq-due-' + d)}</button>`).join('');
+      input.after(div);
+      return;
+    }
+    if (/date-end$/.test(input.id)) {
+      // Einddatum: kiezen op basis van de begindatum (of vandaag)
+      div.innerHTML = [[3,'dq-end-3'],[6,'dq-end-6'],[12,'dq-end-1']].map(([mo,k]) => `<button type="button" onclick="setQuickEnd(this,${mo})" data-i18n="${k}">${t(k)}</button>`).join('');
+      input.after(div);
+      return;
+    }
     div.innerHTML = `<button type="button" onclick="setQuickDate(this,-1)" data-i18n="dq-yesterday">${t('dq-yesterday')}</button><button type="button" onclick="setQuickDate(this,0)" data-i18n="dq-today">${t('dq-today')}</button><button type="button" onclick="setQuickDate(this,1)" data-i18n="dq-tomorrow">${t('dq-tomorrow')}</button>`;
     input.after(div);
   });
@@ -6412,6 +6488,7 @@ function livePreview() {
     else if (currentDocType === 'empl') html = generateEmplHtml();
     else if (currentDocType === 'loan') html = generateLoanHtml();
     else if (currentDocType === 'will') html = generateWillHtml();
+    else if (currentDocType === 'revoke') html = generateRevokeHtml();
   } catch(e) {
     html = '<div class="preview-placeholder">' + t('live-preview-hint') + '</div>';
   }
