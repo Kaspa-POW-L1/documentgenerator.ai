@@ -1328,6 +1328,17 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 #step-0 .doc-grid { margin-top: 4px; }
 /* Op het keuzescherm nooit een voorbeeldpaneel tonen (ook niet als er nog een oud voorbeeld klaarstaat) */
 body:has(#step-0.active) .live-preview-panel { display: none !important; }
+/* Opnieuw beginnen */
+.restore-banner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 14px; background: rgba(37,99,235,.08); border-inline-start: 3px solid #2563eb; border-radius: 8px; padding: 10px 14px; margin: 0 0 14px; font-size: 14px; line-height: 1.5; color: var(--text); }
+.restore-banner button, .step-nav .sn-reset { font: inherit; font-size: 13px; font-weight: 600; color: var(--pri); background: transparent; border: 1px solid var(--border); border-radius: 8px; padding: 5px 12px; cursor: pointer; white-space: nowrap; }
+.restore-banner button:hover, .step-nav .sn-reset:hover { border-color: var(--pri); }
+.step-nav .sn-reset { margin-inline-start: 12px; font-weight: 500; color: var(--text-light); }
+:root[data-theme="dark"] .restore-banner { background: rgba(96,165,250,.14); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .restore-banner { background: rgba(96,165,250,.14); } }
+@media (max-width: 600px) { .step-nav .sn-reset { margin-inline-start: 6px; padding: 4px 8px; font-size: 12px; } }
+/* Hint: bewaren per tabblad */
+.sn-hint { max-width: 1200px; margin: 0 auto 8px; padding: 0 24px; display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-light); line-height: 1.4; }
+.sn-hint button { font: inherit; font-size: 18px; line-height: 1; background: none; border: none; color: var(--text-light); cursor: pointer; padding: 0 4px; }
 </style>
 </head>
 <body>
@@ -1346,12 +1357,15 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
   <span class="sn-doc" id="sn-doc"></span>
   <div class="sn-dots" id="sn-dots"></div>
   <span class="sn-progress" id="sn-progress"></span>
+  <button type="button" class="sn-reset" onclick="startNewDocument()" data-i18n="btn-restart">Start over</button>
 </div>
+<div class="sn-hint" id="sn-hint" style="display:none;"><span data-i18n="tab-hint">Your input stays saved while this tab is open. Close the tab and everything is erased.</span><button type="button" aria-label="Close" onclick="dismissTabHint()">&times;</button></div>
 <div class="split-wrap">
 <div class="container">
 
   <!-- STEP 0: Document Chooser -->
   <div class="step active" id="step-0">
+    <div class="restore-banner" id="restore-banner" style="display:none;"><span data-i18n="restore-msg">We restored what you entered earlier on this device.</span> <button type="button" onclick="startNewDocument(true)" data-i18n="btn-restart">Start over</button></div>
     <div class="hero">
       <h1 data-i18n="hero-title">Your document, ready in minutes</h1>
       <ul class="hero-chips">
@@ -3100,6 +3114,8 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
         <li>Einddatum-velden (volmacht, huur, arbeid, lening): snelkeuze +3/+6/+12 maanden vanaf de begindatum i.p.v. gisteren/vandaag/morgen</li>
         <li>PDF: regel "Gemaakt met documentgenerator.ai" onderaan (aan by default, met uitleg, uit te zetten in Documentinstellingen) en optioneel watermerk Concept/Kopie (18 talen)</li>
         <li>Fix: voorbeeldpaneel verscheen soms naast het keuzescherm (na terugkeren naar de startpagina)</li>
+        <li>Automatisch bewaren nu per browsertabblad (weg zodra je het tabblad sluit, geen 24 uur meer); korte uitleg boven het formulier; browserwaarschuwing bij sluiten met niet-gedownloade invulling; privacybeleid aangepast in 18 talen</li>
+        <li>Opnieuw beginnen: melding op de startpagina als eerdere invulling is hersteld + knop "Opnieuw beginnen" in de voortgangsbalk van elk formulier (met bevestiging)</li>
         <li>Automatische hoofdletters: namen, adressen, plaatsen en landen worden netjes geschreven als iemand alles in kleine letters typt (voorvoegsels als van/de/der blijven klein); e-mail in kleine letters, ID-/kentekennummers in hoofdletters; overbodige spaties weg</li>
         <li>Valuta volgt automatisch het gekozen land (aanpassen blijft mogelijk; een handmatige keuze wordt niet meer overschreven)</li>
         <li>Landvelden: suggestielijst met alle landen in de gekozen taal (via de browser, geen vertalingen nodig); eigen land van de bezoeker bovenaan; vrije invoer blijft mogelijk</li>
@@ -3373,7 +3389,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. Feedback & suggestions</h3>
 <p>If you use the feedback form, your message is sent via <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> to our email. We do not collect your email address unless you include it voluntarily in your message.</p>
 <h3 style="margin-top:16px;">4. Cookies & local storage</h3>
-<p>We do not use tracking cookies. Your browser's local storage (on your own device) is used for your language and theme preference and for a temporary copy of the text you type in a form, so you do not lose your work. That copy is no longer used after 24 hours and is removed the next time you open the site, or as soon as you download a document or start a new one. ID/passport numbers, dates of birth, bank details and tax numbers are never saved. This data never leaves your device and you can remove it at any time by clearing the site data in your browser.</p>
+<p>We do not use tracking cookies. Your browser's local storage (on your own device) is used for your language and theme preference and for a temporary copy of the text you type in a form, so you do not lose your work. That copy exists only in the current browser tab: it is removed when you close the tab, and as soon as you download a document or start a new one. ID/passport numbers, dates of birth, bank details and tax numbers are never saved. This data never leaves your device and you can remove it at any time by clearing the site data in your browser.</p>
 <h3 style="margin-top:16px;">5. Third-party services</h3>
 <p>We use <strong>Formspree</strong> for the feedback form and the anonymous usage data (section 2), <strong>GoatCounter</strong> for privacy-friendly visitor statistics (no cookies, no personal data), <strong>Cloudflare (cdnjs)</strong> and <strong>jsDelivr</strong> to load the PDF library, and <strong>Vercel</strong> for hosting. These services may log standard web request data (IP address, browser type). See their respective privacy policies.</p>
 <h3 style="margin-top:16px;">6. Contact</h3>
@@ -3392,7 +3408,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. Feedback & suggesties</h3>
 <p>Als je het feedbackformulier gebruikt, wordt je bericht via <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> naar ons e-mailadres gestuurd. We verzamelen je e-mailadres niet, tenzij je het zelf in je bericht vermeldt.</p>
 <h3 style="margin-top:16px;">4. Cookies & lokale opslag</h3>
-<p>We gebruiken geen tracking cookies. De lokale opslag van je browser (op je eigen apparaat) wordt gebruikt voor je taal- en themavoorkeur en voor een tijdelijke kopie van de tekst die je in een formulier typt, zodat je je werk niet kwijtraakt. Die kopie wordt na 24 uur niet meer gebruikt en wordt verwijderd zodra je de site opnieuw opent, of zodra je een document downloadt of een nieuw document begint. ID-/paspoortnummers, geboortedatums, bankgegevens en belastingnummers worden nooit opgeslagen. Deze gegevens verlaten je apparaat niet en je kunt ze altijd verwijderen door de sitegegevens in je browser te wissen.</p>
+<p>We gebruiken geen tracking cookies. De lokale opslag van je browser (op je eigen apparaat) wordt gebruikt voor je taal- en themavoorkeur en voor een tijdelijke kopie van de tekst die je in een formulier typt, zodat je je werk niet kwijtraakt. Die kopie bestaat alleen in het huidige browsertabblad: ze verdwijnt zodra je het tabblad sluit, en zodra je een document downloadt of een nieuw document begint. ID-/paspoortnummers, geboortedatums, bankgegevens en belastingnummers worden nooit opgeslagen. Deze gegevens verlaten je apparaat niet en je kunt ze altijd verwijderen door de sitegegevens in je browser te wissen.</p>
 <h3 style="margin-top:16px;">5. Diensten van derden</h3>
 <p>We gebruiken <strong>Formspree</strong> voor het feedbackformulier en de anonieme gebruiksgegevens (punt 2), <strong>GoatCounter</strong> voor privacyvriendelijke bezoekersstatistieken (geen cookies, geen persoonlijke gegevens), <strong>Cloudflare (cdnjs)</strong> en <strong>jsDelivr</strong> om de PDF-bibliotheek te laden, en <strong>Vercel</strong> voor hosting. Deze diensten kunnen standaard webverzoekgegevens loggen (IP-adres, browsertype). Zie hun respectievelijke privacybeleid.</p>
 <h3 style="margin-top:16px;">6. Contact</h3>
@@ -3411,7 +3427,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. Comentarios y sugerencias</h3>
 <p>Si usas el formulario, tu mensaje se envía a través de <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a>. No recopilamos tu correo electrónico a menos que lo incluyas.</p>
 <h3 style="margin-top:16px;">4. Cookies y almacenamiento local</h3>
-<p>No usamos cookies de rastreo. El almacenamiento local de tu navegador (en tu propio dispositivo) guarda tu idioma y tema, y una copia temporal del texto que escribes en un formulario para que no pierdas tu trabajo. Esa copia deja de usarse a las 24 horas y se elimina la próxima vez que abras el sitio, o al descargar un documento o iniciar uno nuevo. Los números de identificación o pasaporte, las fechas de nacimiento, los datos bancarios y los números fiscales nunca se guardan. Estos datos no salen de tu dispositivo.</p>
+<p>No usamos cookies de rastreo. El almacenamiento local de tu navegador (en tu propio dispositivo) guarda tu idioma y tema, y una copia temporal del texto que escribes en un formulario para que no pierdas tu trabajo. Esa copia solo existe en la pestaña actual del navegador: se elimina al cerrar la pestaña, y al descargar un documento o iniciar uno nuevo. Los números de identificación o pasaporte, las fechas de nacimiento, los datos bancarios y los números fiscales nunca se guardan. Estos datos no salen de tu dispositivo.</p>
 <h3 style="margin-top:16px;">5. Servicios de terceros</h3>
 <p>Usamos <strong>Formspree</strong> para comentarios y los datos de uso anónimos (apartado 2), <strong>GoatCounter</strong> para estadísticas de visitantes (sin cookies, sin datos personales), <strong>Cloudflare (cdnjs)</strong> y <strong>jsDelivr</strong> para cargar la biblioteca de PDF, y <strong>Vercel</strong> como alojamiento.</p>
 <h3 style="margin-top:16px;">6. Contacto</h3>
@@ -3430,7 +3446,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. Commentaires</h3>
 <p>Le formulaire envoie votre message via <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a>. Nous ne collectons pas votre e-mail sauf si vous l'incluez.</p>
 <h3 style="margin-top:16px;">4. Cookies et stockage local</h3>
-<p>Nous n'utilisons pas de cookies de suivi. Le stockage local de votre navigateur (sur votre appareil) conserve votre langue et votre thème, ainsi qu'une copie temporaire du texte saisi dans un formulaire afin de ne pas perdre votre travail. Cette copie n'est plus utilisée après 24 heures et est supprimée à votre prochaine visite, ou dès que vous téléchargez un document ou en commencez un nouveau. Les numéros d'identité ou de passeport, les dates de naissance, les coordonnées bancaires et les numéros fiscaux ne sont jamais enregistrés. Ces données ne quittent pas votre appareil.</p>
+<p>Nous n'utilisons pas de cookies de suivi. Le stockage local de votre navigateur (sur votre appareil) conserve votre langue et votre thème, ainsi qu'une copie temporaire du texte saisi dans un formulaire afin de ne pas perdre votre travail. Cette copie n'existe que dans l'onglet actuel du navigateur : elle est supprimée à la fermeture de l'onglet, ainsi que dès que vous téléchargez un document ou en commencez un nouveau. Les numéros d'identité ou de passeport, les dates de naissance, les coordonnées bancaires et les numéros fiscaux ne sont jamais enregistrés. Ces données ne quittent pas votre appareil.</p>
 <h3 style="margin-top:16px;">5. Services tiers</h3>
 <p>Nous utilisons <strong>Formspree</strong> pour les commentaires et les données d'utilisation anonymes (section 2), <strong>GoatCounter</strong> pour les statistiques de visiteurs (sans cookies, sans données personnelles), <strong>Cloudflare (cdnjs)</strong> et <strong>jsDelivr</strong> pour charger la bibliothèque PDF, et <strong>Vercel</strong> pour l'hébergement.</p>
 <h3 style="margin-top:16px;">6. Contact</h3>
@@ -3449,7 +3465,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. Feedback</h3>
 <p>Das Formular sendet Ihre Nachricht über <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a>. Wir erfassen Ihre E-Mail nur, wenn Sie sie angeben.</p>
 <h3 style="margin-top:16px;">4. Cookies und lokaler Speicher</h3>
-<p>Wir verwenden keine Tracking-Cookies. Der lokale Speicher Ihres Browsers (auf Ihrem eigenen Gerät) enthält Ihre Sprach- und Designeinstellung sowie eine temporäre Kopie der Texte, die Sie in ein Formular eingeben, damit Ihre Arbeit nicht verloren geht. Diese Kopie wird nach 24 Stunden nicht mehr verwendet und beim nächsten Besuch der Seite gelöscht, oder sobald Sie ein Dokument herunterladen oder ein neues beginnen. Ausweis-/Passnummern, Geburtsdaten, Bankdaten und Steuernummern werden nie gespeichert. Diese Daten verlassen Ihr Gerät nicht.</p>
+<p>Wir verwenden keine Tracking-Cookies. Der lokale Speicher Ihres Browsers (auf Ihrem eigenen Gerät) enthält Ihre Sprach- und Designeinstellung sowie eine temporäre Kopie der Texte, die Sie in ein Formular eingeben, damit Ihre Arbeit nicht verloren geht. Diese Kopie existiert nur im aktuellen Browser-Tab: Sie wird gelöscht, sobald Sie den Tab schließen, sowie sobald Sie ein Dokument herunterladen oder ein neues beginnen. Ausweis-/Passnummern, Geburtsdaten, Bankdaten und Steuernummern werden nie gespeichert. Diese Daten verlassen Ihr Gerät nicht.</p>
 <h3 style="margin-top:16px;">5. Drittanbieter</h3>
 <p>Wir verwenden <strong>Formspree</strong> für Feedback und die anonymen Nutzungsdaten (Abschnitt 2), <strong>GoatCounter</strong> für datenschutzfreundliche Besucherstatistiken (keine Cookies, keine persönlichen Daten), <strong>Cloudflare (cdnjs)</strong> und <strong>jsDelivr</strong> zum Laden der PDF-Bibliothek sowie <strong>Vercel</strong> für das Hosting.</p>
 <h3 style="margin-top:16px;">6. Kontakt</h3>
@@ -3468,7 +3484,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. Comentários e sugestões</h3>
 <p>Se utilizar o formulário de comentários, a sua mensagem é enviada através do <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> para o nosso e-mail. Não recolhemos o seu endereço de e-mail, a menos que o inclua voluntariamente na mensagem.</p>
 <h3 style="margin-top:16px;">4. Cookies e armazenamento local</h3>
-<p>Não utilizamos cookies de rastreamento. O armazenamento local do seu navegador (no seu próprio dispositivo) é usado para a sua preferência de idioma e tema e para uma cópia temporária do texto que escreve num formulário, para não perder o seu trabalho. Essa cópia deixa de ser usada após 24 horas e é removida na próxima vez que abrir o site, ou assim que descarregar um documento ou iniciar um novo. Números de identificação/passaporte, datas de nascimento, dados bancários e números fiscais nunca são guardados. Estes dados nunca saem do seu dispositivo e pode removê-los a qualquer momento limpando os dados do site no navegador.</p>
+<p>Não utilizamos cookies de rastreamento. O armazenamento local do seu navegador (no seu próprio dispositivo) é usado para a sua preferência de idioma e tema e para uma cópia temporária do texto que escreve num formulário, para não perder o seu trabalho. Essa cópia existe apenas no separador atual do navegador: é removida ao fechar o separador e assim que descarregar um documento ou iniciar um novo. Números de identificação/passaporte, datas de nascimento, dados bancários e números fiscais nunca são guardados. Estes dados nunca saem do seu dispositivo e pode removê-los a qualquer momento limpando os dados do site no navegador.</p>
 <h3 style="margin-top:16px;">5. Serviços de terceiros</h3>
 <p>Utilizamos o <strong>Formspree</strong> para o formulário de comentários e os dados de utilização anónimos (ponto 2), o <strong>GoatCounter</strong> para estatísticas de visitas que respeitam a privacidade (sem cookies, sem dados pessoais), o <strong>Cloudflare (cdnjs)</strong> e o <strong>jsDelivr</strong> para carregar a biblioteca de PDF e a <strong>Vercel</strong> para alojamento. Estes serviços podem registar dados habituais de pedidos web (endereço IP, tipo de navegador). Consulte as respetivas políticas de privacidade.</p>
 <h3 style="margin-top:16px;">6. Contacto</h3>
@@ -3487,7 +3503,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. Feedback e suggerimenti</h3>
 <p>Se usi il modulo di feedback, il tuo messaggio viene inviato tramite <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> al nostro indirizzo e-mail. Non raccogliamo il tuo indirizzo e-mail a meno che tu non lo inserisca volontariamente nel messaggio.</p>
 <h3 style="margin-top:16px;">4. Cookie e archiviazione locale</h3>
-<p>Non usiamo cookie di tracciamento. L’archiviazione locale del tuo browser (sul tuo dispositivo) serve per la preferenza di lingua e tema e per una copia temporanea del testo che scrivi in un modulo, così non perdi il tuo lavoro. Questa copia non viene più usata dopo 24 ore e viene rimossa alla successiva apertura del sito, oppure non appena scarichi un documento o ne inizi uno nuovo. Numeri di documento/passaporto, date di nascita, dati bancari e codici fiscali non vengono mai salvati. Questi dati non lasciano mai il tuo dispositivo e puoi eliminarli in qualsiasi momento cancellando i dati del sito nel browser.</p>
+<p>Non usiamo cookie di tracciamento. L’archiviazione locale del tuo browser (sul tuo dispositivo) serve per la preferenza di lingua e tema e per una copia temporanea del testo che scrivi in un modulo, così non perdi il tuo lavoro. Questa copia esiste solo nella scheda corrente del browser: viene rimossa alla chiusura della scheda e non appena scarichi un documento o ne inizi uno nuovo. Numeri di documento/passaporto, date di nascita, dati bancari e codici fiscali non vengono mai salvati. Questi dati non lasciano mai il tuo dispositivo e puoi eliminarli in qualsiasi momento cancellando i dati del sito nel browser.</p>
 <h3 style="margin-top:16px;">5. Servizi di terze parti</h3>
 <p>Usiamo <strong>Formspree</strong> per il modulo di feedback e per i dati di utilizzo anonimi (punto 2), <strong>GoatCounter</strong> per statistiche dei visitatori rispettose della privacy (senza cookie, senza dati personali), <strong>Cloudflare (cdnjs)</strong> e <strong>jsDelivr</strong> per caricare la libreria PDF e <strong>Vercel</strong> per l’hosting. Questi servizi possono registrare i dati standard delle richieste web (indirizzo IP, tipo di browser). Consulta le rispettive informative sulla privacy.</p>
 <h3 style="margin-top:16px;">6. Contatti</h3>
@@ -3506,7 +3522,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. Отзывы и предложения</h3>
 <p>Если вы используете форму обратной связи, ваше сообщение отправляется через <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> на нашу электронную почту. Мы не собираем ваш адрес электронной почты, если вы сами не укажете его в сообщении.</p>
 <h3 style="margin-top:16px;">4. Файлы cookie и локальное хранилище</h3>
-<p>Мы не используем отслеживающие файлы cookie. Локальное хранилище вашего браузера (на вашем устройстве) используется для сохранения языка и темы оформления, а также временной копии текста, который вы вводите в форму, чтобы вы не потеряли свою работу. Эта копия не используется спустя 24 часа и удаляется при следующем открытии сайта либо сразу после скачивания документа или начала нового. Номера удостоверений личности/паспортов, даты рождения, банковские реквизиты и налоговые номера никогда не сохраняются. Эти данные не покидают ваше устройство, и вы можете удалить их в любой момент, очистив данные сайта в браузере.</p>
+<p>Мы не используем отслеживающие файлы cookie. Локальное хранилище вашего браузера (на вашем устройстве) используется для сохранения языка и темы оформления, а также временной копии текста, который вы вводите в форму, чтобы вы не потеряли свою работу. Эта копия существует только в текущей вкладке браузера: она удаляется при закрытии вкладки, а также сразу после скачивания документа или начала нового. Номера удостоверений личности/паспортов, даты рождения, банковские реквизиты и налоговые номера никогда не сохраняются. Эти данные не покидают ваше устройство, и вы можете удалить их в любой момент, очистив данные сайта в браузере.</p>
 <h3 style="margin-top:16px;">5. Сторонние сервисы</h3>
 <p>Мы используем <strong>Formspree</strong> для формы обратной связи и анонимных данных об использовании (раздел 2), <strong>GoatCounter</strong> для статистики посещений с уважением к конфиденциальности (без cookie и персональных данных), <strong>Cloudflare (cdnjs)</strong> и <strong>jsDelivr</strong> для загрузки библиотеки PDF, а также <strong>Vercel</strong> для хостинга. Эти сервисы могут записывать стандартные данные веб-запросов (IP-адрес, тип браузера). См. их политики конфиденциальности.</p>
 <h3 style="margin-top:16px;">6. Контакты</h3>
@@ -3525,7 +3541,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. 反馈与建议</h3>
 <p>如果您使用反馈表单，您的消息将通过 <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> 发送到我们的电子邮箱。除非您自愿在消息中提供，否则我们不会收集您的电子邮件地址。</p>
 <h3 style="margin-top:16px;">4. Cookie 与本地存储</h3>
-<p>我们不使用跟踪类 Cookie。您浏览器的本地存储（位于您自己的设备上）用于保存您的语言和主题偏好，以及您在表单中输入文字的临时副本，以免您丢失已填内容。该副本在 24 小时后不再使用，并会在您下次打开本站时，或在您下载文件或新建文件时立即删除。身份证/护照号码、出生日期、银行信息和税号绝不会被保存。这些数据绝不会离开您的设备，您可随时通过清除浏览器中的网站数据将其删除。</p>
+<p>我们不使用跟踪类 Cookie。您浏览器的本地存储（位于您自己的设备上）用于保存您的语言和主题偏好，以及您在表单中输入文字的临时副本，以免您丢失已填内容。该副本仅存在于当前浏览器标签页中：关闭标签页，或下载文件、新建文件时即被删除。身份证/护照号码、出生日期、银行信息和税号绝不会被保存。这些数据绝不会离开您的设备，您可随时通过清除浏览器中的网站数据将其删除。</p>
 <h3 style="margin-top:16px;">5. 第三方服务</h3>
 <p>我们使用 <strong>Formspree</strong> 处理反馈表单和匿名使用数据（第 2 条），使用 <strong>GoatCounter</strong> 进行注重隐私的访问统计（无 Cookie，无个人数据），使用 <strong>Cloudflare (cdnjs)</strong> 和 <strong>jsDelivr</strong> 加载 PDF 库，并使用 <strong>Vercel</strong> 托管网站。这些服务可能会记录标准的网络请求数据（IP 地址、浏览器类型）。请参阅它们各自的隐私政策。</p>
 <h3 style="margin-top:16px;">6. 联系我们</h3>
@@ -3544,7 +3560,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. フィードバックとご提案</h3>
 <p>フィードバックフォームをご利用の場合、メッセージは <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> を通じて当方のメールに送信されます。メッセージに自ら記載しない限り、メールアドレスは収集しません。</p>
 <h3 style="margin-top:16px;">4. Cookie とローカルストレージ</h3>
-<p>トラッキング用の Cookie は使用しません。お使いのブラウザのローカルストレージ（お客様ご自身の端末内）は、言語とテーマの設定、およびフォームに入力したテキストの一時的なコピー（作業内容が失われないようにするため）に使用されます。このコピーは24時間後には使用されなくなり、次回サイトを開いたとき、または書類をダウンロードするか新しい書類を開始した時点で削除されます。身分証明書／パスポート番号、生年月日、銀行情報、納税番号は一切保存されません。これらのデータが端末の外に出ることはなく、ブラウザのサイトデータを消去することでいつでも削除できます。</p>
+<p>トラッキング用の Cookie は使用しません。お使いのブラウザのローカルストレージ（お客様ご自身の端末内）は、言語とテーマの設定、およびフォームに入力したテキストの一時的なコピー（作業内容が失われないようにするため）に使用されます。このコピーは現在のブラウザのタブ内にのみ存在し、タブを閉じたとき、または書類をダウンロードするか新しい書類を開始した時点で削除されます。身分証明書／パスポート番号、生年月日、銀行情報、納税番号は一切保存されません。これらのデータが端末の外に出ることはなく、ブラウザのサイトデータを消去することでいつでも削除できます。</p>
 <h3 style="margin-top:16px;">5. 第三者サービス</h3>
 <p>フィードバックフォームおよび匿名の利用データ（第2項）には <strong>Formspree</strong>、プライバシーに配慮した訪問者統計（Cookieなし、個人データなし）には <strong>GoatCounter</strong>、PDFライブラリの読み込みには <strong>Cloudflare (cdnjs)</strong> と <strong>jsDelivr</strong>、ホスティングには <strong>Vercel</strong> を使用しています。これらのサービスは、標準的なウェブリクエストデータ（IPアドレス、ブラウザの種類）を記録する場合があります。各サービスのプライバシーポリシーをご確認ください。</p>
 <h3 style="margin-top:16px;">6. お問い合わせ</h3>
@@ -3563,7 +3579,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. الملاحظات والاقتراحات</h3>
 <p>إذا استخدمت نموذج الملاحظات، تُرسل رسالتك عبر <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> إلى بريدنا الإلكتروني. لا نجمع عنوان بريدك الإلكتروني ما لم تضمّنه طوعًا في رسالتك.</p>
 <h3 style="margin-top:16px;">4. ملفات تعريف الارتباط والتخزين المحلي</h3>
-<p>لا نستخدم ملفات تعريف ارتباط للتتبع. يُستخدم التخزين المحلي في متصفحك (على جهازك أنت) لحفظ تفضيل اللغة والمظهر ولنسخة مؤقتة من النص الذي تكتبه في النموذج حتى لا تفقد عملك. لا تُستخدم هذه النسخة بعد 24 ساعة وتُحذف عند فتح الموقع في المرة التالية، أو فور تنزيل مستند أو بدء مستند جديد. لا تُحفظ أبدًا أرقام الهوية/جواز السفر وتواريخ الميلاد والبيانات المصرفية والأرقام الضريبية. لا تغادر هذه البيانات جهازك أبدًا ويمكنك حذفها في أي وقت بمسح بيانات الموقع في متصفحك.</p>
+<p>لا نستخدم ملفات تعريف ارتباط للتتبع. يُستخدم التخزين المحلي في متصفحك (على جهازك أنت) لحفظ تفضيل اللغة والمظهر ولنسخة مؤقتة من النص الذي تكتبه في النموذج حتى لا تفقد عملك. توجد هذه النسخة فقط في علامة تبويب المتصفح الحالية: تُحذف عند إغلاق علامة التبويب، وفور تنزيل مستند أو بدء مستند جديد. لا تُحفظ أبدًا أرقام الهوية/جواز السفر وتواريخ الميلاد والبيانات المصرفية والأرقام الضريبية. لا تغادر هذه البيانات جهازك أبدًا ويمكنك حذفها في أي وقت بمسح بيانات الموقع في متصفحك.</p>
 <h3 style="margin-top:16px;">5. خدمات الأطراف الثالثة</h3>
 <p>نستخدم <strong>Formspree</strong> لنموذج الملاحظات وبيانات الاستخدام المجهولة (البند 2)، و<strong>GoatCounter</strong> لإحصاءات الزوار المراعية للخصوصية (بدون ملفات تعريف ارتباط ودون بيانات شخصية)، و<strong>Cloudflare (cdnjs)</strong> و<strong>jsDelivr</strong> لتحميل مكتبة PDF، و<strong>Vercel</strong> للاستضافة. قد تسجّل هذه الخدمات بيانات طلبات الويب المعتادة (عنوان IP ونوع المتصفح). راجع سياسات الخصوصية الخاصة بها.</p>
 <h3 style="margin-top:16px;">6. التواصل</h3>
@@ -3582,7 +3598,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. 의견 및 제안</h3>
 <p>의견 양식을 이용하시면 메시지가 <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a>를 통해 저희 이메일로 전송됩니다. 메시지에 직접 적지 않는 한 이메일 주소는 수집하지 않습니다.</p>
 <h3 style="margin-top:16px;">4. 쿠키 및 로컬 저장소</h3>
-<p>추적 쿠키는 사용하지 않습니다. 사용자 기기의 브라우저 로컬 저장소는 언어 및 테마 설정과, 작업 내용을 잃지 않도록 양식에 입력한 텍스트의 임시 사본을 위해 사용됩니다. 이 사본은 24시간이 지나면 더 이상 사용되지 않으며, 다음에 사이트를 열 때 또는 문서를 다운로드하거나 새 문서를 시작하는 즉시 삭제됩니다. 신분증/여권 번호, 생년월일, 은행 정보, 세금 번호는 절대 저장되지 않습니다. 이 데이터는 기기를 벗어나지 않으며 브라우저에서 사이트 데이터를 삭제하면 언제든지 지울 수 있습니다.</p>
+<p>추적 쿠키는 사용하지 않습니다. 사용자 기기의 브라우저 로컬 저장소는 언어 및 테마 설정과, 작업 내용을 잃지 않도록 양식에 입력한 텍스트의 임시 사본을 위해 사용됩니다. 이 사본은 현재 브라우저 탭에만 존재하며, 탭을 닫거나 문서를 다운로드하거나 새 문서를 시작하는 즉시 삭제됩니다. 신분증/여권 번호, 생년월일, 은행 정보, 세금 번호는 절대 저장되지 않습니다. 이 데이터는 기기를 벗어나지 않으며 브라우저에서 사이트 데이터를 삭제하면 언제든지 지울 수 있습니다.</p>
 <h3 style="margin-top:16px;">5. 제3자 서비스</h3>
 <p>의견 양식과 익명 이용 데이터(제2항)에는 <strong>Formspree</strong>, 개인정보를 존중하는 방문 통계(쿠키 및 개인 데이터 없음)에는 <strong>GoatCounter</strong>, PDF 라이브러리 로딩에는 <strong>Cloudflare (cdnjs)</strong>와 <strong>jsDelivr</strong>, 호스팅에는 <strong>Vercel</strong>을 사용합니다. 이러한 서비스는 표준 웹 요청 데이터(IP 주소, 브라우저 유형)를 기록할 수 있습니다. 각 서비스의 개인정보 처리방침을 참조하세요.</p>
 <h3 style="margin-top:16px;">6. 문의</h3>
@@ -3601,7 +3617,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. Geri bildirim ve öneriler</h3>
 <p>Geri bildirim formunu kullanırsanız mesajınız <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> aracılığıyla e-postamıza gönderilir. Mesajınıza gönüllü olarak eklemediğiniz sürece e-posta adresinizi toplamayız.</p>
 <h3 style="margin-top:16px;">4. Çerezler ve yerel depolama</h3>
-<p>İzleme çerezleri kullanmayız. Tarayıcınızın yerel depolama alanı (kendi cihazınızda), dil ve tema tercihiniz ile çalışmanızı kaybetmemeniz için bir forma yazdığınız metnin geçici bir kopyası için kullanılır. Bu kopya 24 saat sonra artık kullanılmaz ve siteyi bir sonraki açışınızda veya bir belgeyi indirir ya da yeni bir belge başlatır başlatmaz silinir. Kimlik/pasaport numaraları, doğum tarihleri, banka bilgileri ve vergi numaraları asla kaydedilmez. Bu veriler cihazınızdan asla çıkmaz ve tarayıcınızdaki site verilerini temizleyerek istediğiniz zaman silebilirsiniz.</p>
+<p>İzleme çerezleri kullanmayız. Tarayıcınızın yerel depolama alanı (kendi cihazınızda), dil ve tema tercihiniz ile çalışmanızı kaybetmemeniz için bir forma yazdığınız metnin geçici bir kopyası için kullanılır. Bu kopya yalnızca geçerli tarayıcı sekmesinde bulunur: sekmeyi kapattığınızda, bir belgeyi indirdiğinizde veya yeni bir belge başlattığınızda hemen silinir. Kimlik/pasaport numaraları, doğum tarihleri, banka bilgileri ve vergi numaraları asla kaydedilmez. Bu veriler cihazınızdan asla çıkmaz ve tarayıcınızdaki site verilerini temizleyerek istediğiniz zaman silebilirsiniz.</p>
 <h3 style="margin-top:16px;">5. Üçüncü taraf hizmetler</h3>
 <p>Geri bildirim formu ve anonim kullanım verileri (madde 2) için <strong>Formspree</strong>, gizliliğe saygılı ziyaretçi istatistikleri için <strong>GoatCounter</strong> (çerez yok, kişisel veri yok), PDF kitaplığını yüklemek için <strong>Cloudflare (cdnjs)</strong> ve <strong>jsDelivr</strong>, barındırma için ise <strong>Vercel</strong> kullanırız. Bu hizmetler standart web isteği verilerini (IP adresi, tarayıcı türü) kaydedebilir. İlgili gizlilik politikalarına bakın.</p>
 <h3 style="margin-top:16px;">6. İletişim</h3>
@@ -3620,7 +3636,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. Opinie i sugestie</h3>
 <p>Jeśli skorzystasz z formularza opinii, Twoja wiadomość zostanie wysłana przez <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> na nasz adres e-mail. Nie zbieramy Twojego adresu e-mail, chyba że podasz go dobrowolnie w wiadomości.</p>
 <h3 style="margin-top:16px;">4. Pliki cookie i pamięć lokalna</h3>
-<p>Nie używamy śledzących plików cookie. Pamięć lokalna Twojej przeglądarki (na Twoim urządzeniu) służy do zapisania preferencji języka i motywu oraz tymczasowej kopii tekstu wpisywanego w formularzu, abyś nie stracił swojej pracy. Kopia ta nie jest używana po 24 godzinach i jest usuwana przy następnym otwarciu strony albo zaraz po pobraniu dokumentu lub rozpoczęciu nowego. Numery dowodów osobistych/paszportów, daty urodzenia, dane bankowe i numery podatkowe nigdy nie są zapisywane. Dane te nigdy nie opuszczają Twojego urządzenia i możesz je w każdej chwili usunąć, czyszcząc dane witryny w przeglądarce.</p>
+<p>Nie używamy śledzących plików cookie. Pamięć lokalna Twojej przeglądarki (na Twoim urządzeniu) służy do zapisania preferencji języka i motywu oraz tymczasowej kopii tekstu wpisywanego w formularzu, abyś nie stracił swojej pracy. Kopia ta istnieje tylko w bieżącej karcie przeglądarki: jest usuwana po zamknięciu karty oraz zaraz po pobraniu dokumentu lub rozpoczęciu nowego. Numery dowodów osobistych/paszportów, daty urodzenia, dane bankowe i numery podatkowe nigdy nie są zapisywane. Dane te nigdy nie opuszczają Twojego urządzenia i możesz je w każdej chwili usunąć, czyszcząc dane witryny w przeglądarce.</p>
 <h3 style="margin-top:16px;">5. Usługi podmiotów trzecich</h3>
 <p>Korzystamy z <strong>Formspree</strong> dla formularza opinii i anonimowych danych o użytkowaniu (punkt 2), z <strong>GoatCounter</strong> do statystyk odwiedzin przyjaznych prywatności (bez plików cookie i danych osobowych), z <strong>Cloudflare (cdnjs)</strong> i <strong>jsDelivr</strong> do ładowania biblioteki PDF oraz z <strong>Vercel</strong> do hostingu. Usługi te mogą rejestrować standardowe dane żądań sieciowych (adres IP, typ przeglądarki). Zapoznaj się z ich politykami prywatności.</p>
 <h3 style="margin-top:16px;">6. Kontakt</h3>
@@ -3639,7 +3655,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. प्रतिक्रिया और सुझाव</h3>
 <p>यदि आप प्रतिक्रिया फ़ॉर्म का उपयोग करते हैं, तो आपका संदेश <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> के माध्यम से हमारे ईमेल पर भेजा जाता है। जब तक आप स्वयं अपने संदेश में शामिल न करें, हम आपका ईमेल पता एकत्र नहीं करते।</p>
 <h3 style="margin-top:16px;">4. कुकीज़ और स्थानीय संग्रहण</h3>
-<p>हम ट्रैकिंग कुकीज़ का उपयोग नहीं करते। आपके ब्राउज़र के लोकल स्टोरेज (आपके अपने डिवाइस पर) का उपयोग आपकी भाषा और थीम की पसंद के लिए और फ़ॉर्म में टाइप किए गए पाठ की अस्थायी प्रति के लिए होता है, ताकि आपका काम खोए नहीं। यह प्रति 24 घंटे बाद उपयोग में नहीं रहती और अगली बार साइट खोलने पर, या दस्तावेज़ डाउनलोड करते ही या नया दस्तावेज़ शुरू करते ही हटा दी जाती है। पहचान/पासपोर्ट संख्या, जन्मतिथि, बैंक विवरण और कर संख्याएँ कभी सहेजी नहीं जातीं। यह डेटा आपके डिवाइस से कभी बाहर नहीं जाता और आप ब्राउज़र में साइट डेटा साफ़ करके इसे कभी भी हटा सकते हैं।</p>
+<p>हम ट्रैकिंग कुकीज़ का उपयोग नहीं करते। आपके ब्राउज़र के लोकल स्टोरेज (आपके अपने डिवाइस पर) का उपयोग आपकी भाषा और थीम की पसंद के लिए और फ़ॉर्म में टाइप किए गए पाठ की अस्थायी प्रति के लिए होता है, ताकि आपका काम खोए नहीं। यह प्रति केवल मौजूदा ब्राउज़र टैब में रहती है: टैब बंद करने पर, या दस्तावेज़ डाउनलोड करते ही या नया दस्तावेज़ शुरू करते ही हटा दी जाती है। पहचान/पासपोर्ट संख्या, जन्मतिथि, बैंक विवरण और कर संख्याएँ कभी सहेजी नहीं जातीं। यह डेटा आपके डिवाइस से कभी बाहर नहीं जाता और आप ब्राउज़र में साइट डेटा साफ़ करके इसे कभी भी हटा सकते हैं।</p>
 <h3 style="margin-top:16px;">5. तृतीय-पक्ष सेवाएँ</h3>
 <p>हम प्रतिक्रिया फ़ॉर्म और गुमनाम उपयोग डेटा (खंड 2) के लिए <strong>Formspree</strong>, गोपनीयता-अनुकूल विज़िटर आँकड़ों (बिना कुकीज़, बिना व्यक्तिगत डेटा) के लिए <strong>GoatCounter</strong>, PDF लाइब्रेरी लोड करने के लिए <strong>Cloudflare (cdnjs)</strong> और <strong>jsDelivr</strong>, तथा होस्टिंग के लिए <strong>Vercel</strong> का उपयोग करते हैं। ये सेवाएँ मानक वेब अनुरोध डेटा (IP पता, ब्राउज़र प्रकार) लॉग कर सकती हैं। उनकी संबंधित गोपनीयता नीतियाँ देखें।</p>
 <h3 style="margin-top:16px;">6. संपर्क</h3>
@@ -3658,7 +3674,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">۳. بازخورد و پیشنهادها</h3>
 <p>اگر از فرم بازخورد استفاده کنید، پیام شما از طریق <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> به ایمیل ما ارسال می‌شود. ما نشانی ایمیل شما را جمع‌آوری نمی‌کنیم، مگر اینکه خودتان آن را در پیام بنویسید.</p>
 <h3 style="margin-top:16px;">۴. کوکی‌ها و ذخیره‌سازی محلی</h3>
-<p>ما از کوکی‌های ردیابی استفاده نمی‌کنیم. حافظه محلی مرورگر شما (روی دستگاه خودتان) برای ترجیح زبان و پوسته و برای یک نسخه موقت از متنی که در فرم تایپ می‌کنید به کار می‌رود تا کارتان از بین نرود. این نسخه پس از ۲۴ ساعت دیگر استفاده نمی‌شود و دفعه بعد که سایت را باز کنید، یا به‌محض دانلود سند یا شروع سند جدید حذف می‌شود. شماره‌های شناسایی/گذرنامه، تاریخ تولد، اطلاعات بانکی و شماره‌های مالیاتی هرگز ذخیره نمی‌شوند. این داده‌ها هرگز دستگاه شما را ترک نمی‌کنند و می‌توانید هر زمان با پاک‌کردن داده‌های سایت در مرورگر آن‌ها را حذف کنید.</p>
+<p>ما از کوکی‌های ردیابی استفاده نمی‌کنیم. حافظه محلی مرورگر شما (روی دستگاه خودتان) برای ترجیح زبان و پوسته و برای یک نسخه موقت از متنی که در فرم تایپ می‌کنید به کار می‌رود تا کارتان از بین نرود. این نسخه فقط در زبانه فعلی مرورگر وجود دارد: با بستن زبانه، و به‌محض دانلود سند یا شروع سند جدید حذف می‌شود. شماره‌های شناسایی/گذرنامه، تاریخ تولد، اطلاعات بانکی و شماره‌های مالیاتی هرگز ذخیره نمی‌شوند. این داده‌ها هرگز دستگاه شما را ترک نمی‌کنند و می‌توانید هر زمان با پاک‌کردن داده‌های سایت در مرورگر آن‌ها را حذف کنید.</p>
 <h3 style="margin-top:16px;">۵. خدمات شخص ثالث</h3>
 <p>ما از <strong>Formspree</strong> برای فرم بازخورد و داده‌های ناشناس استفاده (بند ۲)، از <strong>GoatCounter</strong> برای آمار بازدید دوستدار حریم خصوصی (بدون کوکی و بدون داده شخصی)، از <strong>Cloudflare (cdnjs)</strong> و <strong>jsDelivr</strong> برای بارگذاری کتابخانه PDF و از <strong>Vercel</strong> برای میزبانی استفاده می‌کنیم. این خدمات ممکن است داده‌های استاندارد درخواست وب (نشانی IP، نوع مرورگر) را ثبت کنند. سیاست‌های حریم خصوصی آن‌ها را ببینید.</p>
 <h3 style="margin-top:16px;">۶. تماس</h3>
@@ -3677,7 +3693,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. משוב והצעות</h3>
 <p>אם תשתמשו בטופס המשוב, ההודעה שלכם תישלח באמצעות <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> לדוא״ל שלנו. איננו אוספים את כתובת הדוא״ל שלכם אלא אם תכללו אותה מרצונכם בהודעה.</p>
 <h3 style="margin-top:16px;">4. עוגיות ואחסון מקומי</h3>
-<p>איננו משתמשים בעוגיות מעקב. האחסון המקומי של הדפדפן (במכשיר שלכם) משמש להעדפות השפה והערכת הנושא ולהעתק זמני של הטקסט שאתם מקלידים בטופס, כדי שלא תאבדו את עבודתכם. העתק זה אינו בשימוש לאחר 24 שעות ומוסר בפעם הבאה שתפתחו את האתר, או מיד עם הורדת מסמך או התחלת מסמך חדש. מספרי תעודת זהות/דרכון, תאריכי לידה, פרטי בנק ומספרי מס אינם נשמרים לעולם. נתונים אלה אינם עוזבים את המכשיר שלכם ואפשר למחוק אותם בכל עת על ידי ניקוי נתוני האתר בדפדפן.</p>
+<p>איננו משתמשים בעוגיות מעקב. האחסון המקומי של הדפדפן (במכשיר שלכם) משמש להעדפות השפה והערכת הנושא ולהעתק זמני של הטקסט שאתם מקלידים בטופס, כדי שלא תאבדו את עבודתכם. העתק זה קיים רק בלשונית הדפדפן הנוכחית: הוא נמחק עם סגירת הלשונית, ומיד עם הורדת מסמך או התחלת מסמך חדש. מספרי תעודת זהות/דרכון, תאריכי לידה, פרטי בנק ומספרי מס אינם נשמרים לעולם. נתונים אלה אינם עוזבים את המכשיר שלכם ואפשר למחוק אותם בכל עת על ידי ניקוי נתוני האתר בדפדפן.</p>
 <h3 style="margin-top:16px;">5. שירותי צד שלישי</h3>
 <p>אנו משתמשים ב-<strong>Formspree</strong> לטופס המשוב ולנתוני השימוש האנונימיים (סעיף 2), ב-<strong>GoatCounter</strong> לסטטיסטיקות מבקרים ידידותיות לפרטיות (ללא עוגיות וללא מידע אישי), ב-<strong>Cloudflare (cdnjs)</strong> וב-<strong>jsDelivr</strong> לטעינת ספריית ה-PDF, וב-<strong>Vercel</strong> לאחסון. שירותים אלה עשויים לתעד נתוני בקשות אינטרנט רגילים (כתובת IP, סוג דפדפן). עיינו במדיניות הפרטיות שלהם.</p>
 <h3 style="margin-top:16px;">6. יצירת קשר</h3>
@@ -3696,7 +3712,7 @@ const PRIVACY = {
 <h3 style="margin-top:16px;">3. Maoni na mapendekezo</h3>
 <p>Ukitumia fomu ya maoni, ujumbe wako hutumwa kupitia <a href="https://formspree.io" target="_blank" style="color:var(--pri);">Formspree</a> kwenye barua pepe yetu. Hatukusanyi anwani yako ya barua pepe isipokuwa ukiiweka mwenyewe kwenye ujumbe wako.</p>
 <h3 style="margin-top:16px;">4. Vidakuzi na hifadhi ya ndani</h3>
-<p>Hatutumii vidakuzi vya kufuatilia. Hifadhi ya ndani ya kivinjari chako (kwenye kifaa chako mwenyewe) hutumika kwa upendeleo wako wa lugha na mandhari na kwa nakala ya muda ya maandishi unayoandika kwenye fomu, ili usipoteze kazi yako. Nakala hiyo haitumiki tena baada ya saa 24 na huondolewa utakapofungua tovuti tena, au mara tu unapopakua hati au kuanza hati mpya. Nambari za kitambulisho/pasipoti, tarehe za kuzaliwa, taarifa za benki na nambari za kodi hazihifadhiwi kamwe. Data hii haiondoki kwenye kifaa chako na unaweza kuiondoa wakati wowote kwa kufuta data ya tovuti kwenye kivinjari chako.</p>
+<p>Hatutumii vidakuzi vya kufuatilia. Hifadhi ya ndani ya kivinjari chako (kwenye kifaa chako mwenyewe) hutumika kwa upendeleo wako wa lugha na mandhari na kwa nakala ya muda ya maandishi unayoandika kwenye fomu, ili usipoteze kazi yako. Nakala hiyo ipo tu kwenye kichupo cha sasa cha kivinjari: huondolewa unapofunga kichupo, na mara tu unapopakua hati au kuanza hati mpya. Nambari za kitambulisho/pasipoti, tarehe za kuzaliwa, taarifa za benki na nambari za kodi hazihifadhiwi kamwe. Data hii haiondoki kwenye kifaa chako na unaweza kuiondoa wakati wowote kwa kufuta data ya tovuti kwenye kivinjari chako.</p>
 <h3 style="margin-top:16px;">5. Huduma za wahusika wengine</h3>
 <p>Tunatumia <strong>Formspree</strong> kwa fomu ya maoni na data isiyojulikana ya matumizi (kipengele cha 2), <strong>GoatCounter</strong> kwa takwimu za wageni zinazoheshimu faragha (bila vidakuzi, bila data ya kibinafsi), <strong>Cloudflare (cdnjs)</strong> na <strong>jsDelivr</strong> kupakia maktaba ya PDF, na <strong>Vercel</strong> kwa upangishaji. Huduma hizi zinaweza kurekodi data ya kawaida ya maombi ya wavuti (anwani ya IP, aina ya kivinjari). Angalia sera zao za faragha.</p>
 <h3 style="margin-top:16px;">6. Mawasiliano</h3>
@@ -5866,18 +5882,20 @@ function autoSave() {
       if (el.type === 'checkbox') inputs[el.id] = el.checked;
       else if (el.value) inputs[el.id] = el.value;
     });
-    localStorage.setItem('dg-autosave', JSON.stringify(inputs));
-    localStorage.setItem('dg-autosave-ts', Date.now());
+    sessionStorage.setItem('dg-autosave', JSON.stringify(inputs));
+    sessionStorage.setItem('dg-autosave-ts', Date.now());
   } catch(e) {}
 }
 
 function autoRestore() {
   try {
-    const saved = localStorage.getItem('dg-autosave');
-    const ts = localStorage.getItem('dg-autosave-ts');
+    // Oude kopie uit eerdere versies (localStorage) altijd opruimen: bewaren gebeurt nu alleen per tabblad
+    try { localStorage.removeItem('dg-autosave'); localStorage.removeItem('dg-autosave-ts'); } catch(e) {}
+    const saved = sessionStorage.getItem('dg-autosave');
+    const ts = sessionStorage.getItem('dg-autosave-ts');
     if (!saved || !ts) return;
-    if (Date.now() - parseInt(ts) > 86400000) { localStorage.removeItem('dg-autosave'); return; } // 24h expiry
     const inputs = JSON.parse(saved);
+    if (Object.keys(inputs).some(k => /-(name|address|company|rep|role|email|phone|for|number|purpose|make|model|vin|plate|jobtitle)$/.test(k) && inputs[k])) { const b = document.getElementById('restore-banner'); if (b) b.style.display = ''; }
     Object.entries(inputs).forEach(([id, val]) => {
       const el = document.getElementById(id);
       if (!el) return;
@@ -5888,7 +5906,7 @@ function autoRestore() {
 }
 
 function clearAutoSave() {
-  try { localStorage.removeItem('dg-autosave'); localStorage.removeItem('dg-autosave-ts'); } catch(e) {}
+  try { sessionStorage.removeItem('dg-autosave'); sessionStorage.removeItem('dg-autosave-ts'); localStorage.removeItem('dg-autosave'); localStorage.removeItem('dg-autosave-ts'); } catch(e) {}
 }
 
 // Save every 5 seconds if anything changed
@@ -5907,9 +5925,22 @@ setInterval(autoSave, 5000);
   };
 });
 
+
+function dismissTabHint() {
+  try { sessionStorage.setItem('dg-hint-off', '1'); } catch(e) {}
+  const el = document.getElementById('sn-hint'); if (el) el.style.display = 'none';
+}
+// Waarschuwing van de browser bij het sluiten van het tabblad zolang er iets is ingevuld en nog niet gedownload
+window.addEventListener('beforeunload', e => {
+  if (autoSavePaused) return;
+  const filled = [...document.querySelectorAll('input[type="text"][id], textarea[id]')].some(el => /-(name|address|company|rep|role|email|phone|for|number|purpose|make|model|vin|plate|jobtitle)$/.test(el.id) && el.value.trim());
+  if (filled) { e.preventDefault(); e.returnValue = ''; }
+});
+
 // ====== New document ======
-function startNewDocument() {
-  if (!confirm(t('confirm-new'))) return;
+function startNewDocument(skipConfirm) {
+  if (skipConfirm !== true && !confirm(t('confirm-new'))) return;
+  const rb = document.getElementById('restore-banner'); if (rb) rb.style.display = 'none';
   clearAutoSave();
   document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
     if (el.type === 'checkbox') el.checked = false;
@@ -5921,6 +5952,7 @@ function startNewDocument() {
   // Clear dynamic beneficiaries
   const benList = document.getElementById('will-beneficiaries');
   if (benList) benList.innerHTML = '';
+  { const today = new Date().toISOString().split('T')[0]; ['doc-date','date-start','r-doc-date','r-date-start'].forEach(id => { const el = document.getElementById(id); if (el) el.value = today; }); }
   goStep(0);
   // Re-apply locale defaults
   try { const tz = Intl.DateTimeFormat().resolvedOptions().timeZone; const loc = LOCALE_MAP[tz]; if(loc) applyLocale(loc); } catch(e){}
@@ -6269,8 +6301,9 @@ function renderWillPreview() {
 // ====== Step navigation bar ======
 function updateStepNav(docTitleKey, stepNum, totalSteps) {
   const nav = document.getElementById('step-nav');
-  if (!docTitleKey) { nav.style.display = 'none'; return; }
+  if (!docTitleKey) { nav.style.display = 'none'; const hn = document.getElementById('sn-hint'); if (hn) hn.style.display = 'none'; return; }
   nav.style.display = 'flex';
+  try { const hint = document.getElementById('sn-hint'); if (hint) hint.style.display = sessionStorage.getItem('dg-hint-off') ? 'none' : 'flex'; } catch(e) {}
   document.getElementById('sn-doc').textContent = t(docTitleKey);
   document.getElementById('sn-progress').textContent = t('step-of').replace('{n}', stepNum).replace('{total}', totalSteps);
   // Render step dots
