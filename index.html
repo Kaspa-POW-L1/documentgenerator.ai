@@ -4308,7 +4308,7 @@ function buildScopeDetails() {
 function scopeDetail(d, s, html) {
   const v = (d.details && d.details[s]) || '';
   if (!v) return '';
-  return ' — ' + (html ? v.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : v);
+  return ' — ' + v;
 }
 
 function syncScopeDetails() {
@@ -5975,7 +5975,8 @@ async function downloadWord() {
     } catch (e) {}
   }
   const ftKids = [];
-  if (ds.footer) ftKids.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [grey(ds.footer, 16)], border: { top: { style: BorderStyle.SINGLE, size: 4, color: 'C8C8C8', space: 4 } } }));
+  const ftRuns = ds.footer ? ds.footer.split(/(\{n\}|\{total\})/).filter(Boolean).map(part => part === '{n}' ? new TextRun({ children: [PageNumber.CURRENT], font, size: 16, color: '787878' }) : part === '{total}' ? new TextRun({ children: [PageNumber.TOTAL_PAGES], font, size: 16, color: '787878' }) : grey(part, 16)) : [];
+  if (ds.footer) ftKids.push(new Paragraph({ alignment: AlignmentType.CENTER, children: ftRuns, border: { top: { style: BorderStyle.SINGLE, size: 4, color: 'C8C8C8', space: 4 } } }));
   const pn = document.getElementById(prefix + '-page-numbers');
   if (pn && pn.checked) ftKids.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ children: [PageNumber.CURRENT], font, size: 18, color: '787878' }), grey(' ' + t('page-of') + ' ', 18), new TextRun({ children: [PageNumber.TOTAL_PAGES], font, size: 18, color: '787878' })] }));
   if (ds.brand) ftKids.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [new ExternalHyperlink({ link: 'https://documentgenerator.ai', children: [new TextRun({ text: t('brand-line'), font, size: 14, color: '969696' })] })] }));
@@ -7632,7 +7633,7 @@ function addHeaderFooter(doc, settings) {
     if (settings.footer) {
       doc.setFontSize(8); doc.setFont(settings.fontFamily,'normal'); doc.setTextColor(100);
       doc.setDrawColor(200); doc.line(25, 282, 185, 282);
-      doc.text(settings.footer, 105, 287, { align:'center' });
+      doc.text(settings.footer.replace(/\{n\}/g, i).replace(/\{total\}/g, total), 105, 287, { align:'center' });
     }
     if (settings.watermark) {
       const wm = makeWatermark(t('wm-' + settings.watermark).toLocaleUpperCase(lang));
@@ -8064,6 +8065,24 @@ function trackEdits(previewId, docType) {
     }).catch(() => {});
   }
 }
+
+// ====== Veilige previews: gebruikersinvoer escapen vóór het in de preview-HTML komt ======
+// De build*Document-functies gebruiken de gegevens alleen voor HTML; PDF en Word gebruiken ze niet.
+function escHtmlStr(v) {
+  return v.indexOf('data:') === 0 ? v : v.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function escData(v) {
+  if (typeof v === 'string') return escHtmlStr(v);
+  if (Array.isArray(v)) return v.map(escData);
+  if (v && typeof v === 'object' && Object.getPrototypeOf(v) === Object.prototype) {
+    const o = {}; for (const k in v) o[k] = escData(v[k]); return o;
+  }
+  return v;
+}
+['POA','Rental','Eng','Receipt','Invoice','Nda','Empl','Loan','Will','Bos'].forEach(n => {
+  const f = window['build' + n + 'Document'];
+  if (typeof f === 'function') window['build' + n + 'Document'] = d => f(escData(d));
+});
 
 // ====== Contact / Suggest ======
 function toggleContact() {
