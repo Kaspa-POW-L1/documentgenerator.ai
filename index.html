@@ -1328,7 +1328,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 .doc-pair .doc-card { --acc: var(--pair); position: relative; z-index: 1; }
 .pair-link { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2; width: 30px; height: 30px; border-radius: 50%; background: var(--card); border: 2px solid var(--pair); color: var(--pair); display: flex; align-items: center; justify-content: center; }
 .pair-link svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-@media (max-width: 500px) { .doc-pair { grid-template-columns: 1fr; gap: 18px; } .pair-link svg { transform: rotate(90deg); } }
+@media (max-width: 500px) { .doc-pair { grid-template-columns: 1fr; gap: 18px; } }
 .related { margin-top: 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); padding: 14px 16px; text-align: start; }
 .related .rt { font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--text-light); margin-bottom: 8px; }
 .related .rrow { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
@@ -1425,7 +1425,7 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
               <h3 data-i18n="dt-revoke-title">Revoke a Power of Attorney</h3>
               <p data-i18n="dt-revoke-desc">End a power of attorney you gave</p>
           </div>
-          <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+          <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
         </div>
         <div class="doc-pair p-inv">
           <div class="doc-card" onclick="selectDocType('invoice')">
@@ -1438,7 +1438,7 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
               <h3 data-i18n="dt-receipt-title">Receipt</h3>
               <p data-i18n="dt-receipt-desc">Confirm a payment received</p>
           </div>
-          <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+          <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
         </div>
         <div class="doc-pair p-empl">
           <div class="doc-card" onclick="selectDocType('empl')">
@@ -1451,7 +1451,7 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
               <h3 data-i18n="dt-resign-title">Resignation letter</h3>
               <p data-i18n="dt-resign-desc">Give notice to your employer</p>
           </div>
-          <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+          <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
         </div>
         <div class="doc-pair p-biz">
           <div class="doc-card" onclick="selectDocType('nda')">
@@ -1464,7 +1464,7 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
               <h3 data-i18n="dt-eng-title">Engagement Letter</h3>
               <p data-i18n="dt-eng-desc">Define a professional service agreement</p>
           </div>
-          <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+          <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
         </div>
         <div class="doc-pair p-loan">
           <div class="doc-card" onclick="selectDocType('loan')">
@@ -1477,7 +1477,7 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
               <h3 data-i18n="dt-debt-title">Debt acknowledgement</h3>
               <p data-i18n="dt-debt-desc">Confirm that you owe someone money</p>
           </div>
-          <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+          <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
         </div>
         <div class="doc-card" onclick="selectDocType('rental')">
             <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
