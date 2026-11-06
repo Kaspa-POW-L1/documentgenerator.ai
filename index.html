@@ -3100,6 +3100,7 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
         <li>Einddatum-velden (volmacht, huur, arbeid, lening): snelkeuze +3/+6/+12 maanden vanaf de begindatum i.p.v. gisteren/vandaag/morgen</li>
         <li>PDF: regel "Gemaakt met documentgenerator.ai" onderaan (aan by default, met uitleg, uit te zetten in Documentinstellingen) en optioneel watermerk Concept/Kopie (18 talen)</li>
         <li>Fix: voorbeeldpaneel verscheen soms naast het keuzescherm (na terugkeren naar de startpagina)</li>
+        <li>Automatische hoofdletters: namen, adressen, plaatsen en landen worden netjes geschreven als iemand alles in kleine letters typt (voorvoegsels als van/de/der blijven klein); e-mail in kleine letters, ID-/kentekennummers in hoofdletters; overbodige spaties weg</li>
         <li>Valuta volgt automatisch het gekozen land (aanpassen blijft mogelijk; een handmatige keuze wordt niet meer overschreven)</li>
         <li>Landvelden: suggestielijst met alle landen in de gekozen taal (via de browser, geen vertalingen nodig); eigen land van de bezoeker bovenaan; vrije invoer blijft mogelijk</li>
         <li>Privacybeleid nu in alle 18 talen vertaald</li>
@@ -6022,6 +6023,49 @@ function initCurrencyLinks() {
     });
   }
 }
+
+
+// ====== Automatische hoofdletters (alleen als de gebruiker alles in kleine letters typte) ======
+const NAME_PARTICLES = new Set(['van','de','der','den','het','ten','ter','te','op','aan','von','vom','zu','zur','da','das','do','dos','di','del','della','du','des','la','le','el','al','bin','bint','ibn','y','af','av','en','of','the','and']);
+const NO_CAPS_IDS = /^(iv-from-name|iv-to-name|rc-name|rc-from-name)$/;
+function smartTitle(s) {
+  if (!s || s !== s.toLowerCase() || s === s.toUpperCase()) return s;
+  let first = true;
+  return s.replace(/[^\s]+/g, w => {
+    const lw = w.toLowerCase();
+    if (!first && NAME_PARTICLES.has(lw)) return lw;
+    first = false;
+    let r = lw.replace(/(^|[\-.(\/])(\p{L})/gu, (m, a, b) => a + b.toUpperCase());
+    r = r.replace(/^(\p{L}{1,2}['’])(\p{L})/u, (m, a, b) => a.toUpperCase().slice(0, 1) + a.slice(1) + b.toUpperCase());
+    r = r.replace(/^Mc(\p{L})/u, (m, c) => 'Mc' + c.toUpperCase());
+    return r;
+  });
+}
+function resolveCountryName(v) {
+  const k = (v || '').toLowerCase().trim();
+  canonCountry(k);
+  const code = _countryRev && _countryRev[k];
+  return code ? (countryName(code) || v) : null;
+}
+function normalizeField(el) {
+  const id = el.id || '';
+  let v = el.value;
+  if (!v) return;
+  let n = v.replace(/\s+/g, ' ').trim();
+  if (el.type === 'email' || /-email$/.test(id)) n = n.toLowerCase();
+  else if (/-id$|^b-(vin|plate|hull-id|boat-reg)$/.test(id)) n = n.toUpperCase();
+  else if (/-(country|law)$/.test(id)) n = resolveCountryName(n) || smartTitle(n);
+  else if (/-place$/.test(id)) {
+    const parts = n.split(',').map(p => p.trim());
+    n = parts.map((p, i) => (i === parts.length - 1 && parts.length > 1 ? resolveCountryName(p) : null) || smartTitle(p)).join(', ');
+  }
+  else if (/-(address|neighborhood)$/.test(id) || (/-name$|^(ep|em)-rep$/.test(id) && !NO_CAPS_IDS.test(id))) n = smartTitle(n);
+  if (n !== v) { el.value = n; el.dispatchEvent(new Event('input', { bubbles: true })); }
+}
+document.addEventListener('change', e => {
+  const el = e.target;
+  if (el && el.tagName === 'INPUT' && (el.type === 'text' || el.type === 'email')) { try { normalizeField(el); } catch (err) {} }
+}, true);
 
 // ====== Last Will & Testament ======
 const WILL_STEPS = ['w1','w2','w3','w4','w5'];
