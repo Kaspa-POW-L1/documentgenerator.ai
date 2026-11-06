@@ -1339,6 +1339,8 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
 /* Hint: bewaren per tabblad */
 .sn-hint { max-width: 1200px; margin: 0 auto 8px; padding: 0 24px; display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-light); line-height: 1.4; }
 .sn-hint button { font: inherit; font-size: 18px; line-height: 1; background: none; border: none; color: var(--text-light); cursor: pointer; padding: 0 4px; }
+#contact-topic { width: 100%; padding: 12px; border: 1.5px solid var(--border); border-radius: 8px; background-color: var(--input-bg); background-image: none; color: var(--text); font-family: inherit; font-size: 14px; }
+#contact-topic:focus { outline: none; border-color: var(--pri); background-color: var(--input-focus); }
 </style>
 </head>
 <body>
@@ -3115,6 +3117,7 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
         <li>PDF: regel "Gemaakt met documentgenerator.ai" onderaan (aan by default, met uitleg, uit te zetten in Documentinstellingen) en optioneel watermerk Concept/Kopie (18 talen)</li>
         <li>Fix: voorbeeldpaneel verscheen soms naast het keuzescherm (na terugkeren naar de startpagina)</li>
         <li>Automatisch bewaren nu per browsertabblad (weg zodra je het tabblad sluit, geen 24 uur meer); korte uitleg boven het formulier; browserwaarschuwing bij sluiten met niet-gedownloade invulling; privacybeleid aangepast in 18 talen</li>
+        <li>Contactvenster: één formulier met onderwerpkeuze (document voorstellen, fout melden, feedback, adverteren/samenwerken, anders); het onderwerp staat tussen haakjes in de mail; bij adverteren een hint om e-mail/telefoon te vermelden + e-mailadres; footerlink "Adverteren? Neem contact op" opent het formulier direct met Adverteren gekozen</li>
         <li>Einddatum (3/6/12 maanden) en vervaldatum (7/14/30 dagen) bewegen automatisch mee als je daarna de begindatum of factuurdatum wijzigt; zelf aanpassen stopt het meebewegen</li>
         <li>Opnieuw beginnen: melding op de startpagina als eerdere invulling is hersteld + knop "Opnieuw beginnen" in de voortgangsbalk van elk formulier (met bevestiging)</li>
         <li>Automatische hoofdletters: namen, adressen, plaatsen en landen worden netjes geschreven als iemand alles in kleine letters typt (voorvoegsels als van/de/der blijven klein); e-mail in kleine letters, ID-/kentekennummers in hoofdletters; overbodige spaties weg</li>
@@ -3324,6 +3327,8 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
   <span id="last-updated-text"></span>
   <span style="margin:0 6px;">·</span>
   <a href="#" onclick="event.preventDefault();document.getElementById('privacy-modal').classList.add('show');" style="color:var(--text-mid);font-weight:500;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px 4px;" data-i18n="privacy-link">Privacy Policy</a>
+  <span style="margin:0 6px;">·</span>
+  <a href="#" onclick="event.preventDefault();openContact('ads');" style="color:var(--text-light);text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px 4px;" data-i18n="advertise-link">Advertise? Get in touch</a>
 </div>
 <button class="fab" onclick="toggleContact()" title="Contact & suggestions"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></button>
 
@@ -3332,31 +3337,21 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
   <div class="modal contact-modal">
     <button class="modal-close" onclick="toggleContact()">&times;</button>
     <h2 data-i18n="contact-title">Get in touch</h2>
-    <div id="contact-options" class="cm-options">
-      <div class="cm-option" onclick="showSuggestForm()">
-        <div class="cm-icon">💡</div>
-        <div class="cm-text">
-          <h3 data-i18n="contact-suggest-title">Suggest a document</h3>
-          <p data-i18n="contact-suggest-desc">Tell us what other documents you'd like us to add</p>
-        </div>
+    <div id="contact-form" class="suggest-form">
+      <label for="contact-topic" data-i18n="ct-topic-label" style="display:block;font-size:14px;color:var(--text-mid);margin-bottom:6px;">What is your message about?</label>
+      <select id="contact-topic" onchange="updateContactTopic()" style="width:100%;margin-bottom:12px;">
+        <option value="suggest" data-i18n="ct-t-suggest">Suggest a document</option>
+        <option value="bug" data-i18n="ct-t-bug">Report an error or problem</option>
+        <option value="feedback" data-i18n="ct-t-feedback">Suggest an improvement or give feedback</option>
+        <option value="ads" data-i18n="ct-t-ads">Advertising or collaboration</option>
+        <option value="other" data-i18n="ct-t-other">Something else</option>
+      </select>
+      <textarea id="contact-text" data-i18n-placeholder="ct-ph" placeholder="Write your message..."></textarea>
+      <div id="contact-ad-hint" style="display:none;font-size:13px;color:var(--text-mid);margin:0 0 12px;line-height:1.5;">
+        <div data-i18n="ct-ad-hint">Please include your email address or phone number so we can reply.</div>
+        <div style="margin-top:6px;"><span data-i18n="ct-email-alt">Prefer email?</span> <a href="#" id="contact-mail" onclick="event.preventDefault();location.href='mailto:'+['contact','documentgenerator.ai'].join('@');" style="color:var(--pri);font-weight:600;"></a></div>
       </div>
-      <div class="cm-option" onclick="showFeedbackForm()">
-        <div class="cm-icon">📣</div>
-        <div class="cm-text">
-          <h3 data-i18n="contact-feedback-title">Give feedback</h3>
-          <p data-i18n="contact-feedback-desc">Report a problem or tell us how to improve</p>
-        </div>
-      </div>
-    </div>
-    <div id="suggest-form" class="suggest-form" style="display:none;">
-      <p data-i18n="suggest-prompt" style="font-size:14px;color:var(--text-mid);margin-bottom:4px;">What document would you like to create?</p>
-      <textarea id="suggest-text" data-i18n-placeholder="suggest-ph"></textarea>
-      <button class="btn btn-next" style="width:100%;" onclick="submitSuggestion('suggest')" data-i18n="suggest-send">Send suggestion</button>
-    </div>
-    <div id="feedback-form" class="suggest-form" style="display:none;">
-      <p data-i18n="feedback-prompt" style="font-size:14px;color:var(--text-mid);margin-bottom:4px;">What can we do better?</p>
-      <textarea id="feedback-text" data-i18n-placeholder="feedback-ph"></textarea>
-      <button class="btn btn-next" style="width:100%;" onclick="submitSuggestion('feedback')" data-i18n="feedback-send">Send feedback</button>
+      <button class="btn btn-next" style="width:100%;" onclick="submitContact()" data-i18n="ct-send">Send message</button>
     </div>
     <div id="suggest-thanks" class="suggest-thanks" style="display:none;">
       <div style="font-size:32px;margin-bottom:8px;">🙏</div>
@@ -6900,45 +6895,41 @@ function trackEdits(previewId, docType) {
 function toggleContact() {
   const m = document.getElementById('contact-modal');
   m.classList.toggle('show');
-  // Reset to options view
-  document.getElementById('contact-options').style.display = 'flex';
-  document.getElementById('suggest-form').style.display = 'none';
-  document.getElementById('feedback-form').style.display = 'none';
+  document.getElementById('contact-form').style.display = 'block';
   document.getElementById('suggest-thanks').style.display = 'none';
+  updateContactTopic();
 }
 
-function showSuggestForm() {
-  document.getElementById('contact-options').style.display = 'none';
-  document.getElementById('suggest-form').style.display = 'block';
+function openContact(topic) {
+  const m = document.getElementById('contact-modal');
+  if (!m.classList.contains('show')) toggleContact();
+  const sel = document.getElementById('contact-topic');
+  if (topic) sel.value = topic;
+  updateContactTopic();
 }
 
-function showFeedbackForm() {
-  document.getElementById('contact-options').style.display = 'none';
-  document.getElementById('feedback-form').style.display = 'block';
+function updateContactTopic() {
+  const ads = document.getElementById('contact-topic').value === 'ads';
+  document.getElementById('contact-ad-hint').style.display = ads ? 'block' : 'none';
+  if (ads) document.getElementById('contact-mail').textContent = ['contact', 'documentgenerator.ai'].join('@');
 }
 
-function submitSuggestion(type) {
-  const field = type === 'suggest' ? 'suggest-text' : 'feedback-text';
-  const text = document.getElementById(field).value.trim();
-  if (!text) return;
+function submitContact() {
+  const type = document.getElementById('contact-topic').value;
+  const text = document.getElementById('contact-text').value.trim();
+  if (!text) { document.getElementById('contact-text').focus(); return; }
+  const labels = { suggest: 'Suggest a document', bug: 'Problem', feedback: 'Feedback', ads: 'Advertising', other: 'Other' };
 
-  // Send to Formspree
   fetch('https://formspree.io/f/xqpaownl', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify({ type, message: text, language: lang, _subject: 'documentgenerator.ai — ' + type })
+    body: JSON.stringify({ type, message: text, language: lang, _subject: 'documentgenerator.ai — [' + (labels[type] || type) + ']' })
   }).catch(() => {});
 
-  document.getElementById('suggest-form').style.display = 'none';
-  document.getElementById('feedback-form').style.display = 'none';
+  document.getElementById('contact-form').style.display = 'none';
   document.getElementById('suggest-thanks').style.display = 'block';
-
-  // Clear fields
-  document.getElementById('suggest-text').value = '';
-  document.getElementById('feedback-text').value = '';
-
-  // Auto-close after 2s
-  setTimeout(() => toggleContact(), 2000);
+  document.getElementById('contact-text').value = '';
+  setTimeout(() => { const m = document.getElementById('contact-modal'); if (m.classList.contains('show')) toggleContact(); }, 2000);
 }
 
 // ====== Admin changelog ======
