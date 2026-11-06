@@ -1201,8 +1201,8 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 /* ===== Tokens voor licht en donker ===== */
 :root {
   --fill: #1A56DB; --warn-text: #92400E; --warn-box-bg: #fffbe6; --warn-box-border: #e6d27a;
-  --a-bos:#059669; --a-poa:#2563EB; --a-rental:#EA580C; --a-eng:#0D9488; --a-loan:#D97706;
-  --a-empl:#7C3AED; --a-nda:#DB2777; --a-will:#64748B; --a-receipt:#0891B2; --a-invoice:#4F46E5; --a-revoke:#DC2626;
+  --a-bos:#0891B2; --a-poa:#2563EB; --a-rental:#EA580C; --a-eng:#0D9488; --a-loan:#CA8A04;
+  --a-empl:#7C3AED; --a-nda:#DB2777; --a-will:#64748B; --a-receipt:#059669; --a-invoice:#059669; --a-revoke:#DC2626;
 }
 .doc-card[onclick*="'bos'"]     { --acc: var(--a-bos); }
 .doc-card[onclick*="'poa'"]     { --acc: var(--a-poa); }
@@ -1226,8 +1226,8 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
   --warn-text: #FCD34D; --warn-box-bg: rgba(251,191,36,.10); --warn-box-border: rgba(251,191,36,.35);
   --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 6px 20px rgba(0,0,0,.28);
   --shadow-lg: 0 14px 40px rgba(0,0,0,.5);
-  --a-bos:#34D399; --a-poa:#60A5FA; --a-rental:#FB923C; --a-eng:#2DD4BF; --a-loan:#FBBF24;
-  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#22D3EE; --a-invoice:#818CF8; --a-revoke:#F87171;
+  --a-bos:#22D3EE; --a-poa:#60A5FA; --a-rental:#FB923C; --a-eng:#2DD4BF; --a-loan:#FACC15;
+  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#34D399; --a-invoice:#34D399; --a-revoke:#F87171;
 }
 :root[data-theme="dark"] body {
   background:
@@ -1265,8 +1265,8 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
   --warn-text: #FCD34D; --warn-box-bg: rgba(251,191,36,.10); --warn-box-border: rgba(251,191,36,.35);
   --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 6px 20px rgba(0,0,0,.28);
   --shadow-lg: 0 14px 40px rgba(0,0,0,.5);
-  --a-bos:#34D399; --a-poa:#60A5FA; --a-rental:#FB923C; --a-eng:#2DD4BF; --a-loan:#FBBF24;
-  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#22D3EE; --a-invoice:#818CF8; --a-revoke:#F87171;
+  --a-bos:#22D3EE; --a-poa:#60A5FA; --a-rental:#FB923C; --a-eng:#2DD4BF; --a-loan:#FACC15;
+  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#34D399; --a-invoice:#34D399; --a-revoke:#F87171;
 }
 :root:not([data-theme="light"]) body {
   background:
@@ -1300,7 +1300,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 }
 
 /* Samenhangende documenten: paren op de startpagina en blok "Hoort hierbij" */
-.doc-pair { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; position: relative; }
+.doc-pair { grid-column: 1 / -1; margin: 4px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; position: relative; }
 .doc-pair.p-poa { --pair: var(--a-poa); }
 .doc-pair.p-inv { --pair: var(--a-invoice); }
 .doc-pair::before { content: ""; position: absolute; left: 12px; right: 12px; top: -5px; bottom: -5px; border-radius: 14px; background: color-mix(in srgb, var(--pair) 7%, transparent); border: 1px dashed color-mix(in srgb, var(--pair) 35%, transparent); z-index: 0; }
@@ -1381,30 +1381,25 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
           </div>
           <div class="pair-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
         </div>
-        <div class="doc-card" onclick="selectDocType('bos')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg></div>
-          <h3 data-i18n="dt-bos-title">Bill of Sale</h3>
-          <p data-i18n="dt-bos-desc">Sell or buy a vehicle, boat, or item</p>
-        </div>
         <div class="doc-card" onclick="selectDocType('rental')">
           <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
           <h3 data-i18n="dt-rental-title">Rental Agreement</h3>
           <p data-i18n="dt-rental-desc">Lease a property or room</p>
         </div>
-        <div class="doc-card" onclick="selectDocType('eng')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></div>
-          <h3 data-i18n="dt-eng-title">Engagement Letter</h3>
-          <p data-i18n="dt-eng-desc">Define a professional service agreement</p>
+        <div class="doc-card" onclick="selectDocType('empl')">
+          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg></div>
+          <h3 data-i18n="dt-employment-title">Employment Contract</h3>
+          <p data-i18n="dt-employment-desc">Hire an employee</p>
+        </div>
+        <div class="doc-card" onclick="selectDocType('bos')">
+          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg></div>
+          <h3 data-i18n="dt-bos-title">Bill of Sale</h3>
+          <p data-i18n="dt-bos-desc">Sell or buy a vehicle, boat, or item</p>
         </div>
         <div class="doc-card" onclick="selectDocType('loan')">
           <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg></div>
           <h3 data-i18n="dt-loan-title">Loan Agreement</h3>
           <p data-i18n="dt-loan-desc">Lend or borrow money</p>
-        </div>
-        <div class="doc-card" onclick="selectDocType('empl')">
-          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg></div>
-          <h3 data-i18n="dt-employment-title">Employment Contract</h3>
-          <p data-i18n="dt-employment-desc">Hire an employee</p>
         </div>
         <div class="doc-card" onclick="selectDocType('nda')">
           <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
@@ -1415,6 +1410,11 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
           <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg></div>
           <h3 data-i18n="dt-will-title">Draft Will</h3>
           <p data-i18n="dt-will-desc">Prepare your will for the notary</p>
+        </div>
+        <div class="doc-card" onclick="selectDocType('eng')">
+          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></div>
+          <h3 data-i18n="dt-eng-title">Engagement Letter</h3>
+          <p data-i18n="dt-eng-desc">Define a professional service agreement</p>
         </div>
       </div>
     </div>
