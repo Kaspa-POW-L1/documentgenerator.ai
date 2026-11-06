@@ -1216,7 +1216,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 :root {
   --fill: #1A56DB; --warn-text: #92400E; --warn-box-bg: #fffbe6; --warn-box-border: #e6d27a;
   --a-bos:#0891B2; --a-poa:#2563EB; --a-rental:#EA580C; --a-eng:#0D9488; --a-loan:#CA8A04;
-  --a-empl:#7C3AED; --a-nda:#DB2777; --a-will:#64748B; --a-receipt:#059669; --a-invoice:#059669; --a-revoke:#DC2626;
+  --a-empl:#7C3AED; --a-nda:#DB2777; --a-will:#64748B; --a-receipt:#059669; --a-invoice:#059669; --a-revoke:#DC2626; --a-travel:#0284C7; --a-resign:#65A30D;
 }
 .doc-card[onclick*="'bos'"]     { --acc: var(--a-bos); }
 .doc-card[onclick*="'poa'"]     { --acc: var(--a-poa); }
@@ -1229,6 +1229,8 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
 .doc-card[onclick*="'receipt'"] { --acc: var(--a-receipt); }
 .doc-card[onclick*="'invoice'"] { --acc: var(--a-invoice); }
 .doc-card[onclick*="'revoke'"]  { --acc: var(--a-revoke); }
+.doc-card[onclick*="'travel'"]  { --acc: var(--a-travel); }
+.doc-card[onclick*="'resign'"]  { --acc: var(--a-resign); }
 .mobile-preview-btn, .fab, .detail-toggle button.active { background: var(--fill); }
 
 :root[data-theme="dark"] {
@@ -1241,7 +1243,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
   --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 6px 20px rgba(0,0,0,.28);
   --shadow-lg: 0 14px 40px rgba(0,0,0,.5);
   --a-bos:#22D3EE; --a-poa:#60A5FA; --a-rental:#FB923C; --a-eng:#2DD4BF; --a-loan:#FACC15;
-  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#34D399; --a-invoice:#34D399; --a-revoke:#F87171;
+  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#34D399; --a-invoice:#34D399; --a-revoke:#F87171; --a-travel:#38BDF8; --a-resign:#A3E635;
 }
 :root[data-theme="dark"] body {
   background:
@@ -1280,7 +1282,7 @@ body:has(#step-0.active) .mobile-preview-btn { display: none !important; }
   --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 6px 20px rgba(0,0,0,.28);
   --shadow-lg: 0 14px 40px rgba(0,0,0,.5);
   --a-bos:#22D3EE; --a-poa:#60A5FA; --a-rental:#FB923C; --a-eng:#2DD4BF; --a-loan:#FACC15;
-  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#34D399; --a-invoice:#34D399; --a-revoke:#F87171;
+  --a-empl:#A78BFA; --a-nda:#F472B6; --a-will:#94A3B8; --a-receipt:#34D399; --a-invoice:#34D399; --a-revoke:#F87171; --a-travel:#38BDF8; --a-resign:#A3E635;
 }
 :root:not([data-theme="light"]) body {
   background:
@@ -1465,6 +1467,16 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
           <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></div>
           <h3 data-i18n="dt-eng-title">Engagement Letter</h3>
           <p data-i18n="dt-eng-desc">Define a professional service agreement</p>
+        </div>
+        <div class="doc-card" onclick="selectDocType('travel')">
+          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></div>
+          <h3 data-i18n="dt-travel-title">Travel consent for a child</h3>
+          <p data-i18n="dt-travel-desc">Permission for a child to travel abroad</p>
+        </div>
+        <div class="doc-card" onclick="selectDocType('resign')">
+          <div class="dc-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></div>
+          <h3 data-i18n="dt-resign-title">Resignation letter</h3>
+          <p data-i18n="dt-resign-desc">Give notice to your employer</p>
         </div>
       </div>
       <div class="open-file-row"><button type="button" class="sn-reset" onclick="pickFile()" data-i18n="file-open-btn">Open saved file</button></div>
@@ -2381,6 +2393,161 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
     <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
   </div>
 
+  <!-- TRAVEL STEPS -->
+  <div class="step" id="step-tr1">
+    <div class="step-card">
+      <h2 class="step-title" data-i18n="tr1-title"></h2>
+      <p class="step-explain" data-i18n="tr1-explain"></p>
+      <div class="field"><label data-i18n="lbl-name"></label><input type="text" id="tr-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-tr-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-id"></label><input type="text" id="tr-id"></div>
+      <div class="field"><label data-i18n="lbl-tr-rel"></label><select id="tr-rel"><option value="mother" data-i18n="tr-rel-mother">Mother</option><option value="father" data-i18n="tr-rel-father">Father</option><option value="guardian" data-i18n="tr-rel-guardian">Legal guardian</option></select></div>
+      <div class="field"><label data-i18n="lbl-address"></label><input type="text" id="tr-address" data-i18n-placeholder="ph-address"></div>
+      <div class="field"><label data-i18n="lbl-neighborhood"></label><input type="text" id="tr-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal"></label><input type="text" id="tr-postal"></div>
+      <div class="field"><label data-i18n="lbl-country"></label><input type="text" id="tr-country"></div>
+      <div class="field"><label data-i18n="lbl-phone"></label><input type="tel" id="tr-phone"></div>
+      <div class="field"><label data-i18n="lbl-email"></label><input type="email" id="tr-email"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goTravelStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateTravelAndGo('tr1','tr2')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <div class="step" id="step-tr2">
+    <div class="step-card">
+      <h2 class="step-title" data-i18n="tr2-title"></h2>
+      <p class="step-explain" data-i18n="tr2-explain"></p>
+      <div class="field"><label data-i18n="lbl-name"></label><input type="text" id="tch-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-tch-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-dob"></label><input type="date" id="tch-dob"></div>
+      <div class="field"><label data-i18n="lbl-id"></label><input type="text" id="tch-id"></div>
+      <div class="field"><label data-i18n="lbl-tr-more"></label><textarea id="tch-more" rows="3" data-i18n-placeholder="ph-tr-more"></textarea></div>
+      <div class="nav"><button class="btn btn-back" onclick="goTravelStep('tr1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateTravelAndGo('tr2','tr3')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <div class="step" id="step-tr3">
+    <div class="step-card">
+      <h2 class="step-title" data-i18n="tr3-title"></h2>
+      <p class="step-explain" data-i18n="tr3-explain"></p>
+      <div class="field"><label data-i18n="lbl-tr-comp"></label><input type="text" id="tk-name" data-i18n-placeholder="ph-name"></div>
+      <div class="field"><label data-i18n="lbl-id"></label><input type="text" id="tk-id"></div>
+      <div class="field"><label data-i18n="lbl-tr-comp-rel"></label><input type="text" id="tk-rel" data-i18n-placeholder="ph-tr-comp-rel"></div>
+      <div class="field"><label data-i18n="lbl-phone"></label><input type="tel" id="tk-phone"></div>
+      <div class="field"><label data-i18n="lbl-tr-dest"></label><input type="text" id="tr-dest"><div class="error-msg" id="err-tr-dest" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-tr-dep"></label><input type="date" id="tr-dep"></div>
+      <div class="field"><label data-i18n="lbl-tr-ret"></label><input type="date" id="tr-ret"></div>
+      <div class="field"><label data-i18n="lbl-tr-purpose"></label><input type="text" id="tr-purpose" data-i18n-placeholder="ph-tr-purpose"></div>
+      <div class="field"><label data-i18n="lbl-tr-other"></label><input type="text" id="tr-other" data-i18n-placeholder="ph-tr-other"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goTravelStep('tr2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goTravelStep('tr4')" data-i18n="btn-preview">Next</button></div>
+    </div>
+  </div>
+
+  <!-- NEW STEP 4: Preview & Download -->
+  <div class="step" id="step-tr4">
+    <div class="step-card" style="padding:20px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+        <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-back" onclick="goTravelStep('tr1')" data-i18n="btn-edit">Edit</button>
+          <button class="btn btn-download" onclick="downloadTravelPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+        </div>
+      </div>
+      <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <button class="btn-edit-doc" onclick="toggleEditMode('travel-preview')" id="edit-btn-travel-preview" data-i18n="btn-customize">✏️ Customize document</button>
+    </div>
+    <div class="edit-hint" id="edit-hint-travel-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
+    <div class="preview-box" id="travel-preview"></div>
+    <details class="doc-settings">
+      <summary data-i18n="lbl-doc-settings">Document settings</summary>
+      <div class="ds-body">
+        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="travel-header" data-i18n-placeholder="ph-header"></div>
+        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="travel-footer" data-i18n-placeholder="ph-footer"></div>
+        <div class="field"><label data-i18n="lbl-fontsize">Font size</label><select id="travel-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select></div>
+        <div class="field"><label data-i18n="lbl-fontfamily">Font</label><select id="travel-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select></div>
+        <div class="field" style="grid-column:1/-1;"><label data-i18n="lbl-watermark">Watermark</label><select id="travel-watermark"><option value="" data-i18n="wm-none">None</option><option value="draft" data-i18n="wm-draft">Draft</option><option value="copy" data-i18n="wm-copy">Copy</option></select></div>
+        <div class="field" style="grid-column:1/-1;"><label style="display:flex;gap:8px;align-items:flex-start;font-weight:500;cursor:pointer;"><input type="checkbox" id="travel-brand" checked style="width:16px;height:16px;margin-top:2px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-brand">Add “Created with documentgenerator.ai” at the bottom of the page</span></label><div style="font-size:12px;color:var(--text-light);margin:4px 0 0 24px;line-height:1.5;" data-i18n="brand-help">This tool is free and needs no account. If you leave this small line on, more people will find us, and that helps us keep it free. You can switch it off at any time.</div></div>
+      </div>
+    </details>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
+      <button class="btn btn-download" onclick="downloadTravelPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+    </div>
+    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
+  </div>
+
+  <!-- RESIGN STEPS -->
+  <div class="step" id="step-rs1">
+    <div class="step-card">
+      <h2 class="step-title" data-i18n="rs1-title"></h2>
+      <p class="step-explain" data-i18n="rs1-explain"></p>
+      <div class="field"><label data-i18n="lbl-name"></label><input type="text" id="rs-name" data-i18n-placeholder="ph-name"><div class="error-msg" id="err-rs-name" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-jobtitle"></label><input type="text" id="rs-jobtitle"></div>
+      <div class="field"><label data-i18n="lbl-address"></label><input type="text" id="rs-address" data-i18n-placeholder="ph-address"></div>
+      <div class="field"><label data-i18n="lbl-neighborhood"></label><input type="text" id="rs-neighborhood"></div>
+      <div class="field"><label data-i18n="lbl-postal"></label><input type="text" id="rs-postal"></div>
+      <div class="field"><label data-i18n="lbl-country"></label><input type="text" id="rs-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goResignStep(0)" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateResignAndGo('rs1','rs2')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <div class="step" id="step-rs2">
+    <div class="step-card">
+      <h2 class="step-title" data-i18n="rs2-title"></h2>
+      <p class="step-explain" data-i18n="rs2-explain"></p>
+      <div class="field"><label data-i18n="lbl-company"></label><input type="text" id="re-company" data-i18n-placeholder="ph-company"><div class="error-msg" id="err-re-company" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-rs-contact"></label><input type="text" id="re-contact" data-i18n-placeholder="ph-rs-contact"></div>
+      <div class="field"><label data-i18n="lbl-address"></label><input type="text" id="re-address" data-i18n-placeholder="ph-address"></div>
+      <div class="field"><label data-i18n="lbl-country"></label><input type="text" id="re-country"></div>
+      <div class="nav"><button class="btn btn-back" onclick="goResignStep('rs1')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="validateResignAndGo('rs2','rs3')" data-i18n="btn-next">Next</button></div>
+    </div>
+  </div>
+
+  <div class="step" id="step-rs3">
+    <div class="step-card">
+      <h2 class="step-title" data-i18n="rs3-title"></h2>
+      <p class="step-explain" data-i18n="rs3-explain"></p>
+      <div class="field"><label data-i18n="lbl-rs-last"></label><input type="date" id="rs-last"><div class="error-msg" id="err-rs-last" data-i18n="err-required">This field is required</div></div>
+      <div class="field"><label data-i18n="lbl-date"></label><input type="date" id="rs-date"></div>
+      <div class="field"><label data-i18n="lbl-rs-reason"></label><textarea id="rs-reason" rows="2" data-i18n-placeholder="ph-rs-reason"></textarea></div>
+      <div class="field"><label style="display:flex;gap:8px;align-items:center;font-weight:500;cursor:pointer;"><input type="checkbox" id="rs-thanks" checked style="width:16px;height:16px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-rs-thanks"></span></label></div>
+      <div class="field"><label style="display:flex;gap:8px;align-items:center;font-weight:500;cursor:pointer;"><input type="checkbox" id="rs-handover" checked style="width:16px;height:16px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-rs-handover"></span></label></div>
+      <div class="nav"><button class="btn btn-back" onclick="goResignStep('rs2')" data-i18n="btn-back">Back</button><button class="btn btn-next" onclick="goResignStep('rs4')" data-i18n="btn-preview">Next</button></div>
+    </div>
+  </div>
+
+  <!-- NEW STEP 4: Preview & Download -->
+  <div class="step" id="step-rs4">
+    <div class="step-card" style="padding:20px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+        <h2 class="step-title" style="margin:0;" data-i18n="s5-title">Your document</h2>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-back" onclick="goResignStep('rs1')" data-i18n="btn-edit">Edit</button>
+          <button class="btn btn-download" onclick="downloadResignPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+        </div>
+      </div>
+      <p class="step-explain" data-i18n="s5-explain">Check everything below. If something is wrong, click Edit. If it looks good, download the PDF.</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <button class="btn-edit-doc" onclick="toggleEditMode('resign-preview')" id="edit-btn-resign-preview" data-i18n="btn-customize">✏️ Customize document</button>
+    </div>
+    <div class="edit-hint" id="edit-hint-resign-preview" data-i18n="edit-hint">Click on any section to edit the text. Your changes will be included in the PDF.</div>
+    <div class="preview-box" id="resign-preview"></div>
+    <details class="doc-settings">
+      <summary data-i18n="lbl-doc-settings">Document settings</summary>
+      <div class="ds-body">
+        <div class="field"><label data-i18n="lbl-header">Header text</label><input type="text" id="resign-header" data-i18n-placeholder="ph-header"></div>
+        <div class="field"><label data-i18n="lbl-footer">Footer text</label><input type="text" id="resign-footer" data-i18n-placeholder="ph-footer"></div>
+        <div class="field"><label data-i18n="lbl-fontsize">Font size</label><select id="resign-fontsize"><option value="9">Small (9pt)</option><option value="10" selected>Normal (10pt)</option><option value="11">Medium (11pt)</option><option value="12">Large (12pt)</option></select></div>
+        <div class="field"><label data-i18n="lbl-fontfamily">Font</label><select id="resign-fontfamily"><option value="helvetica">Helvetica</option><option value="times">Times New Roman</option><option value="courier">Courier</option></select></div>
+        <div class="field" style="grid-column:1/-1;"><label data-i18n="lbl-watermark">Watermark</label><select id="resign-watermark"><option value="" data-i18n="wm-none">None</option><option value="draft" data-i18n="wm-draft">Draft</option><option value="copy" data-i18n="wm-copy">Copy</option></select></div>
+        <div class="field" style="grid-column:1/-1;"><label style="display:flex;gap:8px;align-items:flex-start;font-weight:500;cursor:pointer;"><input type="checkbox" id="resign-brand" checked style="width:16px;height:16px;margin-top:2px;flex:none;accent-color:var(--pri);"><span data-i18n="lbl-brand">Add “Created with documentgenerator.ai” at the bottom of the page</span></label><div style="font-size:12px;color:var(--text-light);margin:4px 0 0 24px;line-height:1.5;" data-i18n="brand-help">This tool is free and needs no account. If you leave this small line on, more people will find us, and that helps us keep it free. You can switch it off at any time.</div></div>
+      </div>
+    </details>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;flex-wrap:wrap;">
+      <button class="btn btn-download" onclick="downloadResignPDF()" data-i18n="btn-download">⬇ Download PDF</button>
+    </div>
+    <button class="btn-new-doc" onclick="startNewDocument()" data-i18n="btn-new-doc">+ New document</button>
+  </div>
+
   <!-- RECEIPT STEP 1: Received by -->
   <div class="step" id="step-rc1">
     <div class="step-card">
@@ -3143,6 +3310,7 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
         <li>Fix: voorbeeldpaneel verscheen soms naast het keuzescherm (na terugkeren naar de startpagina)</li>
         <li>Automatisch bewaren nu per browsertabblad (weg zodra je het tabblad sluit, geen 24 uur meer); korte uitleg boven het formulier; browserwaarschuwing bij sluiten met niet-gedownloade invulling; privacybeleid aangepast in 18 talen</li>
         <li>Privacybeleid: zin over bewaren als bestand toegevoegd (18 talen)</li>
+        <li>Twee nieuwe documenten: toestemmingsbrief voor reizen met een kind en ontslagbrief (18 talen)</li>
         <li>Na het downloaden verschijnt een korte "Wat nu?"-tip per documenttype (ondertekenen, bewaren, legaliseren, verzenden) in alle 18 talen</li>
         <li>Footer: korte vermelding dat de documenten sjablonen zijn en geen juridisch advies (18 talen)</li>
         <li>Vindbaarheid: beschrijving, deelplaatje (Open Graph/Twitter), canonical-link, gestructureerde gegevens, titel en beschrijving per taal; robots.txt en sitemap.xml toegevoegd</li>
@@ -4534,6 +4702,8 @@ function selectDocType(type) {
   else if (type === 'loan') goLoanStep('l1');
   else if (type === 'will') goWillStep('w1');
   else if (type === 'revoke') goRevokeStep('rv1');
+  else if (type === 'travel') goTravelStep('tr1');
+  else if (type === 'resign') goResignStep('rs1');
 }
 
 // ====== Rental navigation ======
@@ -5085,6 +5255,169 @@ function renderRevokePreview() {
   trackEdits('revoke-preview', 'Revoke Power of Attorney');
 }
 function generateRevokeHtml() { return buildRevokeDocument(gatherRevokeData()); }
+
+
+// ====== Travel consent for a child ======
+const TRAVEL_STEPS = ['tr1','tr2','tr3','tr4'];
+function goTravelStep(step) {
+  if (step === 0) { goStep(0); return; }
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  const idx = TRAVEL_STEPS.indexOf(step);
+  document.getElementById('progress').style.width = ((idx+1) / TRAVEL_STEPS.length * 100) + '%';
+  updateStepNav('dt-travel-title', idx+1, TRAVEL_STEPS.length);
+  if (step === 'tr4') { renderTravelPreview(); checkEmptyFields(); }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function validateTravelAndGo(from, to) {
+  const req = { 'tr1': ['tr-name'], 'tr2': ['tch-name'], 'tr3': ['tr-dest'] };
+  let ok = true;
+  (req[from]||[]).forEach(id => { const el = document.getElementById(id); const err = document.getElementById('err-'+id); if (!el.value.trim()) { el.classList.add('field-error'); if(err){err.style.display='block';} ok=false; } else { el.classList.remove('field-error'); if(err) err.style.display='none'; } });
+  if (ok) goTravelStep(to);
+}
+function gatherTravelData() {
+  return {
+    parent: { name:$('tr-name'), id:$('tr-id'), rel:$('tr-rel'), address:$('tr-address'), neighborhood:$('tr-neighborhood'), postal:$('tr-postal'), country:$('tr-country'), phone:$('tr-phone'), email:$('tr-email') },
+    child: { name:$('tch-name'), dob:$('tch-dob'), id:$('tch-id') },
+    more: $('tch-more').split(/\n+/).map(s => s.trim()).filter(Boolean),
+    comp: { name:$('tk-name'), id:$('tk-id'), rel:$('tk-rel'), phone:$('tk-phone') },
+    dest:$('tr-dest'), dep:$('tr-dep'), ret:$('tr-ret'), purpose:$('tr-purpose'), other:$('tr-other'),
+  };
+}
+function travelTexts(d) {
+  const addr = [addrJoin(d.parent), d.parent.country].filter(Boolean).join(', ');
+  const rows = arr => arr.filter(r => r[1]);
+  const sections = [
+    { h: t('trdoc-h-parent'), rows: rows([[t('lbl-name'), d.parent.name || '___'], [t('lbl-id'), d.parent.id], [t('lbl-tr-comp-rel'), d.parent.rel ? t('tr-rel-' + d.parent.rel) : ''], [t('lbl-address'), addr], [t('trdoc-phone'), d.parent.phone], [t('trdoc-email'), d.parent.email]]) },
+    { h: t('trdoc-h-child'), rows: rows([[t('lbl-name'), d.child.name || '___'], [t('lbl-dob'), d.child.dob ? fmtDate(d.child.dob) : ''], [t('lbl-id'), d.child.id]]), bullets: d.more },
+  ];
+  if (d.comp.name) sections.push({ h: t('trdoc-h-comp'), rows: rows([[t('lbl-name'), d.comp.name], [t('lbl-id'), d.comp.id], [t('lbl-tr-comp-rel'), d.comp.rel], [t('trdoc-phone'), d.comp.phone]]) });
+  sections.push({ h: t('trdoc-h-trip'), rows: rows([[t('lbl-tr-dest'), d.dest || '___'], [t('lbl-tr-dep'), fmtDate(d.dep)], [t('lbl-tr-ret'), fmtDate(d.ret)], [t('trdoc-purpose'), d.purpose]]) });
+  if (d.other) sections.push({ h: t('trdoc-h-other'), rows: [[t('lbl-name') + ' / ' + t('trdoc-phone'), d.other]] });
+  return { title: t('trdoc-title'), intro: t('trdoc-intro'), sections, valid: t('trdoc-valid'), place: t('trdoc-place'), sig: t('trdoc-sig'), who: d.parent.name || '___' };
+}
+function buildTravelDocument(d) {
+  const x = travelTexts(d);
+  const e = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return `
+    <h2>${e(x.title)}</h2>
+    <div class="sec"><p>${e(x.intro)}</p></div>
+    ${x.sections.map(s => '<div class="sec"><div class="sec-title">' + e(s.h) + '</div>' + s.rows.map(r => '<p style="margin:2px 0;"><b>' + e(r[0]) + ':</b> ' + e(r[1]) + '</p>').join('') + (s.bullets && s.bullets.length ? '<ul>' + s.bullets.map(b => '<li>' + e(b) + '</li>').join('') + '</ul>' : '') + '</div>').join('')}
+    <div class="sec"><p>${e(x.valid)}</p></div>
+    <div class="sec"><p>${e(x.place)} _______________________</p></div>
+    <div class="sig-grid"><div><div class="sig-line">${e(x.sig)}<br>${e(x.who)}</div></div></div>`;
+}
+async function downloadTravelPDF() {
+  if (!window.jspdf) { alert('PDF library not loaded. Please disable your ad blocker for this site and reload.'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = patchPdfUnicode(new jsPDF({ unit:'mm', format:'a4' }));
+  const d = gatherTravelData(); const x = travelTexts(d);
+  const ds = getDocSettings('travel'); const mg = 25, pw = 160; let y = ds.header ? mg + 4 : mg;
+  const addTxt = (text, opts = {}) => { const sz = opts.size || ds.fontSize, st = opts.style || 'normal', al = opts.align || 'left'; doc.setFontSize(sz); doc.setFont(ds.fontFamily, st); const lines = doc.splitTextToSize(text, opts.w || pw); if (y + lines.length * sz * 0.4 > 278) { doc.addPage(); y = ds.header ? mg + 4 : mg; } doc.text(lines, al === 'center' ? 105 : mg, y, { align: al }); y += lines.length * sz * 0.42 + (opts.gap || 2); };
+  addTxt(x.title, { size: 18, style: 'bold', align: 'center', gap: 8 }); y += 3;
+  addTxt(x.intro, { gap: 5 });
+  x.sections.forEach(s => {
+    y += 3; addTxt(s.h, { size: 12, style: 'bold', gap: 3 });
+    s.rows.forEach(r => addTxt(r[0] + ': ' + r[1], { gap: 1.5 }));
+    (s.bullets || []).forEach(b => addTxt('  •  ' + b, { gap: 1.5 }));
+  });
+  y += 5; addTxt(x.valid, { gap: 4 });
+  y += 8; addTxt(x.place + ' _______________________', {}); y += 14;
+  if (y > 240) { doc.addPage(); y = mg + 20; }
+  doc.setDrawColor(50); doc.line(mg, y, mg + 80, y);
+  doc.setFontSize(9); doc.setFont(ds.fontFamily, 'normal');
+  doc.text(x.sig + ': ' + x.who, mg, y + 5, { maxWidth: 100 });
+  addHeaderFooter(doc, ds);
+  const blob = doc.output('blob'); const fn = 'Travel_Consent_' + (d.child.name ? d.child.name.replace(/\s+/g, '_') : 'draft') + '.pdf';
+  try { const dl = await window.claude?.use?.('downloads'); if (dl) { await dl.save({ filename: fn, data: blob }); return; } } catch(e) {}
+  const u = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = u; a.download = fn; a.click(); URL.revokeObjectURL(u);
+}
+function renderTravelPreview() {
+  document.getElementById('travel-preview').innerHTML = buildTravelDocument(gatherTravelData());
+  trackEdits('travel-preview', 'Travel consent');
+}
+function generateTravelHtml() { return buildTravelDocument(gatherTravelData()); }
+
+// ====== Resignation letter ======
+const RESIGN_STEPS = ['rs1','rs2','rs3','rs4'];
+function goResignStep(step) {
+  if (step === 0) { goStep(0); return; }
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  const idx = RESIGN_STEPS.indexOf(step);
+  document.getElementById('progress').style.width = ((idx+1) / RESIGN_STEPS.length * 100) + '%';
+  updateStepNav('dt-resign-title', idx+1, RESIGN_STEPS.length);
+  if (step === 'rs4') { renderResignPreview(); checkEmptyFields(); }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function validateResignAndGo(from, to) {
+  const req = { 'rs1': ['rs-name'], 'rs2': ['re-company'] };
+  let ok = true;
+  (req[from]||[]).forEach(id => { const el = document.getElementById(id); const err = document.getElementById('err-'+id); if (!el.value.trim()) { el.classList.add('field-error'); if(err){err.style.display='block';} ok=false; } else { el.classList.remove('field-error'); if(err) err.style.display='none'; } });
+  if (ok) goResignStep(to);
+}
+function gatherResignData() {
+  return {
+    me: { name:$('rs-name'), jobtitle:$('rs-jobtitle'), address:$('rs-address'), neighborhood:$('rs-neighborhood'), postal:$('rs-postal'), country:$('rs-country') },
+    emp: { company:$('re-company'), contact:$('re-contact'), address:$('re-address'), country:$('re-country') },
+    last:$('rs-last'), date:$('rs-date') || fmtDateISO(0), reason:$('rs-reason'),
+    thanks: !!document.getElementById('rs-thanks')?.checked, handover: !!document.getElementById('rs-handover')?.checked,
+  };
+}
+function resignTexts(d) {
+  const fill = s => s.replace(/\{contact\}/g, d.emp.contact).replace(/\{company\}/g, d.emp.company || '___').replace(/\{last\}/g, fmtDate(d.last)).replace(/\{title\}/g, d.me.jobtitle).replace(/\{reason\}/g, d.reason);
+  const paras = [fill(t('rsdoc-body'))];
+  if (d.me.jobtitle) paras.push(fill(t('rsdoc-position')));
+  if (d.reason) paras.push(fill(t('rsdoc-reason')));
+  if (d.thanks) paras.push(t('rsdoc-thanks'));
+  if (d.handover) paras.push(t('rsdoc-handover'));
+  paras.push(t('rsdoc-confirm'));
+  return {
+    sender: [d.me.name || '___', addrJoin(d.me), d.me.country].filter(Boolean),
+    recipient: [d.emp.company || '___', d.emp.contact, d.emp.address, d.emp.country].filter(Boolean),
+    date: fmtDate(d.date), subject: t('rsdoc-title'),
+    greet: d.emp.contact ? fill(t('rsdoc-greet-named')) : t('rsdoc-greet'),
+    paras, close: t('rsdoc-close'), name: d.me.name || '___',
+  };
+}
+function buildResignDocument(d) {
+  const x = resignTexts(d);
+  const e = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return `
+    <div class="sec">
+      <p>${x.sender.map(e).join('<br>')}</p>
+      <p>${x.recipient.map(e).join('<br>')}</p>
+      <p>${e(x.date)}</p>
+      <p><b>${e(x.subject)}</b></p>
+      <p>${e(x.greet)}</p>${x.paras.map(p => '<p>' + e(p) + '</p>').join('')}
+      <p>${e(x.close)}</p><p style="margin-top:34px;">${e(x.name)}</p>
+    </div>`;
+}
+async function downloadResignPDF() {
+  if (!window.jspdf) { alert('PDF library not loaded. Please disable your ad blocker for this site and reload.'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = patchPdfUnicode(new jsPDF({ unit:'mm', format:'a4' }));
+  const d = gatherResignData(); const x = resignTexts(d);
+  const ds = getDocSettings('resign'); const mg = 25, pw = 160; let y = ds.header ? mg + 4 : mg;
+  const addTxt = (text, opts = {}) => { const sz = opts.size || ds.fontSize, st = opts.style || 'normal', al = opts.align || 'left'; doc.setFontSize(sz); doc.setFont(ds.fontFamily, st); const lines = doc.splitTextToSize(text, opts.w || pw); if (y + lines.length * sz * 0.4 > 278) { doc.addPage(); y = ds.header ? mg + 4 : mg; } doc.text(lines, al === 'center' ? 105 : mg, y, { align: al }); y += lines.length * sz * 0.42 + (opts.gap || 2); };
+  x.sender.forEach((l, i) => addTxt(l, { style: i === 0 ? 'bold' : 'normal', gap: 1 })); y += 8;
+  x.recipient.forEach((l, i) => addTxt(l, { style: i === 0 ? 'bold' : 'normal', gap: 1 })); y += 8;
+  addTxt(x.date, { gap: 8 });
+  addTxt(x.subject, { size: 13, style: 'bold', gap: 7 });
+  addTxt(x.greet, { gap: 5 });
+  x.paras.forEach(p => addTxt(p, { gap: 5 }));
+  y += 3; addTxt(x.close, { gap: 4 });
+  y += 16; addTxt(x.name, {});
+  addHeaderFooter(doc, ds);
+  const blob = doc.output('blob'); const fn = 'Resignation_Letter' + (d.me.name ? '_' + d.me.name.replace(/\s+/g, '_') : '') + '.pdf';
+  try { const dl = await window.claude?.use?.('downloads'); if (dl) { await dl.save({ filename: fn, data: blob }); return; } } catch(e) {}
+  const u = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = u; a.download = fn; a.click(); URL.revokeObjectURL(u);
+}
+function renderResignPreview() {
+  document.getElementById('resign-preview').innerHTML = buildResignDocument(gatherResignData());
+  trackEdits('resign-preview', 'Resignation letter');
+}
+function generateResignHtml() { return buildResignDocument(gatherResignData()); }
 
 // ====== Receipt ======
 const RECEIPT_STEPS = ['rc1','rc2','rc3','rc4'];
@@ -5984,21 +6317,21 @@ setInterval(autoSave, 5000);
 
 // After a document is downloaded: remove the temporary copy and stop saving until the user edits again
 ['input','change'].forEach(ev => document.addEventListener(ev, () => { autoSavePaused = false; }, true));
-['downloadPDF','downloadRentalPDF','downloadBosPDF','downloadEngPDF','downloadLoanPDF','downloadEmplPDF','downloadNdaPDF','downloadWillPDF','downloadReceiptPDF','downloadInvoicePDF'].forEach(name => {
+['downloadPDF','downloadRentalPDF','downloadBosPDF','downloadEngPDF','downloadLoanPDF','downloadEmplPDF','downloadNdaPDF','downloadWillPDF','downloadReceiptPDF','downloadInvoicePDF','downloadRevokePDF','downloadTravelPDF','downloadResignPDF'].forEach(name => {
   const orig = window[name];
   if (typeof orig !== 'function') return;
   window[name] = async function() {
     const r = await orig.apply(this, arguments);
     clearAutoSave();
     autoSavePaused = true;
-    setTimeout(showNextSteps, 700);
+    setTimeout(() => showNextSteps(name === 'downloadRevokePDF' ? 'revoke' : undefined), 700);
     return r;
   };
 });
 
 
-function showNextSteps() {
-  const key = 'next-' + currentDocType;
+function showNextSteps(type) {
+  const key = 'next-' + (type || currentDocType);
   if (!T[key]) return;
   document.getElementById('next-text').textContent = t(key);
   document.getElementById('next-modal').classList.add('show');
@@ -6173,7 +6506,7 @@ function applyFileState(obj) {
     // afhankelijke weergave bijwerken (selecties/vinkjes die iets tonen of verbergen)
     document.querySelectorAll('select[id], input[type="checkbox"][id]').forEach(el => { try { el.dispatchEvent(new Event('change', { bubbles: true })); } catch (e) {} });
     if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
-    const types = ['poa','rental','bos','eng','loan','empl','nda','will','receipt','invoice','revoke'];
+    const types = ['poa','rental','bos','eng','loan','empl','nda','will','receipt','invoice','revoke','travel','resign'];
     selectDocType(types.includes(obj.docType) ? obj.docType : 'poa');
     autoSavePaused = true;
     showDoneToast('file-opened');
@@ -6188,7 +6521,7 @@ function resetAllFields() {
     else if (el.tagName === 'SELECT') el.selectedIndex = 0;
     else if (!['file', 'button', 'submit', 'hidden'].includes(el.type)) el.value = '';
   });
-  document.querySelectorAll('input[id$="-brand"]').forEach(el => { el.checked = true; });
+  document.querySelectorAll('input[id$="-brand"], #rs-thanks, #rs-handover').forEach(el => { el.checked = true; });
   document.querySelectorAll('select[id$="-currency"]').forEach(el => { delete el.dataset.manual; });
   document.querySelectorAll('input[type="date"]').forEach(el => { delete el.dataset.quickMonths; delete el.dataset.quickDays; });
   // Dynamische lijsten leegmaken
@@ -7284,6 +7617,8 @@ function livePreview() {
     else if (currentDocType === 'loan') html = generateLoanHtml();
     else if (currentDocType === 'will') html = generateWillHtml();
     else if (currentDocType === 'revoke') html = generateRevokeHtml();
+    else if (currentDocType === 'travel') html = generateTravelHtml();
+    else if (currentDocType === 'resign') html = generateResignHtml();
   } catch(e) {
     html = '<div class="preview-placeholder">' + t('live-preview-hint') + '</div>';
   }
