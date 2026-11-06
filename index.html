@@ -3115,6 +3115,7 @@ body:has(#step-0.active) .live-preview-panel { display: none !important; }
         <li>PDF: regel "Gemaakt met documentgenerator.ai" onderaan (aan by default, met uitleg, uit te zetten in Documentinstellingen) en optioneel watermerk Concept/Kopie (18 talen)</li>
         <li>Fix: voorbeeldpaneel verscheen soms naast het keuzescherm (na terugkeren naar de startpagina)</li>
         <li>Automatisch bewaren nu per browsertabblad (weg zodra je het tabblad sluit, geen 24 uur meer); korte uitleg boven het formulier; browserwaarschuwing bij sluiten met niet-gedownloade invulling; privacybeleid aangepast in 18 talen</li>
+        <li>Einddatum (3/6/12 maanden) en vervaldatum (7/14/30 dagen) bewegen automatisch mee als je daarna de begindatum of factuurdatum wijzigt; zelf aanpassen stopt het meebewegen</li>
         <li>Opnieuw beginnen: melding op de startpagina als eerdere invulling is hersteld + knop "Opnieuw beginnen" in de voortgangsbalk van elk formulier (met bevestiging)</li>
         <li>Automatische hoofdletters: namen, adressen, plaatsen en landen worden netjes geschreven als iemand alles in kleine letters typt (voorvoegsels als van/de/der blijven klein); e-mail in kleine letters, ID-/kentekennummers in hoofdletters; overbodige spaties weg</li>
         <li>Valuta volgt automatisch het gekozen land (aanpassen blijft mogelijk; een handmatige keuze wordt niet meer overschreven)</li>
@@ -6002,7 +6003,8 @@ const COUNTRY_CODES = 'AF AX AL DZ AS AD AO AI AQ AG AR AM AW AU AT AZ BS BH BD 
 const COUNTRY_TOP = ['SX','CW','AW','NL','SR','GY','US'];
 const COUNTRY_LANGS = ['en','nl','es','fr','de','pt','it','ru','zh','ja','ar','ko','tr','pl','hi','fa','he','sw'];
 let _countryRev = null;
-function countryName(code, lg) { try { return new Intl.DisplayNames([lg || lang], { type: 'region' }).of(code) || ''; } catch (e) { return ''; } }
+const COUNTRY_OVERRIDE = { nl: { SX: 'Sint Maarten' } };
+function countryName(code, lg) { lg = lg || lang; if (COUNTRY_OVERRIDE[lg] && COUNTRY_OVERRIDE[lg][code]) return COUNTRY_OVERRIDE[lg][code]; try { return new Intl.DisplayNames([lg], { type: 'region' }).of(code) || ''; } catch (e) { return ''; } }
 function userRegionCode() {
   try { for (const l of (navigator.languages || [navigator.language])) { if (!l.includes('-')) continue; const r = new Intl.Locale(l).region; if (r && /^[A-Z]{2}$/.test(r)) return r; } } catch (e) {}
   return '';
@@ -6022,7 +6024,19 @@ function initCountryInputs() {
   document.querySelectorAll('input[type="text"][id$="-country"], input[type="text"][id$="-law"]').forEach(el => {
     el.setAttribute('list', 'country-list');
     el.setAttribute('autocomplete', 'off');
-    el.addEventListener('focus', () => { try { el.select(); } catch (e) {} });
+    // Bij focus de ingevulde waarde even als placeholder tonen, zodat de browser de hele lijst laat zien (niet alleen wat past bij de huidige tekst)
+    el.addEventListener('focus', () => {
+      if (!el.value) return;
+      el.dataset.prev = el.value; el.dataset.prevPh = el.placeholder || '';
+      el.placeholder = el.value; el.value = '';
+    });
+    el.addEventListener('blur', () => {
+      if (el.dataset.prev !== undefined) {
+        if (!el.value) el.value = el.dataset.prev;
+        el.placeholder = el.dataset.prevPh;
+        delete el.dataset.prev; delete el.dataset.prevPh;
+      }
+    });
   });
 }
 // Zet een ingevulde landnaam (in welke taal ook) om naar een zoektekst met de namen in en/nl/de/fr/es
@@ -6346,19 +6360,23 @@ function setQuickDate(btn, offset) {
   input.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
-function setQuickEnd(btn, months) {
-  const input = btn.closest('.date-quick').parentElement.querySelector('input[type="date"]');
-  if (!input) return;
-  const start = document.getElementById(input.id.replace(/end$/, 'start'));
-  const base = (start && start.value) ? new Date(start.value + 'T12:00:00') : new Date();
+function calcEndDate(startValue, months) {
+  const base = startValue ? new Date(startValue + 'T12:00:00') : new Date();
   const day = base.getDate();
   base.setDate(1); base.setMonth(base.getMonth() + months);
   base.setDate(Math.min(day, new Date(base.getFullYear(), base.getMonth() + 1, 0).getDate()));
   base.setDate(base.getDate() - 1); // bijv. 3 maanden vanaf 1 jan loopt t/m 31 mrt
   const p = n => String(n).padStart(2, '0');
-  input.value = base.getFullYear() + '-' + p(base.getMonth() + 1) + '-' + p(base.getDate());
+  return base.getFullYear() + '-' + p(base.getMonth() + 1) + '-' + p(base.getDate());
+}
+function setQuickEnd(btn, months) {
+  const input = btn.closest('.date-quick').parentElement.querySelector('input[type="date"]');
+  if (!input) return;
+  const start = document.getElementById(input.id.replace(/end$/, 'start'));
+  input.value = calcEndDate(start && start.value, months);
   input.dispatchEvent(new Event('input', { bubbles: true }));
   input.dispatchEvent(new Event('change', { bubbles: true }));
+  input.dataset.quickMonths = months; // einddatum blijft meebewegen met de begindatum tot de gebruiker hem zelf aanpast
 }
 
 function setQuickDue(btn, days) {
@@ -6368,9 +6386,35 @@ function setQuickDue(btn, days) {
   base.setDate(base.getDate() + days);
   const p = n => String(n).padStart(2, '0');
   input.value = base.getFullYear() + '-' + p(base.getMonth() + 1) + '-' + p(base.getDate());
+  input.dataset.quickDays = days;
   input.dispatchEvent(new Event('input', { bubbles: true }));
   input.dispatchEvent(new Event('change', { bubbles: true }));
 }
+
+
+// Einddatum / vervaldatum meebewegen als de begindatum / factuurdatum verandert (alleen na gebruik van een snelknop)
+document.addEventListener('input', e => {
+  const el = e.target;
+  if (!el || el.tagName !== 'INPUT' || el.type !== 'date') return;
+  if (e.isTrusted && (/date-end$/.test(el.id) || el.id === 'iv-due')) { delete el.dataset.quickMonths; delete el.dataset.quickDays; return; }
+  if (/date-start$/.test(el.id)) {
+    const end = document.getElementById(el.id.replace(/start$/, 'end'));
+    if (end && end.dataset.quickMonths && el.value) {
+      end.value = calcEndDate(el.value, parseInt(end.dataset.quickMonths));
+      end.dispatchEvent(new Event('input', { bubbles: true }));
+      end.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+  if (el.id === 'iv-date') {
+    const due = document.getElementById('iv-due');
+    if (due && due.dataset.quickDays && el.value) {
+      const d = new Date(el.value + 'T12:00:00'); d.setDate(d.getDate() + parseInt(due.dataset.quickDays));
+      const p = n => String(n).padStart(2, '0');
+      due.value = d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+      due.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  }
+}, true);
 
 function initDateQuickPicks() {
   document.querySelectorAll('input[type="date"]').forEach(input => {
